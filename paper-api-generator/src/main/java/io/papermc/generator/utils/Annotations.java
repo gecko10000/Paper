@@ -3,6 +3,7 @@ package io.papermc.generator.utils;
 import com.squareup.javapoet.AnnotationSpec;
 import java.util.List;
 
+import com.squareup.javapoet.ClassName;
 import io.papermc.paper.generated.GeneratedFrom;
 import net.minecraft.SharedConstants;
 import org.bukkit.MinecraftExperimental;
@@ -42,6 +43,7 @@ public final class Annotations {
     @ApiStatus.Experimental
     public static final AnnotationSpec EXPERIMENTAL_API_ANNOTATION = AnnotationSpec.builder(ApiStatus.Experimental.class).build();
     public static final AnnotationSpec NOT_NULL = AnnotationSpec.builder(NotNull.class).build();
+    public static final AnnotationSpec OVERRIDE = AnnotationSpec.builder(Override.class).build();
     private static final AnnotationSpec SUPPRESS_WARNINGS = AnnotationSpec.builder(SuppressWarnings.class)
         .addMember("value", "$S", "unused")
         .addMember("value", "$S", "SpellCheckingInspection")
