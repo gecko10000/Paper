@@ -14,11 +14,14 @@ import org.jetbrains.annotations.Nullable;
 public final class Annotations {
 
     public static List<AnnotationSpec> experimentalAnnotations(final String version) {
+        AnnotationSpec.Builder builder = AnnotationSpec.builder(MinecraftExperimental.class);
+        if (!version.isBlank()) {
+            builder.addMember("value", "$S", version);
+        }
+
         return List.of(
             AnnotationSpec.builder(ApiStatus.Experimental.class).build(),
-            AnnotationSpec.builder(MinecraftExperimental.class)
-                .addMember("value", "$S", version)
-                .build()
+            builder.build()
         );
     }
 
