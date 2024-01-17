@@ -1,75 +1,55 @@
-package io.papermc.generator.types;
+package io.papermc.generator.types.enumgen;
 
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
 import io.papermc.generator.Main;
+import io.papermc.generator.types.SimpleGenerator;
 import io.papermc.generator.utils.Annotations;
 import io.papermc.generator.utils.Formatting;
-import io.papermc.generator.utils.Javadocs;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 import javax.lang.model.element.Modifier;
 import net.kyori.adventure.key.Key;
-import net.kyori.adventure.sound.Sound;
 import net.minecraft.core.Registry;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.sounds.SoundEvent;
+import net.minecraft.resources.ResourceKey;
 import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
 @DefaultQualifier(NonNull.class)
-public class SoundGenerator extends SimpleGenerator {
+public abstract class EnumGenerator<T> extends SimpleGenerator {
 
-    private static final String CLASS_HEADER = Javadocs.getVersionDependentClassHeader("Sounds");
-    private static final List<Pattern> EXPERIEMENTAL_REGEX = of(
-        "block.copper_door.*",
-        "block.copper_bulb.*",
-        "block.copper_grate.*",
-        "block.copper_grate.*",
-        "block.copper_trapdoor.*",
-        "block.polished_tuff.*",
-        "block.trial_spawner.*",
-        "block.tuff_bricks.*",
-        "block.crafter.*",
-        "entity.breeze.*",
-        "entity.generic.wind_burst",
-        "item.bundle.*"
-    );
+    protected final ResourceKey<Registry<T>> registryResourceKey;
 
-    public SoundGenerator(final String keysClassName, final String pkg) {
+    public EnumGenerator(final String keysClassName, final String pkg, ResourceKey<Registry<T>> registryResourceKey) {
         super(keysClassName, pkg);
+        this.registryResourceKey = registryResourceKey;
     }
 
     @Override
     protected TypeSpec getTypeSpec() {
         TypeSpec.Builder typeBuilder = TypeSpec.enumBuilder(this.className)
             .addSuperinterface(Keyed.class)
-            .addSuperinterface(Sound.Type.class)
             .addModifiers(Modifier.PUBLIC)
-            .addAnnotations(Annotations.CLASS_HEADER)
-            .addJavadoc(CLASS_HEADER);
+            .addAnnotations(Annotations.CLASS_HEADER);
 
-        Registry<SoundEvent> event = Main.REGISTRY_ACCESS.registryOrThrow(Registries.SOUND_EVENT);
-        List<String> paths = new ArrayList<>();
-        event.entrySet().forEach(key -> paths.add(key.getKey().location().getPath()));
-        paths.sort(Comparator.naturalOrder());
+        Registry<T> event = Main.REGISTRY_ACCESS.registryOrThrow(this.registryResourceKey);
+        List<Map.Entry<ResourceKey<T>, T>> paths = new ArrayList<>(event.entrySet());
+        paths.sort(Comparator.comparing(o -> o.getKey().location().getPath()));
 
-        paths.forEach(key -> {
-            String fieldName = Formatting.formatKeyAsField(Key.key(key));
-            boolean isExperiemental = false;
-            for (Pattern pattern : EXPERIEMENTAL_REGEX) {
-                if (pattern.matcher(key).find()) {
-                    isExperiemental = true;
-                    break;
-                }
-            }
-            TypeSpec.Builder builder = TypeSpec.anonymousClassBuilder("$S", key);
+        paths.forEach(entry -> {
+            ResourceKey<T> resourceKey = entry.getKey();
+            Key bukkitKey = Key.key(resourceKey.location().toString());
+
+            String fieldName = Formatting.formatKeyAsField(bukkitKey);
+            boolean isExperiemental = this.isExperiemental(entry);
+            TypeSpec.Builder builder = TypeSpec.anonymousClassBuilder("$S", resourceKey.location().getPath().toString());
             if (isExperiemental) {
                 builder.addAnnotations(Annotations.experimentalAnnotations(""));
             }
@@ -81,13 +61,6 @@ public class SoundGenerator extends SimpleGenerator {
         typeBuilder.addMethod(MethodSpec.constructorBuilder()
             .addParameter(String.class, "key").addCode("this.key = NamespacedKey.minecraft(key);").build());
 
-        typeBuilder.addMethod(MethodSpec.methodBuilder("key")
-                .returns(Key.class)
-                .addModifiers(Modifier.PUBLIC)
-                .addAnnotation(Annotations.NOT_NULL)
-                .addAnnotation(Annotations.OVERRIDE)
-            .addCode("return this.key;").build());
-
         typeBuilder.addMethod(MethodSpec.methodBuilder("getKey")
             .returns(NamespacedKey.class)
             .addModifiers(Modifier.PUBLIC)
@@ -95,8 +68,12 @@ public class SoundGenerator extends SimpleGenerator {
             .addAnnotation(Annotations.OVERRIDE)
             .addCode("return this.key;").build());
 
+        this.addExtras(typeBuilder);
+
         return typeBuilder.build();
     }
+
+    public abstract void addExtras(TypeSpec.Builder builder);
 
     @Override
     protected JavaFile.Builder file(JavaFile.Builder builder) {
@@ -104,6 +81,7 @@ public class SoundGenerator extends SimpleGenerator {
             .skipJavaLangImports(true);
     }
 
+    public abstract boolean isExperiemental(Map.Entry<ResourceKey<T>, T> entry);
 
     private static List<Pattern> of(String... strings) {
         List<Pattern> patterns = new ArrayList<>();

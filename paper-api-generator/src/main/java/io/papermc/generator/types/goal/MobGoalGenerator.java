@@ -2,7 +2,6 @@ package io.papermc.generator.types.goal;
 
 import com.destroystokyo.paper.entity.RangedEntity;
 import com.destroystokyo.paper.entity.ai.GoalKey;
-import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -19,12 +18,7 @@ import io.papermc.generator.utils.Annotations;
 import io.papermc.generator.utils.Formatting;
 import io.papermc.generator.utils.Javadocs;
 import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
@@ -65,7 +59,6 @@ import org.bukkit.entity.Vindicator;
 import org.bukkit.entity.WanderingTrader;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 @DefaultQualifier(NonNull.class)

@@ -9,26 +9,20 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import io.papermc.generator.Main;
 import io.papermc.generator.utils.Annotations;
-import io.papermc.generator.utils.CollectingContext;
 import io.papermc.generator.utils.Javadocs;
+import io.papermc.generator.utils.RegistryUtils;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.stream.Collectors;
 import net.kyori.adventure.key.Key;
 import net.minecraft.core.Registry;
-import net.minecraft.core.RegistrySetBuilder;
-import net.minecraft.data.registries.UpdateOneTwentyOneRegistries;
 import net.minecraft.resources.ResourceKey;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
 import static com.squareup.javapoet.TypeSpec.classBuilder;
@@ -44,8 +38,7 @@ import static javax.lang.model.element.Modifier.STATIC;
 @DefaultQualifier(NonNull.class)
 public class GeneratedKeyType<T, A> extends SimpleGenerator {
 
-    private static final Map<ResourceKey<? extends Registry<?>>, RegistrySetBuilder.RegistryBootstrap<?>> EXPERIMENTAL_REGISTRY_ENTRIES = UpdateOneTwentyOneRegistries.BUILDER.entries.stream()
-            .collect(Collectors.toMap(RegistrySetBuilder.RegistryStub::key, RegistrySetBuilder.RegistryStub::bootstrap));
+
 
     private static final Map<RegistryKey<?>, String> REGISTRY_KEY_FIELD_NAMES;
     static {
@@ -119,7 +112,7 @@ public class GeneratedKeyType<T, A> extends SimpleGenerator {
         final MethodSpec.Builder createMethod = this.createMethod(typedKey);
 
         final Registry<T> registry = Main.REGISTRY_ACCESS.registryOrThrow(this.registryKey);
-        final List<ResourceKey<T>> experimental = this.collectExperimentalKeys(registry);
+        final List<ResourceKey<T>> experimental = RegistryUtils.collectExperimentalKeys(registry, this.registryKey);
 
         boolean allExperimental = true;
         for (final T value : registry) {
@@ -143,17 +136,7 @@ public class GeneratedKeyType<T, A> extends SimpleGenerator {
         return typeBuilder.addMethod(createMethod.build()).build();
     }
 
-    @SuppressWarnings("unchecked")
-    private List<ResourceKey<T>> collectExperimentalKeys(final Registry<T> registry) {
-        final RegistrySetBuilder.@Nullable RegistryBootstrap<T> registryBootstrap = (RegistrySetBuilder.RegistryBootstrap<T>) EXPERIMENTAL_REGISTRY_ENTRIES.get(this.registryKey);
-        if (registryBootstrap == null) {
-            return Collections.emptyList();
-        }
-        final List<ResourceKey<T>> experimental = new ArrayList<>();
-        final CollectingContext<T> context = new CollectingContext<>(experimental, registry);
-        registryBootstrap.run(context);
-        return experimental;
-    }
+
 
     @Override
     protected JavaFile.Builder file(JavaFile.Builder builder) {

@@ -4,6 +4,11 @@ import com.destroystokyo.paper.entity.RangedEntity;
 import com.destroystokyo.paper.entity.ai.GoalKey;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import java.lang.reflect.Constructor;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.TamableAnimal;
@@ -116,12 +121,6 @@ import org.bukkit.entity.Zoglin;
 import org.bukkit.entity.Zombie;
 import org.bukkit.entity.ZombieHorse;
 import org.bukkit.entity.ZombieVillager;
-
-import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 public class MobGoalNames {
 

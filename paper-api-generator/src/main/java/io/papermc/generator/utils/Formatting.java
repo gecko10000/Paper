@@ -1,8 +1,7 @@
 package io.papermc.generator.utils;
 
-import net.kyori.adventure.key.Key;
-
 import java.util.Locale;
+import net.kyori.adventure.key.Key;
 
 public final class Formatting {
 

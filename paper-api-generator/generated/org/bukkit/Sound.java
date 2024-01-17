@@ -1,7 +1,6 @@
 package org.bukkit;
 
 import io.papermc.paper.generated.GeneratedFrom;
-import net.kyori.adventure.key.Key;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
@@ -1060,7 +1059,7 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type {
 
     BLOCK_POLISHED_DEEPSLATE_STEP("block.polished_deepslate.step"),
 
-        @ApiStatus.Experimental
+    @ApiStatus.Experimental
     @MinecraftExperimental
     BLOCK_POLISHED_TUFF_BREAK("block.polished_tuff.break"),
 
@@ -3206,12 +3205,6 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type {
 
     Sound(String key) {
         this.key = NamespacedKey.minecraft(key);
-    }
-
-    @NotNull
-    @Override
-    public Key key() {
-        return this.key;
     }
 
     @NotNull

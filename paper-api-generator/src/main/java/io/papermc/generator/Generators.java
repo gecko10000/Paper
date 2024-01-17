@@ -1,8 +1,10 @@
 package io.papermc.generator;
 
 import io.papermc.generator.types.GeneratedKeyType;
-import io.papermc.generator.types.SoundGenerator;
 import io.papermc.generator.types.SourceGenerator;
+import io.papermc.generator.types.enumgen.BiomeGenerator;
+import io.papermc.generator.types.enumgen.PoseGenerator;
+import io.papermc.generator.types.enumgen.SoundGenerator;
 import io.papermc.generator.types.goal.MobGoalGenerator;
 import io.papermc.paper.registry.RegistryKey;
 import net.minecraft.core.Registry;
@@ -25,7 +27,9 @@ public interface Generators {
         simpleKey("StructureKeys", Structure.class, Registries.STRUCTURE, RegistryKey.STRUCTURE, true),
         simpleKey("StructureTypeKeys", StructureType.class, Registries.STRUCTURE_TYPE, RegistryKey.STRUCTURE_TYPE, false),
         new MobGoalGenerator("VanillaGoal", "com.destroystokyo.paper.entity.ai"),
-        new SoundGenerator("Sound", "org.bukkit")
+        new SoundGenerator("Sound", "org.bukkit"),
+        new BiomeGenerator("Biome", "org.bukkit.block"),
+        new PoseGenerator("Pose", "org.bukkit.entity")
     };
 
     private static <T, A> SourceGenerator simpleKey(final String className, final Class<A> apiType, final ResourceKey<? extends Registry<T>> registryKey, final RegistryKey<A> apiRegistryKey, final boolean publicCreateKeyMethod) {
