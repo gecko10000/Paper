@@ -1,15 +1,18 @@
 package io.papermc.generator;
 
-import io.papermc.generator.types.GeneratedKeyType;
+import io.papermc.generator.types.registry.GeneratedKeyType;
 import io.papermc.generator.types.SourceGenerator;
-import io.papermc.generator.types.enumgen.BiomeGenerator;
-import io.papermc.generator.types.enumgen.PoseGenerator;
-import io.papermc.generator.types.enumgen.SoundGenerator;
+import io.papermc.generator.types.enumgen.EnumGenerator;
+import io.papermc.generator.types.registry.BiomeGenerator;
+import io.papermc.generator.types.registry.SoundGenerator;
 import io.papermc.generator.types.goal.MobGoalGenerator;
+import io.papermc.generator.types.registry.StructureTypeGenerator;
+import io.papermc.generator.types.registry.TagGenerator;
 import io.papermc.paper.registry.RegistryKey;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.Pose;
 import org.bukkit.GameEvent;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.structure.Structure;
@@ -29,7 +32,9 @@ public interface Generators {
         new MobGoalGenerator("VanillaGoal", "com.destroystokyo.paper.entity.ai"),
         new SoundGenerator("Sound", "org.bukkit"),
         new BiomeGenerator("Biome", "org.bukkit.block"),
-        new PoseGenerator("Pose", "org.bukkit.entity")
+        new StructureTypeGenerator("StructureType", "org.bukkit.generator.structure"),
+        new EnumGenerator<>(Pose.class, "org.bukkit.entity"),
+        new TagGenerator("Tag", "org.bukkit")
     };
 
     private static <T, A> SourceGenerator simpleKey(final String className, final Class<A> apiType, final ResourceKey<? extends Registry<T>> registryKey, final RegistryKey<A> apiRegistryKey, final boolean publicCreateKeyMethod) {

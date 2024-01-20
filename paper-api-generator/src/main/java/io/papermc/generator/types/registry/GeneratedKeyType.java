@@ -1,4 +1,4 @@
-package io.papermc.generator.types;
+package io.papermc.generator.types.registry;
 
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
@@ -8,7 +8,9 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import io.papermc.generator.Main;
+import io.papermc.generator.types.SimpleGenerator;
 import io.papermc.generator.utils.Annotations;
+import io.papermc.generator.utils.Formatting;
 import io.papermc.generator.utils.Javadocs;
 import io.papermc.generator.utils.RegistryUtils;
 import io.papermc.paper.registry.RegistryKey;
@@ -37,8 +39,6 @@ import static javax.lang.model.element.Modifier.STATIC;
 
 @DefaultQualifier(NonNull.class)
 public class GeneratedKeyType<T, A> extends SimpleGenerator {
-
-
 
     private static final Map<RegistryKey<?>, String> REGISTRY_KEY_FIELD_NAMES;
     static {
@@ -118,7 +118,7 @@ public class GeneratedKeyType<T, A> extends SimpleGenerator {
         for (final T value : registry) {
             final ResourceKey<T> key = registry.getResourceKey(value).orElseThrow();
             final String keyPath = key.location().getPath();
-            final String fieldName = keyPath.toUpperCase(Locale.ENGLISH).replaceAll("[.-/]", "_"); // replace invalid field name chars
+            final String fieldName = Formatting.formatPathAsField(keyPath);
             final FieldSpec.Builder fieldBuilder = FieldSpec.builder(typedKey, fieldName, PUBLIC, STATIC, FINAL)
                 .initializer("$N(key($S))", createMethod.build(), keyPath)
                 .addJavadoc(Javadocs.getVersionDependentField("{@code $L}"), key.location().toString());
@@ -135,8 +135,6 @@ public class GeneratedKeyType<T, A> extends SimpleGenerator {
         }
         return typeBuilder.addMethod(createMethod.build()).build();
     }
-
-
 
     @Override
     protected JavaFile.Builder file(JavaFile.Builder builder) {

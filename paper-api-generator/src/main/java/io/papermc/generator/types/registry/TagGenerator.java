@@ -1,0 +1,176 @@
+package io.papermc.generator.types.registry;
+
+import com.destroystokyo.paper.MaterialTags;
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.FieldSpec;
+import com.squareup.javapoet.JavaFile;
+import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
+import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.TypeVariableName;
+import io.papermc.generator.Main;
+import io.papermc.generator.types.SimpleGenerator;
+import io.papermc.generator.utils.Annotations;
+import io.papermc.generator.utils.Formatting;
+import io.papermc.generator.utils.Javadocs;
+import io.papermc.paper.tag.EntityTags;
+import java.util.Comparator;
+import java.util.Locale;
+import java.util.Set;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.TagKey;
+import org.bukkit.Bukkit;
+import org.bukkit.Fluid;
+import org.bukkit.GameEvent;
+import org.bukkit.Keyed;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Tag;
+import org.bukkit.entity.EntityType;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.DefaultQualifier;
+
+import static com.squareup.javapoet.TypeSpec.interfaceBuilder;
+import static io.papermc.generator.utils.Annotations.NOT_NULL;
+import static javax.lang.model.element.Modifier.ABSTRACT;
+import static javax.lang.model.element.Modifier.FINAL;
+import static javax.lang.model.element.Modifier.PUBLIC;
+import static javax.lang.model.element.Modifier.STATIC;
+
+@DefaultQualifier(NonNull.class)
+public class TagGenerator extends SimpleGenerator {
+
+    public static String CLASS_HEADER_JAVADOC = """
+        Represents a tag that may be defined by the server or a resource pack to
+        group like things together.
+        <p>
+        Note that whilst all tags defined within this interface must be present in
+        Implementations, their existence is not guaranteed across future versions.
+        <p>
+        Custom tags defined by Paper are not present (as constants) in this class.
+        To access them please refer to {@link $T}
+        and {@link $T}.
+    
+        @param <T> the type of things grouped by this tag
+        """;
+
+    private static final String IS_TAGGED_JAVADOC = """
+        Returns whether or not this tag has an entry for the specified item.
+        
+        @param item to check
+        @return if it is tagged
+        """;
+
+    private static final String GET_VALUES_JAVADOC = """
+        Gets an immutable set of all tagged items.
+        
+        @return set of tagged items
+        """;
+
+    private static final String REGISTRY_FIELD_JAVADOC = "Key for the built in $L registry.";
+
+    public record TagRegistryNames(String name, Class<?> apiType, ResourceKey<? extends Registry<?>> registryKey) {}
+
+    private static TagRegistryNames names(final String name, final Class<?> apiType, final ResourceKey<? extends Registry<?>> registryKey) {
+        return new TagRegistryNames(name, apiType, registryKey);
+    }
+
+    private static final Set<TagRegistryNames> NAMES = Set.of(
+        names("blocks", Material.class, Registries.BLOCK),
+        names("items", Material.class, Registries.ITEM),
+        names("fluids", Fluid.class, Registries.FLUID),
+        names("entity_types", EntityType.class, Registries.ENTITY_TYPE),
+        names("game_events", GameEvent.class, Registries.GAME_EVENT)
+    );
+
+    private final TypeVariableName typeVariable = TypeVariableName.get("T", Keyed.class);
+
+    public TagGenerator(final String keysClassName, final String pkg) {
+        super(keysClassName, pkg);
+    }
+
+    private TypeSpec.Builder tagHolderType() {
+        return interfaceBuilder(this.className)
+            .addTypeVariable(this.typeVariable)
+            .addModifiers(PUBLIC)
+            .addSuperinterface(Keyed.class)
+            .addJavadoc(CLASS_HEADER_JAVADOC, MaterialTags.class, EntityTags.class)
+            .addAnnotations(Annotations.CLASS_HEADER);
+    }
+
+    @Override
+    protected TypeSpec getTypeSpec() {
+        final TypeSpec.Builder typeBuilder = this.tagHolderType();
+
+        for (TagRegistryNames names : NAMES) {
+            final TypeName fieldType = ParameterizedTypeName.get(Tag.class, names.apiType());
+
+            final ResourceKey<? extends Registry<?>> registryKey = names.registryKey();
+            final Registry<?> registry = Main.REGISTRY_ACCESS.registryOrThrow(registryKey);
+            final String registryFieldName = "REGISTRY_" + names.name().toUpperCase(Locale.ENGLISH);
+            final FieldSpec.Builder registryFieldBuilder = FieldSpec.builder(String.class, registryFieldName)
+                .addModifiers(PUBLIC, STATIC, FINAL)
+                .initializer("$S", names.name())
+                .addJavadoc(REGISTRY_FIELD_JAVADOC, registryKey.location().getPath());
+
+            typeBuilder.addField(registryFieldBuilder.build());
+
+            for (final TagKey<?> tagKey : registry.getTagNames().sorted(Comparator.comparing(tagKey -> tagKey.location().getPath())).toList()) {
+                final String keyPath = tagKey.location().getPath();
+
+                final String fieldPrefix;
+                if (registryKey == Registries.BLOCK) {
+                    fieldPrefix = "";
+                } else if (registryKey == Registries.GAME_EVENT) {
+                    fieldPrefix = "GAME_EVENT_"; // Paper doesn't follow the format (should be GAME_EVENTS_)
+                } else {
+                    fieldPrefix = names.name().toUpperCase(Locale.ENGLISH) + "_";
+                }
+
+                final String fieldName = Formatting.formatPathAsTagField(keyPath, fieldPrefix);
+                final FieldSpec.Builder fieldBuilder = FieldSpec.builder(fieldType, fieldName)
+                    .addModifiers(PUBLIC, STATIC, FINAL)
+                    .initializer("$T.getTag($L, $T.minecraft($S), $T.class)", Bukkit.class, registryFieldName, NamespacedKey.class, keyPath, names.apiType())
+                    .addJavadoc(Javadocs.getVersionDependentField("{@code $L}"), tagKey.location().toString());
+                typeBuilder.addField(fieldBuilder.build());
+            }
+
+        }
+
+        // deprecated tags
+        typeBuilder.addField(
+            FieldSpec.builder(ParameterizedTypeName.get(Tag.class, Material.class), "CARPETS")
+                .addModifiers(PUBLIC, STATIC, FINAL)
+                .addAnnotation(Deprecated.class)
+                .initializer("WOOL_CARPETS")
+                .addJavadoc(Javadocs.getDeprecatedFor("WOOL_CARPETS")).build()
+        );
+
+        // methods
+        typeBuilder.addMethod(MethodSpec.methodBuilder("isTagged")
+            .addModifiers(PUBLIC, ABSTRACT)
+            .returns(boolean.class).addParameter(ParameterSpec.builder(this.typeVariable, "item")
+                .addAnnotation(NOT_NULL).build())
+            .addJavadoc(IS_TAGGED_JAVADOC)
+            .build());
+
+        typeBuilder.addMethod(MethodSpec.methodBuilder("getValues")
+            .addModifiers(PUBLIC, ABSTRACT)
+            .returns(ParameterizedTypeName.get(ClassName.get(Set.class), this.typeVariable))
+            .addJavadoc(GET_VALUES_JAVADOC)
+            .addAnnotation(NOT_NULL).build());
+
+        return typeBuilder.build();
+    }
+
+    @Override
+    protected JavaFile.Builder file(JavaFile.Builder builder) {
+        return builder
+            .skipJavaLangImports(true)
+            .indent("    ");
+    }
+}

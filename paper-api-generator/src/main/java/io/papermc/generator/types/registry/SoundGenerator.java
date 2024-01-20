@@ -1,4 +1,4 @@
-package io.papermc.generator.types.enumgen;
+package io.papermc.generator.types.registry;
 
 import com.squareup.javapoet.TypeSpec;
 import io.papermc.generator.utils.Javadocs;
@@ -14,10 +14,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
 @DefaultQualifier(NonNull.class)
-public class SoundGenerator extends EnumGenerator<SoundEvent> {
+public class SoundGenerator extends EnumRegistryGenerator<SoundEvent> {
 
     private static final String CLASS_HEADER = Javadocs.getVersionDependentClassHeader("Sounds");
-    private static final List<Pattern> EXPERIEMENTAL_REGEX = of(
+    private static final List<Pattern> EXPERIMENTAL_REGEX = of(
         "block.copper_door.*",
         "block.copper_bulb.*",
         "block.copper_grate.*",
@@ -38,14 +38,13 @@ public class SoundGenerator extends EnumGenerator<SoundEvent> {
 
     @Override
     public void addExtras(final TypeSpec.Builder builder) {
-        builder.addSuperinterface(Sound.Type.class);
-        builder.addJavadoc(CLASS_HEADER);
+        builder.addSuperinterface(Sound.Type.class)
+            .addJavadoc(CLASS_HEADER);
     }
 
-
     @Override
-    public boolean isExperiemental(final Map.Entry<ResourceKey<SoundEvent>, SoundEvent> entry) {
-        for (Pattern pattern : EXPERIEMENTAL_REGEX) {
+    public boolean isExperimental(final Map.Entry<ResourceKey<SoundEvent>, SoundEvent> entry) {
+        for (Pattern pattern : EXPERIMENTAL_REGEX) {
             if (pattern.matcher(entry.getKey().location().toString()).find()) {
                 return true;
             }
@@ -55,7 +54,7 @@ public class SoundGenerator extends EnumGenerator<SoundEvent> {
     }
 
     private static List<Pattern> of(String... strings) {
-        List<Pattern> patterns = new ArrayList<>();
+        List<Pattern> patterns = new ArrayList<>(strings.length);
         for (String pattern : strings) {
             patterns.add(Pattern.compile(pattern));
         }
