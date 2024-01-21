@@ -1,13 +1,16 @@
 package io.papermc.generator;
 
+import io.papermc.generator.types.registry.AttributeGenerator;
 import io.papermc.generator.types.registry.GeneratedKeyType;
 import io.papermc.generator.types.SourceGenerator;
 import io.papermc.generator.types.enumgen.EnumGenerator;
 import io.papermc.generator.types.registry.BiomeGenerator;
 import io.papermc.generator.types.registry.SoundGenerator;
 import io.papermc.generator.types.goal.MobGoalGenerator;
+import io.papermc.generator.types.registry.StructureGenerator;
 import io.papermc.generator.types.registry.StructureTypeGenerator;
 import io.papermc.generator.types.registry.TagGenerator;
+import io.papermc.generator.types.registry.LegacyKeyedRegistryGenerator;
 import io.papermc.paper.registry.RegistryKey;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -32,7 +35,11 @@ public interface Generators {
         new MobGoalGenerator("VanillaGoal", "com.destroystokyo.paper.entity.ai"),
         new SoundGenerator("Sound", "org.bukkit"),
         new BiomeGenerator("Biome", "org.bukkit.block"),
+        new AttributeGenerator("Attribute", "org.bukkit.attribute"),
         new StructureTypeGenerator("StructureType", "org.bukkit.generator.structure"),
+        new StructureGenerator("Structure", "org.bukkit.generator.structure"),
+        new LegacyKeyedRegistryGenerator<>("TrimPattern", TrimPattern.class, "org.bukkit.inventory.meta.trim", Registries.TRIM_PATTERN, RegistryKey.TRIM_PATTERN),
+        new LegacyKeyedRegistryGenerator<>("TrimMaterial", TrimMaterial.class, "org.bukkit.inventory.meta.trim", Registries.TRIM_MATERIAL, RegistryKey.TRIM_MATERIAL),
         new EnumGenerator<>(Pose.class, "org.bukkit.entity"),
         new TagGenerator("Tag", "org.bukkit")
     };

@@ -432,67 +432,67 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type {
     BLOCK_COPPER_STEP("block.copper.step"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_BULB_BREAK("block.copper_bulb.break"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_BULB_FALL("block.copper_bulb.fall"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_BULB_HIT("block.copper_bulb.hit"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_BULB_PLACE("block.copper_bulb.place"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_BULB_STEP("block.copper_bulb.step"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_BULB_TURN_OFF("block.copper_bulb.turn_off"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_BULB_TURN_ON("block.copper_bulb.turn_on"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_DOOR_CLOSE("block.copper_door.close"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_DOOR_OPEN("block.copper_door.open"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_GRATE_BREAK("block.copper_grate.break"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_GRATE_FALL("block.copper_grate.fall"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_GRATE_HIT("block.copper_grate.hit"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_GRATE_PLACE("block.copper_grate.place"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_GRATE_STEP("block.copper_grate.step"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_TRAPDOOR_CLOSE("block.copper_trapdoor.close"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_COPPER_TRAPDOOR_OPEN("block.copper_trapdoor.open"),
 
     BLOCK_CORAL_BLOCK_BREAK("block.coral_block.break"),
@@ -506,11 +506,11 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type {
     BLOCK_CORAL_BLOCK_STEP("block.coral_block.step"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_CRAFTER_CRAFT("block.crafter.craft"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_CRAFTER_FAIL("block.crafter.fail"),
 
     BLOCK_CROP_BREAK("block.crop.break"),
@@ -1060,23 +1060,23 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type {
     BLOCK_POLISHED_DEEPSLATE_STEP("block.polished_deepslate.step"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_POLISHED_TUFF_BREAK("block.polished_tuff.break"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_POLISHED_TUFF_FALL("block.polished_tuff.fall"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_POLISHED_TUFF_HIT("block.polished_tuff.hit"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_POLISHED_TUFF_PLACE("block.polished_tuff.place"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_POLISHED_TUFF_STEP("block.polished_tuff.step"),
 
     BLOCK_PORTAL_AMBIENT("block.portal.ambient"),
@@ -1366,47 +1366,47 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type {
     BLOCK_SWEET_BERRY_BUSH_PLACE("block.sweet_berry_bush.place"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TRIAL_SPAWNER_AMBIENT("block.trial_spawner.ambient"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TRIAL_SPAWNER_BREAK("block.trial_spawner.break"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TRIAL_SPAWNER_CLOSE_SHUTTER("block.trial_spawner.close_shutter"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TRIAL_SPAWNER_DETECT_PLAYER("block.trial_spawner.detect_player"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TRIAL_SPAWNER_EJECT_ITEM("block.trial_spawner.eject_item"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TRIAL_SPAWNER_FALL("block.trial_spawner.fall"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TRIAL_SPAWNER_HIT("block.trial_spawner.hit"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TRIAL_SPAWNER_OPEN_SHUTTER("block.trial_spawner.open_shutter"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TRIAL_SPAWNER_PLACE("block.trial_spawner.place"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TRIAL_SPAWNER_SPAWN_MOB("block.trial_spawner.spawn_mob"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TRIAL_SPAWNER_STEP("block.trial_spawner.step"),
 
     BLOCK_TRIPWIRE_ATTACH("block.tripwire.attach"),
@@ -1428,23 +1428,23 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type {
     BLOCK_TUFF_STEP("block.tuff.step"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TUFF_BRICKS_BREAK("block.tuff_bricks.break"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TUFF_BRICKS_FALL("block.tuff_bricks.fall"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TUFF_BRICKS_HIT("block.tuff_bricks.hit"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TUFF_BRICKS_PLACE("block.tuff_bricks.place"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     BLOCK_TUFF_BRICKS_STEP("block.tuff_bricks.step"),
 
     BLOCK_VINE_BREAK("block.vine.break"),
@@ -1616,39 +1616,39 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type {
     ENTITY_BOAT_PADDLE_WATER("entity.boat.paddle_water"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     ENTITY_BREEZE_DEATH("entity.breeze.death"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     ENTITY_BREEZE_HURT("entity.breeze.hurt"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     ENTITY_BREEZE_IDLE_AIR("entity.breeze.idle_air"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     ENTITY_BREEZE_IDLE_GROUND("entity.breeze.idle_ground"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     ENTITY_BREEZE_INHALE("entity.breeze.inhale"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     ENTITY_BREEZE_JUMP("entity.breeze.jump"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     ENTITY_BREEZE_LAND("entity.breeze.land"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     ENTITY_BREEZE_SHOOT("entity.breeze.shoot"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     ENTITY_BREEZE_SLIDE("entity.breeze.slide"),
 
     ENTITY_CAMEL_AMBIENT("entity.camel.ambient"),
@@ -1940,7 +1940,7 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type {
     ENTITY_GENERIC_SWIM("entity.generic.swim"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     ENTITY_GENERIC_WIND_BURST("entity.generic.wind_burst"),
 
     ENTITY_GHAST_AMBIENT("entity.ghast.ambient"),
@@ -2984,15 +2984,15 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type {
     ITEM_BUCKET_FILL_TADPOLE("item.bucket.fill_tadpole"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     ITEM_BUNDLE_DROP_CONTENTS("item.bundle.drop_contents"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     ITEM_BUNDLE_INSERT("item.bundle.insert"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental
+    @MinecraftExperimental("update 1.21")
     ITEM_BUNDLE_REMOVE_ONE("item.bundle.remove_one"),
 
     ITEM_CHORUS_FRUIT_TELEPORT("item.chorus_fruit.teleport"),
@@ -3201,7 +3201,7 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type {
 
     WEATHER_RAIN_ABOVE("weather.rain.above");
 
-    private NamespacedKey key;
+    private final NamespacedKey key;
 
     Sound(String key) {
         this.key = NamespacedKey.minecraft(key);

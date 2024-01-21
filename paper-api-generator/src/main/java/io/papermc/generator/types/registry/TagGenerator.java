@@ -73,18 +73,18 @@ public class TagGenerator extends SimpleGenerator {
 
     private static final String REGISTRY_FIELD_JAVADOC = "Key for the built in $L registry.";
 
-    public record TagRegistryNames(String name, Class<?> apiType, ResourceKey<? extends Registry<?>> registryKey) {}
+    public record TagRegistry(String name, Class<?> apiType, ResourceKey<? extends Registry<?>> registryKey) {}
 
-    private static TagRegistryNames names(final String name, final Class<?> apiType, final ResourceKey<? extends Registry<?>> registryKey) {
-        return new TagRegistryNames(name, apiType, registryKey);
+    private static TagRegistry registry(final String name, final Class<?> apiType, final ResourceKey<? extends Registry<?>> registryKey) {
+        return new TagRegistry(name, apiType, registryKey);
     }
 
-    private static final Set<TagRegistryNames> NAMES = Set.of(
-        names("blocks", Material.class, Registries.BLOCK),
-        names("items", Material.class, Registries.ITEM),
-        names("fluids", Fluid.class, Registries.FLUID),
-        names("entity_types", EntityType.class, Registries.ENTITY_TYPE),
-        names("game_events", GameEvent.class, Registries.GAME_EVENT)
+    private static final Set<TagRegistry> TAG_REGISTRIES = Set.of(
+        registry("blocks", Material.class, Registries.BLOCK),
+        registry("items", Material.class, Registries.ITEM),
+        registry("fluids", Fluid.class, Registries.FLUID),
+        registry("entity_types", EntityType.class, Registries.ENTITY_TYPE),
+        registry("game_events", GameEvent.class, Registries.GAME_EVENT)
     );
 
     private final TypeVariableName typeVariable = TypeVariableName.get("T", Keyed.class);
@@ -106,35 +106,28 @@ public class TagGenerator extends SimpleGenerator {
     protected TypeSpec getTypeSpec() {
         final TypeSpec.Builder typeBuilder = this.tagHolderType();
 
-        for (TagRegistryNames names : NAMES) {
-            final TypeName fieldType = ParameterizedTypeName.get(Tag.class, names.apiType());
+        for (TagRegistry tagRegistry : TAG_REGISTRIES) {
+            final TypeName fieldType = ParameterizedTypeName.get(Tag.class, tagRegistry.apiType());
 
-            final ResourceKey<? extends Registry<?>> registryKey = names.registryKey();
+            final ResourceKey<? extends Registry<?>> registryKey = tagRegistry.registryKey();
             final Registry<?> registry = Main.REGISTRY_ACCESS.registryOrThrow(registryKey);
-            final String registryFieldName = "REGISTRY_" + names.name().toUpperCase(Locale.ENGLISH);
+            final String registryFieldName = "REGISTRY_" + tagRegistry.name().toUpperCase(Locale.ENGLISH);
             final FieldSpec.Builder registryFieldBuilder = FieldSpec.builder(String.class, registryFieldName)
                 .addModifiers(PUBLIC, STATIC, FINAL)
-                .initializer("$S", names.name())
+                .initializer("$S", tagRegistry.name())
                 .addJavadoc(REGISTRY_FIELD_JAVADOC, registryKey.location().getPath());
 
             typeBuilder.addField(registryFieldBuilder.build());
 
+            final String fieldPrefix = Formatting.formatTagFieldPrefix(tagRegistry.name(), registryKey);
+
             for (final TagKey<?> tagKey : registry.getTagNames().sorted(Comparator.comparing(tagKey -> tagKey.location().getPath())).toList()) {
                 final String keyPath = tagKey.location().getPath();
 
-                final String fieldPrefix;
-                if (registryKey == Registries.BLOCK) {
-                    fieldPrefix = "";
-                } else if (registryKey == Registries.GAME_EVENT) {
-                    fieldPrefix = "GAME_EVENT_"; // Paper doesn't follow the format (should be GAME_EVENTS_)
-                } else {
-                    fieldPrefix = names.name().toUpperCase(Locale.ENGLISH) + "_";
-                }
-
-                final String fieldName = Formatting.formatPathAsTagField(keyPath, fieldPrefix);
+                final String fieldName = fieldPrefix + Formatting.formatPathAsField(keyPath);
                 final FieldSpec.Builder fieldBuilder = FieldSpec.builder(fieldType, fieldName)
                     .addModifiers(PUBLIC, STATIC, FINAL)
-                    .initializer("$T.getTag($L, $T.minecraft($S), $T.class)", Bukkit.class, registryFieldName, NamespacedKey.class, keyPath, names.apiType())
+                    .initializer("$T.getTag($L, $T.minecraft($S), $T.class)", Bukkit.class, registryFieldName, NamespacedKey.class, keyPath, tagRegistry.apiType())
                     .addJavadoc(Javadocs.getVersionDependentField("{@code $L}"), tagKey.location().toString());
                 typeBuilder.addField(fieldBuilder.build());
             }

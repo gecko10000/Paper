@@ -1,5 +1,6 @@
 package io.papermc.generator.types.registry;
 
+import com.google.common.base.Suppliers;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -13,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
+import io.papermc.generator.utils.RegistryUtils;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import org.bukkit.Keyed;
@@ -21,14 +24,22 @@ import org.bukkit.NamespacedKey;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
+import static javax.lang.model.element.Modifier.FINAL;
+import static javax.lang.model.element.Modifier.PRIVATE;
+
 @DefaultQualifier(NonNull.class)
 public abstract class EnumRegistryGenerator<T> extends SimpleGenerator {
 
-    protected final ResourceKey<Registry<T>> registryResourceKey;
+    protected final ResourceKey<Registry<T>> registryKey;
+    private final Supplier<List<ResourceKey<T>>> experimentalKeys;
 
-    public EnumRegistryGenerator(final String keysClassName, final String pkg, ResourceKey<Registry<T>> registryResourceKey) {
+    public EnumRegistryGenerator(final String keysClassName, final String pkg, ResourceKey<Registry<T>> registryKey) {
         super(keysClassName, pkg);
-        this.registryResourceKey = registryResourceKey;
+        this.registryKey = registryKey;
+        this.experimentalKeys = Suppliers.memoize(() -> {
+            Registry<T> registry = Main.REGISTRY_ACCESS.registryOrThrow(this.registryKey);
+            return RegistryUtils.collectExperimentalKeys(registry, registry.key());
+        });
     }
 
     @Override
@@ -38,8 +49,8 @@ public abstract class EnumRegistryGenerator<T> extends SimpleGenerator {
             .addModifiers(Modifier.PUBLIC)
             .addAnnotations(Annotations.CLASS_HEADER);
 
-        Registry<T> event = Main.REGISTRY_ACCESS.registryOrThrow(this.registryResourceKey);
-        List<Map.Entry<ResourceKey<T>, T>> paths = new ArrayList<>(event.entrySet());
+        Registry<T> registry = Main.REGISTRY_ACCESS.registryOrThrow(this.registryKey);
+        List<Map.Entry<ResourceKey<T>, T>> paths = new ArrayList<>(registry.entrySet());
         paths.sort(Comparator.comparing(o -> o.getKey().location().getPath()));
 
         paths.forEach(entry -> {
@@ -50,13 +61,13 @@ public abstract class EnumRegistryGenerator<T> extends SimpleGenerator {
             boolean isExperimental = this.isExperimental(entry);
             TypeSpec.Builder builder = TypeSpec.anonymousClassBuilder("$S", pathKey);
             if (isExperimental) {
-                builder.addAnnotations(Annotations.experimentalAnnotations(""));
+                builder.addAnnotations(Annotations.experimentalAnnotations("update 1.21"));
             }
 
             typeBuilder.addEnumConstant(fieldName, builder.build());
         });
 
-        FieldSpec keyField = FieldSpec.builder(NamespacedKey.class, "key", Modifier.PRIVATE).build();
+        FieldSpec keyField = FieldSpec.builder(NamespacedKey.class, "key", PRIVATE, FINAL).build();
         typeBuilder.addField(keyField);
 
         ParameterSpec keyParam = ParameterSpec.builder(String.class, "key").build();
@@ -70,19 +81,20 @@ public abstract class EnumRegistryGenerator<T> extends SimpleGenerator {
             .addAnnotation(Annotations.OVERRIDE)
             .addCode("return this.$N;", keyField).build());
 
-        this.addExtras(typeBuilder);
+        this.addExtras(typeBuilder, keyField);
 
         return typeBuilder.build();
     }
 
-    public abstract void addExtras(TypeSpec.Builder builder);
+    public abstract void addExtras(TypeSpec.Builder builder, FieldSpec keyField);
 
     @Override
     protected JavaFile.Builder file(JavaFile.Builder builder) {
-        return builder
-            .skipJavaLangImports(true);
+        return builder.skipJavaLangImports(true);
     }
 
-    public abstract boolean isExperimental(Map.Entry<ResourceKey<T>, T> entry);
+    public boolean isExperimental(Map.Entry<ResourceKey<T>, T> entry) {
+        return this.experimentalKeys.get().contains(entry.getKey());
+    }
 
 }

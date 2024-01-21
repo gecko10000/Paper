@@ -151,7 +151,7 @@ public enum Biome implements Keyed, Translatable {
 
     CUSTOM("custom");
 
-    private NamespacedKey key;
+    private final NamespacedKey key;
 
     Biome(String key) {
         this.key = NamespacedKey.minecraft(key);

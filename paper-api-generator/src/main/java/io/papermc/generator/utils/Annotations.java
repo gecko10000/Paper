@@ -26,7 +26,7 @@ public final class Annotations {
     public static AnnotationSpec deprecatedVersioned(final @Nullable String version, boolean forRemoval) {
         AnnotationSpec.Builder annotationSpec = AnnotationSpec.builder(Deprecated.class);
         if (forRemoval) {
-            annotationSpec.addMember("forRemoval", "$L", forRemoval);
+            annotationSpec.addMember("forRemoval", "$L", true);
         }
         if (version != null) {
             annotationSpec.addMember("since", "$S", version);

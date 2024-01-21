@@ -1,5 +1,6 @@
 package io.papermc.generator.types.registry;
 
+import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.TypeSpec;
 import io.papermc.generator.utils.Javadocs;
 import java.util.ArrayList;
@@ -37,7 +38,7 @@ public class SoundGenerator extends EnumRegistryGenerator<SoundEvent> {
     }
 
     @Override
-    public void addExtras(final TypeSpec.Builder builder) {
+    public void addExtras(final TypeSpec.Builder builder, final FieldSpec keyField) {
         builder.addSuperinterface(Sound.Type.class)
             .addJavadoc(CLASS_HEADER);
     }
@@ -50,7 +51,7 @@ public class SoundGenerator extends EnumRegistryGenerator<SoundEvent> {
             }
         }
 
-        return false;
+        return super.isExperimental(entry);
     }
 
     private static List<Pattern> of(String... strings) {

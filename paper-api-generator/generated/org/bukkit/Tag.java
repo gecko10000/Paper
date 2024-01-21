@@ -25,6 +25,46 @@ import org.jetbrains.annotations.NotNull;
 @GeneratedFrom("1.20.4")
 public interface Tag<T extends Keyed> extends Keyed {
     /**
+     * Key for the built in game_event registry.
+     */
+    String REGISTRY_GAME_EVENTS = "game_events";
+
+    /**
+     * {@code minecraft:allay_can_listen}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<GameEvent> GAME_EVENT_ALLAY_CAN_LISTEN = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("allay_can_listen"), GameEvent.class);
+
+    /**
+     * {@code minecraft:ignore_vibrations_sneaking}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<GameEvent> GAME_EVENT_IGNORE_VIBRATIONS_SNEAKING = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("ignore_vibrations_sneaking"), GameEvent.class);
+
+    /**
+     * {@code minecraft:shrieker_can_listen}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<GameEvent> GAME_EVENT_SHRIEKER_CAN_LISTEN = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("shrieker_can_listen"), GameEvent.class);
+
+    /**
+     * {@code minecraft:vibrations}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<GameEvent> GAME_EVENT_VIBRATIONS = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("vibrations"), GameEvent.class);
+
+    /**
+     * {@code minecraft:warden_can_listen}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<GameEvent> GAME_EVENT_WARDEN_CAN_LISTEN = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("warden_can_listen"), GameEvent.class);
+
+    /**
      * Key for the built in item registry.
      */
     String REGISTRY_ITEMS = "items";
@@ -723,44 +763,23 @@ public interface Tag<T extends Keyed> extends Keyed {
     Tag<Material> ITEMS_WOOL_CARPETS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wool_carpets"), Material.class);
 
     /**
-     * Key for the built in game_event registry.
+     * Key for the built in fluid registry.
      */
-    String REGISTRY_GAME_EVENTS = "game_events";
+    String REGISTRY_FLUIDS = "fluids";
 
     /**
-     * {@code minecraft:allay_can_listen}
+     * {@code minecraft:lava}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    Tag<GameEvent> GAME_EVENT_ALLAY_CAN_LISTEN = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("allay_can_listen"), GameEvent.class);
+    Tag<Fluid> FLUIDS_LAVA = Bukkit.getTag(REGISTRY_FLUIDS, NamespacedKey.minecraft("lava"), Fluid.class);
 
     /**
-     * {@code minecraft:ignore_vibrations_sneaking}
+     * {@code minecraft:water}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    Tag<GameEvent> GAME_EVENT_IGNORE_VIBRATIONS_SNEAKING = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("ignore_vibrations_sneaking"), GameEvent.class);
-
-    /**
-     * {@code minecraft:shrieker_can_listen}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<GameEvent> GAME_EVENT_SHRIEKER_CAN_LISTEN = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("shrieker_can_listen"), GameEvent.class);
-
-    /**
-     * {@code minecraft:vibrations}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<GameEvent> GAME_EVENT_VIBRATIONS = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("vibrations"), GameEvent.class);
-
-    /**
-     * {@code minecraft:warden_can_listen}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<GameEvent> GAME_EVENT_WARDEN_CAN_LISTEN = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("warden_can_listen"), GameEvent.class);
+    Tag<Fluid> FLUIDS_WATER = Bukkit.getTag(REGISTRY_FLUIDS, NamespacedKey.minecraft("water"), Fluid.class);
 
     /**
      * Key for the built in entity_type registry.
@@ -906,25 +925,6 @@ public interface Tag<T extends Keyed> extends Keyed {
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
     Tag<EntityType> ENTITY_TYPES_ZOMBIES = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("zombies"), EntityType.class);
-
-    /**
-     * Key for the built in fluid registry.
-     */
-    String REGISTRY_FLUIDS = "fluids";
-
-    /**
-     * {@code minecraft:lava}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Fluid> FLUIDS_LAVA = Bukkit.getTag(REGISTRY_FLUIDS, NamespacedKey.minecraft("lava"), Fluid.class);
-
-    /**
-     * {@code minecraft:water}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Fluid> FLUIDS_WATER = Bukkit.getTag(REGISTRY_FLUIDS, NamespacedKey.minecraft("water"), Fluid.class);
 
     /**
      * Key for the built in block registry.

@@ -1,4 +1,4 @@
-package org.bukkit.generator.structure;
+package org.bukkit.inventory.meta.trim;
 
 import io.papermc.paper.generated.GeneratedFrom;
 import org.bukkit.Keyed;
@@ -7,7 +7,7 @@ import org.bukkit.Registry;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Vanilla keys for StructureTypes.
+ * Vanilla keys for TrimPattern.
  *
  * @apiNote The fields provided here are a direct representation of
  * what is available from the vanilla game source. They may be
@@ -20,120 +20,128 @@ import org.jetbrains.annotations.NotNull;
         "SpellCheckingInspection"
 })
 @GeneratedFrom("1.20.4")
-public abstract class StructureType implements Keyed {
+public interface TrimPattern extends Keyed {
     /**
-     * {@code minecraft:buried_treasure}
+     * {@code minecraft:coast}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType BURIED_TREASURE = fetch("buried_treasure");
+    TrimPattern COAST = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("coast"));
 
     /**
-     * {@code minecraft:desert_pyramid}
+     * {@code minecraft:dune}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType DESERT_PYRAMID = fetch("desert_pyramid");
+    TrimPattern DUNE = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("dune"));
 
     /**
-     * {@code minecraft:end_city}
+     * {@code minecraft:eye}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType END_CITY = fetch("end_city");
+    TrimPattern EYE = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("eye"));
 
     /**
-     * {@code minecraft:fortress}
+     * {@code minecraft:host}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType FORTRESS = fetch("fortress");
+    TrimPattern HOST = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("host"));
 
     /**
-     * {@code minecraft:igloo}
+     * {@code minecraft:raiser}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType IGLOO = fetch("igloo");
+    TrimPattern RAISER = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("raiser"));
 
     /**
-     * {@code minecraft:jigsaw}
+     * {@code minecraft:rib}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType JIGSAW = fetch("jigsaw");
+    TrimPattern RIB = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("rib"));
 
     /**
-     * {@code minecraft:jungle_temple}
+     * {@code minecraft:sentry}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType JUNGLE_TEMPLE = fetch("jungle_temple");
+    TrimPattern SENTRY = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("sentry"));
 
     /**
-     * {@code minecraft:mineshaft}
+     * {@code minecraft:shaper}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType MINESHAFT = fetch("mineshaft");
+    TrimPattern SHAPER = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("shaper"));
 
     /**
-     * {@code minecraft:nether_fossil}
+     * {@code minecraft:silence}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType NETHER_FOSSIL = fetch("nether_fossil");
+    TrimPattern SILENCE = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("silence"));
 
     /**
-     * {@code minecraft:ocean_monument}
+     * {@code minecraft:snout}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType OCEAN_MONUMENT = fetch("ocean_monument");
+    TrimPattern SNOUT = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("snout"));
 
     /**
-     * {@code minecraft:ocean_ruin}
+     * {@code minecraft:spire}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType OCEAN_RUIN = fetch("ocean_ruin");
+    TrimPattern SPIRE = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("spire"));
 
     /**
-     * {@code minecraft:ruined_portal}
+     * {@code minecraft:tide}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType RUINED_PORTAL = fetch("ruined_portal");
+    TrimPattern TIDE = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("tide"));
 
     /**
-     * {@code minecraft:shipwreck}
+     * {@code minecraft:vex}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType SHIPWRECK = fetch("shipwreck");
+    TrimPattern VEX = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("vex"));
 
     /**
-     * {@code minecraft:stronghold}
+     * {@code minecraft:ward}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType STRONGHOLD = fetch("stronghold");
+    TrimPattern WARD = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("ward"));
 
     /**
-     * {@code minecraft:swamp_hut}
+     * {@code minecraft:wayfinder}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType SWAMP_HUT = fetch("swamp_hut");
+    TrimPattern WAYFINDER = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("wayfinder"));
 
     /**
-     * {@code minecraft:woodland_mansion}
+     * {@code minecraft:wild}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
-    public static final StructureType WOODLAND_MANSION = fetch("woodland_mansion");
+    TrimPattern WILD = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("wild"));
 
-    private static @NotNull StructureType fetch(final @NotNull String key) {
-        return Registry.STRUCTURE_TYPE.get(NamespacedKey.minecraft(key));
-    }
+    /**
+     * @deprecated use {@link Registry#getKey(Keyed)} and {@link Registry#TRIM_PATTERN}. TrimPattern
+     * can exist without a key.
+     */
+    @Deprecated(
+            forRemoval = true,
+            since = "1.20.4"
+    )
+    @Override
+    @NotNull
+    TrimPattern getKey();
 }

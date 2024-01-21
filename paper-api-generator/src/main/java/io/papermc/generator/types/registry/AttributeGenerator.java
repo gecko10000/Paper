@@ -8,17 +8,17 @@ import io.papermc.generator.utils.Javadocs;
 import javax.lang.model.element.Modifier;
 import net.kyori.adventure.translation.Translatable;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
 @DefaultQualifier(NonNull.class)
-public class BiomeGenerator extends EnumRegistryGenerator<Biome> {
+public class AttributeGenerator extends EnumRegistryGenerator<Attribute> {
 
-    private static final String CLASS_HEADER = Javadocs.getVersionDependentClassHeader("Biomes");
+    private static final String CLASS_HEADER = Javadocs.getVersionDependentClassHeader("Attributes");
 
-    public BiomeGenerator(final String keysClassName, final String pkg) {
-        super(keysClassName, pkg, Registries.BIOME);
+    public AttributeGenerator(final String keysClassName, final String pkg) {
+        super(keysClassName, pkg, Registries.ATTRIBUTE);
     }
 
     @Override
@@ -31,9 +31,7 @@ public class BiomeGenerator extends EnumRegistryGenerator<Biome> {
             .addModifiers(Modifier.PUBLIC)
             .addAnnotation(Annotations.NOT_NULL)
             .addAnnotation(Annotations.OVERRIDE)
-            .addCode("return $S + this.$N.getKey();", "biome.minecraft.", keyField).build());
-
-        builder.addEnumConstant("CUSTOM", TypeSpec.anonymousClassBuilder("$S", "custom").build());
+            .addCode("return $S + this.$N.getKey();", "attribute.name.", keyField).build());
     }
 
 }
