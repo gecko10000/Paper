@@ -17,8 +17,8 @@ public class BiomeGenerator extends EnumRegistryGenerator<Biome> {
 
     private static final String CLASS_HEADER = Javadocs.getVersionDependentClassHeader("Biomes");
 
-    public BiomeGenerator(final String keysClassName, final String pkg) {
-        super(keysClassName, pkg, Registries.BIOME);
+    public BiomeGenerator(final String className, final String pkg) {
+        super(className, pkg, Registries.BIOME);
     }
 
     @Override

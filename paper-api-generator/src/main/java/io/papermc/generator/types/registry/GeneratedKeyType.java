@@ -15,16 +15,11 @@ import io.papermc.generator.utils.Javadocs;
 import io.papermc.generator.utils.RegistryUtils;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.HashMap;
-import java.util.IdentityHashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 import net.kyori.adventure.key.Key;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.flag.FeatureFlags;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
@@ -53,8 +48,8 @@ public class GeneratedKeyType<T, A> extends SimpleGenerator {
     private final RegistryKey<A> apiRegistryKey;
     private final boolean publicCreateKeyMethod;
 
-    public GeneratedKeyType(final String keysClassName, final Class<A> apiType, final String pkg, final ResourceKey<? extends Registry<T>> registryKey, final RegistryKey<A> apiRegistryKey, final boolean publicCreateKeyMethod) {
-        super(keysClassName, pkg);
+    public GeneratedKeyType(final String className, final Class<A> apiType, final String pkg, final ResourceKey<? extends Registry<T>> registryKey, final RegistryKey<A> apiRegistryKey, final boolean publicCreateKeyMethod) {
+        super(className, pkg);
         this.apiType = apiType;
         this.registryKey = registryKey;
         this.apiRegistryKey = apiRegistryKey;
@@ -97,7 +92,7 @@ public class GeneratedKeyType<T, A> extends SimpleGenerator {
         final MethodSpec.Builder createMethod = this.createMethod(typedKey);
 
         final Registry<T> registry = Main.REGISTRY_ACCESS.registryOrThrow(this.registryKey);
-        final List<ResourceKey<T>> experimental = RegistryUtils.collectExperimentalKeys(registry, this.registryKey);
+        final List<ResourceKey<T>> experimental = RegistryUtils.collectExperimentalKeys(registry);
 
         boolean allExperimental = true;
         for (final T value : registry) {
@@ -108,15 +103,15 @@ public class GeneratedKeyType<T, A> extends SimpleGenerator {
                 .initializer("$N(key($S))", createMethod.build(), keyPath)
                 .addJavadoc(Javadocs.getVersionDependentField("{@code $L}"), key.location().toString());
             if (experimental.contains(key)) {
-                fieldBuilder.addAnnotations(experimentalAnnotations("update 1.21"));
+                fieldBuilder.addAnnotations(experimentalAnnotations(FeatureFlags.UPDATE_1_21));
             } else {
                 allExperimental = false;
             }
             typeBuilder.addField(fieldBuilder.build());
         }
         if (allExperimental) {
-            typeBuilder.addAnnotations(experimentalAnnotations("update 1.21"));
-            createMethod.addAnnotations(experimentalAnnotations("update 1.21"));
+            typeBuilder.addAnnotations(experimentalAnnotations(FeatureFlags.UPDATE_1_21));
+            createMethod.addAnnotations(experimentalAnnotations(FeatureFlags.UPDATE_1_21));
         }
         return typeBuilder.addMethod(createMethod.build()).build();
     }

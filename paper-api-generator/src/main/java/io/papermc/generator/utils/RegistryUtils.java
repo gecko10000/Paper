@@ -22,8 +22,8 @@ public class RegistryUtils {
         .collect(Collectors.toMap(RegistrySetBuilder.RegistryStub::key, RegistrySetBuilder.RegistryStub::bootstrap));
 
     @SuppressWarnings("unchecked")
-    public static <T> List<ResourceKey<T>> collectExperimentalKeys(final Registry<T> registry, ResourceKey<? extends Registry<T>> registryKey) {
-        final RegistrySetBuilder.@Nullable RegistryBootstrap<T> registryBootstrap = (RegistrySetBuilder.RegistryBootstrap<T>) EXPERIMENTAL_REGISTRY_ENTRIES.get(registryKey);
+    public static <T> List<ResourceKey<T>> collectExperimentalKeys(final Registry<T> registry) {
+        final RegistrySetBuilder.@Nullable RegistryBootstrap<T> registryBootstrap = (RegistrySetBuilder.RegistryBootstrap<T>) EXPERIMENTAL_REGISTRY_ENTRIES.get(registry.key());
         if (registryBootstrap == null) {
             return Collections.emptyList();
         }

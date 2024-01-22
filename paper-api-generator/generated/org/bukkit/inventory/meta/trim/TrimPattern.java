@@ -143,5 +143,5 @@ public interface TrimPattern extends Keyed {
     )
     @Override
     @NotNull
-    TrimPattern getKey();
+    NamespacedKey getKey();
 }

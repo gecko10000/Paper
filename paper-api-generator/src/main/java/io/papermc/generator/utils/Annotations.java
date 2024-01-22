@@ -4,6 +4,7 @@ import com.squareup.javapoet.AnnotationSpec;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.List;
 import net.minecraft.SharedConstants;
+import net.minecraft.world.flag.FeatureFlag;
 import org.bukkit.MinecraftExperimental;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -11,10 +12,14 @@ import org.jetbrains.annotations.Nullable;
 
 public final class Annotations {
 
-    public static List<AnnotationSpec> experimentalAnnotations(final String version) {
+    public static List<AnnotationSpec> experimentalAnnotations(final FeatureFlag featureFlag) {
+        return experimentalAnnotations(Formatting.formatFeatureFlag(featureFlag));
+    }
+
+    public static List<AnnotationSpec> experimentalAnnotations(final String value) {
         AnnotationSpec.Builder builder = AnnotationSpec.builder(MinecraftExperimental.class);
-        if (!version.isBlank()) {
-            builder.addMember("value", "$S", version);
+        if (!value.isBlank()) {
+            builder.addMember("value", "$S", value);
         }
 
         return List.of(

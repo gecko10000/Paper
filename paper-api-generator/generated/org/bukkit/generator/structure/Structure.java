@@ -273,5 +273,5 @@ public abstract class Structure implements Keyed {
      * @return the type of structure
      */
     @NotNull
-    public abstract Structure getStructureType();
+    public abstract StructureType getStructureType();
 }

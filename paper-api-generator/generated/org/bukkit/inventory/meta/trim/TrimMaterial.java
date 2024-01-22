@@ -101,5 +101,5 @@ public interface TrimMaterial extends Keyed {
     )
     @Override
     @NotNull
-    TrimMaterial getKey();
+    NamespacedKey getKey();
 }

@@ -25,908 +25,6 @@ import org.jetbrains.annotations.NotNull;
 @GeneratedFrom("1.20.4")
 public interface Tag<T extends Keyed> extends Keyed {
     /**
-     * Key for the built in game_event registry.
-     */
-    String REGISTRY_GAME_EVENTS = "game_events";
-
-    /**
-     * {@code minecraft:allay_can_listen}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<GameEvent> GAME_EVENT_ALLAY_CAN_LISTEN = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("allay_can_listen"), GameEvent.class);
-
-    /**
-     * {@code minecraft:ignore_vibrations_sneaking}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<GameEvent> GAME_EVENT_IGNORE_VIBRATIONS_SNEAKING = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("ignore_vibrations_sneaking"), GameEvent.class);
-
-    /**
-     * {@code minecraft:shrieker_can_listen}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<GameEvent> GAME_EVENT_SHRIEKER_CAN_LISTEN = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("shrieker_can_listen"), GameEvent.class);
-
-    /**
-     * {@code minecraft:vibrations}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<GameEvent> GAME_EVENT_VIBRATIONS = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("vibrations"), GameEvent.class);
-
-    /**
-     * {@code minecraft:warden_can_listen}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<GameEvent> GAME_EVENT_WARDEN_CAN_LISTEN = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("warden_can_listen"), GameEvent.class);
-
-    /**
-     * Key for the built in item registry.
-     */
-    String REGISTRY_ITEMS = "items";
-
-    /**
-     * {@code minecraft:acacia_logs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_ACACIA_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("acacia_logs"), Material.class);
-
-    /**
-     * {@code minecraft:anvil}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_ANVIL = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("anvil"), Material.class);
-
-    /**
-     * {@code minecraft:arrows}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_ARROWS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("arrows"), Material.class);
-
-    /**
-     * {@code minecraft:axes}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_AXES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("axes"), Material.class);
-
-    /**
-     * {@code minecraft:axolotl_tempt_items}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_AXOLOTL_TEMPT_ITEMS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("axolotl_tempt_items"), Material.class);
-
-    /**
-     * {@code minecraft:bamboo_blocks}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_BAMBOO_BLOCKS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("bamboo_blocks"), Material.class);
-
-    /**
-     * {@code minecraft:banners}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_BANNERS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("banners"), Material.class);
-
-    /**
-     * {@code minecraft:beacon_payment_items}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_BEACON_PAYMENT_ITEMS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("beacon_payment_items"), Material.class);
-
-    /**
-     * {@code minecraft:beds}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_BEDS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("beds"), Material.class);
-
-    /**
-     * {@code minecraft:birch_logs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_BIRCH_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("birch_logs"), Material.class);
-
-    /**
-     * {@code minecraft:boats}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_BOATS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("boats"), Material.class);
-
-    /**
-     * {@code minecraft:bookshelf_books}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_BOOKSHELF_BOOKS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("bookshelf_books"), Material.class);
-
-    /**
-     * {@code minecraft:breaks_decorated_pots}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_BREAKS_DECORATED_POTS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("breaks_decorated_pots"), Material.class);
-
-    /**
-     * {@code minecraft:buttons}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_BUTTONS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("buttons"), Material.class);
-
-    /**
-     * {@code minecraft:candles}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_CANDLES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("candles"), Material.class);
-
-    /**
-     * {@code minecraft:cherry_logs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_CHERRY_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("cherry_logs"), Material.class);
-
-    /**
-     * {@code minecraft:chest_boats}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_CHEST_BOATS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("chest_boats"), Material.class);
-
-    /**
-     * {@code minecraft:cluster_max_harvestables}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_CLUSTER_MAX_HARVESTABLES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("cluster_max_harvestables"), Material.class);
-
-    /**
-     * {@code minecraft:coal_ores}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_COAL_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("coal_ores"), Material.class);
-
-    /**
-     * {@code minecraft:coals}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_COALS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("coals"), Material.class);
-
-    /**
-     * {@code minecraft:compasses}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_COMPASSES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("compasses"), Material.class);
-
-    /**
-     * {@code minecraft:completes_find_tree_tutorial}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_COMPLETES_FIND_TREE_TUTORIAL = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("completes_find_tree_tutorial"), Material.class);
-
-    /**
-     * {@code minecraft:copper_ores}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_COPPER_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("copper_ores"), Material.class);
-
-    /**
-     * {@code minecraft:creeper_drop_music_discs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_CREEPER_DROP_MUSIC_DISCS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("creeper_drop_music_discs"), Material.class);
-
-    /**
-     * {@code minecraft:creeper_igniters}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_CREEPER_IGNITERS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("creeper_igniters"), Material.class);
-
-    /**
-     * {@code minecraft:crimson_stems}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_CRIMSON_STEMS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("crimson_stems"), Material.class);
-
-    /**
-     * {@code minecraft:dampens_vibrations}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_DAMPENS_VIBRATIONS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("dampens_vibrations"), Material.class);
-
-    /**
-     * {@code minecraft:dark_oak_logs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_DARK_OAK_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("dark_oak_logs"), Material.class);
-
-    /**
-     * {@code minecraft:decorated_pot_ingredients}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_DECORATED_POT_INGREDIENTS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("decorated_pot_ingredients"), Material.class);
-
-    /**
-     * {@code minecraft:decorated_pot_sherds}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_DECORATED_POT_SHERDS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("decorated_pot_sherds"), Material.class);
-
-    /**
-     * {@code minecraft:diamond_ores}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_DIAMOND_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("diamond_ores"), Material.class);
-
-    /**
-     * {@code minecraft:dirt}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_DIRT = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("dirt"), Material.class);
-
-    /**
-     * {@code minecraft:doors}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_DOORS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("doors"), Material.class);
-
-    /**
-     * {@code minecraft:emerald_ores}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_EMERALD_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("emerald_ores"), Material.class);
-
-    /**
-     * {@code minecraft:fence_gates}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_FENCE_GATES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("fence_gates"), Material.class);
-
-    /**
-     * {@code minecraft:fences}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_FENCES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("fences"), Material.class);
-
-    /**
-     * {@code minecraft:fishes}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_FISHES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("fishes"), Material.class);
-
-    /**
-     * {@code minecraft:flowers}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_FLOWERS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("flowers"), Material.class);
-
-    /**
-     * {@code minecraft:fox_food}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_FOX_FOOD = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("fox_food"), Material.class);
-
-    /**
-     * {@code minecraft:freeze_immune_wearables}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_FREEZE_IMMUNE_WEARABLES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("freeze_immune_wearables"), Material.class);
-
-    /**
-     * {@code minecraft:gold_ores}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_GOLD_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("gold_ores"), Material.class);
-
-    /**
-     * {@code minecraft:hanging_signs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_HANGING_SIGNS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("hanging_signs"), Material.class);
-
-    /**
-     * {@code minecraft:hoes}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_HOES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("hoes"), Material.class);
-
-    /**
-     * {@code minecraft:ignored_by_piglin_babies}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_IGNORED_BY_PIGLIN_BABIES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("ignored_by_piglin_babies"), Material.class);
-
-    /**
-     * {@code minecraft:iron_ores}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_IRON_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("iron_ores"), Material.class);
-
-    /**
-     * {@code minecraft:jungle_logs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_JUNGLE_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("jungle_logs"), Material.class);
-
-    /**
-     * {@code minecraft:lapis_ores}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_LAPIS_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("lapis_ores"), Material.class);
-
-    /**
-     * {@code minecraft:leaves}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_LEAVES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("leaves"), Material.class);
-
-    /**
-     * {@code minecraft:lectern_books}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_LECTERN_BOOKS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("lectern_books"), Material.class);
-
-    /**
-     * {@code minecraft:logs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("logs"), Material.class);
-
-    /**
-     * {@code minecraft:logs_that_burn}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_LOGS_THAT_BURN = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("logs_that_burn"), Material.class);
-
-    /**
-     * {@code minecraft:mangrove_logs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_MANGROVE_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("mangrove_logs"), Material.class);
-
-    /**
-     * {@code minecraft:music_discs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_MUSIC_DISCS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("music_discs"), Material.class);
-
-    /**
-     * {@code minecraft:non_flammable_wood}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_NON_FLAMMABLE_WOOD = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("non_flammable_wood"), Material.class);
-
-    /**
-     * {@code minecraft:noteblock_top_instruments}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_NOTEBLOCK_TOP_INSTRUMENTS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("noteblock_top_instruments"), Material.class);
-
-    /**
-     * {@code minecraft:oak_logs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_OAK_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("oak_logs"), Material.class);
-
-    /**
-     * {@code minecraft:pickaxes}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_PICKAXES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("pickaxes"), Material.class);
-
-    /**
-     * {@code minecraft:piglin_food}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_PIGLIN_FOOD = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("piglin_food"), Material.class);
-
-    /**
-     * {@code minecraft:piglin_loved}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_PIGLIN_LOVED = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("piglin_loved"), Material.class);
-
-    /**
-     * {@code minecraft:piglin_repellents}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_PIGLIN_REPELLENTS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("piglin_repellents"), Material.class);
-
-    /**
-     * {@code minecraft:planks}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_PLANKS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("planks"), Material.class);
-
-    /**
-     * {@code minecraft:rails}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_RAILS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("rails"), Material.class);
-
-    /**
-     * {@code minecraft:redstone_ores}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_REDSTONE_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("redstone_ores"), Material.class);
-
-    /**
-     * {@code minecraft:sand}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_SAND = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("sand"), Material.class);
-
-    /**
-     * {@code minecraft:saplings}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_SAPLINGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("saplings"), Material.class);
-
-    /**
-     * {@code minecraft:shovels}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_SHOVELS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("shovels"), Material.class);
-
-    /**
-     * {@code minecraft:signs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_SIGNS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("signs"), Material.class);
-
-    /**
-     * {@code minecraft:slabs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_SLABS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("slabs"), Material.class);
-
-    /**
-     * {@code minecraft:small_flowers}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_SMALL_FLOWERS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("small_flowers"), Material.class);
-
-    /**
-     * {@code minecraft:smelts_to_glass}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_SMELTS_TO_GLASS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("smelts_to_glass"), Material.class);
-
-    /**
-     * {@code minecraft:sniffer_food}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_SNIFFER_FOOD = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("sniffer_food"), Material.class);
-
-    /**
-     * {@code minecraft:soul_fire_base_blocks}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_SOUL_FIRE_BASE_BLOCKS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("soul_fire_base_blocks"), Material.class);
-
-    /**
-     * {@code minecraft:spruce_logs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_SPRUCE_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("spruce_logs"), Material.class);
-
-    /**
-     * {@code minecraft:stairs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_STAIRS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("stairs"), Material.class);
-
-    /**
-     * {@code minecraft:stone_bricks}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_STONE_BRICKS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("stone_bricks"), Material.class);
-
-    /**
-     * {@code minecraft:stone_buttons}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_STONE_BUTTONS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("stone_buttons"), Material.class);
-
-    /**
-     * {@code minecraft:stone_crafting_materials}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_STONE_CRAFTING_MATERIALS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("stone_crafting_materials"), Material.class);
-
-    /**
-     * {@code minecraft:stone_tool_materials}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_STONE_TOOL_MATERIALS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("stone_tool_materials"), Material.class);
-
-    /**
-     * {@code minecraft:swords}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_SWORDS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("swords"), Material.class);
-
-    /**
-     * {@code minecraft:tall_flowers}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_TALL_FLOWERS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("tall_flowers"), Material.class);
-
-    /**
-     * {@code minecraft:terracotta}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_TERRACOTTA = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("terracotta"), Material.class);
-
-    /**
-     * {@code minecraft:tools}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_TOOLS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("tools"), Material.class);
-
-    /**
-     * {@code minecraft:trapdoors}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_TRAPDOORS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("trapdoors"), Material.class);
-
-    /**
-     * {@code minecraft:trim_materials}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_TRIM_MATERIALS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("trim_materials"), Material.class);
-
-    /**
-     * {@code minecraft:trim_templates}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_TRIM_TEMPLATES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("trim_templates"), Material.class);
-
-    /**
-     * {@code minecraft:trimmable_armor}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_TRIMMABLE_ARMOR = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("trimmable_armor"), Material.class);
-
-    /**
-     * {@code minecraft:villager_plantable_seeds}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_VILLAGER_PLANTABLE_SEEDS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("villager_plantable_seeds"), Material.class);
-
-    /**
-     * {@code minecraft:walls}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_WALLS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("walls"), Material.class);
-
-    /**
-     * {@code minecraft:warped_stems}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_WARPED_STEMS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("warped_stems"), Material.class);
-
-    /**
-     * {@code minecraft:wart_blocks}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_WART_BLOCKS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wart_blocks"), Material.class);
-
-    /**
-     * {@code minecraft:wooden_buttons}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_WOODEN_BUTTONS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wooden_buttons"), Material.class);
-
-    /**
-     * {@code minecraft:wooden_doors}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_WOODEN_DOORS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wooden_doors"), Material.class);
-
-    /**
-     * {@code minecraft:wooden_fences}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_WOODEN_FENCES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wooden_fences"), Material.class);
-
-    /**
-     * {@code minecraft:wooden_pressure_plates}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_WOODEN_PRESSURE_PLATES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wooden_pressure_plates"), Material.class);
-
-    /**
-     * {@code minecraft:wooden_slabs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_WOODEN_SLABS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wooden_slabs"), Material.class);
-
-    /**
-     * {@code minecraft:wooden_stairs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_WOODEN_STAIRS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wooden_stairs"), Material.class);
-
-    /**
-     * {@code minecraft:wooden_trapdoors}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_WOODEN_TRAPDOORS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wooden_trapdoors"), Material.class);
-
-    /**
-     * {@code minecraft:wool}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_WOOL = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wool"), Material.class);
-
-    /**
-     * {@code minecraft:wool_carpets}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Material> ITEMS_WOOL_CARPETS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wool_carpets"), Material.class);
-
-    /**
-     * Key for the built in fluid registry.
-     */
-    String REGISTRY_FLUIDS = "fluids";
-
-    /**
-     * {@code minecraft:lava}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Fluid> FLUIDS_LAVA = Bukkit.getTag(REGISTRY_FLUIDS, NamespacedKey.minecraft("lava"), Fluid.class);
-
-    /**
-     * {@code minecraft:water}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<Fluid> FLUIDS_WATER = Bukkit.getTag(REGISTRY_FLUIDS, NamespacedKey.minecraft("water"), Fluid.class);
-
-    /**
-     * Key for the built in entity_type registry.
-     */
-    String REGISTRY_ENTITY_TYPES = "entity_types";
-
-    /**
-     * {@code minecraft:arrows}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_ARROWS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("arrows"), EntityType.class);
-
-    /**
-     * {@code minecraft:axolotl_always_hostiles}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_AXOLOTL_ALWAYS_HOSTILES = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("axolotl_always_hostiles"), EntityType.class);
-
-    /**
-     * {@code minecraft:axolotl_hunt_targets}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_AXOLOTL_HUNT_TARGETS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("axolotl_hunt_targets"), EntityType.class);
-
-    /**
-     * {@code minecraft:beehive_inhabitors}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_BEEHIVE_INHABITORS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("beehive_inhabitors"), EntityType.class);
-
-    /**
-     * {@code minecraft:can_breathe_under_water}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_CAN_BREATHE_UNDER_WATER = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("can_breathe_under_water"), EntityType.class);
-
-    /**
-     * {@code minecraft:can_turn_in_boats}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_CAN_TURN_IN_BOATS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("can_turn_in_boats"), EntityType.class);
-
-    /**
-     * {@code minecraft:deflects_arrows}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_DEFLECTS_ARROWS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("deflects_arrows"), EntityType.class);
-
-    /**
-     * {@code minecraft:deflects_tridents}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_DEFLECTS_TRIDENTS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("deflects_tridents"), EntityType.class);
-
-    /**
-     * {@code minecraft:dismounts_underwater}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_DISMOUNTS_UNDERWATER = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("dismounts_underwater"), EntityType.class);
-
-    /**
-     * {@code minecraft:fall_damage_immune}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_FALL_DAMAGE_IMMUNE = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("fall_damage_immune"), EntityType.class);
-
-    /**
-     * {@code minecraft:freeze_hurts_extra_types}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_FREEZE_HURTS_EXTRA_TYPES = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("freeze_hurts_extra_types"), EntityType.class);
-
-    /**
-     * {@code minecraft:freeze_immune_entity_types}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_FREEZE_IMMUNE_ENTITY_TYPES = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("freeze_immune_entity_types"), EntityType.class);
-
-    /**
-     * {@code minecraft:frog_food}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_FROG_FOOD = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("frog_food"), EntityType.class);
-
-    /**
-     * {@code minecraft:impact_projectiles}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_IMPACT_PROJECTILES = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("impact_projectiles"), EntityType.class);
-
-    /**
-     * {@code minecraft:non_controlling_rider}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_NON_CONTROLLING_RIDER = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("non_controlling_rider"), EntityType.class);
-
-    /**
-     * {@code minecraft:powder_snow_walkable_mobs}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_POWDER_SNOW_WALKABLE_MOBS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("powder_snow_walkable_mobs"), EntityType.class);
-
-    /**
-     * {@code minecraft:raiders}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_RAIDERS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("raiders"), EntityType.class);
-
-    /**
-     * {@code minecraft:skeletons}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_SKELETONS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("skeletons"), EntityType.class);
-
-    /**
-     * {@code minecraft:undead}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_UNDEAD = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("undead"), EntityType.class);
-
-    /**
-     * {@code minecraft:zombies}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    Tag<EntityType> ENTITY_TYPES_ZOMBIES = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("zombies"), EntityType.class);
-
-    /**
      * Key for the built in block registry.
      */
     String REGISTRY_BLOCKS = "blocks";
@@ -2134,6 +1232,908 @@ public interface Tag<T extends Keyed> extends Keyed {
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
     Tag<Material> WOOL_CARPETS = Bukkit.getTag(REGISTRY_BLOCKS, NamespacedKey.minecraft("wool_carpets"), Material.class);
+
+    /**
+     * Key for the built in item registry.
+     */
+    String REGISTRY_ITEMS = "items";
+
+    /**
+     * {@code minecraft:acacia_logs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_ACACIA_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("acacia_logs"), Material.class);
+
+    /**
+     * {@code minecraft:anvil}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_ANVIL = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("anvil"), Material.class);
+
+    /**
+     * {@code minecraft:arrows}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_ARROWS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("arrows"), Material.class);
+
+    /**
+     * {@code minecraft:axes}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_AXES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("axes"), Material.class);
+
+    /**
+     * {@code minecraft:axolotl_tempt_items}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_AXOLOTL_TEMPT_ITEMS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("axolotl_tempt_items"), Material.class);
+
+    /**
+     * {@code minecraft:bamboo_blocks}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_BAMBOO_BLOCKS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("bamboo_blocks"), Material.class);
+
+    /**
+     * {@code minecraft:banners}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_BANNERS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("banners"), Material.class);
+
+    /**
+     * {@code minecraft:beacon_payment_items}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_BEACON_PAYMENT_ITEMS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("beacon_payment_items"), Material.class);
+
+    /**
+     * {@code minecraft:beds}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_BEDS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("beds"), Material.class);
+
+    /**
+     * {@code minecraft:birch_logs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_BIRCH_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("birch_logs"), Material.class);
+
+    /**
+     * {@code minecraft:boats}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_BOATS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("boats"), Material.class);
+
+    /**
+     * {@code minecraft:bookshelf_books}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_BOOKSHELF_BOOKS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("bookshelf_books"), Material.class);
+
+    /**
+     * {@code minecraft:breaks_decorated_pots}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_BREAKS_DECORATED_POTS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("breaks_decorated_pots"), Material.class);
+
+    /**
+     * {@code minecraft:buttons}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_BUTTONS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("buttons"), Material.class);
+
+    /**
+     * {@code minecraft:candles}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_CANDLES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("candles"), Material.class);
+
+    /**
+     * {@code minecraft:cherry_logs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_CHERRY_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("cherry_logs"), Material.class);
+
+    /**
+     * {@code minecraft:chest_boats}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_CHEST_BOATS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("chest_boats"), Material.class);
+
+    /**
+     * {@code minecraft:cluster_max_harvestables}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_CLUSTER_MAX_HARVESTABLES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("cluster_max_harvestables"), Material.class);
+
+    /**
+     * {@code minecraft:coal_ores}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_COAL_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("coal_ores"), Material.class);
+
+    /**
+     * {@code minecraft:coals}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_COALS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("coals"), Material.class);
+
+    /**
+     * {@code minecraft:compasses}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_COMPASSES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("compasses"), Material.class);
+
+    /**
+     * {@code minecraft:completes_find_tree_tutorial}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_COMPLETES_FIND_TREE_TUTORIAL = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("completes_find_tree_tutorial"), Material.class);
+
+    /**
+     * {@code minecraft:copper_ores}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_COPPER_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("copper_ores"), Material.class);
+
+    /**
+     * {@code minecraft:creeper_drop_music_discs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_CREEPER_DROP_MUSIC_DISCS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("creeper_drop_music_discs"), Material.class);
+
+    /**
+     * {@code minecraft:creeper_igniters}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_CREEPER_IGNITERS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("creeper_igniters"), Material.class);
+
+    /**
+     * {@code minecraft:crimson_stems}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_CRIMSON_STEMS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("crimson_stems"), Material.class);
+
+    /**
+     * {@code minecraft:dampens_vibrations}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_DAMPENS_VIBRATIONS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("dampens_vibrations"), Material.class);
+
+    /**
+     * {@code minecraft:dark_oak_logs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_DARK_OAK_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("dark_oak_logs"), Material.class);
+
+    /**
+     * {@code minecraft:decorated_pot_ingredients}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_DECORATED_POT_INGREDIENTS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("decorated_pot_ingredients"), Material.class);
+
+    /**
+     * {@code minecraft:decorated_pot_sherds}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_DECORATED_POT_SHERDS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("decorated_pot_sherds"), Material.class);
+
+    /**
+     * {@code minecraft:diamond_ores}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_DIAMOND_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("diamond_ores"), Material.class);
+
+    /**
+     * {@code minecraft:dirt}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_DIRT = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("dirt"), Material.class);
+
+    /**
+     * {@code minecraft:doors}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_DOORS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("doors"), Material.class);
+
+    /**
+     * {@code minecraft:emerald_ores}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_EMERALD_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("emerald_ores"), Material.class);
+
+    /**
+     * {@code minecraft:fence_gates}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_FENCE_GATES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("fence_gates"), Material.class);
+
+    /**
+     * {@code minecraft:fences}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_FENCES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("fences"), Material.class);
+
+    /**
+     * {@code minecraft:fishes}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_FISHES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("fishes"), Material.class);
+
+    /**
+     * {@code minecraft:flowers}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_FLOWERS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("flowers"), Material.class);
+
+    /**
+     * {@code minecraft:fox_food}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_FOX_FOOD = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("fox_food"), Material.class);
+
+    /**
+     * {@code minecraft:freeze_immune_wearables}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_FREEZE_IMMUNE_WEARABLES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("freeze_immune_wearables"), Material.class);
+
+    /**
+     * {@code minecraft:gold_ores}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_GOLD_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("gold_ores"), Material.class);
+
+    /**
+     * {@code minecraft:hanging_signs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_HANGING_SIGNS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("hanging_signs"), Material.class);
+
+    /**
+     * {@code minecraft:hoes}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_HOES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("hoes"), Material.class);
+
+    /**
+     * {@code minecraft:ignored_by_piglin_babies}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_IGNORED_BY_PIGLIN_BABIES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("ignored_by_piglin_babies"), Material.class);
+
+    /**
+     * {@code minecraft:iron_ores}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_IRON_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("iron_ores"), Material.class);
+
+    /**
+     * {@code minecraft:jungle_logs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_JUNGLE_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("jungle_logs"), Material.class);
+
+    /**
+     * {@code minecraft:lapis_ores}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_LAPIS_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("lapis_ores"), Material.class);
+
+    /**
+     * {@code minecraft:leaves}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_LEAVES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("leaves"), Material.class);
+
+    /**
+     * {@code minecraft:lectern_books}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_LECTERN_BOOKS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("lectern_books"), Material.class);
+
+    /**
+     * {@code minecraft:logs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("logs"), Material.class);
+
+    /**
+     * {@code minecraft:logs_that_burn}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_LOGS_THAT_BURN = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("logs_that_burn"), Material.class);
+
+    /**
+     * {@code minecraft:mangrove_logs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_MANGROVE_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("mangrove_logs"), Material.class);
+
+    /**
+     * {@code minecraft:music_discs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_MUSIC_DISCS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("music_discs"), Material.class);
+
+    /**
+     * {@code minecraft:non_flammable_wood}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_NON_FLAMMABLE_WOOD = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("non_flammable_wood"), Material.class);
+
+    /**
+     * {@code minecraft:noteblock_top_instruments}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_NOTEBLOCK_TOP_INSTRUMENTS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("noteblock_top_instruments"), Material.class);
+
+    /**
+     * {@code minecraft:oak_logs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_OAK_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("oak_logs"), Material.class);
+
+    /**
+     * {@code minecraft:pickaxes}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_PICKAXES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("pickaxes"), Material.class);
+
+    /**
+     * {@code minecraft:piglin_food}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_PIGLIN_FOOD = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("piglin_food"), Material.class);
+
+    /**
+     * {@code minecraft:piglin_loved}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_PIGLIN_LOVED = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("piglin_loved"), Material.class);
+
+    /**
+     * {@code minecraft:piglin_repellents}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_PIGLIN_REPELLENTS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("piglin_repellents"), Material.class);
+
+    /**
+     * {@code minecraft:planks}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_PLANKS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("planks"), Material.class);
+
+    /**
+     * {@code minecraft:rails}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_RAILS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("rails"), Material.class);
+
+    /**
+     * {@code minecraft:redstone_ores}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_REDSTONE_ORES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("redstone_ores"), Material.class);
+
+    /**
+     * {@code minecraft:sand}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_SAND = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("sand"), Material.class);
+
+    /**
+     * {@code minecraft:saplings}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_SAPLINGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("saplings"), Material.class);
+
+    /**
+     * {@code minecraft:shovels}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_SHOVELS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("shovels"), Material.class);
+
+    /**
+     * {@code minecraft:signs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_SIGNS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("signs"), Material.class);
+
+    /**
+     * {@code minecraft:slabs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_SLABS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("slabs"), Material.class);
+
+    /**
+     * {@code minecraft:small_flowers}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_SMALL_FLOWERS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("small_flowers"), Material.class);
+
+    /**
+     * {@code minecraft:smelts_to_glass}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_SMELTS_TO_GLASS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("smelts_to_glass"), Material.class);
+
+    /**
+     * {@code minecraft:sniffer_food}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_SNIFFER_FOOD = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("sniffer_food"), Material.class);
+
+    /**
+     * {@code minecraft:soul_fire_base_blocks}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_SOUL_FIRE_BASE_BLOCKS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("soul_fire_base_blocks"), Material.class);
+
+    /**
+     * {@code minecraft:spruce_logs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_SPRUCE_LOGS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("spruce_logs"), Material.class);
+
+    /**
+     * {@code minecraft:stairs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_STAIRS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("stairs"), Material.class);
+
+    /**
+     * {@code minecraft:stone_bricks}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_STONE_BRICKS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("stone_bricks"), Material.class);
+
+    /**
+     * {@code minecraft:stone_buttons}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_STONE_BUTTONS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("stone_buttons"), Material.class);
+
+    /**
+     * {@code minecraft:stone_crafting_materials}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_STONE_CRAFTING_MATERIALS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("stone_crafting_materials"), Material.class);
+
+    /**
+     * {@code minecraft:stone_tool_materials}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_STONE_TOOL_MATERIALS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("stone_tool_materials"), Material.class);
+
+    /**
+     * {@code minecraft:swords}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_SWORDS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("swords"), Material.class);
+
+    /**
+     * {@code minecraft:tall_flowers}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_TALL_FLOWERS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("tall_flowers"), Material.class);
+
+    /**
+     * {@code minecraft:terracotta}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_TERRACOTTA = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("terracotta"), Material.class);
+
+    /**
+     * {@code minecraft:tools}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_TOOLS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("tools"), Material.class);
+
+    /**
+     * {@code minecraft:trapdoors}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_TRAPDOORS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("trapdoors"), Material.class);
+
+    /**
+     * {@code minecraft:trim_materials}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_TRIM_MATERIALS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("trim_materials"), Material.class);
+
+    /**
+     * {@code minecraft:trim_templates}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_TRIM_TEMPLATES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("trim_templates"), Material.class);
+
+    /**
+     * {@code minecraft:trimmable_armor}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_TRIMMABLE_ARMOR = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("trimmable_armor"), Material.class);
+
+    /**
+     * {@code minecraft:villager_plantable_seeds}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_VILLAGER_PLANTABLE_SEEDS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("villager_plantable_seeds"), Material.class);
+
+    /**
+     * {@code minecraft:walls}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_WALLS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("walls"), Material.class);
+
+    /**
+     * {@code minecraft:warped_stems}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_WARPED_STEMS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("warped_stems"), Material.class);
+
+    /**
+     * {@code minecraft:wart_blocks}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_WART_BLOCKS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wart_blocks"), Material.class);
+
+    /**
+     * {@code minecraft:wooden_buttons}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_WOODEN_BUTTONS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wooden_buttons"), Material.class);
+
+    /**
+     * {@code minecraft:wooden_doors}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_WOODEN_DOORS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wooden_doors"), Material.class);
+
+    /**
+     * {@code minecraft:wooden_fences}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_WOODEN_FENCES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wooden_fences"), Material.class);
+
+    /**
+     * {@code minecraft:wooden_pressure_plates}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_WOODEN_PRESSURE_PLATES = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wooden_pressure_plates"), Material.class);
+
+    /**
+     * {@code minecraft:wooden_slabs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_WOODEN_SLABS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wooden_slabs"), Material.class);
+
+    /**
+     * {@code minecraft:wooden_stairs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_WOODEN_STAIRS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wooden_stairs"), Material.class);
+
+    /**
+     * {@code minecraft:wooden_trapdoors}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_WOODEN_TRAPDOORS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wooden_trapdoors"), Material.class);
+
+    /**
+     * {@code minecraft:wool}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_WOOL = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wool"), Material.class);
+
+    /**
+     * {@code minecraft:wool_carpets}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Material> ITEMS_WOOL_CARPETS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wool_carpets"), Material.class);
+
+    /**
+     * Key for the built in fluid registry.
+     */
+    String REGISTRY_FLUIDS = "fluids";
+
+    /**
+     * {@code minecraft:lava}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Fluid> FLUIDS_LAVA = Bukkit.getTag(REGISTRY_FLUIDS, NamespacedKey.minecraft("lava"), Fluid.class);
+
+    /**
+     * {@code minecraft:water}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<Fluid> FLUIDS_WATER = Bukkit.getTag(REGISTRY_FLUIDS, NamespacedKey.minecraft("water"), Fluid.class);
+
+    /**
+     * Key for the built in entity_type registry.
+     */
+    String REGISTRY_ENTITY_TYPES = "entity_types";
+
+    /**
+     * {@code minecraft:arrows}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_ARROWS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("arrows"), EntityType.class);
+
+    /**
+     * {@code minecraft:axolotl_always_hostiles}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_AXOLOTL_ALWAYS_HOSTILES = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("axolotl_always_hostiles"), EntityType.class);
+
+    /**
+     * {@code minecraft:axolotl_hunt_targets}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_AXOLOTL_HUNT_TARGETS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("axolotl_hunt_targets"), EntityType.class);
+
+    /**
+     * {@code minecraft:beehive_inhabitors}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_BEEHIVE_INHABITORS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("beehive_inhabitors"), EntityType.class);
+
+    /**
+     * {@code minecraft:can_breathe_under_water}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_CAN_BREATHE_UNDER_WATER = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("can_breathe_under_water"), EntityType.class);
+
+    /**
+     * {@code minecraft:can_turn_in_boats}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_CAN_TURN_IN_BOATS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("can_turn_in_boats"), EntityType.class);
+
+    /**
+     * {@code minecraft:deflects_arrows}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_DEFLECTS_ARROWS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("deflects_arrows"), EntityType.class);
+
+    /**
+     * {@code minecraft:deflects_tridents}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_DEFLECTS_TRIDENTS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("deflects_tridents"), EntityType.class);
+
+    /**
+     * {@code minecraft:dismounts_underwater}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_DISMOUNTS_UNDERWATER = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("dismounts_underwater"), EntityType.class);
+
+    /**
+     * {@code minecraft:fall_damage_immune}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_FALL_DAMAGE_IMMUNE = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("fall_damage_immune"), EntityType.class);
+
+    /**
+     * {@code minecraft:freeze_hurts_extra_types}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_FREEZE_HURTS_EXTRA_TYPES = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("freeze_hurts_extra_types"), EntityType.class);
+
+    /**
+     * {@code minecraft:freeze_immune_entity_types}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_FREEZE_IMMUNE_ENTITY_TYPES = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("freeze_immune_entity_types"), EntityType.class);
+
+    /**
+     * {@code minecraft:frog_food}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_FROG_FOOD = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("frog_food"), EntityType.class);
+
+    /**
+     * {@code minecraft:impact_projectiles}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_IMPACT_PROJECTILES = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("impact_projectiles"), EntityType.class);
+
+    /**
+     * {@code minecraft:non_controlling_rider}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_NON_CONTROLLING_RIDER = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("non_controlling_rider"), EntityType.class);
+
+    /**
+     * {@code minecraft:powder_snow_walkable_mobs}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_POWDER_SNOW_WALKABLE_MOBS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("powder_snow_walkable_mobs"), EntityType.class);
+
+    /**
+     * {@code minecraft:raiders}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_RAIDERS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("raiders"), EntityType.class);
+
+    /**
+     * {@code minecraft:skeletons}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_SKELETONS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("skeletons"), EntityType.class);
+
+    /**
+     * {@code minecraft:undead}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_UNDEAD = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("undead"), EntityType.class);
+
+    /**
+     * {@code minecraft:zombies}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<EntityType> ENTITY_TYPES_ZOMBIES = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("zombies"), EntityType.class);
+
+    /**
+     * Key for the built in game_event registry.
+     */
+    String REGISTRY_GAME_EVENTS = "game_events";
+
+    /**
+     * {@code minecraft:allay_can_listen}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<GameEvent> GAME_EVENT_ALLAY_CAN_LISTEN = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("allay_can_listen"), GameEvent.class);
+
+    /**
+     * {@code minecraft:ignore_vibrations_sneaking}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<GameEvent> GAME_EVENT_IGNORE_VIBRATIONS_SNEAKING = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("ignore_vibrations_sneaking"), GameEvent.class);
+
+    /**
+     * {@code minecraft:shrieker_can_listen}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<GameEvent> GAME_EVENT_SHRIEKER_CAN_LISTEN = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("shrieker_can_listen"), GameEvent.class);
+
+    /**
+     * {@code minecraft:vibrations}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<GameEvent> GAME_EVENT_VIBRATIONS = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("vibrations"), GameEvent.class);
+
+    /**
+     * {@code minecraft:warden_can_listen}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    Tag<GameEvent> GAME_EVENT_WARDEN_CAN_LISTEN = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("warden_can_listen"), GameEvent.class);
 
     /**
      * @deprecated in favour of {@link #WOOL_CARPETS}.

@@ -7,6 +7,7 @@ import io.papermc.generator.utils.Javadocs;
 import io.papermc.paper.registry.RegistryKey;
 import net.minecraft.core.registries.Registries;
 import org.bukkit.generator.structure.Structure;
+import org.bukkit.generator.structure.StructureType;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
@@ -35,7 +36,7 @@ public class StructureGenerator extends RegistryGenerator<net.minecraft.world.le
 
         builder.addMethod(MethodSpec.methodBuilder("getStructureType")
             .addModifiers(PUBLIC, ABSTRACT)
-            .returns(this.apiType)
+            .returns(StructureType.class)
             .addJavadoc(GET_STRUCTURE_TYPE_JAVADOC)
             .addAnnotation(NOT_NULL).build());
     }

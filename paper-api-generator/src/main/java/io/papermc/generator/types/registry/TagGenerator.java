@@ -17,6 +17,7 @@ import io.papermc.generator.utils.Formatting;
 import io.papermc.generator.utils.Javadocs;
 import io.papermc.paper.tag.EntityTags;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import net.minecraft.core.Registry;
@@ -79,7 +80,7 @@ public class TagGenerator extends SimpleGenerator {
         return new TagRegistry(name, apiType, registryKey);
     }
 
-    private static final Set<TagRegistry> TAG_REGISTRIES = Set.of(
+    private static final List<TagRegistry> TAG_REGISTRIES = List.of(
         registry("blocks", Material.class, Registries.BLOCK),
         registry("items", Material.class, Registries.ITEM),
         registry("fluids", Fluid.class, Registries.FLUID),
@@ -89,8 +90,8 @@ public class TagGenerator extends SimpleGenerator {
 
     private final TypeVariableName typeVariable = TypeVariableName.get("T", Keyed.class);
 
-    public TagGenerator(final String keysClassName, final String pkg) {
-        super(keysClassName, pkg);
+    public TagGenerator(final String className, final String pkg) {
+        super(className, pkg);
     }
 
     private TypeSpec.Builder tagHolderType() {
@@ -106,7 +107,7 @@ public class TagGenerator extends SimpleGenerator {
     protected TypeSpec getTypeSpec() {
         final TypeSpec.Builder typeBuilder = this.tagHolderType();
 
-        for (TagRegistry tagRegistry : TAG_REGISTRIES) {
+        for (final TagRegistry tagRegistry : TAG_REGISTRIES) {
             final TypeName fieldType = ParameterizedTypeName.get(Tag.class, tagRegistry.apiType());
 
             final ResourceKey<? extends Registry<?>> registryKey = tagRegistry.registryKey();

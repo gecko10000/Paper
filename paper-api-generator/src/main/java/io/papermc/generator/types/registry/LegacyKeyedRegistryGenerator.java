@@ -10,6 +10,7 @@ import io.papermc.paper.registry.RegistryKey;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import org.bukkit.Keyed;
+import org.bukkit.NamespacedKey;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
@@ -40,7 +41,7 @@ public class LegacyKeyedRegistryGenerator<T, A> extends RegistryGenerator<T, A> 
 
         builder.addMethod(MethodSpec.methodBuilder("getKey")
             .addModifiers(PUBLIC, ABSTRACT)
-            .returns(this.apiType) // todo check runtime order issue when the classes are removed with the key generator
+            .returns(NamespacedKey.class)
             .addJavadoc(GET_KEY_JAVADOC, org.bukkit.Registry.class, Keyed.class, org.bukkit.Registry.class, requireNonNull(RegistryUtils.getRegistryKeyFieldNames().get(this.apiRegistryKey), "Missing field for " + this.apiRegistryKey), this.className)
             .addAnnotation(Annotations.deprecatedVersioned("1.20.4", true))
             .addAnnotation(OVERRIDE)

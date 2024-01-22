@@ -17,8 +17,8 @@ public class AttributeGenerator extends EnumRegistryGenerator<Attribute> {
 
     private static final String CLASS_HEADER = Javadocs.getVersionDependentClassHeader("Attributes");
 
-    public AttributeGenerator(final String keysClassName, final String pkg) {
-        super(keysClassName, pkg, Registries.ATTRIBUTE);
+    public AttributeGenerator(final String className, final String pkg) {
+        super(className, pkg, Registries.ATTRIBUTE);
     }
 
     @Override

@@ -5,3 +5,4 @@ accessible method net/minecraft/server/WorldLoader loadAndReplaceLayer (Lnet/min
 accessible field net/minecraft/core/RegistrySetBuilder entries Ljava/util/List;
 accessible class net/minecraft/core/RegistrySetBuilder$RegistryStub
 accessible field net/minecraft/data/registries/UpdateOneTwentyOneRegistries BUILDER Lnet/minecraft/core/RegistrySetBuilder;
+accessible field net/minecraft/world/flag/FeatureFlagRegistry names Ljava/util/Map;

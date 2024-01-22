@@ -1939,8 +1939,6 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type {
 
     ENTITY_GENERIC_SWIM("entity.generic.swim"),
 
-    @ApiStatus.Experimental
-    @MinecraftExperimental("update 1.21")
     ENTITY_GENERIC_WIND_BURST("entity.generic.wind_burst"),
 
     ENTITY_GHAST_AMBIENT("entity.ghast.ambient"),
@@ -2984,15 +2982,15 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type {
     ITEM_BUCKET_FILL_TADPOLE("item.bucket.fill_tadpole"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental("update 1.21")
+    @MinecraftExperimental("bundle feature")
     ITEM_BUNDLE_DROP_CONTENTS("item.bundle.drop_contents"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental("update 1.21")
+    @MinecraftExperimental("bundle feature")
     ITEM_BUNDLE_INSERT("item.bundle.insert"),
 
     @ApiStatus.Experimental
-    @MinecraftExperimental("update 1.21")
+    @MinecraftExperimental("bundle feature")
     ITEM_BUNDLE_REMOVE_ONE("item.bundle.remove_one"),
 
     ITEM_CHORUS_FRUIT_TELEPORT("item.chorus_fruit.teleport"),
