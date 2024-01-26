@@ -8,7 +8,8 @@ import io.papermc.generator.utils.Formatting;
 import io.papermc.generator.utils.Javadocs;
 
 import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import net.kyori.adventure.sound.Sound;
@@ -35,7 +36,11 @@ public class SoundGenerator extends EnumRegistryGenerator<SoundEvent> {
                 return "entity";
             }
             return key.location().getPath();
-        }, value -> Suppliers.memoize(() -> Main.REGISTRY_ACCESS.registryOrThrow(value))));
+        }, key -> Suppliers.memoize(() -> Main.REGISTRY_ACCESS.registryOrThrow(key))));
+
+    private static final Set<String> EXPERIMENTAL_EXCEPTIONS = Set.of(
+        "entity.generic.wind_burst"
+    );
 
     public SoundGenerator(final String className, final String pkg) {
         super(className, pkg, Registries.SOUND_EVENT);
@@ -55,21 +60,30 @@ public class SoundGenerator extends EnumRegistryGenerator<SoundEvent> {
         }
 
         String path = entry.getKey().location().getPath();
+        // the below way is not perfect, but it tries its best
+        if (EXPERIMENTAL_EXCEPTIONS.contains(path)) {
+            return Formatting.formatFeatureFlag(FeatureFlags.UPDATE_1_21);
+        }
+
         String[] fragments = path.split("\\.");
         if (fragments.length < 2) {
             return null;
         }
 
-        for (Map.Entry<String, Supplier<Registry<? extends FeatureElement>>> filteredRegistry : FILTERED_REGISTRIES.entrySet()) {
-            if (fragments[0].equals(filteredRegistry.getKey())) {
-                Registry<? extends FeatureElement> registry = filteredRegistry.getValue().get();
-                FeatureElement element = Objects.requireNonNull(registry.get(new ResourceLocation(ResourceLocation.DEFAULT_NAMESPACE, fragments[1])));
-                if (element instanceof BundleItem) {
-                    return Formatting.formatFeatureFlag(FeatureFlags.BUNDLE); // special case since the item is not locked itself just in the creative menu
-                }
-                if (FeatureFlags.isExperimental(element.requiredFeatures())) {
-                    return Formatting.formatFeatureFlagSet(element.requiredFeatures());
-                }
+        Supplier<Registry<? extends FeatureElement>> filteredRegistry = FILTERED_REGISTRIES.get(fragments[0]);
+        if (filteredRegistry == null) {
+            return null;
+        }
+
+        Registry<? extends FeatureElement> registry = filteredRegistry.get();
+        Optional<? extends FeatureElement> optionalElement = registry.getOptional(new ResourceLocation(ResourceLocation.DEFAULT_NAMESPACE, fragments[1]));
+        if (optionalElement.isPresent()) {
+            FeatureElement element = optionalElement.get();
+            if (element instanceof BundleItem) {
+                return Formatting.formatFeatureFlag(FeatureFlags.BUNDLE); // special case since the item is not locked itself just in the creative menu
+            }
+            if (FeatureFlags.isExperimental(element.requiredFeatures())) {
+                return Formatting.formatFeatureFlagSet(element.requiredFeatures());
             }
         }
 

@@ -3,6 +3,7 @@ package org.bukkit;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.Set;
 import org.bukkit.entity.EntityType;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -1995,6 +1996,8 @@ public interface Tag<T extends Keyed> extends Keyed {
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
+    @ApiStatus.Experimental
+    @MinecraftExperimental("update 1.21")
     Tag<EntityType> ENTITY_TYPES_CAN_TURN_IN_BOATS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("can_turn_in_boats"), EntityType.class);
 
     /**
@@ -2002,6 +2005,8 @@ public interface Tag<T extends Keyed> extends Keyed {
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
+    @ApiStatus.Experimental
+    @MinecraftExperimental("update 1.21")
     Tag<EntityType> ENTITY_TYPES_DEFLECTS_ARROWS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("deflects_arrows"), EntityType.class);
 
     /**
@@ -2009,6 +2014,8 @@ public interface Tag<T extends Keyed> extends Keyed {
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
+    @ApiStatus.Experimental
+    @MinecraftExperimental("update 1.21")
     Tag<EntityType> ENTITY_TYPES_DEFLECTS_TRIDENTS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("deflects_tridents"), EntityType.class);
 
     /**

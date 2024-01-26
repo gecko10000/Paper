@@ -5,7 +5,8 @@ import com.mojang.logging.LogUtils;
 import io.papermc.generator.types.SourceGenerator;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
+import io.papermc.generator.utils.TagCollector;
+import io.papermc.generator.utils.TagResult;
 import net.minecraft.SharedConstants;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.LayeredRegistryAccess;
@@ -28,6 +29,7 @@ public final class Main {
 
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final RegistryAccess.Frozen REGISTRY_ACCESS;
+    public static final TagResult EXPERIMENTAL_TAGS;
 
     static {
         SharedConstants.tryDetectVersion();
@@ -40,6 +42,7 @@ public final class Main {
         REGISTRY_ACCESS = layers.compositeAccess().freeze();
         final ReloadableServerResources datapack = ReloadableServerResources.loadResources(resourceManager, REGISTRY_ACCESS, FeatureFlags.REGISTRY.allFlags(), Commands.CommandSelection.DEDICATED, 0, MoreExecutors.directExecutor(), MoreExecutors.directExecutor()).join();
         datapack.updateRegistryTags(REGISTRY_ACCESS);
+        EXPERIMENTAL_TAGS = TagCollector.grabExperimental(resourceManager);
     }
 
     private Main() {
@@ -47,9 +50,9 @@ public final class Main {
 
     public static void main(final String[] args) {
         LOGGER.info("Running API generators...");
-        generate(Paths.get(args[0]), Generators.API);
+        generate(Path.of(args[0]), Generators.API);
         // LOGGER.info("Running Server generators...");
-        // generate(Paths.get(args[1]), Generators.SERVER);
+        // generate(Path.of(args[1]), Generators.SERVER);
     }
 
     private static void generate(Path output, SourceGenerator[] generators) {

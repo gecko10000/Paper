@@ -16,6 +16,7 @@ import io.papermc.generator.utils.Annotations;
 import io.papermc.generator.utils.Formatting;
 import io.papermc.generator.utils.Javadocs;
 import io.papermc.paper.tag.EntityTags;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
@@ -37,6 +38,7 @@ import org.checkerframework.framework.qual.DefaultQualifier;
 
 import static com.squareup.javapoet.TypeSpec.interfaceBuilder;
 import static io.papermc.generator.utils.Annotations.NOT_NULL;
+import static io.papermc.generator.utils.Annotations.experimentalAnnotations;
 import static javax.lang.model.element.Modifier.ABSTRACT;
 import static javax.lang.model.element.Modifier.FINAL;
 import static javax.lang.model.element.Modifier.PUBLIC;
@@ -121,6 +123,7 @@ public class TagGenerator extends SimpleGenerator {
             typeBuilder.addField(registryFieldBuilder.build());
 
             final String fieldPrefix = Formatting.formatTagFieldPrefix(tagRegistry.name(), registryKey);
+            final Collection<String> experimentalTags = Main.EXPERIMENTAL_TAGS.perRegistry().get(tagRegistry.registryKey());
 
             for (final TagKey<?> tagKey : registry.getTagNames().sorted(Comparator.comparing(tagKey -> tagKey.location().getPath())).toList()) {
                 final String keyPath = tagKey.location().getPath();
@@ -130,6 +133,9 @@ public class TagGenerator extends SimpleGenerator {
                     .addModifiers(PUBLIC, STATIC, FINAL)
                     .initializer("$T.getTag($L, $T.minecraft($S), $T.class)", Bukkit.class, registryFieldName, NamespacedKey.class, keyPath, tagRegistry.apiType())
                     .addJavadoc(Javadocs.getVersionDependentField("{@code $L}"), tagKey.location().toString());
+                if (experimentalTags.contains(keyPath)) {
+                    fieldBuilder.addAnnotations(experimentalAnnotations(Formatting.formatFeatureFlagName(Main.EXPERIMENTAL_TAGS.perFeatureFlag().get(tagKey))));
+                }
                 typeBuilder.addField(fieldBuilder.build());
             }
 

@@ -3,7 +3,6 @@ package io.papermc.generator;
 import io.papermc.generator.types.registry.AttributeGenerator;
 import io.papermc.generator.types.registry.GeneratedKeyType;
 import io.papermc.generator.types.SourceGenerator;
-import io.papermc.generator.types.enumgen.EnumGenerator;
 import io.papermc.generator.types.registry.BiomeGenerator;
 import io.papermc.generator.types.registry.SoundGenerator;
 import io.papermc.generator.types.goal.MobGoalGenerator;
@@ -15,7 +14,6 @@ import io.papermc.paper.registry.RegistryKey;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.entity.Pose;
 import org.bukkit.GameEvent;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.structure.Structure;
@@ -40,7 +38,6 @@ public interface Generators {
         new StructureGenerator("Structure", "org.bukkit.generator.structure"),
         new LegacyKeyedRegistryGenerator<>("TrimPattern", TrimPattern.class, "org.bukkit.inventory.meta.trim", Registries.TRIM_PATTERN, RegistryKey.TRIM_PATTERN),
         new LegacyKeyedRegistryGenerator<>("TrimMaterial", TrimMaterial.class, "org.bukkit.inventory.meta.trim", Registries.TRIM_MATERIAL, RegistryKey.TRIM_MATERIAL),
-        new EnumGenerator<>(Pose.class, "org.bukkit.entity"),
         new TagGenerator("Tag", "org.bukkit")
     };
 
