@@ -36,8 +36,8 @@ public interface Generators {
         new AttributeGenerator("Attribute", "org.bukkit.attribute"),
         new StructureTypeGenerator("StructureType", "org.bukkit.generator.structure"),
         new StructureGenerator("Structure", "org.bukkit.generator.structure"),
-        new LegacyKeyedRegistryGenerator<>("TrimPattern", TrimPattern.class, "org.bukkit.inventory.meta.trim", Registries.TRIM_PATTERN, RegistryKey.TRIM_PATTERN),
-        new LegacyKeyedRegistryGenerator<>("TrimMaterial", TrimMaterial.class, "org.bukkit.inventory.meta.trim", Registries.TRIM_MATERIAL, RegistryKey.TRIM_MATERIAL),
+        new LegacyKeyedRegistryGenerator<>("TrimPattern", "org.bukkit.inventory.meta.trim", Registries.TRIM_PATTERN, RegistryKey.TRIM_PATTERN),
+        new LegacyKeyedRegistryGenerator<>("TrimMaterial", "org.bukkit.inventory.meta.trim", Registries.TRIM_MATERIAL, RegistryKey.TRIM_MATERIAL),
         new TagGenerator("Tag", "org.bukkit")
     };
 

@@ -2,7 +2,6 @@ package io.papermc.generator.types.registry;
 
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
-import io.papermc.generator.Main;
 import io.papermc.generator.utils.Javadocs;
 import io.papermc.paper.registry.RegistryKey;
 import net.minecraft.core.registries.Registries;
@@ -27,7 +26,7 @@ public class StructureGenerator extends RegistryGenerator<net.minecraft.world.le
         """;
 
     public StructureGenerator(final String className, final String pkg) {
-        super(className, Structure.class, pkg, RegistryKey.STRUCTURE, false);
+        super(className, pkg, Registries.STRUCTURE, RegistryKey.STRUCTURE, false);
     }
 
     @Override
@@ -39,11 +38,6 @@ public class StructureGenerator extends RegistryGenerator<net.minecraft.world.le
             .returns(StructureType.class)
             .addJavadoc(GET_STRUCTURE_TYPE_JAVADOC)
             .addAnnotation(NOT_NULL).build());
-    }
-
-    @Override
-    public net.minecraft.core.Registry<net.minecraft.world.level.levelgen.structure.Structure> getRegistry() {
-        return Main.REGISTRY_ACCESS.registryOrThrow(Registries.STRUCTURE);
     }
 
 }

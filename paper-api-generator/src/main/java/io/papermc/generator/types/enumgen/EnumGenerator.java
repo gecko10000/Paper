@@ -5,7 +5,6 @@ import com.squareup.javapoet.TypeSpec;
 import io.papermc.generator.types.SimpleGenerator;
 import io.papermc.generator.utils.Annotations;
 import javax.lang.model.element.Modifier;
-import net.minecraft.world.entity.Pose;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
 

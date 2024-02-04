@@ -35,6 +35,8 @@ public enum Attribute implements Keyed, Translatable {
 
     GENERIC_FOLLOW_RANGE("generic.follow_range"),
 
+    HORSE_JUMP_STRENGTH("horse.jump_strength"),
+
     GENERIC_KNOCKBACK_RESISTANCE("generic.knockback_resistance"),
 
     GENERIC_LUCK("generic.luck"),
@@ -44,8 +46,6 @@ public enum Attribute implements Keyed, Translatable {
     GENERIC_MAX_HEALTH("generic.max_health"),
 
     GENERIC_MOVEMENT_SPEED("generic.movement_speed"),
-
-    HORSE_JUMP_STRENGTH("horse.jump_strength"),
 
     ZOMBIE_SPAWN_REINFORCEMENTS("zombie.spawn_reinforcements");
 

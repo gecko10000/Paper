@@ -49,6 +49,7 @@ public final class Annotations {
     @ApiStatus.Experimental
     public static final AnnotationSpec EXPERIMENTAL_API_ANNOTATION = AnnotationSpec.builder(ApiStatus.Experimental.class).build();
     public static final AnnotationSpec NOT_NULL = AnnotationSpec.builder(NotNull.class).build();
+    public static final AnnotationSpec NULLABLE = AnnotationSpec.builder(Nullable.class).build();
     public static final AnnotationSpec OVERRIDE = AnnotationSpec.builder(Override.class).build();
     private static final AnnotationSpec SUPPRESS_WARNINGS = AnnotationSpec.builder(SuppressWarnings.class)
         .addMember("value", "$S", "unused")

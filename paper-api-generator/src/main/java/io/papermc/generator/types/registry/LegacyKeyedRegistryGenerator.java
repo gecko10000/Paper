@@ -2,7 +2,6 @@ package io.papermc.generator.types.registry;
 
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.TypeSpec;
-import io.papermc.generator.Main;
 import io.papermc.generator.utils.Annotations;
 import io.papermc.generator.utils.Javadocs;
 import io.papermc.generator.utils.RegistryUtils;
@@ -28,11 +27,8 @@ public class LegacyKeyedRegistryGenerator<T, A> extends RegistryGenerator<T, A> 
         can exist without a key.
         """;
 
-    private final ResourceKey<? extends Registry<T>> registryKey;
-
-    public LegacyKeyedRegistryGenerator(final String className, final Class<A> apiType, final String pkg, final ResourceKey<? extends Registry<T>> registryKey, final RegistryKey<A> apiRegistryKey) {
-        super(className, apiType, pkg, apiRegistryKey, true);
-        this.registryKey = registryKey;
+    public LegacyKeyedRegistryGenerator(final String className, final String pkg, final ResourceKey<? extends Registry<T>> registryKey, final RegistryKey<A> apiRegistryKey) {
+        super(className, pkg, registryKey, apiRegistryKey, true);
     }
 
     @Override
@@ -46,11 +42,6 @@ public class LegacyKeyedRegistryGenerator<T, A> extends RegistryGenerator<T, A> 
             .addAnnotation(Annotations.deprecatedVersioned("1.20.4", true))
             .addAnnotation(OVERRIDE)
             .addAnnotation(NOT_NULL).build());
-    }
-
-    @Override
-    public net.minecraft.core.Registry<T> getRegistry() {
-        return Main.REGISTRY_ACCESS.registryOrThrow(this.registryKey);
     }
 
 }

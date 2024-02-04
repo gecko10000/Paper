@@ -38,6 +38,7 @@ import org.checkerframework.framework.qual.DefaultQualifier;
 
 import static com.squareup.javapoet.TypeSpec.interfaceBuilder;
 import static io.papermc.generator.utils.Annotations.NOT_NULL;
+import static io.papermc.generator.utils.Annotations.NULLABLE;
 import static io.papermc.generator.utils.Annotations.experimentalAnnotations;
 import static javax.lang.model.element.Modifier.ABSTRACT;
 import static javax.lang.model.element.Modifier.FINAL;
@@ -74,7 +75,7 @@ public class TagGenerator extends SimpleGenerator {
         @return set of tagged items
         """;
 
-    private static final String REGISTRY_FIELD_JAVADOC = "Key for the built in $L registry.";
+    private static final String REGISTRY_FIELD_JAVADOC = "Key for the built-in $L registry.";
 
     public record TagRegistry(String name, Class<?> apiType, ResourceKey<? extends Registry<?>> registryKey) {}
 
@@ -134,7 +135,8 @@ public class TagGenerator extends SimpleGenerator {
                     .initializer("$T.getTag($L, $T.minecraft($S), $T.class)", Bukkit.class, registryFieldName, NamespacedKey.class, keyPath, tagRegistry.apiType())
                     .addJavadoc(Javadocs.getVersionDependentField("{@code $L}"), tagKey.location().toString());
                 if (experimentalTags.contains(keyPath)) {
-                    fieldBuilder.addAnnotations(experimentalAnnotations(Formatting.formatFeatureFlagName(Main.EXPERIMENTAL_TAGS.perFeatureFlag().get(tagKey))));
+                    fieldBuilder.addAnnotations(experimentalAnnotations(Formatting.formatFeatureFlagName(Main.EXPERIMENTAL_TAGS.perFeatureFlag().get(tagKey))))
+                                .addAnnotation(NULLABLE);
                 }
                 typeBuilder.addField(fieldBuilder.build());
             }
@@ -147,7 +149,7 @@ public class TagGenerator extends SimpleGenerator {
                 .addModifiers(PUBLIC, STATIC, FINAL)
                 .addAnnotation(Deprecated.class)
                 .initializer("WOOL_CARPETS")
-                .addJavadoc(Javadocs.getDeprecatedFor("WOOL_CARPETS")).build()
+                .addJavadoc(Javadocs.DEPRECATED_FOR, "WOOL_CARPETS").build()
         );
 
         // methods

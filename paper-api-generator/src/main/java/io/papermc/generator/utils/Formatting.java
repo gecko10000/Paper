@@ -1,6 +1,7 @@
 package io.papermc.generator.utils;
 
 import java.util.Locale;
+import java.util.Optional;
 import java.util.Set;
 import net.kyori.adventure.key.Key;
 import net.minecraft.core.Registry;
@@ -57,13 +58,13 @@ public final class Formatting {
         return name.replace('_', ' ') + " feature";
     }
 
-    public static String formatTagKey(String tagDir, String resourcePath) {
+    public static Optional<String> formatTagKey(String tagDir, String resourcePath) {
         int tagsIndex = resourcePath.indexOf(tagDir);
         int dotIndex = resourcePath.lastIndexOf('.');
         if (tagsIndex == -1 || dotIndex == -1) {
-            return "none";
+            return Optional.empty();
         }
-        return resourcePath.substring(tagsIndex + tagDir.length() + 1, dotIndex); // tags/registry_key/[tagKey].json
+        return Optional.of(resourcePath.substring(tagsIndex + tagDir.length() + 1, dotIndex)); // namespace/tags/registry_key/[tag_key].json
     }
 
     private Formatting() {

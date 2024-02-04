@@ -13,9 +13,9 @@ import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import net.kyori.adventure.sound.Sound;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.flag.FeatureElement;
@@ -53,13 +53,13 @@ public class SoundGenerator extends EnumRegistryGenerator<SoundEvent> {
     }
 
     @Override
-    public @Nullable String getExperimentalValue(final Map.Entry<ResourceKey<SoundEvent>, SoundEvent> entry) {
-        @Nullable String result = super.getExperimentalValue(entry);
+    public @Nullable String getExperimentalValue(final Holder.Reference<SoundEvent> reference) {
+        @Nullable String result = super.getExperimentalValue(reference);
         if (result != null) {
             return result;
         }
 
-        String path = entry.getKey().location().getPath();
+        String path = reference.key().location().getPath();
         // the below way is not perfect, but it tries its best
         if (EXPERIMENTAL_EXCEPTIONS.contains(path)) {
             return Formatting.formatFeatureFlag(FeatureFlags.UPDATE_1_21);

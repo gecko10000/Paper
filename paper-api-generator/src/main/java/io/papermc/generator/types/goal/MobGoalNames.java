@@ -236,7 +236,7 @@ public class MobGoalNames {
     }
 
     private static final BiMap<String, String> deobfuscationMap = HashBiMap.create();
-    static final Set<String> ignored = new HashSet<>();
+    private static final Set<String> ignored = new HashSet<>();
 
     static {
         deobfuscationMap.put("abstract_skeleton_1", "abstract_skeleton_melee");
@@ -250,14 +250,14 @@ public class MobGoalNames {
 
     public static String getUsableName(String name) {
         final String original = name;
-        name = name.substring(name.lastIndexOf(".") + 1);
+        name = name.substring(name.lastIndexOf('.') + 1);
         boolean flag = false;
         // inner classes
         if (name.contains("$")) {
-            String cut = name.substring(name.indexOf("$") + 1);
+            String cut = name.substring(name.indexOf('$') + 1);
             if (cut.length() <= 2) {
                 name = name.replace("Entity", "");
-                name = name.replace("$", "_");
+                name = name.replace('$', '_');
                 flag = true;
             } else {
                 // mapped, wooo
@@ -270,7 +270,7 @@ public class MobGoalNames {
         StringBuilder sb = new StringBuilder();
         for (char c : name.toCharArray()) {
             if (c >= 'A' && c <= 'Z') {
-                sb.append("_");
+                sb.append('_');
                 sb.append(Character.toLowerCase(c));
             } else {
                 sb.append(c);

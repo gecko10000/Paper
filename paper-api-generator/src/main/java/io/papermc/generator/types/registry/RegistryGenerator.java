@@ -1,25 +1,27 @@
 package io.papermc.generator.types.registry;
 
 import com.google.common.base.Suppliers;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import io.papermc.generator.Main;
 import io.papermc.generator.types.SimpleGenerator;
 import io.papermc.generator.utils.Annotations;
 import io.papermc.generator.utils.Formatting;
 import io.papermc.generator.utils.Javadocs;
 import io.papermc.generator.utils.RegistryUtils;
 import io.papermc.paper.registry.RegistryKey;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Supplier;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.flag.FeatureElement;
 import net.minecraft.world.flag.FeatureFlags;
 import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
@@ -40,19 +42,21 @@ import static javax.lang.model.element.Modifier.STATIC;
 @DefaultQualifier(NonNull.class)
 public abstract class RegistryGenerator<T, A> extends SimpleGenerator {
 
-    private final Class<A> apiType;
+    private final ClassName apiType;
+    private final Registry<T> registry;
     protected final RegistryKey<A> apiRegistryKey;
-    private final Supplier<Registry<T>> registry;
     private final boolean isInterface;
     private final Supplier<List<ResourceKey<T>>> experimentalKeys;
+    private final boolean isFilteredRegistry;
 
-    protected RegistryGenerator(final String className, final Class<A> apiType, final String pkg, final RegistryKey<A> apiRegistryKey, final boolean isInterface) {
+    protected RegistryGenerator(final String className, final String pkg, final ResourceKey<? extends Registry<T>> registryKey, final RegistryKey<A> apiRegistryKey, final boolean isInterface) {
         super(className, pkg);
-        this.apiType = apiType;
-        this.registry = Suppliers.memoize(this::getRegistry);
+        this.apiType = ClassName.get(pkg, className);
+        this.registry = Main.REGISTRY_ACCESS.registryOrThrow(registryKey);
         this.apiRegistryKey = apiRegistryKey;
         this.isInterface = isInterface;
-        this.experimentalKeys = Suppliers.memoize(() -> RegistryUtils.collectExperimentalKeys(this.registry.get())); // need to cleanup a bit here
+        this.experimentalKeys = Suppliers.memoize(() -> RegistryUtils.collectExperimentalKeys(this.registry));
+        this.isFilteredRegistry = FeatureElement.FILTERED_REGISTRIES.contains(registryKey);
     }
 
     private MethodSpec.@Nullable Builder fetchMethod(TypeName returnType) {
@@ -89,32 +93,29 @@ public abstract class RegistryGenerator<T, A> extends SimpleGenerator {
     protected TypeSpec getTypeSpec() {
         TypeSpec.Builder typeBuilder = this.valueHolderType();
 
-        MethodSpec.@Nullable Builder fetchMethod = this.fetchMethod(TypeName.get(this.apiType)); // todo check runtime order issue when the classes are removed with the key generator
-
-        List<Map.Entry<ResourceKey<T>, T>> paths = new ArrayList<>(this.registry.get().entrySet());
-        paths.sort(Comparator.comparing(o -> o.getKey().location().getPath()));
+        MethodSpec.@Nullable Builder fetchMethod = this.fetchMethod(this.apiType); // todo check runtime order issue when the classes are removed with the key generator
 
         String registryField = requireNonNull(RegistryUtils.getRegistryKeyFieldNames().get(this.apiRegistryKey)); // those will use the new RegistryAccess that use the registry key
 
-        paths.forEach(entry -> {
-            ResourceKey<T> resourceKey = entry.getKey();
-            String pathKey = resourceKey.location().getPath();
+        for (Holder.Reference<T> entry : this.registry.holders().toList()) {
+            ResourceLocation key = entry.key().location();
+            String pathKey = key.getPath();
             String fieldName = Formatting.formatPathAsField(pathKey);
-            boolean isExperimental = this.isExperimental(entry);
 
             FieldSpec.Builder fieldBuilder = FieldSpec.builder(this.apiType, fieldName, PUBLIC, STATIC, FINAL)
-                .addJavadoc(Javadocs.getVersionDependentField("{@code $L}"), resourceKey.location().toString());
+                .addJavadoc(Javadocs.getVersionDependentField("{@code $L}"), key.toString());
             if (this.isInterface) {
                 fieldBuilder.initializer("$T.$L.get($T.minecraft($S))", org.bukkit.Registry.class, registryField, NamespacedKey.class, pathKey);
             } else {
                 fieldBuilder.initializer("$N($S)", fetchMethod.build(), pathKey);
             }
-            if (isExperimental) {
-                fieldBuilder.addAnnotations(Annotations.experimentalAnnotations(FeatureFlags.UPDATE_1_21));
+            @Nullable String experimentalValue = this.getExperimentalValue(entry);
+            if (experimentalValue != null) {
+                fieldBuilder.addAnnotations(Annotations.experimentalAnnotations(experimentalValue));
             }
 
             typeBuilder.addField(fieldBuilder.build());
-        });
+        }
 
         if (fetchMethod != null) {
             typeBuilder.addMethod(fetchMethod.build());
@@ -132,10 +133,15 @@ public abstract class RegistryGenerator<T, A> extends SimpleGenerator {
         return builder.skipJavaLangImports(true);
     }
 
-    public abstract Registry<T> getRegistry();
-
-    public boolean isExperimental(Map.Entry<ResourceKey<T>, T> entry) {
-        return this.experimentalKeys.get().contains(entry.getKey());
+    @Nullable
+    public String getExperimentalValue(Holder.Reference<T> reference) {
+        if (this.isFilteredRegistry && reference.value() instanceof FeatureElement element && FeatureFlags.isExperimental(element.requiredFeatures())) {
+            return Formatting.formatFeatureFlagSet(element.requiredFeatures());
+        }
+        if (this.experimentalKeys.get().contains(reference.key())) {
+            return Formatting.formatFeatureFlag(FeatureFlags.UPDATE_1_21);
+        }
+        return null;
     }
 
 }

@@ -22,9 +22,7 @@ public final class Javadocs {
         """.formatted(headerIdentifier);
     }
 
-    public static String getDeprecatedFor(String alternative) {
-        return "@deprecated in favour of {@link #%s}.".formatted(alternative);
-    }
+    public static final String DEPRECATED_FOR = "@deprecated in favour of {@link #$L}";
 
     private Javadocs() {
     }

@@ -5,6 +5,7 @@ import java.util.Set;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a tag that may be defined by the server or a resource pack to
@@ -26,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 @GeneratedFrom("1.20.4")
 public interface Tag<T extends Keyed> extends Keyed {
     /**
-     * Key for the built in block registry.
+     * Key for the built-in block registry.
      */
     String REGISTRY_BLOCKS = "blocks";
 
@@ -1235,7 +1236,7 @@ public interface Tag<T extends Keyed> extends Keyed {
     Tag<Material> WOOL_CARPETS = Bukkit.getTag(REGISTRY_BLOCKS, NamespacedKey.minecraft("wool_carpets"), Material.class);
 
     /**
-     * Key for the built in item registry.
+     * Key for the built-in item registry.
      */
     String REGISTRY_ITEMS = "items";
 
@@ -1933,7 +1934,7 @@ public interface Tag<T extends Keyed> extends Keyed {
     Tag<Material> ITEMS_WOOL_CARPETS = Bukkit.getTag(REGISTRY_ITEMS, NamespacedKey.minecraft("wool_carpets"), Material.class);
 
     /**
-     * Key for the built in fluid registry.
+     * Key for the built-in fluid registry.
      */
     String REGISTRY_FLUIDS = "fluids";
 
@@ -1952,7 +1953,7 @@ public interface Tag<T extends Keyed> extends Keyed {
     Tag<Fluid> FLUIDS_WATER = Bukkit.getTag(REGISTRY_FLUIDS, NamespacedKey.minecraft("water"), Fluid.class);
 
     /**
-     * Key for the built in entity_type registry.
+     * Key for the built-in entity_type registry.
      */
     String REGISTRY_ENTITY_TYPES = "entity_types";
 
@@ -1998,6 +1999,7 @@ public interface Tag<T extends Keyed> extends Keyed {
      */
     @ApiStatus.Experimental
     @MinecraftExperimental("update 1.21")
+    @Nullable
     Tag<EntityType> ENTITY_TYPES_CAN_TURN_IN_BOATS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("can_turn_in_boats"), EntityType.class);
 
     /**
@@ -2007,6 +2009,7 @@ public interface Tag<T extends Keyed> extends Keyed {
      */
     @ApiStatus.Experimental
     @MinecraftExperimental("update 1.21")
+    @Nullable
     Tag<EntityType> ENTITY_TYPES_DEFLECTS_ARROWS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("deflects_arrows"), EntityType.class);
 
     /**
@@ -2016,6 +2019,7 @@ public interface Tag<T extends Keyed> extends Keyed {
      */
     @ApiStatus.Experimental
     @MinecraftExperimental("update 1.21")
+    @Nullable
     Tag<EntityType> ENTITY_TYPES_DEFLECTS_TRIDENTS = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("deflects_tridents"), EntityType.class);
 
     /**
@@ -2103,7 +2107,7 @@ public interface Tag<T extends Keyed> extends Keyed {
     Tag<EntityType> ENTITY_TYPES_ZOMBIES = Bukkit.getTag(REGISTRY_ENTITY_TYPES, NamespacedKey.minecraft("zombies"), EntityType.class);
 
     /**
-     * Key for the built in game_event registry.
+     * Key for the built-in game_event registry.
      */
     String REGISTRY_GAME_EVENTS = "game_events";
 
@@ -2143,7 +2147,7 @@ public interface Tag<T extends Keyed> extends Keyed {
     Tag<GameEvent> GAME_EVENT_WARDEN_CAN_LISTEN = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("warden_can_listen"), GameEvent.class);
 
     /**
-     * @deprecated in favour of {@link #WOOL_CARPETS}.
+     * @deprecated in favour of {@link #WOOL_CARPETS}
      */
     @Deprecated
     Tag<Material> CARPETS = WOOL_CARPETS;

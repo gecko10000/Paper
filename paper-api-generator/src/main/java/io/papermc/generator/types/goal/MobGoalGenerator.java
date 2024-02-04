@@ -155,8 +155,8 @@ public class MobGoalGenerator extends SimpleGenerator {
         //</editor-fold>
     };
 
-    public MobGoalGenerator(final String keysClassName, final String pkg) {
-        super(keysClassName, pkg);
+    public MobGoalGenerator(final String className, final String pkg) {
+        super(className, pkg);
     }
 
     @Override
@@ -209,7 +209,7 @@ public class MobGoalGenerator extends SimpleGenerator {
             NamespacedKey key = value.getNamespacedKey();
 
             String keyPath = key.getKey();
-            String fieldName = Formatting.formatKeyAsField(key);
+            String fieldName = Formatting.formatPathAsField(keyPath);
             FieldSpec.Builder fieldBuilder = FieldSpec.builder(typedKey, fieldName, Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                 .initializer("$N($S, $T.class)", createMethod.build(), keyPath, value.getEntityClass());
             typeBuilder.addField(fieldBuilder.build());
@@ -217,10 +217,9 @@ public class MobGoalGenerator extends SimpleGenerator {
 
         for (final DeprecatedEntry value : DEPRECATED_ENTRIES) {
             TypeName typedKey = ParameterizedTypeName.get(GoalKey.class, value.entity);
-            NamespacedKey key = NamespacedKey.minecraft(value.entryName);
+            String keyPath = value.entryName;
 
-            String keyPath = key.getKey();
-            String fieldName = Formatting.formatKeyAsField(key);
+            String fieldName = Formatting.formatPathAsField(keyPath);
             FieldSpec.Builder fieldBuilder = FieldSpec.builder(typedKey, fieldName, Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
                 .addAnnotation(Annotations.deprecatedVersioned(value.removedVersion, value.removalVersion != null))
                 .initializer("$N($S, $T.class)", createMethod.build(), keyPath, value.entity);
