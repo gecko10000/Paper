@@ -48,8 +48,8 @@ public class SoundGenerator extends EnumRegistryGenerator<SoundEvent> {
 
     @Override
     public void addExtras(final TypeSpec.Builder builder, final FieldSpec keyField) {
-        builder.addSuperinterface(Sound.Type.class)
-            .addJavadoc(CLASS_HEADER);
+        builder.addSuperinterface(Sound.Type.class);
+        builder.addJavadoc(CLASS_HEADER);
     }
 
     @Override

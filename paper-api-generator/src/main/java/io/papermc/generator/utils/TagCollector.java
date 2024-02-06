@@ -34,7 +34,7 @@ public final class TagCollector {
         Map<TagKey<?>, String> perFeatureFlag = new HashMap<>();
         ImmutableMultimap.Builder<ResourceKey<? extends Registry<?>>, String> perRegistry = ImmutableMultimap.builder();
 
-        // first collect all vanilla tags
+        // collect all vanilla tags
         Multimap<ResourceKey<? extends Registry<?>>, String> vanillaTags = HashMultimap.create();
         resourceManager.listPacks().filter(packResources -> packResources.packId().equals(BuiltInPackSource.VANILLA_ID)).forEach(pack -> {
             collectFromPack(pack, vanillaTags::put);
@@ -75,6 +75,5 @@ public final class TagCollector {
     }
 
     private TagCollector() {
-
     }
 }

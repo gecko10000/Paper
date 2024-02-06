@@ -72,7 +72,7 @@ public class GeneratedKeyType<T, A> extends SimpleGenerator {
         final MethodSpec.Builder create = MethodSpec.methodBuilder("create")
             .addModifiers(this.publicCreateKeyMethod ? PUBLIC : PRIVATE, STATIC)
             .addParameter(keyParam)
-            .addCode("return $T.create($T.$L, $N);", TypedKey.class, RegistryKey.class, requireNonNull(RegistryUtils.getRegistryKeyFieldNames().get(this.apiRegistryKey), "Missing field for " + this.apiRegistryKey), keyParam)
+            .addCode("return $T.create($T.$L, $N);", TypedKey.class, RegistryKey.class, requireNonNull(RegistryUtils.REGISTRY_KEY_FIELD_NAMES.get(this.apiRegistryKey), "Missing field for " + this.apiRegistryKey), keyParam)
             .returns(returnType.annotated(NOT_NULL));
         if (this.publicCreateKeyMethod) {
             create.addAnnotation(EXPERIMENTAL_API_ANNOTATION); // TODO remove once not experimental
@@ -84,7 +84,7 @@ public class GeneratedKeyType<T, A> extends SimpleGenerator {
     private TypeSpec.Builder keyHolderType() {
         return classBuilder(this.className)
             .addModifiers(PUBLIC, FINAL)
-            .addJavadoc(Javadocs.getVersionDependentClassHeader("{@link $T#$L}"), RegistryKey.class, RegistryUtils.getRegistryKeyFieldNames().get(this.apiRegistryKey))
+            .addJavadoc(Javadocs.getVersionDependentClassHeader("{@link $T#$L}"), RegistryKey.class, RegistryUtils.REGISTRY_KEY_FIELD_NAMES.get(this.apiRegistryKey))
             .addAnnotations(Annotations.CLASS_HEADER)
             .addMethod(MethodSpec.constructorBuilder()
                 .addModifiers(PRIVATE)
@@ -100,7 +100,7 @@ public class GeneratedKeyType<T, A> extends SimpleGenerator {
         final MethodSpec.Builder createMethod = this.createMethod(typedKey);
 
         boolean allExperimental = true;
-        for (final Holder.Reference<T> reference : this.registry.holders().toList()) {
+        for (final Holder.Reference<T> reference : this.registry.holders().sorted(Formatting.ALPHABETICALLY_HOLDER_ORDER).toList()) {
             final ResourceKey<T> key = reference.key();
             final String keyPath = key.location().getPath();
             final String fieldName = Formatting.formatPathAsField(keyPath);
@@ -108,7 +108,7 @@ public class GeneratedKeyType<T, A> extends SimpleGenerator {
                 .initializer("$N(key($S))", createMethod.build(), keyPath)
                 .addJavadoc(Javadocs.getVersionDependentField("{@code $L}"), key.location().toString());
 
-            final @Nullable String experimentalValue = getExperimentalValue(reference);
+            final @Nullable String experimentalValue = this.getExperimentalValue(reference);
             if (experimentalValue != null) {
                 fieldBuilder.addAnnotations(experimentalAnnotations(experimentalValue));
             } else {
@@ -118,8 +118,8 @@ public class GeneratedKeyType<T, A> extends SimpleGenerator {
         }
 
         if (allExperimental) {
-            typeBuilder.addAnnotations(experimentalAnnotations(FeatureFlags.UPDATE_1_21));
-            createMethod.addAnnotations(experimentalAnnotations(FeatureFlags.UPDATE_1_21));
+            typeBuilder.addAnnotations(experimentalAnnotations(""));
+            createMethod.addAnnotations(experimentalAnnotations(""));
         } else {
             typeBuilder.addAnnotation(EXPERIMENTAL_API_ANNOTATION); // TODO experimental API
         }
@@ -128,10 +128,7 @@ public class GeneratedKeyType<T, A> extends SimpleGenerator {
 
     @Override
     protected JavaFile.Builder file(JavaFile.Builder builder) {
-        return builder
-            .skipJavaLangImports(true)
-            .addStaticImport(Key.class, "key")
-            .indent("    ");
+        return builder.addStaticImport(Key.class, "key");
     }
 
     @Nullable

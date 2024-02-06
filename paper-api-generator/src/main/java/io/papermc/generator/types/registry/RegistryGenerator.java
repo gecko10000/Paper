@@ -3,7 +3,6 @@ package io.papermc.generator.types.registry;
 import com.google.common.base.Suppliers;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
@@ -70,7 +69,7 @@ public abstract class RegistryGenerator<T, A> extends SimpleGenerator {
         final MethodSpec.Builder fetch = MethodSpec.methodBuilder("fetch")
             .addModifiers(PRIVATE, STATIC)
             .addParameter(keyParam)
-            .addCode("return $T.$L.get($T.minecraft($N));", org.bukkit.Registry.class, requireNonNull(RegistryUtils.getRegistryKeyFieldNames().get(this.apiRegistryKey), "Missing field for " + this.apiRegistryKey), NamespacedKey.class, keyParam)
+            .addCode("return $T.$L.get($T.minecraft($N));", org.bukkit.Registry.class, requireNonNull(RegistryUtils.REGISTRY_KEY_FIELD_NAMES.get(this.apiRegistryKey), "Missing field for " + this.apiRegistryKey), NamespacedKey.class, keyParam)
             .returns(returnType.annotated(NOT_NULL));
         return fetch;
     }
@@ -93,12 +92,12 @@ public abstract class RegistryGenerator<T, A> extends SimpleGenerator {
     protected TypeSpec getTypeSpec() {
         TypeSpec.Builder typeBuilder = this.valueHolderType();
 
-        MethodSpec.@Nullable Builder fetchMethod = this.fetchMethod(this.apiType); // todo check runtime order issue when the classes are removed with the key generator
+        MethodSpec.@Nullable Builder fetchMethod = this.fetchMethod(this.apiType); // todo runtime order issue when the classes are removed with the key generator + paper-api can't compile without some api
 
-        String registryField = requireNonNull(RegistryUtils.getRegistryKeyFieldNames().get(this.apiRegistryKey)); // those will use the new RegistryAccess that use the registry key
+        String registryField = requireNonNull(RegistryUtils.REGISTRY_KEY_FIELD_NAMES.get(this.apiRegistryKey)); // those will use the new RegistryAccess that use the registry key
 
-        for (Holder.Reference<T> entry : this.registry.holders().toList()) {
-            ResourceLocation key = entry.key().location();
+        this.registry.holders().sorted(Formatting.ALPHABETICALLY_HOLDER_ORDER).forEach(reference -> {
+            ResourceLocation key = reference.key().location();
             String pathKey = key.getPath();
             String fieldName = Formatting.formatPathAsField(pathKey);
 
@@ -109,13 +108,13 @@ public abstract class RegistryGenerator<T, A> extends SimpleGenerator {
             } else {
                 fieldBuilder.initializer("$N($S)", fetchMethod.build(), pathKey);
             }
-            @Nullable String experimentalValue = this.getExperimentalValue(entry);
+            @Nullable String experimentalValue = this.getExperimentalValue(reference);
             if (experimentalValue != null) {
                 fieldBuilder.addAnnotations(Annotations.experimentalAnnotations(experimentalValue));
             }
 
             typeBuilder.addField(fieldBuilder.build());
-        }
+        });
 
         if (fetchMethod != null) {
             typeBuilder.addMethod(fetchMethod.build());
@@ -127,11 +126,6 @@ public abstract class RegistryGenerator<T, A> extends SimpleGenerator {
     }
 
     public abstract void addExtras(TypeSpec.Builder builder);
-
-    @Override
-    protected JavaFile.Builder file(JavaFile.Builder builder) {
-        return builder.skipJavaLangImports(true);
-    }
 
     @Nullable
     public String getExperimentalValue(Holder.Reference<T> reference) {

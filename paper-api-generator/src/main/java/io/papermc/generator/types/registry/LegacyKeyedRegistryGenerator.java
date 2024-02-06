@@ -38,7 +38,7 @@ public class LegacyKeyedRegistryGenerator<T, A> extends RegistryGenerator<T, A> 
         builder.addMethod(MethodSpec.methodBuilder("getKey")
             .addModifiers(PUBLIC, ABSTRACT)
             .returns(NamespacedKey.class)
-            .addJavadoc(GET_KEY_JAVADOC, org.bukkit.Registry.class, Keyed.class, org.bukkit.Registry.class, requireNonNull(RegistryUtils.getRegistryKeyFieldNames().get(this.apiRegistryKey), "Missing field for " + this.apiRegistryKey), this.className)
+            .addJavadoc(GET_KEY_JAVADOC, org.bukkit.Registry.class, Keyed.class, org.bukkit.Registry.class, requireNonNull(RegistryUtils.REGISTRY_KEY_FIELD_NAMES.get(this.apiRegistryKey), "Missing field for " + this.apiRegistryKey), this.className)
             .addAnnotation(Annotations.deprecatedVersioned("1.20.4", true))
             .addAnnotation(OVERRIDE)
             .addAnnotation(NOT_NULL).build());

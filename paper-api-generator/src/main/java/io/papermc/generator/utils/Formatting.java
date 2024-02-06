@@ -1,9 +1,11 @@
 package io.papermc.generator.utils;
 
+import java.util.Comparator;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import net.kyori.adventure.key.Key;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -66,6 +68,8 @@ public final class Formatting {
         }
         return Optional.of(resourcePath.substring(tagsIndex + tagDir.length() + 1, dotIndex)); // namespace/tags/registry_key/[tag_key].json
     }
+
+    public static final Comparator<Holder.Reference<?>> ALPHABETICALLY_HOLDER_ORDER = Comparator.comparing(reference -> reference.key().location().getPath());
 
     private Formatting() {
     }

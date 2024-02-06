@@ -1122,7 +1122,7 @@ public interface VanillaGoal<T extends Mob> extends Goal<T> {
     )
     GoalKey<Mob> UNIVERSAL_ANGER_RESET = create("universal_anger_reset", Mob.class);
 
-    private static @NotNull GoalKey create(final @NotNull String key, final @NotNull Class clazz) {
-        return GoalKey.of(clazz, NamespacedKey.minecraft(key));
+    private static @NotNull GoalKey create(final @NotNull String key, final @NotNull Class type) {
+        return GoalKey.of(type, NamespacedKey.minecraft(key));
     }
 }

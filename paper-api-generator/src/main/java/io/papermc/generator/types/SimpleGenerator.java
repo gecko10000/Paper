@@ -19,18 +19,21 @@ public abstract class SimpleGenerator implements SourceGenerator {
 
     protected abstract TypeSpec getTypeSpec();
 
-    protected abstract JavaFile.Builder file(JavaFile.Builder builder);
+    protected JavaFile.Builder file(JavaFile.Builder builder) {
+        return builder;
+    }
 
     @Override
     public void writeToFile(Path parent) throws IOException {
         Path packagePath = parent.resolve(this.packageName.replace('.', '/'));
         Files.createDirectories(packagePath);
 
-        JavaFile.Builder builder = JavaFile.builder(this.packageName, this.getTypeSpec())
-            .indent("    ");
-        this.file(builder);
+        JavaFile.Builder builder = JavaFile.builder(this.packageName, this.getTypeSpec());
+        this.file(builder)
+            .indent("    ")
+            .skipJavaLangImports(true);
 
-        Files.writeString(packagePath.resolve(this.className + ".java"), this.file(builder).build().toString(), StandardCharsets.UTF_8);
+        Files.writeString(packagePath.resolve(this.className + ".java"), builder.build().toString(), StandardCharsets.UTF_8);
     }
 
 }

@@ -1,6 +1,5 @@
 package io.papermc.generator.types.enumgen;
 
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.TypeSpec;
 import io.papermc.generator.types.SimpleGenerator;
 import io.papermc.generator.utils.Annotations;
@@ -29,12 +28,6 @@ public class EnumGenerator<T extends Enum<T>> extends SimpleGenerator {
         }
 
         return typeBuilder.build();
-    }
-
-    @Override
-    protected JavaFile.Builder file(JavaFile.Builder builder) {
-        return builder
-            .skipJavaLangImports(true);
     }
 
 }

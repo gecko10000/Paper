@@ -2,7 +2,6 @@ package io.papermc.generator.types.registry;
 
 import com.google.common.base.Suppliers;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
@@ -49,19 +48,19 @@ public abstract class EnumRegistryGenerator<T> extends SimpleGenerator {
             .addModifiers(Modifier.PUBLIC)
             .addAnnotations(Annotations.CLASS_HEADER);
 
-        for (Holder.Reference<T> entry : this.registry.holders().toList()) {
-            ResourceKey<T> resourceKey = entry.key();
+        this.registry.holders().sorted(Formatting.ALPHABETICALLY_HOLDER_ORDER).forEach(reference -> {
+            ResourceKey<T> resourceKey = reference.key();
             String pathKey = resourceKey.location().getPath();
 
             String fieldName = Formatting.formatPathAsField(pathKey);
-            @Nullable String experimentalValue = this.getExperimentalValue(entry);
+            @Nullable String experimentalValue = this.getExperimentalValue(reference);
             TypeSpec.Builder builder = TypeSpec.anonymousClassBuilder("$S", pathKey);
             if (experimentalValue != null) {
                 builder.addAnnotations(Annotations.experimentalAnnotations(experimentalValue));
             }
 
             typeBuilder.addEnumConstant(fieldName, builder.build());
-        }
+        });
 
         FieldSpec keyField = FieldSpec.builder(NamespacedKey.class, "key", PRIVATE, FINAL).build();
         typeBuilder.addField(keyField);
@@ -83,11 +82,6 @@ public abstract class EnumRegistryGenerator<T> extends SimpleGenerator {
     }
 
     public abstract void addExtras(TypeSpec.Builder builder, FieldSpec keyField);
-
-    @Override
-    protected JavaFile.Builder file(JavaFile.Builder builder) {
-        return builder.skipJavaLangImports(true);
-    }
 
     @Nullable
     public String getExperimentalValue(Holder.Reference<T> reference) {

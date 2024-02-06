@@ -4,7 +4,6 @@ import com.destroystokyo.paper.entity.RangedEntity;
 import com.destroystokyo.paper.entity.ai.GoalKey;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
-import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
@@ -161,20 +160,18 @@ public class MobGoalGenerator extends SimpleGenerator {
 
     @Override
     protected TypeSpec getTypeSpec() {
-        TypeName clazzType = TypeName.get(Class.class)
+        TypeName entityType = TypeName.get(Class.class)
             .annotated(Annotations.NOT_NULL);
         TypeName keyType = TypeName.get(String.class)
             .annotated(Annotations.NOT_NULL);
 
+        ParameterSpec keyParam = ParameterSpec.builder(keyType, "key", Modifier.FINAL).build();
+        ParameterSpec typeParam = ParameterSpec.builder(entityType, "type", Modifier.FINAL).build();
         MethodSpec.Builder createMethod = MethodSpec.methodBuilder("create")
             .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
-            .addParameter(ParameterSpec.builder(keyType, "key", Modifier.FINAL)
-                .build()
-            )
-            .addParameter(ParameterSpec.builder(clazzType, "clazz", Modifier.FINAL)
-                .build()
-            )
-            .addCode("return $T.of(clazz, $T.minecraft(key));", GoalKey.class, NamespacedKey.class)
+            .addParameter(keyParam)
+            .addParameter(typeParam)
+            .addCode("return $T.of($N, $T.minecraft($N));", GoalKey.class, typeParam, NamespacedKey.class, keyParam)
             .returns(ParameterizedTypeName.get(GoalKey.class).annotated(Annotations.NOT_NULL));
 
 
@@ -198,7 +195,7 @@ public class MobGoalGenerator extends SimpleGenerator {
             .map(goalClass -> new VanillaGoalKey(goalClass, MobGoalNames.getKey(goalClass.getName(), (Class<? extends Goal>) goalClass)))
             .filter((key) -> !MobGoalNames.isIgnored(key.key().getNamespacedKey().getKey()))
             .sorted(Comparator.<VanillaGoalKey, String>comparing(o -> o.key().getEntityClass().getSimpleName())
-                .thenComparing(vanillaGoalKey -> vanillaGoalKey.key.getNamespacedKey().getKey())
+                .thenComparing(vanillaGoalKey -> vanillaGoalKey.key().getNamespacedKey().getKey())
             )
             .toList();
 
@@ -235,12 +232,6 @@ public class MobGoalGenerator extends SimpleGenerator {
         }
 
         return typeBuilder.addMethod(createMethod.build()).build();
-    }
-
-    @Override
-    protected JavaFile.Builder file(JavaFile.Builder builder) {
-        return builder
-            .skipJavaLangImports(true);
     }
 
     record VanillaGoalKey(Class<?> clazz, GoalKey<?> key) {

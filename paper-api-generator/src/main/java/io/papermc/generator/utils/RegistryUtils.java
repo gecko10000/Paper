@@ -32,7 +32,7 @@ public class RegistryUtils {
         return experimental;
     }
 
-    private static final Map<RegistryKey<?>, String> REGISTRY_KEY_FIELD_NAMES;
+    public static final Map<RegistryKey<?>, String> REGISTRY_KEY_FIELD_NAMES;
     static {
         final Map<RegistryKey<?>, String> map = new IdentityHashMap<>();
         try {
@@ -46,9 +46,5 @@ public class RegistryUtils {
         } catch (final ReflectiveOperationException ex) {
             throw new RuntimeException(ex);
         }
-    }
-
-    public static Map<RegistryKey<?>, String> getRegistryKeyFieldNames() {
-        return REGISTRY_KEY_FIELD_NAMES;
     }
 }
