@@ -124,7 +124,7 @@ public class TagGenerator extends SimpleGenerator {
 
             final String fieldPrefix = Formatting.formatTagFieldPrefix(tagRegistry.name(), registryKey);
 
-            registry.getTagNames().sorted(Comparator.comparing(tagKey -> tagKey.location().getPath())).forEach(tagKey -> {
+            registry.getTagNames().sorted(Formatting.alphabeticOrder(tagKey -> tagKey.location().getPath())).forEach(tagKey -> {
                 final String keyPath = tagKey.location().getPath();
 
                 final String fieldName = fieldPrefix + Formatting.formatPathAsField(keyPath);

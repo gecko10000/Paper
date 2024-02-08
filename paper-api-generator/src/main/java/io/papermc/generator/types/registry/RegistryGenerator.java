@@ -96,7 +96,7 @@ public abstract class RegistryGenerator<T, A> extends SimpleGenerator {
 
         String registryField = requireNonNull(RegistryUtils.REGISTRY_KEY_FIELD_NAMES.get(this.apiRegistryKey)); // those will use the new RegistryAccess that use the registry key
 
-        this.registry.holders().sorted(Formatting.ALPHABETICALLY_HOLDER_ORDER).forEach(reference -> {
+        this.registry.holders().sorted(Formatting.alphabeticOrder(reference -> reference.key().location().getPath())).forEach(reference -> {
             ResourceLocation key = reference.key().location();
             String pathKey = key.getPath();
             String fieldName = Formatting.formatPathAsField(pathKey);

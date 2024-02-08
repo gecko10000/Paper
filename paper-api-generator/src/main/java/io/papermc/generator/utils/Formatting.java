@@ -3,9 +3,10 @@ package io.papermc.generator.utils;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.Set;
+import com.google.common.base.Function;
 import net.kyori.adventure.key.Key;
-import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -13,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.flag.FeatureFlag;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
+import org.apache.commons.lang3.math.NumberUtils;
 
 public final class Formatting {
 
@@ -69,7 +71,32 @@ public final class Formatting {
         return Optional.of(resourcePath.substring(tagsIndex + tagDir.length() + 1, dotIndex)); // namespace/tags/registry_key/[tag_key].json
     }
 
-    public static final Comparator<Holder.Reference<?>> ALPHABETICALLY_HOLDER_ORDER = Comparator.comparing(reference -> reference.key().location().getPath());
+    public static <T> Comparator<T> alphabeticOrder(Function<T, String> mapper) {
+        return (o1, o2) -> {
+            String path1 = mapper.apply(o1);
+            String path2 = mapper.apply(o2);
+
+            OptionalInt trailingInt1 = tryParseTrailingInt(path1);
+            OptionalInt trailingInt2 = tryParseTrailingInt(path2);
+
+            if (trailingInt1.isPresent() && trailingInt2.isPresent()) {
+                return Integer.compare(trailingInt1.getAsInt(), trailingInt2.getAsInt());
+            }
+
+            return path1.compareTo(path2);
+        };
+    }
+
+    private static OptionalInt tryParseTrailingInt(String path) {
+        int delimiterIndex = path.lastIndexOf('_');
+        if (delimiterIndex != -1) {
+            String score = path.substring(delimiterIndex + 1);
+            if (NumberUtils.isDigits(score)) {
+                return OptionalInt.of(Integer.parseInt(score));
+            }
+        }
+        return OptionalInt.empty();
+    }
 
     private Formatting() {
     }

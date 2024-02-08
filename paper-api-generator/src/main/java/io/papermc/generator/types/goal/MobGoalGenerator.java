@@ -10,6 +10,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
+import com.squareup.javapoet.WildcardTypeName;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
 import io.papermc.generator.types.SimpleGenerator;
@@ -160,7 +161,7 @@ public class MobGoalGenerator extends SimpleGenerator {
 
     @Override
     protected TypeSpec getTypeSpec() {
-        TypeName entityType = TypeName.get(Class.class)
+        TypeName entityType = ParameterizedTypeName.get(ClassName.get(Class.class), WildcardTypeName.subtypeOf(Mob.class))
             .annotated(Annotations.NOT_NULL);
         TypeName keyType = TypeName.get(String.class)
             .annotated(Annotations.NOT_NULL);
@@ -184,15 +185,15 @@ public class MobGoalGenerator extends SimpleGenerator {
             .addJavadoc(CLASS_HEADER);
 
 
-        List<Class<?>> classes;
+        List<Class<Goal>> classes;
         try (ScanResult scanResult = new ClassGraph().enableAllInfo().whitelistPackages("net.minecraft").scan()) {
-            classes = scanResult.getSubclasses(net.minecraft.world.entity.ai.goal.Goal.class.getName()).loadClasses();
+            classes = scanResult.getSubclasses(Goal.class.getName()).loadClasses(Goal.class);
         }
 
         List<VanillaGoalKey> vanillaNames = classes.stream()
             .filter(clazz -> !java.lang.reflect.Modifier.isAbstract(clazz.getModifiers()))
             .filter(clazz -> !WrappedGoal.class.equals(clazz)) // TODO - properly fix
-            .map(goalClass -> new VanillaGoalKey(goalClass, MobGoalNames.getKey(goalClass.getName(), (Class<? extends Goal>) goalClass)))
+            .map(goalClass -> new VanillaGoalKey(goalClass, MobGoalNames.getKey(goalClass.getName(), goalClass)))
             .filter((key) -> !MobGoalNames.isIgnored(key.key().getNamespacedKey().getKey()))
             .sorted(Comparator.<VanillaGoalKey, String>comparing(o -> o.key().getEntityClass().getSimpleName())
                 .thenComparing(vanillaGoalKey -> vanillaGoalKey.key().getNamespacedKey().getKey())
@@ -234,12 +235,11 @@ public class MobGoalGenerator extends SimpleGenerator {
         return typeBuilder.addMethod(createMethod.build()).build();
     }
 
-    record VanillaGoalKey(Class<?> clazz, GoalKey<?> key) {
+    record VanillaGoalKey(Class<? extends Goal> clazz, GoalKey<?> key) {
     }
 
-    record DeprecatedEntry(Class<?> entity, String entryName, @Nullable String removalVersion,
+    record DeprecatedEntry(Class<? extends Mob> entity, String entryName, @Nullable String removalVersion,
                            @Nullable String removedVersion) {
-
     }
 
 }

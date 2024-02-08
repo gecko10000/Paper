@@ -293,48 +293,6 @@ public final class GameEventKeys {
     public static final TypedKey<GameEvent> RESONATE_1 = create(key("resonate_1"));
 
     /**
-     * {@code minecraft:resonate_10}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    public static final TypedKey<GameEvent> RESONATE_10 = create(key("resonate_10"));
-
-    /**
-     * {@code minecraft:resonate_11}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    public static final TypedKey<GameEvent> RESONATE_11 = create(key("resonate_11"));
-
-    /**
-     * {@code minecraft:resonate_12}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    public static final TypedKey<GameEvent> RESONATE_12 = create(key("resonate_12"));
-
-    /**
-     * {@code minecraft:resonate_13}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    public static final TypedKey<GameEvent> RESONATE_13 = create(key("resonate_13"));
-
-    /**
-     * {@code minecraft:resonate_14}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    public static final TypedKey<GameEvent> RESONATE_14 = create(key("resonate_14"));
-
-    /**
-     * {@code minecraft:resonate_15}
-     *
-     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
-     */
-    public static final TypedKey<GameEvent> RESONATE_15 = create(key("resonate_15"));
-
-    /**
      * {@code minecraft:resonate_2}
      *
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
@@ -389,6 +347,48 @@ public final class GameEventKeys {
      * @apiNote This field is version-dependant and may be removed in future Minecraft versions
      */
     public static final TypedKey<GameEvent> RESONATE_9 = create(key("resonate_9"));
+
+    /**
+     * {@code minecraft:resonate_10}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    public static final TypedKey<GameEvent> RESONATE_10 = create(key("resonate_10"));
+
+    /**
+     * {@code minecraft:resonate_11}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    public static final TypedKey<GameEvent> RESONATE_11 = create(key("resonate_11"));
+
+    /**
+     * {@code minecraft:resonate_12}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    public static final TypedKey<GameEvent> RESONATE_12 = create(key("resonate_12"));
+
+    /**
+     * {@code minecraft:resonate_13}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    public static final TypedKey<GameEvent> RESONATE_13 = create(key("resonate_13"));
+
+    /**
+     * {@code minecraft:resonate_14}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    public static final TypedKey<GameEvent> RESONATE_14 = create(key("resonate_14"));
+
+    /**
+     * {@code minecraft:resonate_15}
+     *
+     * @apiNote This field is version-dependant and may be removed in future Minecraft versions
+     */
+    public static final TypedKey<GameEvent> RESONATE_15 = create(key("resonate_15"));
 
     /**
      * {@code minecraft:sculk_sensor_tendrils_clicking}

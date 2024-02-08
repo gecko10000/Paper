@@ -48,7 +48,7 @@ public abstract class EnumRegistryGenerator<T> extends SimpleGenerator {
             .addModifiers(Modifier.PUBLIC)
             .addAnnotations(Annotations.CLASS_HEADER);
 
-        this.registry.holders().sorted(Formatting.ALPHABETICALLY_HOLDER_ORDER).forEach(reference -> {
+        this.registry.holders().sorted(Formatting.alphabeticOrder(reference -> reference.key().location().getPath())).forEach(reference -> {
             ResourceKey<T> resourceKey = reference.key();
             String pathKey = resourceKey.location().getPath();
 

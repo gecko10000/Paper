@@ -100,7 +100,7 @@ public class GeneratedKeyType<T, A> extends SimpleGenerator {
         final MethodSpec.Builder createMethod = this.createMethod(typedKey);
 
         boolean allExperimental = true;
-        for (final Holder.Reference<T> reference : this.registry.holders().sorted(Formatting.ALPHABETICALLY_HOLDER_ORDER).toList()) {
+        for (final Holder.Reference<T> reference : this.registry.holders().sorted(Formatting.alphabeticOrder(reference -> reference.key().location().getPath())).toList()) {
             final ResourceKey<T> key = reference.key();
             final String keyPath = key.location().getPath();
             final String fieldName = Formatting.formatPathAsField(keyPath);
