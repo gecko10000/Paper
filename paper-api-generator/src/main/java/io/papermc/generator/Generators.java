@@ -2,13 +2,16 @@ package io.papermc.generator;
 
 import io.papermc.generator.rewriter.SourceRewriter;
 import io.papermc.generator.rewriter.types.EnumRegistryRewriter;
+import io.papermc.generator.utils.ExperimentalSounds;
 import io.papermc.generator.types.registry.GeneratedKeyType;
 import io.papermc.generator.types.SourceGenerator;
 import io.papermc.generator.types.goal.MobGoalGenerator;
 import io.papermc.paper.registry.RegistryKey;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.sounds.SoundEvent;
 import org.bukkit.Fluid;
 import org.bukkit.GameEvent;
 import org.bukkit.Sound;
@@ -42,7 +45,16 @@ public interface Generators {
     SourceRewriter[] API_REWRITE = {
         //new EnumCloneRewriter(Pose.class, net.minecraft.world.entity.Pose.class, "Pose", false)
         new EnumRegistryRewriter<>(Fluid.class, Registries.FLUID, "Fluid", false),
-        new EnumRegistryRewriter<>(Sound.class, Registries.SOUND_EVENT, "Sound", true),
+        new EnumRegistryRewriter<>(Sound.class, Registries.SOUND_EVENT, "Sound", true) {
+            @Override
+            public String getExperimentalValue(Holder.Reference<SoundEvent> reference) {
+                String result = super.getExperimentalValue(reference);
+                if (result != null) {
+                    return result;
+                }
+                return ExperimentalSounds.findExperimentalValue(reference.key().location());
+            }
+        },
         new EnumRegistryRewriter<>(Attribute.class, Registries.ATTRIBUTE, "Attribute", true),
         new EnumRegistryRewriter<>(Biome.class, Registries.BIOME, "Biome", false),
         //new EnumRegistryRewriter<>(EntityType.class, Registries.ENTITY_TYPE, "EntityType", false) seems complex to get the typeId?
