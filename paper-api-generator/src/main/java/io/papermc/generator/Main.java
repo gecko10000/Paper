@@ -2,6 +2,7 @@ package io.papermc.generator;
 
 import com.google.common.util.concurrent.MoreExecutors;
 import com.mojang.logging.LogUtils;
+import io.papermc.generator.rewriter.SourceRewriter;
 import io.papermc.generator.types.SourceGenerator;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,6 +31,7 @@ public final class Main {
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final RegistryAccess.Frozen REGISTRY_ACCESS;
     public static final TagResult EXPERIMENTAL_TAGS;
+    public static Path generatedPath;
 
     static {
         SharedConstants.tryDetectVersion();
@@ -50,9 +52,9 @@ public final class Main {
 
     public static void main(final String[] args) {
         LOGGER.info("Running API generators...");
-        generate(Path.of(args[0]), Generators.API);
-        // LOGGER.info("Running Server generators...");
-        // generate(Path.of(args[1]), Generators.SERVER);
+        Main.generatedPath = Path.of(args[0]); // todo remove
+        generate(Main.generatedPath, Generators.API);
+        apply(Path.of(args[1]), Generators.API_REWRITE);
     }
 
     private static void generate(Path output, SourceGenerator[] generators) {
@@ -63,6 +65,18 @@ public final class Main {
             Files.createDirectories(output);
 
             for (final SourceGenerator generator : generators) {
+                generator.writeToFile(output);
+            }
+
+            LOGGER.info("Files written to {}", output.toAbsolutePath());
+        } catch (final Exception ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private static void apply(Path output, SourceRewriter[] generators) {
+        try {
+            for (final SourceRewriter generator : generators) {
                 generator.writeToFile(output);
             }
 

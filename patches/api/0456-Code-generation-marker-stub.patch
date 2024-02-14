@@ -1,0 +1,86 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Lulu13022002 <41980282+Lulu13022002@users.noreply.github.com>
+Date: Wed, 14 Feb 2024 19:33:27 +0100
+Subject: [PATCH] Code generation marker stub
+
+
+diff --git a/src/main/java/org/bukkit/Fluid.java b/src/main/java/org/bukkit/Fluid.java
+index 7202b44a65e8699cf64329e441e83d4dd1779c19..ebcef7cdbcd402010af13d9fb055b3a3f6ce665e 100644
+--- a/src/main/java/org/bukkit/Fluid.java
++++ b/src/main/java/org/bukkit/Fluid.java
+@@ -8,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
+  */
+ public enum Fluid implements Keyed {
+ 
++    // Paper start - Generated/Fluid
+     // Paper start
+     /**
+      * No fluid.
+@@ -30,6 +31,7 @@ public enum Fluid implements Keyed {
+      * Flowing lava.
+      */
+     FLOWING_LAVA;
++    // Paper end - Generated/Fluid
+ 
+     private final NamespacedKey key;
+ 
+diff --git a/src/main/java/org/bukkit/Sound.java b/src/main/java/org/bukkit/Sound.java
+index bb1b6bc9349af6dec369420035e860921da52589..98bdf175bea2f559655ccb96ceb900669752fbb5 100644
+--- a/src/main/java/org/bukkit/Sound.java
++++ b/src/main/java/org/bukkit/Sound.java
+@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
+  */
+ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type { // Paper - implement Sound.Type
+ 
++    // Paper start - Generated/Sound
+     AMBIENT_BASALT_DELTAS_ADDITIONS("ambient.basalt_deltas.additions"),
+     AMBIENT_BASALT_DELTAS_LOOP("ambient.basalt_deltas.loop"),
+     AMBIENT_BASALT_DELTAS_MOOD("ambient.basalt_deltas.mood"),
+@@ -1653,6 +1654,7 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type { // Pa
+     UI_TOAST_OUT("ui.toast.out"),
+     WEATHER_RAIN("weather.rain"),
+     WEATHER_RAIN_ABOVE("weather.rain.above");
++    // Paper end - Generated/Sound
+ 
+     private final NamespacedKey key;
+ 
+diff --git a/src/main/java/org/bukkit/attribute/Attribute.java b/src/main/java/org/bukkit/attribute/Attribute.java
+index 37f93b7e9f722e76631c3e7d3e770526ee0c3926..ee18e01cf5407ee1c6bd2626431bd283d0db56b2 100644
+--- a/src/main/java/org/bukkit/attribute/Attribute.java
++++ b/src/main/java/org/bukkit/attribute/Attribute.java
+@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
+  */
+ public enum Attribute implements Keyed, net.kyori.adventure.translation.Translatable { // Paper - Adventure translations
+ 
++    // Paper start - Generated/Attribute
+     /**
+      * Maximum health of an Entity.
+      */
+@@ -65,6 +66,7 @@ public enum Attribute implements Keyed, net.kyori.adventure.translation.Translat
+      * Chance of a zombie to spawn reinforcements.
+      */
+     ZOMBIE_SPAWN_REINFORCEMENTS("zombie.spawn_reinforcements");
++    // Paper end - Generated/Attribute
+ 
+     private final NamespacedKey key;
+ 
+diff --git a/src/main/java/org/bukkit/block/Biome.java b/src/main/java/org/bukkit/block/Biome.java
+index 5d8fa5b39a5d50cca48ba63af3a84b80f279b649..c6ea69c0d05aef5a29b758dbd3ea4c84a7587f6b 100644
+--- a/src/main/java/org/bukkit/block/Biome.java
++++ b/src/main/java/org/bukkit/block/Biome.java
+@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
+  * Holds all accepted Biomes in the default server
+  */
+ public enum Biome implements Keyed, net.kyori.adventure.translation.Translatable { // Paper
++    // Paper start - Generated/Biome
+     OCEAN,
+     PLAINS,
+     DESERT,
+@@ -73,6 +74,7 @@ public enum Biome implements Keyed, net.kyori.adventure.translation.Translatable
+     JAGGED_PEAKS,
+     STONY_PEAKS,
+     CHERRY_GROVE,
++    // Paper end - Generated/Biome
+     /**
+      * Represents a custom Biome
+      */
