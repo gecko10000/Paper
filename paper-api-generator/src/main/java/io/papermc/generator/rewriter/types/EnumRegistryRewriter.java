@@ -41,7 +41,7 @@ public class EnumRegistryRewriter<T, A extends Enum<A>> extends SearchReplaceRew
             ResourceKey<T> resourceKey = reference.key();
             String pathKey = resourceKey.location().getPath();
 
-            String fieldName = Formatting.formatPathAsField(pathKey);
+            String fieldName = this.rewriteFieldName(reference);
             String experimentalValue = this.getExperimentalValue(reference);
             if (experimentalValue != null) {
                 Annotations.experimentalAnnotations(builder, metadata::indent, experimentalValue);
@@ -58,6 +58,10 @@ public class EnumRegistryRewriter<T, A extends Enum<A>> extends SearchReplaceRew
             }
             builder.append('\n');
         }
+    }
+
+    public String rewriteFieldName(Holder.Reference<T> reference) {
+        return Formatting.formatPathAsField(reference.key().location().getPath());
     }
 
     @Nullable

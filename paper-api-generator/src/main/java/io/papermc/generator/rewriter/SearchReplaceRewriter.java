@@ -2,6 +2,7 @@ package io.papermc.generator.rewriter;
 
 import io.papermc.generator.Main;
 import io.papermc.generator.rewriter.utils.Annotations;
+import io.papermc.generator.utils.Formatting;
 import io.papermc.paper.generated.GeneratedFrom;
 import net.minecraft.SharedConstants;
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class SearchReplaceRewriter implements SourceRewriter {
     private static final String PAPER_START_FORMAT = "Paper start";
     private static final String PAPER_END_FORMAT = "Paper end";
 
-    private final Class<?> rewriteClass;
+    protected final Class<?> rewriteClass;
     private final String pattern;
     private final boolean equalsSize;
 
@@ -32,28 +33,24 @@ public class SearchReplaceRewriter implements SourceRewriter {
     // only when equalsSize = true
     public void replaceLine(SearchMetadata metadata, StringBuilder builder) {}
 
-    private String getIndent(String unit, Class<?> clazz) { // todo move in formatting
-        Class<?> parent = clazz.getEnclosingClass();
-        StringBuilder indentBuilder = new StringBuilder(unit);
-        while (parent != null) {
-            indentBuilder.append(unit);
-            parent = parent.getEnclosingClass();
-        }
-        return indentBuilder.toString();
-    }
-
     private boolean framed;
 
     @Override
     public void writeToFile(Path parent) throws IOException {
-        String indent = getIndent(INDENT, this.rewriteClass);
+        String indent = Formatting.incrementalIndent(INDENT, this.rewriteClass);
         String startPattern = String.format("%s// %s - Generated/%s", indent, PAPER_START_FORMAT, this.pattern);
         String endPattern = String.format("%s// %s - Generated/%s", indent, PAPER_END_FORMAT, this.pattern);
 
-        Path path = parent.resolve(this.rewriteClass.getCanonicalName().replace('.', '/') + ".java");
+        String filePath = "%s/%s.java".formatted(
+            this.rewriteClass.getPackageName().replace('.', '/'),
+            Formatting.retrieveFileName(this.rewriteClass)
+        );
+
+        Path path = parent.resolve(filePath);
         StringBuilder content = new StringBuilder();
         StringBuilder strippedContent = new StringBuilder();
 
+        // todo support multiple passes
         // strip the replaced content first or apply directly the change when the replaced content size is equals to the new content size
         {
             List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
@@ -129,7 +126,7 @@ public class SearchReplaceRewriter implements SourceRewriter {
         }
 
         // Files.writeString(path, content.toString(), StandardCharsets.UTF_8); // todo
-        Path createdPath = Main.generatedPath.resolve(this.rewriteClass.getCanonicalName().replace('.', '/') + ".java");
+        Path createdPath = Main.generatedPath.resolve(filePath);
         Files.createDirectories(createdPath.getParent());
         Files.writeString(createdPath, content.toString(), StandardCharsets.UTF_8);
     }

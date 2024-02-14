@@ -2,6 +2,7 @@ package io.papermc.generator;
 
 import io.papermc.generator.rewriter.SourceRewriter;
 import io.papermc.generator.rewriter.types.EnumRegistryRewriter;
+import io.papermc.generator.rewriter.types.RegistryFieldRewriter;
 import io.papermc.generator.utils.ExperimentalSounds;
 import io.papermc.generator.types.registry.GeneratedKeyType;
 import io.papermc.generator.types.SourceGenerator;
@@ -12,15 +13,22 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.Potions;
 import org.bukkit.Fluid;
 import org.bukkit.GameEvent;
 import org.bukkit.Sound;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
+import org.bukkit.damage.DamageType;
+import org.bukkit.entity.Cat;
+import org.bukkit.entity.Frog;
+import org.bukkit.entity.Villager;
 import org.bukkit.generator.structure.Structure;
 import org.bukkit.generator.structure.StructureType;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
+import org.bukkit.potion.PotionType;
 
 public interface Generators {
 
@@ -55,9 +63,26 @@ public interface Generators {
                 return ExperimentalSounds.findExperimentalValue(reference.key().location());
             }
         },
-        new EnumRegistryRewriter<>(Attribute.class, Registries.ATTRIBUTE, "Attribute", true),
         new EnumRegistryRewriter<>(Biome.class, Registries.BIOME, "Biome", false),
-        //new EnumRegistryRewriter<>(EntityType.class, Registries.ENTITY_TYPE, "EntityType", false) seems complex to get the typeId?
+        new EnumRegistryRewriter<>(Frog.Variant.class, Registries.FROG_VARIANT, "FrogVariant", false),
+        new EnumRegistryRewriter<>(Villager.Type.class, Registries.VILLAGER_TYPE, "VillagerType", false),
+        new EnumRegistryRewriter<>(Attribute.class, Registries.ATTRIBUTE, "Attribute", true),
+        new EnumRegistryRewriter<>(Cat.Type.class, Registries.CAT_VARIANT, "CatType", true),
+        new EnumRegistryRewriter<>(PotionType.class, Registries.POTION, "PotionType", true) {
+            @Override
+            public String rewriteFieldName(Holder.Reference<Potion> potion) {
+                if (potion.key() == Potions.EMPTY_ID) {
+                    return "UNCRAFTABLE";
+                }
+                return super.rewriteFieldName(potion);
+            }
+        },
+        //new EnumRegistryRewriter<>(EntityType.class, Registries.ENTITY_TYPE, "EntityType", false), seems complex to get the typeId?
+        new RegistryFieldRewriter<>(Structure.class, Registries.STRUCTURE, "Structure", "getStructure"),
+        new RegistryFieldRewriter<>(StructureType.class, Registries.STRUCTURE_TYPE, "StructureType", "getStructureType"),
+        new RegistryFieldRewriter<>(TrimPattern.class, Registries.TRIM_PATTERN, "TrimPattern", null),
+        new RegistryFieldRewriter<>(TrimMaterial.class, Registries.TRIM_MATERIAL, "TrimMaterial", null),
+        new RegistryFieldRewriter<>(DamageType.class, Registries.DAMAGE_TYPE, "DamageType", "getDamageType"),
     };
 
     private static <T, A> SourceGenerator simpleKey(final String className, final Class<A> apiType, final ResourceKey<? extends Registry<T>> registryKey, final RegistryKey<A> apiRegistryKey, final boolean publicCreateKeyMethod) {

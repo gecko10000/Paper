@@ -36,7 +36,7 @@ public class RegistryUtils {
     static {
         final Map<RegistryKey<?>, String> map = new IdentityHashMap<>();
         try {
-            for (final Field field : RegistryKey.class.getFields()) {
+            for (final Field field : RegistryKey.class.getDeclaredFields()) {
                 if (!Modifier.isStatic(field.getModifiers()) || !Modifier.isFinal(field.getModifiers()) || field.getType() != RegistryKey.class) {
                     continue;
                 }

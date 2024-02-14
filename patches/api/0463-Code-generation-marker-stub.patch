@@ -84,3 +84,183 @@ index 5d8fa5b39a5d50cca48ba63af3a84b80f279b649..c6ea69c0d05aef5a29b758dbd3ea4c84
      /**
       * Represents a custom Biome
       */
+diff --git a/src/main/java/org/bukkit/damage/DamageType.java b/src/main/java/org/bukkit/damage/DamageType.java
+index 5fef0f8b7957d5daef864de8547104f552215f29..de742b029409e2c4d74f854ca802130d6422ec88 100644
+--- a/src/main/java/org/bukkit/damage/DamageType.java
++++ b/src/main/java/org/bukkit/damage/DamageType.java
+@@ -20,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
+ @ApiStatus.Experimental
+ public interface DamageType extends Keyed, Translatable {
+ 
++    // Paper start - Generated/DamageType
+     public static final DamageType IN_FIRE = getDamageType("in_fire");
+     public static final DamageType LIGHTNING_BOLT = getDamageType("lightning_bolt");
+     public static final DamageType ON_FIRE = getDamageType("on_fire");
+@@ -64,6 +65,7 @@ public interface DamageType extends Keyed, Translatable {
+     public static final DamageType BAD_RESPAWN_POINT = getDamageType("bad_respawn_point");
+     public static final DamageType OUTSIDE_BORDER = getDamageType("outside_border");
+     public static final DamageType GENERIC_KILL = getDamageType("generic_kill");
++    // Paper end - Generated/DamageType
+ 
+     @NotNull
+     private static DamageType getDamageType(@NotNull String key) {
+diff --git a/src/main/java/org/bukkit/entity/Cat.java b/src/main/java/org/bukkit/entity/Cat.java
+index d03adfaa4176617ef2ace2754fe02b63860e3aee..fceb2f0a452a1ce72988bbd1ecca599cfb6af6d9 100644
+--- a/src/main/java/org/bukkit/entity/Cat.java
++++ b/src/main/java/org/bukkit/entity/Cat.java
+@@ -46,6 +46,7 @@ public interface Cat extends Tameable, Sittable, io.papermc.paper.entity.CollarC
+      * Represents the various different cat types there are.
+      */
+     public enum Type implements Keyed {
++        // Paper start - Generated/CatType
+         TABBY("tabby"),
+         BLACK("black"),
+         RED("red"),
+@@ -57,6 +58,7 @@ public interface Cat extends Tameable, Sittable, io.papermc.paper.entity.CollarC
+         WHITE("white"),
+         JELLIE("jellie"),
+         ALL_BLACK("all_black");
++        // Paper end - Generated/CatType
+ 
+         private final NamespacedKey key;
+ 
+diff --git a/src/main/java/org/bukkit/entity/Frog.java b/src/main/java/org/bukkit/entity/Frog.java
+index 0960bdbb3253bfe109dc6283244b8c9d95a850f7..d11cfd431cee09886ecd9d9416de85f56ac90462 100644
+--- a/src/main/java/org/bukkit/entity/Frog.java
++++ b/src/main/java/org/bukkit/entity/Frog.java
+@@ -46,6 +46,7 @@ public interface Frog extends Animals {
+      */
+     public enum Variant implements Keyed {
+ 
++        // Paper start - Generated/FrogVariant
+         /**
+          * Temperate (brown-orange) frog.
+          */
+@@ -58,6 +59,7 @@ public interface Frog extends Animals {
+          * Cold (green) frog.
+          */
+         COLD;
++        // Paper end - Generated/FrogVariant
+         private final NamespacedKey key;
+ 
+         private Variant() {
+diff --git a/src/main/java/org/bukkit/entity/Villager.java b/src/main/java/org/bukkit/entity/Villager.java
+index 3bc24457d143449e6a338d79becf7c39b9f81054..b6f07418ab7267cc43d1174fc023930e04eba360 100644
+--- a/src/main/java/org/bukkit/entity/Villager.java
++++ b/src/main/java/org/bukkit/entity/Villager.java
+@@ -167,6 +167,7 @@ public interface Villager extends AbstractVillager {
+      */
+     public enum Type implements Keyed {
+ 
++        // Paper start - Generated/VillagerType
+         DESERT,
+         JUNGLE,
+         PLAINS,
+@@ -174,6 +175,7 @@ public interface Villager extends AbstractVillager {
+         SNOW,
+         SWAMP,
+         TAIGA;
++        // Paper end - Generated/VillagerType
+         private final NamespacedKey key;
+ 
+         private Type() {
+diff --git a/src/main/java/org/bukkit/generator/structure/Structure.java b/src/main/java/org/bukkit/generator/structure/Structure.java
+index 8e39f282c771ddafe5d890dcf065c56f0c633647..5505705a63e9ed8a820f7f4e164d6c1dd2936b05 100644
+--- a/src/main/java/org/bukkit/generator/structure/Structure.java
++++ b/src/main/java/org/bukkit/generator/structure/Structure.java
+@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
+  */
+ public abstract class Structure implements Keyed {
+ 
++    // Paper start - Generated/Structure
+     public static final Structure PILLAGER_OUTPOST = getStructure("pillager_outpost");
+     public static final Structure MINESHAFT = getStructure("mineshaft");
+     public static final Structure MINESHAFT_MESA = getStructure("mineshaft_mesa");
+@@ -51,6 +52,7 @@ public abstract class Structure implements Keyed {
+     @MinecraftExperimental
+     @org.jetbrains.annotations.ApiStatus.Experimental // Paper - add missing annotation
+     public static final Structure TRIAL_CHAMBERS = getStructure("trial_chambers");
++    // Paper end - Generated/Structure
+ 
+     private static Structure getStructure(String name) {
+         return Registry.STRUCTURE.get(NamespacedKey.minecraft(name));
+diff --git a/src/main/java/org/bukkit/generator/structure/StructureType.java b/src/main/java/org/bukkit/generator/structure/StructureType.java
+index 2f908d5545d76ea25e26f6a4be579460512b5faf..77a03c7c35da902a802a90a41d8583172a9ca992 100644
+--- a/src/main/java/org/bukkit/generator/structure/StructureType.java
++++ b/src/main/java/org/bukkit/generator/structure/StructureType.java
+@@ -14,6 +14,7 @@ import org.bukkit.Registry;
+  */
+ public abstract class StructureType implements Keyed {
+ 
++    // Paper start - Generated/StructureType
+     public static final StructureType BURIED_TREASURE = getStructureType("buried_treasure");
+     public static final StructureType DESERT_PYRAMID = getStructureType("desert_pyramid");
+     public static final StructureType END_CITY = getStructureType("end_city");
+@@ -30,6 +31,7 @@ public abstract class StructureType implements Keyed {
+     public static final StructureType STRONGHOLD = getStructureType("stronghold");
+     public static final StructureType SWAMP_HUT = getStructureType("swamp_hut");
+     public static final StructureType WOODLAND_MANSION = getStructureType("woodland_mansion");
++    // Paper end - Generated/StructureType
+ 
+     private static StructureType getStructureType(String name) {
+         return Registry.STRUCTURE_TYPE.get(NamespacedKey.minecraft(name));
+diff --git a/src/main/java/org/bukkit/inventory/meta/trim/TrimMaterial.java b/src/main/java/org/bukkit/inventory/meta/trim/TrimMaterial.java
+index 178d83cb3ccff2d12477d3c13ca4f108fa17e619..86e5957c70bd369f08c86d8ed588d2dc285a61f9 100644
+--- a/src/main/java/org/bukkit/inventory/meta/trim/TrimMaterial.java
++++ b/src/main/java/org/bukkit/inventory/meta/trim/TrimMaterial.java
+@@ -10,6 +10,7 @@ import org.bukkit.Registry;
+  */
+ public interface TrimMaterial extends Keyed {
+ 
++    // Paper start - Generated/TrimMaterial
+     /**
+      * {@link Material#QUARTZ}.
+      */
+@@ -50,6 +51,7 @@ public interface TrimMaterial extends Keyed {
+      * {@link Material#AMETHYST_SHARD}.
+      */
+     public static final TrimMaterial AMETHYST = Registry.TRIM_MATERIAL.get(NamespacedKey.minecraft("amethyst"));
++    // Paper end - Generated/TrimMaterial
+     // Paper start
+     /**
+      * @deprecated use {@link Registry#getKey(Keyed)} and {@link Registry#TRIM_MATERIAL}. TrimMaterials
+diff --git a/src/main/java/org/bukkit/inventory/meta/trim/TrimPattern.java b/src/main/java/org/bukkit/inventory/meta/trim/TrimPattern.java
+index e29fc42ae2b9c555db63d10d20552748e28ba60e..ae7f73f391b514266371021e4171fde6e8fda6b3 100644
+--- a/src/main/java/org/bukkit/inventory/meta/trim/TrimPattern.java
++++ b/src/main/java/org/bukkit/inventory/meta/trim/TrimPattern.java
+@@ -10,6 +10,7 @@ import org.bukkit.Registry;
+  */
+ public interface TrimPattern extends Keyed {
+ 
++    // Paper start - Generated/TrimPattern
+     /**
+      * {@link Material#SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE}.
+      */
+@@ -74,6 +75,7 @@ public interface TrimPattern extends Keyed {
+      * {@link Material#HOST_ARMOR_TRIM_SMITHING_TEMPLATE}.
+      */
+     public static final TrimPattern HOST = Registry.TRIM_PATTERN.get(NamespacedKey.minecraft("host"));
++    // Paper end - Generated/TrimPattern
+     // Paper start
+     /**
+      * @deprecated use {@link Registry#getKey(Keyed)} and {@link Registry#TRIM_PATTERN}. TrimPatterns
+diff --git a/src/main/java/org/bukkit/potion/PotionType.java b/src/main/java/org/bukkit/potion/PotionType.java
+index 70456f08668733a9a2840be6b08b078ad63e6825..13e1db8778adea4591dbb85870ff366fd565aa9e 100644
+--- a/src/main/java/org/bukkit/potion/PotionType.java
++++ b/src/main/java/org/bukkit/potion/PotionType.java
+@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
+  * the Creative mode inventory
+  */
+ public enum PotionType implements Keyed {
++    // Paper start - Generated/PotionType
+     UNCRAFTABLE("empty"),
+     WATER("water"),
+     MUNDANE("mundane"),
+@@ -59,6 +60,7 @@ public enum PotionType implements Keyed {
+     SLOW_FALLING("slow_falling"),
+     LONG_SLOW_FALLING("long_slow_falling"),
+     ;
++    // Paper end - Generated/PotionType
+ 
+     private final NamespacedKey key;
+     private final Supplier<InternalPotionData> internalPotionDataSupplier;
