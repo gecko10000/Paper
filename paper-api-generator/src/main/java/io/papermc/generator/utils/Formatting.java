@@ -1,11 +1,11 @@
 package io.papermc.generator.utils;
 
+import com.google.common.base.Function;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.OptionalInt;
 import java.util.Set;
-import com.google.common.base.Function;
 import net.kyori.adventure.key.Key;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;

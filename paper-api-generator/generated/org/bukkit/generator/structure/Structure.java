@@ -73,7 +73,7 @@ public abstract class Structure implements Keyed {
 
     public static final Structure TRAIL_RUINS = getStructure("trail_ruins");
 
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     public static final Structure TRIAL_CHAMBERS = getStructure("trial_chambers");
 

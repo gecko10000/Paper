@@ -2,6 +2,7 @@ package io.papermc.generator.rewriter;
 
 import io.papermc.generator.Main;
 import io.papermc.generator.rewriter.utils.Annotations;
+import io.papermc.generator.rewriter.utils.ImportCollector;
 import io.papermc.generator.utils.Formatting;
 import io.papermc.paper.generated.GeneratedFrom;
 import net.minecraft.SharedConstants;
@@ -13,33 +14,35 @@ import java.util.List;
 
 public class SearchReplaceRewriter implements SourceRewriter {
 
-    private static final String INDENT = "    ";
+    private static final String INDENT_UNIT = "    ";
     private static final String PAPER_START_FORMAT = "Paper start";
     private static final String PAPER_END_FORMAT = "Paper end";
 
     protected final Class<?> rewriteClass;
     private final String pattern;
     private final boolean equalsSize;
+    private final ImportCollector importCollector;
 
     public SearchReplaceRewriter(Class<?> rewriteClass, String pattern, boolean equalsSize) {
         this.rewriteClass = rewriteClass;
         this.pattern = pattern;
         this.equalsSize = equalsSize;
+        this.importCollector = new ImportCollector(rewriteClass);
     }
 
     // only when equalsSize = false
-    public void insert(SearchMetadata metadata, StringBuilder builder) {}
+    protected void insert(SearchMetadata metadata, StringBuilder builder) {}
 
     // only when equalsSize = true
-    public void replaceLine(SearchMetadata metadata, StringBuilder builder) {}
+    protected void replaceLine(SearchMetadata metadata, StringBuilder builder) {}
 
     private boolean framed;
 
     @Override
     public void writeToFile(Path parent) throws IOException {
-        String indent = Formatting.incrementalIndent(INDENT, this.rewriteClass);
-        String startPattern = String.format("%s// %s - Generated/%s", indent, PAPER_START_FORMAT, this.pattern);
-        String endPattern = String.format("%s// %s - Generated/%s", indent, PAPER_END_FORMAT, this.pattern);
+        String indent = Formatting.incrementalIndent(INDENT_UNIT, this.rewriteClass);
+        String startPattern = String.format("// %s - Generated/%s", PAPER_START_FORMAT, this.pattern);
+        String endPattern = String.format("// %s - Generated/%s", PAPER_END_FORMAT, this.pattern);
 
         String filePath = "%s/%s.java".formatted(
             this.rewriteClass.getPackageName().replace('.', '/'),
@@ -59,7 +62,12 @@ public class SearchReplaceRewriter implements SourceRewriter {
             for (int i = 0; i < lines.size(); i++) {
                 String line = lines.get(i);
 
-                if (line.equals(endPattern)) {
+                // collect import to avoid fqn when not needed
+                if (line.startsWith("import ") && line.endsWith(";")) {
+                    this.importCollector.consume(line);
+                }
+
+                if (line.equals(indent + endPattern)) {
                     if (this.framed) {
                         this.framed = false;
                         if (this.equalsSize) {
@@ -78,13 +86,18 @@ public class SearchReplaceRewriter implements SourceRewriter {
                     strippedContent.append('\n');
                     if (replace) {
                         // todo generated version comment
-                        this.replaceLine(new SearchMetadata(indent, line, i), content);
+                        this.replaceLine(new SearchMetadata(this.importCollector, indent, line, i), content);
                     }
                 }
 
-                if (line.equals(startPattern)) {
+                int startPatternIndex = line.indexOf(startPattern);
+                if (startPatternIndex != -1) {
                     if (!this.framed) {
                         this.framed = true;
+                        indent = " ".repeat(startPatternIndex); // update indent based on the comments for flexibility
+                        if (indent.length() % INDENT_UNIT.length() != 0) {
+                            throw new IllegalStateException("Start generated comment is not properly indented at line " + (i + 1));
+                        }
                         if (this.equalsSize) {
                             replace = true;
                         }
@@ -108,17 +121,17 @@ public class SearchReplaceRewriter implements SourceRewriter {
                 String line = stripLines[i];
                 if (replace) {
                     replacedContent.append(indent).append("// %s %s".formatted(
-                        Annotations.annotation(GeneratedFrom.class, true),
+                        Annotations.annotationStyle(GeneratedFrom.class),
                         SharedConstants.getCurrentVersion().getName()
                     ));
                     replacedContent.append('\n');
 
-                    this.insert(new SearchMetadata(indent, strippedContent.toString(), i), replacedContent);
+                    this.insert(new SearchMetadata(this.importCollector, indent, strippedContent.toString(), i), replacedContent);
                     replace = false;
                 }
                 replacedContent.append(line);
                 replacedContent.append('\n');
-                if (line.equals(startPattern)) {
+                if (line.equals(indent + startPattern)) {
                     replace = true;
                 }
             }

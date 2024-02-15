@@ -32,7 +32,7 @@ public class EnumRegistryRewriter<T, A extends Enum<A>> extends SearchReplaceRew
     }
 
     @Override
-    public void insert(final SearchMetadata metadata, final StringBuilder builder) {
+    protected void insert(final SearchMetadata metadata, final StringBuilder builder) {
         boolean reachEnd = metadata.replacedContent().stripTrailing().endsWith(";");
 
         List<Holder.Reference<T>> references = this.registry.holders().sorted(Formatting.alphabeticOrder(reference -> reference.key().location().getPath())).toList();
@@ -44,7 +44,7 @@ public class EnumRegistryRewriter<T, A extends Enum<A>> extends SearchReplaceRew
             String fieldName = this.rewriteFieldName(reference);
             String experimentalValue = this.getExperimentalValue(reference);
             if (experimentalValue != null) {
-                Annotations.experimentalAnnotations(builder, metadata::indent, experimentalValue);
+                Annotations.experimentalAnnotations(builder, metadata, experimentalValue);
             }
 
             builder.append(metadata.indent()).append(fieldName);
@@ -60,12 +60,12 @@ public class EnumRegistryRewriter<T, A extends Enum<A>> extends SearchReplaceRew
         }
     }
 
-    public String rewriteFieldName(Holder.Reference<T> reference) {
+    protected String rewriteFieldName(Holder.Reference<T> reference) {
         return Formatting.formatPathAsField(reference.key().location().getPath());
     }
 
     @Nullable
-    public String getExperimentalValue(Holder.Reference<T> reference) {
+    protected String getExperimentalValue(Holder.Reference<T> reference) {
         if (this.isFilteredRegistry && reference.value() instanceof FeatureElement element && FeatureFlags.isExperimental(element.requiredFeatures())) {
             return Formatting.formatFeatureFlagSet(element.requiredFeatures());
         }

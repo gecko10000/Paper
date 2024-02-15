@@ -220,52 +220,52 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type { // Pa
     BLOCK_COPPER_HIT("block.copper.hit"),
     BLOCK_COPPER_PLACE("block.copper.place"),
     BLOCK_COPPER_STEP("block.copper.step"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_BULB_BREAK("block.copper_bulb.break"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_BULB_FALL("block.copper_bulb.fall"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_BULB_HIT("block.copper_bulb.hit"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_BULB_PLACE("block.copper_bulb.place"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_BULB_STEP("block.copper_bulb.step"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_BULB_TURN_OFF("block.copper_bulb.turn_off"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_BULB_TURN_ON("block.copper_bulb.turn_on"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_DOOR_CLOSE("block.copper_door.close"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_DOOR_OPEN("block.copper_door.open"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_GRATE_BREAK("block.copper_grate.break"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_GRATE_FALL("block.copper_grate.fall"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_GRATE_HIT("block.copper_grate.hit"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_GRATE_PLACE("block.copper_grate.place"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_GRATE_STEP("block.copper_grate.step"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_TRAPDOOR_CLOSE("block.copper_trapdoor.close"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_COPPER_TRAPDOOR_OPEN("block.copper_trapdoor.open"),
     BLOCK_CORAL_BLOCK_BREAK("block.coral_block.break"),
@@ -273,10 +273,10 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type { // Pa
     BLOCK_CORAL_BLOCK_HIT("block.coral_block.hit"),
     BLOCK_CORAL_BLOCK_PLACE("block.coral_block.place"),
     BLOCK_CORAL_BLOCK_STEP("block.coral_block.step"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_CRAFTER_CRAFT("block.crafter.craft"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_CRAFTER_FAIL("block.crafter.fail"),
     BLOCK_CROP_BREAK("block.crop.break"),
@@ -552,19 +552,19 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type { // Pa
     BLOCK_POLISHED_DEEPSLATE_HIT("block.polished_deepslate.hit"),
     BLOCK_POLISHED_DEEPSLATE_PLACE("block.polished_deepslate.place"),
     BLOCK_POLISHED_DEEPSLATE_STEP("block.polished_deepslate.step"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_POLISHED_TUFF_BREAK("block.polished_tuff.break"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_POLISHED_TUFF_FALL("block.polished_tuff.fall"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_POLISHED_TUFF_HIT("block.polished_tuff.hit"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_POLISHED_TUFF_PLACE("block.polished_tuff.place"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_POLISHED_TUFF_STEP("block.polished_tuff.step"),
     BLOCK_PORTAL_AMBIENT("block.portal.ambient"),
@@ -710,37 +710,37 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type { // Pa
     BLOCK_SWEET_BERRY_BUSH_BREAK("block.sweet_berry_bush.break"),
     BLOCK_SWEET_BERRY_BUSH_PICK_BERRIES("block.sweet_berry_bush.pick_berries"),
     BLOCK_SWEET_BERRY_BUSH_PLACE("block.sweet_berry_bush.place"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TRIAL_SPAWNER_AMBIENT("block.trial_spawner.ambient"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TRIAL_SPAWNER_BREAK("block.trial_spawner.break"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TRIAL_SPAWNER_CLOSE_SHUTTER("block.trial_spawner.close_shutter"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TRIAL_SPAWNER_DETECT_PLAYER("block.trial_spawner.detect_player"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TRIAL_SPAWNER_EJECT_ITEM("block.trial_spawner.eject_item"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TRIAL_SPAWNER_FALL("block.trial_spawner.fall"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TRIAL_SPAWNER_HIT("block.trial_spawner.hit"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TRIAL_SPAWNER_OPEN_SHUTTER("block.trial_spawner.open_shutter"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TRIAL_SPAWNER_PLACE("block.trial_spawner.place"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TRIAL_SPAWNER_SPAWN_MOB("block.trial_spawner.spawn_mob"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TRIAL_SPAWNER_STEP("block.trial_spawner.step"),
     BLOCK_TRIPWIRE_ATTACH("block.tripwire.attach"),
@@ -752,19 +752,19 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type { // Pa
     BLOCK_TUFF_HIT("block.tuff.hit"),
     BLOCK_TUFF_PLACE("block.tuff.place"),
     BLOCK_TUFF_STEP("block.tuff.step"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TUFF_BRICKS_BREAK("block.tuff_bricks.break"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TUFF_BRICKS_FALL("block.tuff_bricks.fall"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TUFF_BRICKS_HIT("block.tuff_bricks.hit"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TUFF_BRICKS_PLACE("block.tuff_bricks.place"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     BLOCK_TUFF_BRICKS_STEP("block.tuff_bricks.step"),
     BLOCK_VINE_BREAK("block.vine.break"),
@@ -851,31 +851,31 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type { // Pa
     ENTITY_BLAZE_SHOOT("entity.blaze.shoot"),
     ENTITY_BOAT_PADDLE_LAND("entity.boat.paddle_land"),
     ENTITY_BOAT_PADDLE_WATER("entity.boat.paddle_water"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     ENTITY_BREEZE_DEATH("entity.breeze.death"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     ENTITY_BREEZE_HURT("entity.breeze.hurt"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     ENTITY_BREEZE_IDLE_AIR("entity.breeze.idle_air"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     ENTITY_BREEZE_IDLE_GROUND("entity.breeze.idle_ground"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     ENTITY_BREEZE_INHALE("entity.breeze.inhale"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     ENTITY_BREEZE_JUMP("entity.breeze.jump"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     ENTITY_BREEZE_LAND("entity.breeze.land"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     ENTITY_BREEZE_SHOOT("entity.breeze.shoot"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     ENTITY_BREEZE_SLIDE("entity.breeze.slide"),
     ENTITY_CAMEL_AMBIENT("entity.camel.ambient"),
@@ -1022,7 +1022,7 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type { // Pa
     ENTITY_GENERIC_SMALL_FALL("entity.generic.small_fall"),
     ENTITY_GENERIC_SPLASH("entity.generic.splash"),
     ENTITY_GENERIC_SWIM("entity.generic.swim"),
-    @org.bukkit.MinecraftExperimental(value = "update 1.21")
+    @MinecraftExperimental("update 1.21")
     @org.jetbrains.annotations.ApiStatus.Experimental
     ENTITY_GENERIC_WIND_BURST("entity.generic.wind_burst"),
     ENTITY_GHAST_AMBIENT("entity.ghast.ambient"),
@@ -1545,13 +1545,13 @@ public enum Sound implements Keyed, net.kyori.adventure.sound.Sound.Type { // Pa
     ITEM_BUCKET_FILL_LAVA("item.bucket.fill_lava"),
     ITEM_BUCKET_FILL_POWDER_SNOW("item.bucket.fill_powder_snow"),
     ITEM_BUCKET_FILL_TADPOLE("item.bucket.fill_tadpole"),
-    @org.bukkit.MinecraftExperimental(value = "bundle feature")
+    @MinecraftExperimental("bundle feature")
     @org.jetbrains.annotations.ApiStatus.Experimental
     ITEM_BUNDLE_DROP_CONTENTS("item.bundle.drop_contents"),
-    @org.bukkit.MinecraftExperimental(value = "bundle feature")
+    @MinecraftExperimental("bundle feature")
     @org.jetbrains.annotations.ApiStatus.Experimental
     ITEM_BUNDLE_INSERT("item.bundle.insert"),
-    @org.bukkit.MinecraftExperimental(value = "bundle feature")
+    @MinecraftExperimental("bundle feature")
     @org.jetbrains.annotations.ApiStatus.Experimental
     ITEM_BUNDLE_REMOVE_ONE("item.bundle.remove_one"),
     ITEM_CHORUS_FRUIT_TELEPORT("item.chorus_fruit.teleport"),

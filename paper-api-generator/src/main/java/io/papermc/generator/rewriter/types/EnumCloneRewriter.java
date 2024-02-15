@@ -26,12 +26,12 @@ public class EnumCloneRewriter extends SearchReplaceRewriter {
     }
 
     @Override
-    public void replaceLine(final SearchMetadata metadata, final StringBuilder builder) {
+    protected void replaceLine(final SearchMetadata metadata, final StringBuilder builder) {
         appendEnumValue(builder, metadata.indent(), this.enums, this.index++);
     }
 
     @Override
-    public void insert(final SearchMetadata metadata, final StringBuilder builder) {
+    protected void insert(final SearchMetadata metadata, final StringBuilder builder) {
         Preconditions.checkState(metadata.replacedContent().stripTrailing().endsWith(";"), "The generated comments must enclose the whole enum in the clone enum rewriter");
 
         for (int i = 0, len = this.enums.length; i < len; i++) {

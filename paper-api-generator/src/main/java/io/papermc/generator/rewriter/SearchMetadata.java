@@ -1,4 +1,6 @@
 package io.papermc.generator.rewriter;
 
-public record SearchMetadata(String indent, String replacedContent, int line) {
+import io.papermc.generator.rewriter.utils.ImportCollector;
+
+public record SearchMetadata(ImportCollector importCollector, String indent, String replacedContent, int line) {
 }

@@ -1,47 +1,47 @@
 package io.papermc.generator.rewriter.utils;
 
+import io.papermc.generator.rewriter.SearchMetadata;
 import io.papermc.generator.utils.Formatting;
 import net.minecraft.world.flag.FeatureFlag;
 import org.bukkit.MinecraftExperimental;
 import org.jetbrains.annotations.ApiStatus;
 import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
-public class Annotations {
+public final class Annotations {
 
-    private static String retrieveFullNestedName(Class<?> clazz) {
-        List<Class<?>> nestedClasses = new ArrayList<>();
-        nestedClasses.add(clazz);
-        Class<?> parent = clazz.getEnclosingClass();
-        while (parent != null) {
-            nestedClasses.add(parent);
-            parent = parent.getEnclosingClass();
-        }
-        Collections.reverse(nestedClasses);
-        return nestedClasses.stream().map(Class::getSimpleName).collect(Collectors.joining("."));
+    public static String annotation(Class<? extends Annotation> clazz, ImportCollector collector) {
+        return "@%s".formatted(collector.getTypeName(clazz));
     }
 
-    public static String annotation(Class<? extends Annotation> clazz, boolean imported) { // todo importCollector
-        return "@%s".formatted(imported ? retrieveFullNestedName(clazz) : clazz.getCanonicalName());
+    public static String annotationStyle(Class<? extends Annotation> clazz) {
+        return "@%s".formatted(ImportCollector.retrieveFullNestedName(clazz));
     }
 
-    public static String annotation(Class<? extends Annotation> clazz, String param, String value) {
+    public static String annotation(Class<? extends Annotation> clazz, ImportCollector collector, String param, String value) {
+        String annotation = annotation(clazz, collector);
         if (value.isEmpty()) {
-            return annotation(clazz, false);
+            return annotation;
         }
-        return "@%s(%s = %s)".formatted(clazz.getCanonicalName(), param, value);
+        return "%s(%s = %s)".formatted(annotation, param, value);
     }
 
-    public static void experimentalAnnotations(final StringBuilder builder, final Supplier<String> indent, final FeatureFlag featureFlag) {
-        experimentalAnnotations(builder, indent, Formatting.formatFeatureFlag(featureFlag));
+    public static String annotation(Class<? extends Annotation> clazz, ImportCollector collector, String value) {
+        String annotation = annotation(clazz, collector);
+        if (value.isEmpty()) {
+            return annotation;
+        }
+        return "%s(%s)".formatted(annotation, value);
     }
 
-    public static void experimentalAnnotations(final StringBuilder builder, Supplier<String> indent, final String value) {
-        builder.append(indent.get()).append(annotation(MinecraftExperimental.class, "value", '"' + value + '"')).append('\n');
-        builder.append(indent.get()).append(annotation(ApiStatus.Experimental.class, false)).append('\n');
+    public static void experimentalAnnotations(final StringBuilder builder, final SearchMetadata metadata, final FeatureFlag featureFlag) {
+        experimentalAnnotations(builder, metadata, Formatting.formatFeatureFlag(featureFlag));
+    }
+
+    public static void experimentalAnnotations(final StringBuilder builder, final SearchMetadata metadata, final String value) {
+        builder.append(metadata.indent()).append(annotation(MinecraftExperimental.class, metadata.importCollector(), '"' + value + '"')).append('\n');
+        builder.append(metadata.indent()).append(annotation(ApiStatus.Experimental.class, metadata.importCollector())).append('\n');
+    }
+
+    private Annotations() {
     }
 }

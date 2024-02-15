@@ -55,7 +55,7 @@ public interface Generators {
         new EnumRegistryRewriter<>(Fluid.class, Registries.FLUID, "Fluid", false),
         new EnumRegistryRewriter<>(Sound.class, Registries.SOUND_EVENT, "Sound", true) {
             @Override
-            public String getExperimentalValue(Holder.Reference<SoundEvent> reference) {
+            protected String getExperimentalValue(Holder.Reference<SoundEvent> reference) {
                 String result = super.getExperimentalValue(reference);
                 if (result != null) {
                     return result;
@@ -70,7 +70,7 @@ public interface Generators {
         new EnumRegistryRewriter<>(Cat.Type.class, Registries.CAT_VARIANT, "CatType", true),
         new EnumRegistryRewriter<>(PotionType.class, Registries.POTION, "PotionType", true) {
             @Override
-            public String rewriteFieldName(Holder.Reference<Potion> potion) {
+            protected String rewriteFieldName(Holder.Reference<Potion> potion) {
                 if (potion.key() == Potions.EMPTY_ID) {
                     return "UNCRAFTABLE";
                 }
