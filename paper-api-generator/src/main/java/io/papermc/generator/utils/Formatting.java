@@ -91,6 +91,10 @@ public final class Formatting {
         return name;
     }
 
+    public static String quoted(String value) {
+        return String.format("\"%s\"", value);
+    }
+
     public static <T> Comparator<T> alphabeticOrder(Function<T, String> mapper) {
         return (o1, o2) -> {
             String path1 = mapper.apply(o1);

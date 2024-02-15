@@ -14,9 +14,9 @@ import io.papermc.generator.types.SimpleGenerator;
 import io.papermc.generator.utils.Annotations;
 import io.papermc.generator.utils.Formatting;
 import io.papermc.generator.utils.Javadocs;
+import io.papermc.generator.utils.TagRegistry;
 import io.papermc.paper.tag.EntityTags;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -74,8 +74,6 @@ public class TagGenerator extends SimpleGenerator {
         """;
 
     private static final String REGISTRY_FIELD_JAVADOC = "Key for the built-in $L registry.";
-
-    public record TagRegistry(String name, Class<?> apiType, ResourceKey<? extends Registry<?>> registryKey) {}
 
     private static TagRegistry registry(final String name, final Class<?> apiType, final ResourceKey<? extends Registry<?>> registryKey) {
         return new TagRegistry(name, apiType, registryKey);

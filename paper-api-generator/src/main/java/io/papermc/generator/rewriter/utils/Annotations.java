@@ -7,6 +7,8 @@ import org.bukkit.MinecraftExperimental;
 import org.jetbrains.annotations.ApiStatus;
 import java.lang.annotation.Annotation;
 
+import static io.papermc.generator.utils.Formatting.quoted;
+
 public final class Annotations {
 
     public static String annotation(Class<? extends Annotation> clazz, ImportCollector collector) {
@@ -38,7 +40,7 @@ public final class Annotations {
     }
 
     public static void experimentalAnnotations(final StringBuilder builder, final SearchMetadata metadata, final String value) {
-        builder.append(metadata.indent()).append(annotation(MinecraftExperimental.class, metadata.importCollector(), '"' + value + '"')).append('\n');
+        builder.append(metadata.indent()).append(annotation(MinecraftExperimental.class, metadata.importCollector(), quoted(value))).append('\n');
         builder.append(metadata.indent()).append(annotation(ApiStatus.Experimental.class, metadata.importCollector())).append('\n');
     }
 

@@ -2,7 +2,9 @@ package io.papermc.generator;
 
 import io.papermc.generator.rewriter.SourceRewriter;
 import io.papermc.generator.rewriter.types.EnumRegistryRewriter;
+import io.papermc.generator.rewriter.types.MapPaletteRewriter;
 import io.papermc.generator.rewriter.types.RegistryFieldRewriter;
+import io.papermc.generator.rewriter.types.TagRewriter;
 import io.papermc.generator.utils.ExperimentalSounds;
 import io.papermc.generator.types.registry.GeneratedKeyType;
 import io.papermc.generator.types.SourceGenerator;
@@ -18,6 +20,7 @@ import net.minecraft.world.item.alchemy.Potions;
 import org.bukkit.Fluid;
 import org.bukkit.GameEvent;
 import org.bukkit.Sound;
+import org.bukkit.Tag;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.damage.DamageType;
@@ -28,6 +31,7 @@ import org.bukkit.generator.structure.Structure;
 import org.bukkit.generator.structure.StructureType;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
+import org.bukkit.map.MapPalette;
 import org.bukkit.potion.PotionType;
 
 public interface Generators {
@@ -83,6 +87,8 @@ public interface Generators {
         new RegistryFieldRewriter<>(TrimPattern.class, Registries.TRIM_PATTERN, "TrimPattern", null),
         new RegistryFieldRewriter<>(TrimMaterial.class, Registries.TRIM_MATERIAL, "TrimMaterial", null),
         new RegistryFieldRewriter<>(DamageType.class, Registries.DAMAGE_TYPE, "DamageType", "getDamageType"),
+        new TagRewriter(Tag.class, "Tag"),
+        new MapPaletteRewriter(MapPalette.class, "MapPalette#colors"),
     };
 
     private static <T, A> SourceGenerator simpleKey(final String className, final Class<A> apiType, final ResourceKey<? extends Registry<T>> registryKey, final RegistryKey<A> apiRegistryKey, final boolean publicCreateKeyMethod) {

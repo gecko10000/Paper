@@ -16,6 +16,8 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.List;
 import java.util.function.Supplier;
 
+import static io.papermc.generator.utils.Formatting.quoted;
+
 public class EnumRegistryRewriter<T, A extends Enum<A>> extends SearchReplaceRewriter {
 
     private final net.minecraft.core.Registry<T> registry;
@@ -49,7 +51,7 @@ public class EnumRegistryRewriter<T, A extends Enum<A>> extends SearchReplaceRew
 
             builder.append(metadata.indent()).append(fieldName);
             if (this.keyedParam) {
-                builder.append("(\"%s\")".formatted(pathKey));
+                builder.append("(%s)".formatted(quoted(pathKey)));
             }
             if (reachEnd && i == size - 1) {
                 builder.append(';');

@@ -44,6 +44,43 @@ index bb1b6bc9349af6dec369420035e860921da52589..98bdf175bea2f559655ccb96ceb90066
  
      private final NamespacedKey key;
  
+diff --git a/src/main/java/org/bukkit/Tag.java b/src/main/java/org/bukkit/Tag.java
+index 1137a21afa0283fa3d391415e98171e3c160aa1f..97d39786e5026dafd35ee285d2b8cc2928346fce 100644
+--- a/src/main/java/org/bukkit/Tag.java
++++ b/src/main/java/org/bukkit/Tag.java
+@@ -19,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
+  */
+ public interface Tag<T extends Keyed> extends Keyed {
+ 
++    // Paper start - Generated/Tag
+     /**
+      * Key for the built in block registry.
+      */
+@@ -53,11 +54,6 @@ public interface Tag<T extends Keyed> extends Keyed {
+      * Vanilla block tag representing all colors of carpet.
+      */
+     Tag<Material> WOOL_CARPETS = Bukkit.getTag(REGISTRY_BLOCKS, NamespacedKey.minecraft("wool_carpets"), Material.class);
+-    /**
+-     * @deprecated {@link #WOOL_CARPETS}.
+-     */
+-    @Deprecated
+-    Tag<Material> CARPETS = WOOL_CARPETS;
+     /**
+      * Vanilla block tag representing all wooden doors.
+      */
+@@ -1006,6 +1002,12 @@ public interface Tag<T extends Keyed> extends Keyed {
+      */
+     Tag<GameEvent> GAME_EVENT_ALLAY_CAN_LISTEN = Bukkit.getTag(REGISTRY_GAME_EVENTS, NamespacedKey.minecraft("allay_can_listen"), GameEvent.class);
+     // Paper end
++    // Paper end - Generated/Tag
++    /**
++     * @deprecated {@link #WOOL_CARPETS}.
++     */
++    @Deprecated
++    Tag<Material> CARPETS = WOOL_CARPETS;
+ 
+     /**
+      * Returns whether or not this tag has an entry for the specified item.
 diff --git a/src/main/java/org/bukkit/attribute/Attribute.java b/src/main/java/org/bukkit/attribute/Attribute.java
 index 37f93b7e9f722e76631c3e7d3e770526ee0c3926..ee18e01cf5407ee1c6bd2626431bd283d0db56b2 100644
 --- a/src/main/java/org/bukkit/attribute/Attribute.java
@@ -244,6 +281,26 @@ index e29fc42ae2b9c555db63d10d20552748e28ba60e..ae7f73f391b514266371021e4171fde6
      // Paper start
      /**
       * @deprecated use {@link Registry#getKey(Keyed)} and {@link Registry#TRIM_PATTERN}. TrimPatterns
+diff --git a/src/main/java/org/bukkit/map/MapPalette.java b/src/main/java/org/bukkit/map/MapPalette.java
+index c80faa079eca1564847070f0338fc98024639829..825b6c7b4e6b24f8d49da7b44f37e8a5ddc2e2c1 100644
+--- a/src/main/java/org/bukkit/map/MapPalette.java
++++ b/src/main/java/org/bukkit/map/MapPalette.java
+@@ -41,6 +41,7 @@ public final class MapPalette {
+ 
+     @NotNull
+     static final Color[] colors = {
++        // Paper start - Generated/MapPalette#colors
+         c(0, 0, 0, 0), c(0, 0, 0, 0), c(0, 0, 0, 0), c(0, 0, 0, 0),
+         c(89, 125, 39), c(109, 153, 48), c(127, 178, 56), c(67, 94, 29),
+         c(174, 164, 115), c(213, 201, 140), c(247, 233, 163), c(130, 123, 86),
+@@ -103,6 +104,7 @@ public final class MapPalette {
+         c(70, 70, 70), c(86, 86, 86), c(100, 100, 100), c(52, 52, 52),
+         c(152, 123, 103), c(186, 150, 126), c(216, 175, 147), c(114, 92, 77),
+         c(89, 117, 105), c(109, 144, 129), c(127, 167, 150), c(67, 88, 79)
++        // Paper end - Generated/MapPalette#colors
+     };
+ 
+     // Interface
 diff --git a/src/main/java/org/bukkit/potion/PotionType.java b/src/main/java/org/bukkit/potion/PotionType.java
 index 70456f08668733a9a2840be6b08b078ad63e6825..13e1db8778adea4591dbb85870ff366fd565aa9e 100644
 --- a/src/main/java/org/bukkit/potion/PotionType.java

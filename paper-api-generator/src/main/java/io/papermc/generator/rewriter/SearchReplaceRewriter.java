@@ -36,10 +36,14 @@ public class SearchReplaceRewriter implements SourceRewriter {
     // only when equalsSize = true
     protected void replaceLine(SearchMetadata metadata, StringBuilder builder) {}
 
+    protected void checkFileState() {}
+
     private boolean framed;
 
     @Override
     public void writeToFile(Path parent) throws IOException {
+        this.checkFileState();
+
         String indent = Formatting.incrementalIndent(INDENT_UNIT, this.rewriteClass);
         String startPattern = String.format("// %s - Generated/%s", PAPER_START_FORMAT, this.pattern);
         String endPattern = String.format("// %s - Generated/%s", PAPER_END_FORMAT, this.pattern);
