@@ -5,15 +5,10 @@ import io.papermc.generator.rewriter.SearchMetadata;
 import io.papermc.generator.rewriter.SearchReplaceRewriter;
 import io.papermc.generator.rewriter.utils.Annotations;
 import io.papermc.generator.utils.Formatting;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
-import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import io.papermc.generator.utils.TagRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -92,7 +87,7 @@ public class TagRewriter extends SearchReplaceRewriter {
             }
 
             if (i != len - 1) {
-                builder.append('\n'); // extra line before registry field
+                builder.append('\n'); // extra line before the registry field
             }
         }
     }

@@ -36,31 +36,22 @@ public class SearchReplaceRewriter implements SourceRewriter {
     // only when equalsSize = true
     protected void replaceLine(SearchMetadata metadata, StringBuilder builder) {}
 
-    protected void checkFileState() {}
+    protected void beginSearch() {}
 
     private boolean framed;
 
-    @Override
-    public void writeToFile(Path parent) throws IOException {
-        this.checkFileState();
+    private StringBuilder searchAndReplace(List<String> lines, StringBuilder content) {
+        this.beginSearch();
 
         String indent = Formatting.incrementalIndent(INDENT_UNIT, this.rewriteClass);
         String startPattern = String.format("// %s - Generated/%s", PAPER_START_FORMAT, this.pattern);
         String endPattern = String.format("// %s - Generated/%s", PAPER_END_FORMAT, this.pattern);
 
-        String filePath = "%s/%s.java".formatted(
-            this.rewriteClass.getPackageName().replace('.', '/'),
-            Formatting.retrieveFileName(this.rewriteClass)
-        );
-
-        Path path = parent.resolve(filePath);
-        StringBuilder content = new StringBuilder();
         StringBuilder strippedContent = new StringBuilder();
 
         // todo support multiple passes
         // strip the replaced content first or apply directly the change when the replaced content size is equals to the new content size
         {
-            List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
             boolean replace = false;
 
             for (int i = 0; i < lines.size(); i++) {
@@ -88,7 +79,7 @@ public class SearchReplaceRewriter implements SourceRewriter {
                 } else {
                     strippedContent.append(line);
                     strippedContent.append('\n');
-                    if (replace) {
+                    if (replace) { // todo check this.equalsSize
                         // todo generated version comment
                         this.replaceLine(new SearchMetadata(this.importCollector, indent, line, i), content);
                     }
@@ -141,6 +132,19 @@ public class SearchReplaceRewriter implements SourceRewriter {
             }
             content = replacedContent;
         }
+        return content;
+    }
+
+    @Override
+    public void writeToFile(Path parent) throws IOException {
+        String filePath = "%s/%s.java".formatted(
+            this.rewriteClass.getPackageName().replace('.', '/'),
+            Formatting.retrieveFileName(this.rewriteClass)
+        );
+
+        Path path = parent.resolve(filePath);
+        List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
+        StringBuilder content = this.searchAndReplace(lines, new StringBuilder());
 
         // Files.writeString(path, content.toString(), StandardCharsets.UTF_8); // todo
         Path createdPath = Main.generatedPath.resolve(filePath);

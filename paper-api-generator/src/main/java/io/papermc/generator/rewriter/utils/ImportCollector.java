@@ -65,6 +65,7 @@ public class ImportCollector {
     }
 
     public void consume(String line) {
+        // precondition for inlined import and other like import 1; import 2; | ;;; import a ;;; + extra space
         if (line.startsWith("import static ")) {
             addStaticImport(line.substring("import static ".length(), line.length() - 1));
         } else {

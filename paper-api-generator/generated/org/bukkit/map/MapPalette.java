@@ -43,10 +43,10 @@ public final class MapPalette {
     static final Color[] colors = {
         // Paper start - Generated/MapPalette#colors
         // @GeneratedFrom 1.20.4
-        new Color(0, 0, 0),
-        new Color(0, 0, 0),
-        new Color(0, 0, 0),
-        new Color(0, 0, 0),
+        new Color(0, 0, 0, 0),
+        new Color(0, 0, 0, 0),
+        new Color(0, 0, 0, 0),
+        new Color(0, 0, 0, 0),
         new Color(89, 125, 39),
         new Color(109, 153, 48),
         new Color(127, 178, 56),

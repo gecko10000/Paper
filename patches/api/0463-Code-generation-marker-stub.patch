@@ -4,6 +4,26 @@ Date: Wed, 14 Feb 2024 19:33:27 +0100
 Subject: [PATCH] Code generation marker stub
 
 
+diff --git a/src/main/java/org/bukkit/Art.java b/src/main/java/org/bukkit/Art.java
+index 24daba85ce4129fb0babe67570059ca8119360c0..7aca317825492157e78ef04470914c2ec5a9d45d 100644
+--- a/src/main/java/org/bukkit/Art.java
++++ b/src/main/java/org/bukkit/Art.java
+@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
+  * Represents the art on a painting
+  */
+ public enum Art implements Keyed {
++    // Paper start - Generated/Art
+     KEBAB(0, 1, 1),
+     AZTEC(1, 1, 1),
+     ALBAN(2, 1, 1),
+@@ -40,6 +41,7 @@ public enum Art implements Keyed {
+     WIND(27, 2, 2),
+     WATER(28, 2, 2),
+     FIRE(29, 2, 2);
++    // Paper end - Generated/Art
+ 
+     private final int id, width, height;
+     private final NamespacedKey key;
 diff --git a/src/main/java/org/bukkit/Fluid.java b/src/main/java/org/bukkit/Fluid.java
 index 7202b44a65e8699cf64329e441e83d4dd1779c19..ebcef7cdbcd402010af13d9fb055b3a3f6ce665e 100644
 --- a/src/main/java/org/bukkit/Fluid.java
@@ -121,6 +141,26 @@ index 5d8fa5b39a5d50cca48ba63af3a84b80f279b649..c6ea69c0d05aef5a29b758dbd3ea4c84
      /**
       * Represents a custom Biome
       */
+diff --git a/src/main/java/org/bukkit/block/banner/PatternType.java b/src/main/java/org/bukkit/block/banner/PatternType.java
+index 1c5c6303de815dd4ffa68f47dd2b6fa187fd4b70..09a0ab2e16a9ded3c011b0361c8568f9d7768244 100644
+--- a/src/main/java/org/bukkit/block/banner/PatternType.java
++++ b/src/main/java/org/bukkit/block/banner/PatternType.java
+@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
+ import org.jetbrains.annotations.Nullable;
+ 
+ public enum PatternType implements Keyed {
++    // Paper start - Generated/PatternType
+     BASE("b", "base"),
+     SQUARE_BOTTOM_LEFT("bl", "square_bottom_left"),
+     SQUARE_BOTTOM_RIGHT("br", "square_bottom_right"),
+@@ -51,6 +52,7 @@ public enum PatternType implements Keyed {
+     MOJANG("moj", "mojang"),
+     GLOBE("glb", "globe"),
+     PIGLIN("pig", "piglin");
++    // Paper end - Generated/PatternType
+ 
+     private final String identifier;
+     private final NamespacedKey key;
 diff --git a/src/main/java/org/bukkit/damage/DamageType.java b/src/main/java/org/bukkit/damage/DamageType.java
 index 5fef0f8b7957d5daef864de8547104f552215f29..de742b029409e2c4d74f854ca802130d6422ec88 100644
 --- a/src/main/java/org/bukkit/damage/DamageType.java
@@ -281,6 +321,26 @@ index e29fc42ae2b9c555db63d10d20552748e28ba60e..ae7f73f391b514266371021e4171fde6
      // Paper start
      /**
       * @deprecated use {@link Registry#getKey(Keyed)} and {@link Registry#TRIM_PATTERN}. TrimPatterns
+diff --git a/src/main/java/org/bukkit/map/MapCursor.java b/src/main/java/org/bukkit/map/MapCursor.java
+index 599399e4d8ca7c46747439ad2dd0186d0a289a19..da69e7750ccac139ec2e8e240fbb7ef53d136683 100644
+--- a/src/main/java/org/bukkit/map/MapCursor.java
++++ b/src/main/java/org/bukkit/map/MapCursor.java
+@@ -282,6 +282,7 @@ public final class MapCursor {
+      * resource pack.
+      */
+     public enum Type {
++        // Paper start - Generated/MapCursorType
+         WHITE_POINTER(0),
+         GREEN_POINTER(1),
+         RED_POINTER(2),
+@@ -317,6 +318,7 @@ public final class MapCursor {
+         JUNGLE_TEMPLE(32),
+         SWAMP_HUT(33),
+         ;
++        // Paper end - Generated/MapCursorType
+ 
+         private byte value;
+ 
 diff --git a/src/main/java/org/bukkit/map/MapPalette.java b/src/main/java/org/bukkit/map/MapPalette.java
 index c80faa079eca1564847070f0338fc98024639829..825b6c7b4e6b24f8d49da7b44f37e8a5ddc2e2c1 100644
 --- a/src/main/java/org/bukkit/map/MapPalette.java
@@ -321,3 +381,23 @@ index 70456f08668733a9a2840be6b08b078ad63e6825..13e1db8778adea4591dbb85870ff366f
  
      private final NamespacedKey key;
      private final Supplier<InternalPotionData> internalPotionDataSupplier;
+diff --git a/src/main/java/org/bukkit/scoreboard/DisplaySlot.java b/src/main/java/org/bukkit/scoreboard/DisplaySlot.java
+index 21cd2ba659504c3a1eb95226539a5701d0c324db..3f6044892ad17bb99786e0009c937d294e90aa09 100644
+--- a/src/main/java/org/bukkit/scoreboard/DisplaySlot.java
++++ b/src/main/java/org/bukkit/scoreboard/DisplaySlot.java
+@@ -6,6 +6,7 @@ import net.kyori.adventure.text.format.NamedTextColor; // Paper
+  */
+ public enum DisplaySlot {
+     // Paper start
++    // Paper start - Generated/DisplaySlot
+     BELOW_NAME("below_name"),
+     PLAYER_LIST("list"),
+     SIDEBAR("sidebar"),
+@@ -25,6 +26,7 @@ public enum DisplaySlot {
+     SIDEBAR_TEAM_LIGHT_PURPLE(NamedTextColor.LIGHT_PURPLE),
+     SIDEBAR_TEAM_YELLOW(NamedTextColor.YELLOW),
+     SIDEBAR_TEAM_WHITE(NamedTextColor.WHITE);
++    // Paper end - Generated/DisplaySlot
+ 
+     public static final net.kyori.adventure.util.Index<String, DisplaySlot> NAMES = net.kyori.adventure.util.Index.create(DisplaySlot.class, DisplaySlot::getId);
+ 

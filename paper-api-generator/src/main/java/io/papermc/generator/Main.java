@@ -81,6 +81,8 @@ public final class Main {
             }
 
             LOGGER.info("Files written to {}", output.toAbsolutePath());
+        } catch (final RuntimeException ex) {
+            throw ex;
         } catch (final Exception ex) {
             throw new RuntimeException(ex);
         }

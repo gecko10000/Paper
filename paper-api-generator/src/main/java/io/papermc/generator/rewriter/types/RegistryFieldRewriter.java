@@ -1,6 +1,5 @@
 package io.papermc.generator.rewriter.types;
 
-import com.google.common.base.Preconditions;
 import com.google.common.base.Suppliers;
 import io.papermc.generator.Main;
 import io.papermc.generator.rewriter.SearchMetadata;
@@ -25,6 +24,9 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import static io.papermc.generator.utils.Formatting.quoted;
+import static javax.lang.model.element.Modifier.FINAL;
+import static javax.lang.model.element.Modifier.PUBLIC;
+import static javax.lang.model.element.Modifier.STATIC;
 
 public class RegistryFieldRewriter<T, A> extends SearchReplaceRewriter {
 
@@ -60,7 +62,7 @@ public class RegistryFieldRewriter<T, A> extends SearchReplaceRewriter {
     }
 
     @Override
-    protected void checkFileState() {
+    protected void beginSearch() {
         if (this.fetchMethod == null) {
             return;
         }
@@ -90,7 +92,7 @@ public class RegistryFieldRewriter<T, A> extends SearchReplaceRewriter {
 
             builder.append(metadata.indent());
             if (!this.isInterface) {
-                builder.append("public static final ");
+                builder.append("%s %s %s ".formatted(PUBLIC, STATIC, FINAL));
             }
             builder.append(this.rewriteClass.getSimpleName()).append(' ').append(fieldName);
             builder.append(" = ");
