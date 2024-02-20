@@ -84,7 +84,6 @@ public class RegistryFieldRewriter<T, A> extends SearchReplaceRewriter {
             ResourceKey<T> resourceKey = reference.key();
             String pathKey = resourceKey.location().getPath();
 
-            String fieldName = Formatting.formatPathAsField(pathKey);
             String experimentalValue = this.getExperimentalValue(reference);
             if (experimentalValue != null) {
                 Annotations.experimentalAnnotations(builder, metadata, experimentalValue);
@@ -94,7 +93,7 @@ public class RegistryFieldRewriter<T, A> extends SearchReplaceRewriter {
             if (!this.isInterface) {
                 builder.append("%s %s %s ".formatted(PUBLIC, STATIC, FINAL));
             }
-            builder.append(this.rewriteClass.getSimpleName()).append(' ').append(fieldName);
+            builder.append(this.rewriteClass.getSimpleName()).append(' ').append(this.rewriteFieldName(reference));
             builder.append(" = ");
             if (this.fetchMethod == null) {
                 builder.append("%s.%s.get(%s.minecraft(%s))".formatted(org.bukkit.Registry.class.getSimpleName(), REGISTRY_FIELD_NAMES.get(this.rewriteClass), NamespacedKey.class.getSimpleName(), quoted(pathKey)));
@@ -108,6 +107,10 @@ public class RegistryFieldRewriter<T, A> extends SearchReplaceRewriter {
                 builder.append('\n');
             }
         }
+    }
+
+    protected String rewriteFieldName(Holder.Reference<T> reference) {
+        return Formatting.formatPathAsField(reference.key().location().getPath());
     }
 
     @Nullable

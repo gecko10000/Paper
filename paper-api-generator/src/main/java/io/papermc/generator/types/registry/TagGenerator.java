@@ -38,6 +38,7 @@ import static com.squareup.javapoet.TypeSpec.interfaceBuilder;
 import static io.papermc.generator.utils.Annotations.NOT_NULL;
 import static io.papermc.generator.utils.Annotations.NULLABLE;
 import static io.papermc.generator.utils.Annotations.experimentalAnnotations;
+import static io.papermc.generator.utils.TagRegistry.registry;
 import static javax.lang.model.element.Modifier.ABSTRACT;
 import static javax.lang.model.element.Modifier.FINAL;
 import static javax.lang.model.element.Modifier.PUBLIC;
@@ -74,10 +75,6 @@ public class TagGenerator extends SimpleGenerator {
         """;
 
     private static final String REGISTRY_FIELD_JAVADOC = "Key for the built-in $L registry.";
-
-    private static TagRegistry registry(final String name, final Class<?> apiType, final ResourceKey<? extends Registry<?>> registryKey) {
-        return new TagRegistry(name, apiType, registryKey);
-    }
 
     private static final List<TagRegistry> TAG_REGISTRIES = List.of(
         registry("blocks", Material.class, Registries.BLOCK),

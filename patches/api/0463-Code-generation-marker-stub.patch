@@ -4,6 +4,40 @@ Date: Wed, 14 Feb 2024 19:33:27 +0100
 Subject: [PATCH] Code generation marker stub
 
 
+diff --git a/src/main/java/io/papermc/paper/enchantments/EnchantmentRarity.java b/src/main/java/io/papermc/paper/enchantments/EnchantmentRarity.java
+index e6a40c1fcea761bd66743b50e3da3d14797d05b0..0ef8a64ca3fb93b878a0f67bb85629e7b85b07e2 100644
+--- a/src/main/java/io/papermc/paper/enchantments/EnchantmentRarity.java
++++ b/src/main/java/io/papermc/paper/enchantments/EnchantmentRarity.java
+@@ -2,10 +2,12 @@ package io.papermc.paper.enchantments;
+ 
+ public enum EnchantmentRarity {
+ 
++    // Paper start - Generated/EnchantmentRarity
+     COMMON(10),
+     UNCOMMON(5),
+     RARE(2),
+     VERY_RARE(1);
++    // Paper end - Generated/EnchantmentRarity
+ 
+     private final int weight;
+ 
+diff --git a/src/main/java/io/papermc/paper/inventory/ItemRarity.java b/src/main/java/io/papermc/paper/inventory/ItemRarity.java
+index 74ef8395cc040ce488c2acaa416db20272cc2734..73d3b072368ff9b0aa480659857c456c8c6d0438 100644
+--- a/src/main/java/io/papermc/paper/inventory/ItemRarity.java
++++ b/src/main/java/io/papermc/paper/inventory/ItemRarity.java
+@@ -6,10 +6,12 @@ import org.jetbrains.annotations.NotNull;
+ 
+ public enum ItemRarity {
+ 
++    // Paper start - Generated/ItemRarity
+     COMMON(NamedTextColor.WHITE),
+     UNCOMMON(NamedTextColor.YELLOW),
+     RARE(NamedTextColor.AQUA),
+     EPIC(NamedTextColor.LIGHT_PURPLE);
++    // Paper end - Generated/ItemRarity
+ 
+     TextColor color;
+ 
 diff --git a/src/main/java/org/bukkit/Art.java b/src/main/java/org/bukkit/Art.java
 index 24daba85ce4129fb0babe67570059ca8119360c0..7aca317825492157e78ef04470914c2ec5a9d45d 100644
 --- a/src/main/java/org/bukkit/Art.java
@@ -44,6 +78,164 @@ index 7202b44a65e8699cf64329e441e83d4dd1779c19..ebcef7cdbcd402010af13d9fb055b3a3
  
      private final NamespacedKey key;
  
+diff --git a/src/main/java/org/bukkit/GameEvent.java b/src/main/java/org/bukkit/GameEvent.java
+index 6c9689baca1763e2ef79495d38618d587e792434..3073fe5929650076f99d2ea04ebd226534bbf93f 100644
+--- a/src/main/java/org/bukkit/GameEvent.java
++++ b/src/main/java/org/bukkit/GameEvent.java
+@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
+  */
+ public abstract class GameEvent implements Keyed {
+ 
++    // Paper start - Generated/GameEvent
+     public static final GameEvent BLOCK_ACTIVATE = getEvent("block_activate");
+     public static final GameEvent BLOCK_ATTACH = getEvent("block_attach");
+     public static final GameEvent BLOCK_CHANGE = getEvent("block_change");
+@@ -21,42 +22,18 @@ public abstract class GameEvent implements Keyed {
+     public static final GameEvent BLOCK_DETACH = getEvent("block_detach");
+     public static final GameEvent BLOCK_OPEN = getEvent("block_open");
+     public static final GameEvent BLOCK_PLACE = getEvent("block_place");
+-    @Deprecated
+-    public static final GameEvent BLOCK_PRESS = getEvent("block_activate");
+-    @Deprecated
+-    public static final GameEvent BLOCK_SWITCH = getEvent("block_activate");
+-    @Deprecated
+-    public static final GameEvent BLOCK_UNPRESS = getEvent("block_deactivate");
+-    @Deprecated
+-    public static final GameEvent BLOCK_UNSWITCH = getEvent("block_deactivate");
+     public static final GameEvent CONTAINER_CLOSE = getEvent("container_close");
+     public static final GameEvent CONTAINER_OPEN = getEvent("container_open");
+-    @Deprecated
+-    public static final GameEvent DISPENSE_FAIL = getEvent("block_activate");
+     public static final GameEvent DRINK = getEvent("drink");
+-    @Deprecated
+-    public static final GameEvent DRINKING_FINISH = getEvent("drink");
+     public static final GameEvent EAT = getEvent("eat");
+-    @Deprecated
+-    public static final GameEvent ELYTRA_FREE_FALL = getEvent("elytra_glide");
+     public static final GameEvent ELYTRA_GLIDE = getEvent("elytra_glide");
+     public static final GameEvent ENTITY_DAMAGE = getEvent("entity_damage");
+-    @Deprecated
+-    public static final GameEvent ENTITY_DAMAGED = getEvent("entity_damage");
+     public static final GameEvent ENTITY_DIE = getEvent("entity_die");
+     public static final GameEvent ENTITY_DISMOUNT = getEvent("entity_dismount");
+-    @Deprecated
+-    public static final GameEvent ENTITY_DYING = getEvent("entity_die");
+     public static final GameEvent ENTITY_INTERACT = getEvent("entity_interact");
+     public static final GameEvent ENTITY_MOUNT = getEvent("entity_mount");
+-    @Deprecated
+-    public static final GameEvent ENTITY_KILLED = getEvent("entity_die");
+     public static final GameEvent ENTITY_PLACE = getEvent("entity_place");
+     public static final GameEvent ENTITY_ACTION = getEvent("entity_action");
+-    @Deprecated
+-    public static final GameEvent ENTITY_ROAR = getEvent("entity_action");
+-    @Deprecated
+-    public static final GameEvent ENTITY_SHAKE = getEvent("entity_action");
+     public static final GameEvent EQUIP = getEvent("equip");
+     public static final GameEvent EXPLODE = getEvent("explode");
+     public static final GameEvent FLAP = getEvent("flap");
+@@ -69,34 +46,18 @@ public abstract class GameEvent implements Keyed {
+     public static final GameEvent JUKEBOX_PLAY = getEvent("jukebox_play");
+     public static final GameEvent JUKEBOX_STOP_PLAY = getEvent("jukebox_stop_play");
+     public static final GameEvent LIGHTNING_STRIKE = getEvent("lightning_strike");
+-    @Deprecated
+-    public static final GameEvent MOB_INTERACT = getEvent("entity_interact");
+     public static final GameEvent NOTE_BLOCK_PLAY = getEvent("note_block_play");
+-    @Deprecated
+-    public static final GameEvent PISTON_CONTRACT = getEvent("block_deactivate");
+-    @Deprecated
+-    public static final GameEvent PISTON_EXTEND = getEvent("block_activate");
+     public static final GameEvent PRIME_FUSE = getEvent("prime_fuse");
+     public static final GameEvent PROJECTILE_LAND = getEvent("projectile_land");
+     public static final GameEvent PROJECTILE_SHOOT = getEvent("projectile_shoot");
+-    @Deprecated
+-    public static final GameEvent RAVAGER_ROAR = getEvent("entity_action");
+-    @Deprecated
+-    public static final GameEvent RING_BELL = getEvent("block_change");
+     public static final GameEvent SCULK_SENSOR_TENDRILS_CLICKING = getEvent("sculk_sensor_tendrils_clicking");
+     public static final GameEvent SHEAR = getEvent("shear");
+     public static final GameEvent SHRIEK = getEvent("shriek");
+-    @Deprecated
+-    public static final GameEvent SHULKER_CLOSE = getEvent("container_close");
+-    @Deprecated
+-    public static final GameEvent SHULKER_OPEN = getEvent("container_open");
+     public static final GameEvent SPLASH = getEvent("splash");
+     public static final GameEvent STEP = getEvent("step");
+     public static final GameEvent SWIM = getEvent("swim");
+     public static final GameEvent TELEPORT = getEvent("teleport");
+     public static final GameEvent UNEQUIP = getEvent("unequip");
+-    @Deprecated
+-    public static final GameEvent WOLF_SHAKING = getEvent("entity_action");
+     public static final GameEvent RESONATE_1 = getEvent("resonate_1");
+     public static final GameEvent RESONATE_2 = getEvent("resonate_2");
+     public static final GameEvent RESONATE_3 = getEvent("resonate_3");
+@@ -112,6 +73,47 @@ public abstract class GameEvent implements Keyed {
+     public static final GameEvent RESONATE_13 = getEvent("resonate_13");
+     public static final GameEvent RESONATE_14 = getEvent("resonate_14");
+     public static final GameEvent RESONATE_15 = getEvent("resonate_15");
++    // Paper end - Generated/GameEvent
++    @Deprecated
++    public static final GameEvent BLOCK_PRESS = getEvent("block_activate");
++    @Deprecated
++    public static final GameEvent BLOCK_SWITCH = getEvent("block_activate");
++    @Deprecated
++    public static final GameEvent BLOCK_UNPRESS = getEvent("block_deactivate");
++    @Deprecated
++    public static final GameEvent BLOCK_UNSWITCH = getEvent("block_deactivate");
++    @Deprecated
++    public static final GameEvent DISPENSE_FAIL = getEvent("block_activate");
++    @Deprecated
++    public static final GameEvent DRINKING_FINISH = getEvent("drink");
++    @Deprecated
++    public static final GameEvent ELYTRA_FREE_FALL = getEvent("elytra_glide");
++    @Deprecated
++    public static final GameEvent ENTITY_DAMAGED = getEvent("entity_damage");
++    @Deprecated
++    public static final GameEvent ENTITY_DYING = getEvent("entity_die");
++    @Deprecated
++    public static final GameEvent ENTITY_KILLED = getEvent("entity_die");
++    @Deprecated
++    public static final GameEvent ENTITY_ROAR = getEvent("entity_action");
++    @Deprecated
++    public static final GameEvent ENTITY_SHAKE = getEvent("entity_action");
++    @Deprecated
++    public static final GameEvent MOB_INTERACT = getEvent("entity_interact");
++    @Deprecated
++    public static final GameEvent PISTON_CONTRACT = getEvent("block_deactivate");
++    @Deprecated
++    public static final GameEvent PISTON_EXTEND = getEvent("block_activate");
++    @Deprecated
++    public static final GameEvent RAVAGER_ROAR = getEvent("entity_action");
++    @Deprecated
++    public static final GameEvent RING_BELL = getEvent("block_change");
++    @Deprecated
++    public static final GameEvent SHULKER_CLOSE = getEvent("container_close");
++    @Deprecated
++    public static final GameEvent SHULKER_OPEN = getEvent("container_open");
++    @Deprecated
++    public static final GameEvent WOLF_SHAKING = getEvent("entity_action");
+ 
+     /**
+      * Returns a {@link GameEvent} by a {@link NamespacedKey}.
+diff --git a/src/main/java/org/bukkit/MusicInstrument.java b/src/main/java/org/bukkit/MusicInstrument.java
+index ee5368372e136541eafe1d7ffb395de670fe4843..da849da92617fe123bf768ca2cdde4ac15f74959 100644
+--- a/src/main/java/org/bukkit/MusicInstrument.java
++++ b/src/main/java/org/bukkit/MusicInstrument.java
+@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
+ 
+ public abstract class MusicInstrument implements Keyed, net.kyori.adventure.translation.Translatable { // Paper - translation keys
+ 
++    // Paper start - Generated/MusicInstrument
+     public static final MusicInstrument PONDER = getInstrument("ponder_goat_horn");
+     public static final MusicInstrument SING = getInstrument("sing_goat_horn");
+     public static final MusicInstrument SEEK = getInstrument("seek_goat_horn");
+@@ -17,6 +18,7 @@ public abstract class MusicInstrument implements Keyed, net.kyori.adventure.tran
+     public static final MusicInstrument CALL = getInstrument("call_goat_horn");
+     public static final MusicInstrument YEARN = getInstrument("yearn_goat_horn");
+     public static final MusicInstrument DREAM = getInstrument("dream_goat_horn");
++    // Paper end - Generated/MusicInstrument
+ 
+     /**
+      * Returns a {@link MusicInstrument} by a {@link NamespacedKey}.
 diff --git a/src/main/java/org/bukkit/Sound.java b/src/main/java/org/bukkit/Sound.java
 index bb1b6bc9349af6dec369420035e860921da52589..98bdf175bea2f559655ccb96ceb900669752fbb5 100644
 --- a/src/main/java/org/bukkit/Sound.java
@@ -181,6 +373,26 @@ index 5fef0f8b7957d5daef864de8547104f552215f29..de742b029409e2c4d74f854ca802130d
  
      @NotNull
      private static DamageType getDamageType(@NotNull String key) {
+diff --git a/src/main/java/org/bukkit/entity/Boat.java b/src/main/java/org/bukkit/entity/Boat.java
+index 2ac685fb1817f3ce06ebe6391cc863712d68367c..3ce5fa588e46b251c459f2e191539377f946f287 100644
+--- a/src/main/java/org/bukkit/entity/Boat.java
++++ b/src/main/java/org/bukkit/entity/Boat.java
+@@ -136,6 +136,7 @@ public interface Boat extends Vehicle {
+      * Represents the type of boats.
+      */
+     public enum Type {
++        // Paper start - Generated/BoatType
+         OAK(Material.OAK_PLANKS),
+         SPRUCE(Material.SPRUCE_PLANKS),
+         BIRCH(Material.BIRCH_PLANKS),
+@@ -146,6 +147,7 @@ public interface Boat extends Vehicle {
+         MANGROVE(Material.MANGROVE_PLANKS),
+         BAMBOO(Material.BAMBOO_PLANKS),
+         ;
++        // Paper end - Generated/BoatType
+ 
+         private final Material materialBlock;
+ 
 diff --git a/src/main/java/org/bukkit/entity/Cat.java b/src/main/java/org/bukkit/entity/Cat.java
 index d03adfaa4176617ef2ace2754fe02b63860e3aee..fceb2f0a452a1ce72988bbd1ecca599cfb6af6d9 100644
 --- a/src/main/java/org/bukkit/entity/Cat.java
@@ -201,6 +413,21 @@ index d03adfaa4176617ef2ace2754fe02b63860e3aee..fceb2f0a452a1ce72988bbd1ecca599c
  
          private final NamespacedKey key;
  
+diff --git a/src/main/java/org/bukkit/entity/Fox.java b/src/main/java/org/bukkit/entity/Fox.java
+index 473a7e36ad64f866d1d2e09e2ecb2e9881668faf..1fb12e0bc77247e9f6562bb7a8d0ff35eecb54a9 100644
+--- a/src/main/java/org/bukkit/entity/Fox.java
++++ b/src/main/java/org/bukkit/entity/Fox.java
+@@ -89,8 +89,10 @@ public interface Fox extends Animals, Sittable {
+      * Represents the various different fox types there are.
+      */
+     public enum Type {
++        // Paper start - Generated/FoxType
+         RED,
+         SNOW;
++        // Paper end - Generated/FoxType
+     }
+ 
+     // Paper start - Add more fox behavior API
 diff --git a/src/main/java/org/bukkit/entity/Frog.java b/src/main/java/org/bukkit/entity/Frog.java
 index 0960bdbb3253bfe109dc6283244b8c9d95a850f7..d11cfd431cee09886ecd9d9416de85f56ac90462 100644
 --- a/src/main/java/org/bukkit/entity/Frog.java
@@ -221,6 +448,64 @@ index 0960bdbb3253bfe109dc6283244b8c9d95a850f7..d11cfd431cee09886ecd9d9416de85f5
          private final NamespacedKey key;
  
          private Variant() {
+diff --git a/src/main/java/org/bukkit/entity/Panda.java b/src/main/java/org/bukkit/entity/Panda.java
+index aa5686df134185334a74429576ff0709a604dbfd..94ce1e46ef2fe4a8aa5ba79e1c941119b744a572 100644
+--- a/src/main/java/org/bukkit/entity/Panda.java
++++ b/src/main/java/org/bukkit/entity/Panda.java
+@@ -201,6 +201,7 @@ public interface Panda extends Animals, Sittable {
+ 
+     public enum Gene {
+ 
++        // Paper start - Generated/PandaGene
+         NORMAL(false),
+         LAZY(false),
+         WORRIED(false),
+@@ -208,6 +209,7 @@ public interface Panda extends Animals, Sittable {
+         BROWN(true),
+         WEAK(true),
+         AGGRESSIVE(false);
++        // Paper end - Generated/PandaGene
+ 
+         private final boolean recessive;
+ 
+diff --git a/src/main/java/org/bukkit/entity/Sniffer.java b/src/main/java/org/bukkit/entity/Sniffer.java
+index 15a0a733b0e5804655b5957cbf20831290d52a08..53228454d68eb57f6f0e70760ac02fd7998312f8 100644
+--- a/src/main/java/org/bukkit/entity/Sniffer.java
++++ b/src/main/java/org/bukkit/entity/Sniffer.java
+@@ -74,6 +74,7 @@ public interface Sniffer extends Animals {
+      * Represents the current state of the Sniffer.
+      */
+     public enum State {
++        // Paper start - Generated/SnifferState
+         IDLING,
+         FEELING_HAPPY,
+         SCENTING,
+@@ -81,5 +82,6 @@ public interface Sniffer extends Animals {
+         SEARCHING,
+         DIGGING,
+         RISING;
++        // Paper end - Generated/SnifferState
+     }
+ }
+diff --git a/src/main/java/org/bukkit/entity/TropicalFish.java b/src/main/java/org/bukkit/entity/TropicalFish.java
+index 84bba32e80d755f094975b667f1bf2a132087f4f..4fec7b3bbeae7ab0538f3de6e83faa9c5aa0b8ad 100644
+--- a/src/main/java/org/bukkit/entity/TropicalFish.java
++++ b/src/main/java/org/bukkit/entity/TropicalFish.java
+@@ -60,6 +60,7 @@ public interface TropicalFish extends io.papermc.paper.entity.SchoolableFish { /
+      */
+     public static enum Pattern {
+ 
++        // Paper start - Generated/TropicalFishPattern
+         KOB,
+         SUNSTREAK,
+         SNOOPER,
+@@ -72,5 +73,6 @@ public interface TropicalFish extends io.papermc.paper.entity.SchoolableFish { /
+         BLOCKFISH,
+         BETTY,
+         CLAYFISH;
++        // Paper end - Generated/TropicalFishPattern
+     }
+ }
 diff --git a/src/main/java/org/bukkit/entity/Villager.java b/src/main/java/org/bukkit/entity/Villager.java
 index 3bc24457d143449e6a338d79becf7c39b9f81054..b6f07418ab7267cc43d1174fc023930e04eba360 100644
 --- a/src/main/java/org/bukkit/entity/Villager.java
@@ -321,6 +606,35 @@ index e29fc42ae2b9c555db63d10d20552748e28ba60e..ae7f73f391b514266371021e4171fde6
      // Paper start
      /**
       * @deprecated use {@link Registry#getKey(Keyed)} and {@link Registry#TRIM_PATTERN}. TrimPatterns
+diff --git a/src/main/java/org/bukkit/inventory/recipe/CookingBookCategory.java b/src/main/java/org/bukkit/inventory/recipe/CookingBookCategory.java
+index 9990a7abf8f910ff5da45b6e5d94902e825e2096..54cd8b54e9516f6d900f9a550fc220063b494166 100644
+--- a/src/main/java/org/bukkit/inventory/recipe/CookingBookCategory.java
++++ b/src/main/java/org/bukkit/inventory/recipe/CookingBookCategory.java
+@@ -5,7 +5,9 @@ package org.bukkit.inventory.recipe;
+  */
+ public enum CookingBookCategory {
+ 
++    // Paper start - Generated/CookingBookCategory
+     FOOD,
+     BLOCKS,
+     MISC;
++    // Paper end - Generated/CookingBookCategory
+ }
+diff --git a/src/main/java/org/bukkit/inventory/recipe/CraftingBookCategory.java b/src/main/java/org/bukkit/inventory/recipe/CraftingBookCategory.java
+index 09a6a1b9b9ffb1e269bdaa1efc19cd8bedc2b499..3eecca87f204dcaebf580b7284859c4300057715 100644
+--- a/src/main/java/org/bukkit/inventory/recipe/CraftingBookCategory.java
++++ b/src/main/java/org/bukkit/inventory/recipe/CraftingBookCategory.java
+@@ -5,8 +5,10 @@ package org.bukkit.inventory.recipe;
+  */
+ public enum CraftingBookCategory {
+ 
++    // Paper start - Generated/CraftingBookCategory
+     BUILDING,
+     REDSTONE,
+     EQUIPMENT,
+     MISC;
++    // Paper end - Generated/CraftingBookCategory
+ }
 diff --git a/src/main/java/org/bukkit/map/MapCursor.java b/src/main/java/org/bukkit/map/MapCursor.java
 index 599399e4d8ca7c46747439ad2dd0186d0a289a19..da69e7750ccac139ec2e8e240fbb7ef53d136683 100644
 --- a/src/main/java/org/bukkit/map/MapCursor.java

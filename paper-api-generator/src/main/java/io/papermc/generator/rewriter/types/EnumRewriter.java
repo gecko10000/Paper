@@ -3,6 +3,7 @@ package io.papermc.generator.rewriter.types;
 import io.papermc.generator.rewriter.SearchMetadata;
 import io.papermc.generator.rewriter.SearchReplaceRewriter;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import java.util.Iterator;
 
 public abstract class EnumRewriter<T, A extends Enum<A>> extends SearchReplaceRewriter {
@@ -18,6 +19,7 @@ public abstract class EnumRewriter<T, A extends Enum<A>> extends SearchReplaceRe
 
     protected abstract String rewriteEnumName(T item);
 
+    @Nullable
     protected String rewriteEnumValue(T item) {
         return null;
     }
@@ -32,7 +34,7 @@ public abstract class EnumRewriter<T, A extends Enum<A>> extends SearchReplaceRe
         builder.append(metadata.indent()).append(this.rewriteEnumName(item));
         String value = this.rewriteEnumValue(item);
         if (value != null) {
-            builder.append('(').append(this.rewriteEnumValue(item)).append(')');
+            builder.append('(').append(value).append(')');
         }
         if (reachEnd && !this.values.hasNext()) {
             builder.append(';');

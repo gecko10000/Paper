@@ -13,7 +13,10 @@ import io.papermc.generator.types.registry.GeneratedKeyType;
 import io.papermc.generator.types.SourceGenerator;
 import io.papermc.generator.types.goal.MobGoalGenerator;
 import io.papermc.generator.utils.Formatting;
+import io.papermc.paper.enchantments.EnchantmentRarity;
+import io.papermc.paper.inventory.ItemRarity;
 import io.papermc.paper.registry.RegistryKey;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -22,25 +25,39 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.decoration.PaintingVariant;
+import net.minecraft.world.item.Instrument;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.Potions;
+import net.minecraft.world.item.enchantment.Enchantment;
 import org.bukkit.Art;
 import org.bukkit.Fluid;
 import org.bukkit.GameEvent;
+import org.bukkit.Material;
+import org.bukkit.MusicInstrument;
 import org.bukkit.Sound;
 import org.bukkit.Tag;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.damage.DamageType;
+import org.bukkit.entity.Boat;
 import org.bukkit.entity.Cat;
+import org.bukkit.entity.Fox;
 import org.bukkit.entity.Frog;
+import org.bukkit.entity.Panda;
+import org.bukkit.entity.Sniffer;
+import org.bukkit.entity.TropicalFish;
 import org.bukkit.entity.Villager;
 import org.bukkit.generator.structure.Structure;
 import org.bukkit.generator.structure.StructureType;
 import org.bukkit.inventory.meta.trim.TrimMaterial;
 import org.bukkit.inventory.meta.trim.TrimPattern;
+import org.bukkit.inventory.recipe.CookingBookCategory;
+import org.bukkit.inventory.recipe.CraftingBookCategory;
 import org.bukkit.potion.PotionType;
 import org.bukkit.scoreboard.DisplaySlot;
+
+import java.util.Locale;
 
 import static io.papermc.generator.utils.Formatting.quoted;
 
@@ -82,6 +99,7 @@ public interface Generators {
         new EnumRegistryRewriter<>(Villager.Type.class, Registries.VILLAGER_TYPE, "VillagerType", false),
         new EnumRegistryRewriter<>(Attribute.class, Registries.ATTRIBUTE, "Attribute", true),
         new EnumRegistryRewriter<>(Cat.Type.class, Registries.CAT_VARIANT, "CatType", true),
+        //new EnumRegistryRewriter<>(EntityType.class, Registries.ENTITY_TYPE, "EntityType", true), seems complex to get the typeId?
         new EnumRegistryRewriter<>(PotionType.class, Registries.POTION, "PotionType", true) {
             @Override
             protected String rewriteEnumName(Holder.Reference<Potion> reference) {
@@ -98,7 +116,7 @@ public interface Generators {
             protected String rewriteEnumValue(Holder.Reference<PaintingVariant> reference) {
                 PaintingVariant variant = reference.value();
                 return "%d, %d, %d".formatted(
-                    BuiltInRegistries.PAINTING_VARIANT.getId(reference.value()),
+                    BuiltInRegistries.PAINTING_VARIANT.getId(variant),
                     Mth.positiveCeilDiv(variant.getWidth(), PIXELS_PER_BLOCK),
                     Mth.positiveCeilDiv(variant.getHeight(), PIXELS_PER_BLOCK)
                 );
@@ -121,12 +139,49 @@ public interface Generators {
                 return quoted(slot.getSerializedName());
             }
         },
-        //new EnumRegistryRewriter<>(EntityType.class, Registries.ENTITY_TYPE, "EntityType", false), seems complex to get the typeId?
+        new EnumCloneRewriter<>(ItemRarity.class, Rarity.class, "ItemRarity", false) {
+            @Override
+            protected String rewriteEnumValue(Rarity rarity) {
+                return "%s.%s".formatted(NamedTextColor.class.getSimpleName(), NamedTextColor.NAMES.value(rarity.color.getName()).toString().toUpperCase(Locale.ENGLISH));
+            }
+        },
+        new EnumCloneRewriter<>(EnchantmentRarity.class, Enchantment.Rarity.class, "EnchantmentRarity", false) {
+            @Override
+            protected String rewriteEnumValue(Enchantment.Rarity rarity) {
+                return String.valueOf(rarity.getWeight());
+            }
+        },
+        new EnumCloneRewriter<>(Sniffer.State.class, net.minecraft.world.entity.animal.sniffer.Sniffer.State.class, "SnifferState", false),
+        new EnumCloneRewriter<>(Panda.Gene.class, net.minecraft.world.entity.animal.Panda.Gene.class, "PandaGene", false) {
+            @Override
+            protected String rewriteEnumValue(net.minecraft.world.entity.animal.Panda.Gene gene) {
+                return String.valueOf(gene.isRecessive());
+            }
+        },
+        new EnumCloneRewriter<>(CookingBookCategory.class, net.minecraft.world.item.crafting.CookingBookCategory.class, "CookingBookCategory", false),
+        new EnumCloneRewriter<>(CraftingBookCategory.class, net.minecraft.world.item.crafting.CraftingBookCategory.class, "CraftingBookCategory", false),
+        new EnumCloneRewriter<>(TropicalFish.Pattern.class, net.minecraft.world.entity.animal.TropicalFish.Pattern.class, "TropicalFishPattern", false),
+        new EnumCloneRewriter<>(Fox.Type.class, net.minecraft.world.entity.animal.Fox.Type.class, "FoxType", false),
+        new EnumCloneRewriter<>(Boat.Type.class, net.minecraft.world.entity.vehicle.Boat.Type.class, "BoatType", false) {
+            @Override
+            protected String rewriteEnumValue(net.minecraft.world.entity.vehicle.Boat.Type type) {
+                return "%s.%s".formatted(Material.class.getSimpleName(), BuiltInRegistries.BLOCK.getKey(type.getPlanks()).getPath().toUpperCase(Locale.ENGLISH));
+            }
+        },
         new RegistryFieldRewriter<>(Structure.class, Registries.STRUCTURE, "Structure", "getStructure"),
         new RegistryFieldRewriter<>(StructureType.class, Registries.STRUCTURE_TYPE, "StructureType", "getStructureType"),
         new RegistryFieldRewriter<>(TrimPattern.class, Registries.TRIM_PATTERN, "TrimPattern", null),
         new RegistryFieldRewriter<>(TrimMaterial.class, Registries.TRIM_MATERIAL, "TrimMaterial", null),
         new RegistryFieldRewriter<>(DamageType.class, Registries.DAMAGE_TYPE, "DamageType", "getDamageType"),
+        new RegistryFieldRewriter<>(GameEvent.class, Registries.GAME_EVENT, "GameEvent", "getEvent"),
+        new RegistryFieldRewriter<>(MusicInstrument.class, Registries.INSTRUMENT, "MusicInstrument", "getInstrument") {
+            @Override
+            protected String rewriteFieldName(Holder.Reference<Instrument> reference) {
+                String internalName = super.rewriteFieldName(reference);
+                int goatHornSuffix = internalName.lastIndexOf("_GOAT_HORN");
+                return goatHornSuffix == -1 ? internalName : internalName.substring(0, goatHornSuffix);
+            }
+        },
         new TagRewriter(Tag.class, "Tag"),
         new MapPaletteRewriter("MapPalette#colors"),
     };

@@ -22,12 +22,9 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.entity.EntityType;
 
 import static io.papermc.generator.utils.Formatting.quoted;
+import static io.papermc.generator.utils.TagRegistry.registry;
 
 public class TagRewriter extends SearchReplaceRewriter {
-
-    private static TagRegistry registry(final String name, final Class<?> apiType, final ResourceKey<? extends Registry<?>> registryKey) {
-        return new TagRegistry(name, apiType, registryKey);
-    }
 
     private static final List<TagRegistry> TAG_REGISTRIES = List.of(
         registry("blocks", Material.class, Registries.BLOCK),
