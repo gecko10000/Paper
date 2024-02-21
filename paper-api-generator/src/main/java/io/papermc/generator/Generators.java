@@ -8,6 +8,7 @@ import io.papermc.generator.rewriter.types.simple.MapCursorTypeRewriter;
 import io.papermc.generator.rewriter.types.simple.MapPaletteRewriter;
 import io.papermc.generator.rewriter.types.RegistryFieldRewriter;
 import io.papermc.generator.rewriter.types.TagRewriter;
+import io.papermc.generator.rewriter.types.simple.MaterialRewriter;
 import io.papermc.generator.rewriter.types.simple.PatternTypeRewriter;
 import io.papermc.generator.utils.ExperimentalSounds;
 import io.papermc.generator.types.registry.GeneratedKeyType;
@@ -171,6 +172,22 @@ public interface Generators {
                 }
             },
             new EnumCloneRewriter<>(Boat.Status.class, net.minecraft.world.entity.vehicle.Boat.Status.class, "BoatStatus", false)
+        ),
+        CompositeRewriter.bind(
+            new MaterialRewriter.IsBlock("Material#isBlock", false),
+            new MaterialRewriter.IsSolid("Material#isSolid", false),
+            new MaterialRewriter.IsAir("Material#isAir", false),
+            //new MaterialRewriter.IsTransparent("Material#isTransparent", false),
+            new MaterialRewriter.IsFlammable("Material#isFlammable", false),
+            new MaterialRewriter.IsBurnable("Material#isBurnable", false),
+            new MaterialRewriter.IsOccluding("Material#isOccluding", false),
+            new MaterialRewriter.HasGravity("Material#hasGravity", false),
+            new MaterialRewriter.IsInteractable("Material#isInteractable", false),
+
+            new MaterialRewriter.IsItem("Material#isItem", false),
+            new MaterialRewriter.IsEdible("Material#isEdible", false),
+            new MaterialRewriter.IsRecord("Material#isRecord", false),
+            new MaterialRewriter.IsFuel("Material#isFuel", false)
         ),
         new RegistryFieldRewriter<>(Structure.class, Registries.STRUCTURE, "Structure", "getStructure"),
         new RegistryFieldRewriter<>(StructureType.class, Registries.STRUCTURE_TYPE, "StructureType", "getStructureType"),
