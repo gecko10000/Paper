@@ -1,5 +1,6 @@
 package io.papermc.generator;
 
+import io.papermc.generator.rewriter.CompositeRewriter;
 import io.papermc.generator.rewriter.SourceRewriter;
 import io.papermc.generator.rewriter.types.EnumCloneRewriter;
 import io.papermc.generator.rewriter.types.EnumRegistryRewriter;
@@ -162,12 +163,15 @@ public interface Generators {
         new EnumCloneRewriter<>(CraftingBookCategory.class, net.minecraft.world.item.crafting.CraftingBookCategory.class, "CraftingBookCategory", false),
         new EnumCloneRewriter<>(TropicalFish.Pattern.class, net.minecraft.world.entity.animal.TropicalFish.Pattern.class, "TropicalFishPattern", false),
         new EnumCloneRewriter<>(Fox.Type.class, net.minecraft.world.entity.animal.Fox.Type.class, "FoxType", false),
-        new EnumCloneRewriter<>(Boat.Type.class, net.minecraft.world.entity.vehicle.Boat.Type.class, "BoatType", false) {
-            @Override
-            protected String rewriteEnumValue(net.minecraft.world.entity.vehicle.Boat.Type type) {
-                return "%s.%s".formatted(Material.class.getSimpleName(), BuiltInRegistries.BLOCK.getKey(type.getPlanks()).getPath().toUpperCase(Locale.ENGLISH));
-            }
-        },
+        CompositeRewriter.bind(
+            new EnumCloneRewriter<>(Boat.Type.class, net.minecraft.world.entity.vehicle.Boat.Type.class, "BoatType", false) {
+                @Override
+                protected String rewriteEnumValue(net.minecraft.world.entity.vehicle.Boat.Type type) {
+                    return "%s.%s".formatted(Material.class.getSimpleName(), BuiltInRegistries.BLOCK.getKey(type.getPlanks()).getPath().toUpperCase(Locale.ENGLISH));
+                }
+            },
+            new EnumCloneRewriter<>(Boat.Status.class, net.minecraft.world.entity.vehicle.Boat.Status.class, "BoatStatus", false)
+        ),
         new RegistryFieldRewriter<>(Structure.class, Registries.STRUCTURE, "Structure", "getStructure"),
         new RegistryFieldRewriter<>(StructureType.class, Registries.STRUCTURE_TYPE, "StructureType", "getStructureType"),
         new RegistryFieldRewriter<>(TrimPattern.class, Registries.TRIM_PATTERN, "TrimPattern", null),
@@ -178,8 +182,8 @@ public interface Generators {
             @Override
             protected String rewriteFieldName(Holder.Reference<Instrument> reference) {
                 String internalName = super.rewriteFieldName(reference);
-                int goatHornSuffix = internalName.lastIndexOf("_GOAT_HORN");
-                return goatHornSuffix == -1 ? internalName : internalName.substring(0, goatHornSuffix);
+                int goatHornSuffixIndex = internalName.lastIndexOf("_GOAT_HORN");
+                return goatHornSuffixIndex == -1 ? internalName : internalName.substring(0, goatHornSuffixIndex);
             }
         },
         new TagRewriter(Tag.class, "Tag"),

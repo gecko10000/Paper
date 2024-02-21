@@ -16,7 +16,7 @@ public final class Annotations {
     }
 
     public static String annotationStyle(Class<? extends Annotation> clazz) {
-        return "@%s".formatted(ImportCollector.retrieveFullNestedName(clazz));
+        return "@%s".formatted(ClassHelper.retrieveFullNestedName(clazz));
     }
 
     public static String annotation(Class<? extends Annotation> clazz, ImportCollector collector, String param, String value) {

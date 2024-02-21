@@ -36,7 +36,6 @@ import org.checkerframework.framework.qual.DefaultQualifier;
 
 import static com.squareup.javapoet.TypeSpec.interfaceBuilder;
 import static io.papermc.generator.utils.Annotations.NOT_NULL;
-import static io.papermc.generator.utils.Annotations.NULLABLE;
 import static io.papermc.generator.utils.Annotations.experimentalAnnotations;
 import static io.papermc.generator.utils.TagRegistry.registry;
 import static javax.lang.model.element.Modifier.ABSTRACT;
@@ -128,8 +127,7 @@ public class TagGenerator extends SimpleGenerator {
                     .initializer("$T.getTag($L, $T.minecraft($S), $T.class)", Bukkit.class, registryFieldName, NamespacedKey.class, keyPath, tagRegistry.apiType())
                     .addJavadoc(Javadocs.getVersionDependentField("{@code $L}"), tagKey.location().toString());
                 if (experimentalTags.contains(keyPath)) {
-                    fieldBuilder.addAnnotations(experimentalAnnotations(Formatting.formatFeatureFlagName(Main.EXPERIMENTAL_TAGS.perFeatureFlag().get(tagKey))))
-                                .addAnnotation(NULLABLE);
+                    fieldBuilder.addAnnotations(experimentalAnnotations(Formatting.formatFeatureFlagName(Main.EXPERIMENTAL_TAGS.perFeatureFlag().get(tagKey))));
                 }
                 typeBuilder.addField(fieldBuilder.build());
             });

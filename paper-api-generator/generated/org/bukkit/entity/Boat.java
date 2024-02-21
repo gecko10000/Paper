@@ -172,11 +172,14 @@ public interface Boat extends Vehicle {
     public enum Status {
 
         NOT_IN_WORLD, // Paper
+        // Paper start - Generated/BoatStatus
+        // @GeneratedFrom 1.20.4
         IN_WATER,
         UNDER_WATER,
         UNDER_FLOWING_WATER,
         ON_LAND,
         IN_AIR;
+        // Paper end - Generated/BoatStatus
     }
 
     // Paper start

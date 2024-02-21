@@ -81,16 +81,6 @@ public final class Formatting {
         return indentBuilder.toString();
     }
 
-    public static String retrieveFileName(Class<?> clazz) {
-        String name = clazz.getSimpleName();
-        Class<?> parent = clazz.getEnclosingClass();
-        while (parent != null) {
-            name = parent.getSimpleName();
-            parent = parent.getEnclosingClass();
-        }
-        return name;
-    }
-
     public static String quoted(String value) {
         return String.format("\"%s\"", value);
     }

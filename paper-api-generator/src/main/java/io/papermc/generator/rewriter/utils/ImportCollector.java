@@ -1,5 +1,6 @@
 package io.papermc.generator.rewriter.utils;
 
+import org.jetbrains.annotations.VisibleForTesting;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -19,6 +20,7 @@ public class ImportCollector {
         this.rewriteClass = rewriteClass;
     }
 
+    @VisibleForTesting
     public void addImport(String fqn) {
         if (fqn.endsWith("*")) {
             this.globalImports.add(fqn.substring(0, fqn.lastIndexOf('.')));
@@ -27,6 +29,7 @@ public class ImportCollector {
         }
     }
 
+    @VisibleForTesting
     public void addStaticImport(String fqn) { // todo support star import?
         this.staticImports.put(fqn, fqn.substring(fqn.lastIndexOf('.') + 1));
     }
@@ -40,22 +43,13 @@ public class ImportCollector {
             return this.typeCache.get(clazz);
         }
 
-        Class<?> rootClass = clazz;
-        Class<?> parentClass = clazz;
-        while (true) {
-            parentClass = parentClass.getEnclosingClass();
-            if (parentClass == null) {
-                break;
-            }
-            rootClass = parentClass;
-        }
-
+        Class<?> rootClass = ClassHelper.getRootClass(clazz);
         final String typeName;
         if (this.rewriteClass == clazz ||
             this.imports.contains(rootClass.getName()) ||
             clazz.getPackageName().equals(this.rewriteClass.getPackageName()) || // same package don't need fqn too
             this.globalImports.contains(clazz.getPackageName())) { // star import
-            typeName = retrieveFullNestedName(clazz);
+            typeName = ClassHelper.retrieveFullNestedName(clazz);
         } else {
             typeName = clazz.getCanonicalName();
         }
@@ -64,17 +58,21 @@ public class ImportCollector {
         return typeName;
     }
 
-    public void consume(String line) {
-        // precondition for inlined import and other like import 1; import 2; | ;;; import a ;;; + extra space
-        if (line.startsWith("import static ")) {
-            addStaticImport(line.substring("import static ".length(), line.length() - 1));
+    private void addImportLine(String importLine) {
+        if (importLine.startsWith("import static ")) {
+            addStaticImport(importLine.substring("import static ".length()));
         } else {
-            addImport(line.substring("import ".length(), line.length() - 1));
+            addImport(importLine.substring("import ".length()));
         }
     }
 
-    public static String retrieveFullNestedName(Class<?> clazz) {
-        String fqn = clazz.getCanonicalName();
-        return fqn.substring(clazz.getPackageName().length() + 1);
+    public void consume(String line) {
+        for (String rawImport : line.split(";")) {
+            String importLine = rawImport.trim();
+            if (importLine.isEmpty()) {
+                continue;
+            }
+            addImportLine(importLine);
+        }
     }
 }

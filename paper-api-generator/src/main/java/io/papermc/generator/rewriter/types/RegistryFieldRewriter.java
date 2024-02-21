@@ -76,8 +76,7 @@ public class RegistryFieldRewriter<T, A> extends SearchReplaceRewriter {
 
     @Override
     protected void insert(final SearchMetadata metadata, final StringBuilder builder) {
-        List<Holder.Reference<T>> references = this.registry.holders().sorted(Formatting.alphabeticOrder(reference -> reference.key().location().getPath())).toList();
-        Iterator<Holder.Reference<T>> referenceIterator = references.iterator();
+        Iterator<Holder.Reference<T>> referenceIterator = this.registry.holders().sorted(Formatting.alphabeticOrder(reference -> reference.key().location().getPath())).iterator();
 
         while (referenceIterator.hasNext()) {
             Holder.Reference<T> reference = referenceIterator.next();

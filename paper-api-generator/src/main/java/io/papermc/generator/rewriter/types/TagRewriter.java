@@ -58,8 +58,7 @@ public class TagRewriter extends SearchReplaceRewriter {
             builder.append('\n');
             builder.append('\n');
 
-            List<? extends TagKey<?>> tagKeys = registry.getTagNames().sorted(Formatting.alphabeticOrder(tagKey -> tagKey.location().getPath())).toList();
-            Iterator<? extends TagKey<?>> keyIterator = tagKeys.iterator();
+            Iterator<? extends TagKey<?>> keyIterator = registry.getTagNames().sorted(Formatting.alphabeticOrder(tagKey -> tagKey.location().getPath())).iterator();
 
             while (keyIterator.hasNext()) {
                 TagKey<?> tagKey = keyIterator.next();

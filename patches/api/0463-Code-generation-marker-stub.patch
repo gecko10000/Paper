@@ -374,7 +374,7 @@ index 5fef0f8b7957d5daef864de8547104f552215f29..de742b029409e2c4d74f854ca802130d
      @NotNull
      private static DamageType getDamageType(@NotNull String key) {
 diff --git a/src/main/java/org/bukkit/entity/Boat.java b/src/main/java/org/bukkit/entity/Boat.java
-index 2ac685fb1817f3ce06ebe6391cc863712d68367c..3ce5fa588e46b251c459f2e191539377f946f287 100644
+index 2ac685fb1817f3ce06ebe6391cc863712d68367c..056d44476b2118b124ad2f7262aee8631d1fc0aa 100644
 --- a/src/main/java/org/bukkit/entity/Boat.java
 +++ b/src/main/java/org/bukkit/entity/Boat.java
 @@ -136,6 +136,7 @@ public interface Boat extends Vehicle {
@@ -393,6 +393,20 @@ index 2ac685fb1817f3ce06ebe6391cc863712d68367c..3ce5fa588e46b251c459f2e191539377
  
          private final Material materialBlock;
  
+@@ -170,11 +172,13 @@ public interface Boat extends Vehicle {
+     public enum Status {
+ 
+         NOT_IN_WORLD, // Paper
++        // Paper start - Generated/BoatStatus
+         IN_WATER,
+         UNDER_WATER,
+         UNDER_FLOWING_WATER,
+         ON_LAND,
+         IN_AIR;
++        // Paper end - Generated/BoatStatus
+     }
+ 
+     // Paper start
 diff --git a/src/main/java/org/bukkit/entity/Cat.java b/src/main/java/org/bukkit/entity/Cat.java
 index d03adfaa4176617ef2ace2754fe02b63860e3aee..fceb2f0a452a1ce72988bbd1ecca599cfb6af6d9 100644
 --- a/src/main/java/org/bukkit/entity/Cat.java
