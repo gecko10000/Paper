@@ -217,7 +217,7 @@ index 6c9689baca1763e2ef79495d38618d587e792434..3073fe5929650076f99d2ea04ebd2265
      /**
       * Returns a {@link GameEvent} by a {@link NamespacedKey}.
 diff --git a/src/main/java/org/bukkit/Material.java b/src/main/java/org/bukkit/Material.java
-index f9af60356da4668cec8b24e73f5747ab82e35a91..aa659b57ada18834f5df37b0ad0d0b0062312750 100644
+index f9af60356da4668cec8b24e73f5747ab82e35a91..64923077d86a7fcd3d81af23c390fe0a1d8d36f2 100644
 --- a/src/main/java/org/bukkit/Material.java
 +++ b/src/main/java/org/bukkit/Material.java
 @@ -4942,6 +4942,7 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
@@ -424,6 +424,86 @@ index f9af60356da4668cec8b24e73f5747ab82e35a91..aa659b57ada18834f5df37b0ad0d0b00
                  // </editor-fold>
                  return true;
              default:
+@@ -9474,6 +9500,7 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
+         Preconditions.checkArgument(isBlock(), "The Material is not a block!");
+         switch (this) {
+             // <editor-fold defaultstate="collapsed" desc="getBlockHardness">
++            // Paper start - Generated/Material#getHardness
+             case BARRIER:
+             case BEDROCK:
+             case CHAIN_COMMAND_BLOCK:
+@@ -10404,6 +10431,7 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
+                 return 100.0F;
+             default:
+                 return 0F;
++            // Paper end - Generated/Material#getHardness
+             // </editor-fold>
+         }
+     }
+@@ -10422,6 +10450,7 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
+         Preconditions.checkArgument(isBlock(), "The Material is not a block!");
+         switch (this) {
+             // <editor-fold defaultstate="collapsed" desc="getBlastResistance">
++            // Paper start - Generated/Material#getBlastResistance
+             case BIG_DRIPLEAF:
+             case BIG_DRIPLEAF_STEM:
+             case BLACK_CANDLE:
+@@ -11352,6 +11381,7 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
+                 return 3600000.8F;
+             default:
+                 return 0;
++            // Paper end - Generated/Material#getBlastResistance
+             // </editor-fold>
+         }
+     }
+@@ -11372,6 +11402,7 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
+         Preconditions.checkArgument(isBlock(), "The Material is not a block!");
+         switch (this) {
+             // <editor-fold defaultstate="collapsed" desc="getSlipperiness">
++            // Paper start - Generated/Material#getSlipperiness
+             default:
+                 return 0.6F;
+             case SLIME_BLOCK:
+@@ -11382,6 +11413,7 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
+                 return 0.98F;
+             case BLUE_ICE:
+                 return 0.989F;
++            // Paper end - Generated/Material#getSlipperiness
+             // </editor-fold>
+         }
+     }
+@@ -11399,6 +11431,7 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
+         Preconditions.checkArgument(isItem(), "The Material is not an item!");
+         switch (this) {
+             // <editor-fold defaultstate="collapsed" desc="getCraftingRemainingItem">
++            // Paper start - Generated/Material#getCraftingRemainingItem
+             case WATER_BUCKET:
+             case LAVA_BUCKET:
+             case MILK_BUCKET:
+@@ -11408,6 +11441,7 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
+                 return GLASS_BOTTLE;
+             default:
+                 return null;
++            // Paper end - Generated/Material#getCraftingRemainingItem
+             // </editor-fold>
+         }
+     }
+@@ -11424,6 +11458,7 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
+         Preconditions.checkArgument(isItem(), "The Material is not an item!");
+         switch (this) {
+             // <editor-fold defaultstate="collapsed" desc="getEquipmentSlot">
++            // Paper start - Generated/Material#getEquipmentSlot
+             case CARVED_PUMPKIN:
+             case CHAINMAIL_HELMET:
+             case CREEPER_HEAD:
+@@ -11466,6 +11501,7 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
+                 return EquipmentSlot.OFF_HAND;
+             default:
+                 return EquipmentSlot.HAND;
++            // Paper end - Generated/Material#getEquipmentSlot
+             // </editor-fold>
+         }
+     }
 diff --git a/src/main/java/org/bukkit/MusicInstrument.java b/src/main/java/org/bukkit/MusicInstrument.java
 index ee5368372e136541eafe1d7ffb395de670fe4843..da849da92617fe123bf768ca2cdde4ac15f74959 100644
 --- a/src/main/java/org/bukkit/MusicInstrument.java

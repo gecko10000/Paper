@@ -24,7 +24,7 @@ import java.util.Set;
 
 public class SearchReplaceRewriter implements SourceRewriter {
 
-    private static final String INDENT_UNIT = "    ";
+    protected static final String INDENT_UNIT = "    ";
     private static final String PAPER_START_FORMAT = "Paper start";
     private static final String PAPER_END_FORMAT = "Paper end";
     private static final String GENERATED_COMMENT_FORMAT = "// %s - Generated/%s"; // {0} = PAPER_START_FORMAT|PAPER_END_FORMAT {1} = pattern

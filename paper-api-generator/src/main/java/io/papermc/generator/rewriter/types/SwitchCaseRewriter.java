@@ -15,7 +15,7 @@ public abstract class SwitchCaseRewriter extends SearchReplaceRewriter {
         super(rewriteClass, pattern, equalsSize);
     }
 
-    protected abstract List<String> getCases();
+    protected abstract Iterable<String> getCases();
 
     @Override
     protected void beginSearch() {

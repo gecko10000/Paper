@@ -183,11 +183,16 @@ public interface Generators {
             new MaterialRewriter.IsOccluding("Material#isOccluding", false),
             new MaterialRewriter.HasGravity("Material#hasGravity", false),
             new MaterialRewriter.IsInteractable("Material#isInteractable", false),
+            new MaterialRewriter.GetHardness("Material#getHardness", false),
+            new MaterialRewriter.GetBlastResistance("Material#getBlastResistance", false),
+            new MaterialRewriter.GetSlipperiness("Material#getSlipperiness", false),
 
             new MaterialRewriter.IsItem("Material#isItem", false),
             new MaterialRewriter.IsEdible("Material#isEdible", false),
             new MaterialRewriter.IsRecord("Material#isRecord", false),
-            new MaterialRewriter.IsFuel("Material#isFuel", false)
+            new MaterialRewriter.IsFuel("Material#isFuel", false),
+            new MaterialRewriter.GetCraftingRemainingItem("Material#getCraftingRemainingItem", false),
+            new MaterialRewriter.GetEquipmentSlot("Material#getEquipmentSlot", false)
         ),
         new RegistryFieldRewriter<>(Structure.class, Registries.STRUCTURE, "Structure", "getStructure"),
         new RegistryFieldRewriter<>(StructureType.class, Registries.STRUCTURE_TYPE, "StructureType", "getStructureType"),
