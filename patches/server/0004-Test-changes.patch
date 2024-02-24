@@ -337,6 +337,18 @@ index 0000000000000000000000000000000000000000..6cbf11c898439834cffb99ef84e5df14
 +public @interface MethodParameterSource {
 +    String[] value() default {};
 +}
+diff --git a/src/test/java/org/bukkit/MaterialTest.java b/src/test/java/org/bukkit/MaterialTest.java
+index 40b540a382f8c64a59a8df637e2c4c0b60ab3af9..c0d576d7cacf2a71a5922f9e959b5e15db2cfcc6 100644
+--- a/src/test/java/org/bukkit/MaterialTest.java
++++ b/src/test/java/org/bukkit/MaterialTest.java
+@@ -51,6 +51,7 @@ public class MaterialTest extends AbstractTestingBase {
+     }
+ 
+     @Test
++    @org.junit.jupiter.api.Disabled // Paper - order is now alphabetically
+     public void verifyMaterialOrder() {
+         List<Material> expectedOrder = new ArrayList<>(Material.values().length);
+ 
 diff --git a/src/test/java/org/bukkit/support/DummyServer.java b/src/test/java/org/bukkit/support/DummyServer.java
 index b19d4f7d1fcb604b448a5084f6bfe56d47ab12b3..f3017525b0c2397fdc7ce0778add2e7b38e9e2ba 100644
 --- a/src/test/java/org/bukkit/support/DummyServer.java

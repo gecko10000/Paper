@@ -10,6 +10,7 @@ import io.papermc.generator.rewriter.types.RegistryFieldRewriter;
 import io.papermc.generator.rewriter.types.TagRewriter;
 import io.papermc.generator.rewriter.types.simple.MaterialRewriter;
 import io.papermc.generator.rewriter.types.simple.PatternTypeRewriter;
+import io.papermc.generator.rewriter.types.simple.PotionTypeRewriter;
 import io.papermc.generator.rewriter.types.simple.StatisticRewriter;
 import io.papermc.generator.utils.ExperimentalSounds;
 import io.papermc.generator.types.registry.GeneratedKeyType;
@@ -103,15 +104,6 @@ public interface Generators {
         new EnumRegistryRewriter<>(Attribute.class, Registries.ATTRIBUTE, "Attribute", true),
         new EnumRegistryRewriter<>(Cat.Type.class, Registries.CAT_VARIANT, "CatType", true),
         //new EnumRegistryRewriter<>(EntityType.class, Registries.ENTITY_TYPE, "EntityType", true), seems complex to get the typeId?
-        new EnumRegistryRewriter<>(PotionType.class, Registries.POTION, "PotionType", true) {
-            @Override
-            protected String rewriteEnumName(Holder.Reference<Potion> reference) {
-                if (reference.key() == Potions.EMPTY_ID) {
-                    return "UNCRAFTABLE";
-                }
-                return super.rewriteEnumName(reference);
-            }
-        },
         new EnumRegistryRewriter<>(Art.class, Registries.PAINTING_VARIANT, "Art", true) {
 
             private static final int PIXELS_PER_BLOCK = 16;
@@ -125,6 +117,7 @@ public interface Generators {
                 );
             }
         },
+        new PotionTypeRewriter("PotionType"),
         new PatternTypeRewriter("PatternType"),
         new MapCursorTypeRewriter("MapCursorType"),
         new EnumCloneRewriter<>(DisplaySlot.class, net.minecraft.world.scores.DisplaySlot.class, "DisplaySlot", false) {
