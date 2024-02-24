@@ -3,7 +3,6 @@ package io.papermc.generator.rewriter.types;
 import com.google.common.base.Suppliers;
 import io.papermc.generator.Main;
 import io.papermc.generator.rewriter.SearchMetadata;
-import io.papermc.generator.rewriter.SearchReplaceRewriter;
 import io.papermc.generator.rewriter.utils.Annotations;
 import io.papermc.generator.utils.Formatting;
 import io.papermc.generator.utils.RegistryUtils;
@@ -35,7 +34,7 @@ public class EnumRegistryRewriter<T, A extends Enum<A>> extends EnumRewriter<Hol
 
     @Override
     protected Iterable<Holder.Reference<T>> getValues() {
-        return this.registry.holders().sorted(Formatting.alphabeticOrder(reference -> reference.key().location().getPath())).toList();
+        return this.registry.holders().sorted(Formatting.alphabeticKeyOrder(reference -> reference.key().location().getPath())).toList();
     }
 
     @Override

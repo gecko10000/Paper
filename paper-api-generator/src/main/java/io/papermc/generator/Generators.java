@@ -10,6 +10,7 @@ import io.papermc.generator.rewriter.types.RegistryFieldRewriter;
 import io.papermc.generator.rewriter.types.TagRewriter;
 import io.papermc.generator.rewriter.types.simple.MaterialRewriter;
 import io.papermc.generator.rewriter.types.simple.PatternTypeRewriter;
+import io.papermc.generator.rewriter.types.simple.StatisticRewriter;
 import io.papermc.generator.utils.ExperimentalSounds;
 import io.papermc.generator.types.registry.GeneratedKeyType;
 import io.papermc.generator.types.SourceGenerator;
@@ -174,25 +175,31 @@ public interface Generators {
             new EnumCloneRewriter<>(Boat.Status.class, net.minecraft.world.entity.vehicle.Boat.Status.class, "BoatStatus", false)
         ),
         CompositeRewriter.bind(
-            new MaterialRewriter.IsBlock("Material#isBlock", false),
-            new MaterialRewriter.IsSolid("Material#isSolid", false),
-            new MaterialRewriter.IsAir("Material#isAir", false),
-            //new MaterialRewriter.IsTransparent("Material#isTransparent", false),
-            new MaterialRewriter.IsFlammable("Material#isFlammable", false),
-            new MaterialRewriter.IsBurnable("Material#isBurnable", false),
-            new MaterialRewriter.IsOccluding("Material#isOccluding", false),
-            new MaterialRewriter.HasGravity("Material#hasGravity", false),
-            new MaterialRewriter.IsInteractable("Material#isInteractable", false),
-            new MaterialRewriter.GetHardness("Material#getHardness", false),
-            new MaterialRewriter.GetBlastResistance("Material#getBlastResistance", false),
-            new MaterialRewriter.GetSlipperiness("Material#getSlipperiness", false),
+            new MaterialRewriter.Blocks("Blocks"),
+            new MaterialRewriter.IsBlock("Material#isBlock"),
+            new MaterialRewriter.IsSolid("Material#isSolid"),
+            new MaterialRewriter.IsAir("Material#isAir"),
+            //new MaterialRewriter.IsTransparent("Material#isTransparent"),
+            new MaterialRewriter.IsFlammable("Material#isFlammable"),
+            new MaterialRewriter.IsBurnable("Material#isBurnable"),
+            new MaterialRewriter.IsOccluding("Material#isOccluding"),
+            new MaterialRewriter.HasGravity("Material#hasGravity"),
+            new MaterialRewriter.IsInteractable("Material#isInteractable"),
+            new MaterialRewriter.GetHardness("Material#getHardness"),
+            new MaterialRewriter.GetBlastResistance("Material#getBlastResistance"),
+            new MaterialRewriter.GetSlipperiness("Material#getSlipperiness"),
 
-            new MaterialRewriter.IsItem("Material#isItem", false),
-            new MaterialRewriter.IsEdible("Material#isEdible", false),
-            new MaterialRewriter.IsRecord("Material#isRecord", false),
-            new MaterialRewriter.IsFuel("Material#isFuel", false),
-            new MaterialRewriter.GetCraftingRemainingItem("Material#getCraftingRemainingItem", false),
-            new MaterialRewriter.GetEquipmentSlot("Material#getEquipmentSlot", false)
+            new MaterialRewriter.Items("Items"),
+            new MaterialRewriter.IsItem("Material#isItem"),
+            new MaterialRewriter.IsEdible("Material#isEdible"),
+            new MaterialRewriter.IsRecord("Material#isRecord"),
+            new MaterialRewriter.IsFuel("Material#isFuel"),
+            new MaterialRewriter.GetCraftingRemainingItem("Material#getCraftingRemainingItem"),
+            new MaterialRewriter.GetEquipmentSlot("Material#getEquipmentSlot")
+        ),
+        CompositeRewriter.bind(
+            new StatisticRewriter.Custom("StatisticCustom"),
+            new StatisticRewriter.Type("StatisticType")
         ),
         new RegistryFieldRewriter<>(Structure.class, Registries.STRUCTURE, "Structure", "getStructure"),
         new RegistryFieldRewriter<>(StructureType.class, Registries.STRUCTURE_TYPE, "StructureType", "getStructureType"),

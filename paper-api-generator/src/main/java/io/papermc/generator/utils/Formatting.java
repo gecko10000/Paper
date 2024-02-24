@@ -89,7 +89,11 @@ public final class Formatting {
         return Float.toString(value) + 'F';
     }
 
-    public static <T> Comparator<T> alphabeticOrder(Function<T, String> mapper) {
+    public static Comparator<String> alphabeticKeyOrder() {
+        return alphabeticKeyOrder(path -> path);
+    }
+
+    public static <T> Comparator<T> alphabeticKeyOrder(Function<T, String> mapper) {
         return (o1, o2) -> {
             String path1 = mapper.apply(o1);
             String path2 = mapper.apply(o2);

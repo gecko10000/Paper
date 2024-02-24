@@ -1,12 +1,27 @@
 package io.papermc.generator.rewriter.types.simple;
 
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.MultimapBuilder;
 import com.google.common.collect.Sets;
+import io.papermc.generator.rewriter.types.EnumRegistryRewriter;
 import io.papermc.generator.rewriter.types.SwitchCaseRewriter;
 import io.papermc.generator.rewriter.types.SwitchRewriter;
+import io.papermc.generator.utils.BlockStateMapping;
+import io.papermc.generator.utils.Formatting;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Mob;
@@ -14,130 +29,169 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.EmptyBlockGetter;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.FireBlock;
+import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.bukkit.Material;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.inventory.EquipmentSlot;
-import java.util.Locale;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static io.papermc.generator.utils.Formatting.floatStr;
 
 @Deprecated(forRemoval = true)
-public class MaterialRewriter { // todo sort values?
+public class MaterialRewriter {
 
     // blocks
 
+    public static class Blocks extends EnumRegistryRewriter<Block, Material> {
+
+        public Blocks(final String pattern) {
+            super(Material.class, Registries.BLOCK, pattern, true);
+        }
+
+        @Override
+        protected Iterable<Holder.Reference<Block>> getValues() {
+            return BuiltInRegistries.BLOCK.holders().filter(reference -> !reference.value().equals(net.minecraft.world.level.block.Blocks.AIR))
+                .sorted(Formatting.alphabeticKeyOrder(reference -> reference.key().location().getPath())).toList();
+        }
+
+        @Override
+        protected String rewriteEnumValue(Holder.Reference<Block> reference) {
+            Block block = reference.value();
+            if (BlockStateMapping.SPECIAL_BLOCKS.contains(block.getClass())) {
+                // some block can also be represented as item in that enum
+                // doing a double job
+                Optional<Item> equivalentItem = BuiltInRegistries.ITEM.getOptional(reference.key().location());
+
+                if (equivalentItem.isEmpty() && block instanceof WallSignBlock) {
+                    // wall sign block stack size is 16 for some reason like the sign item?
+                    // but that rule doesn't work for the wall hanging sign block??
+                    equivalentItem = Optional.of(block.asItem());
+                }
+
+                if (equivalentItem.isPresent() && equivalentItem.get().getMaxStackSize() != Item.MAX_STACK_SIZE) {
+                    return "%d, %d, %s.class".formatted(-1, equivalentItem.get().getMaxStackSize(), BlockData.class.getSimpleName());
+                }
+                return "%d, %s.class".formatted(-1, BlockData.class.getSimpleName()); // todo block data need server gen
+            }
+            return String.valueOf(-1); // id not needed for non legacy material
+        }
+    }
+
     public static class IsBlock extends SwitchCaseRewriter {
 
-        public IsBlock(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
+        public IsBlock(final String pattern) {
+            super(Material.class, pattern, false);
         }
 
         @Override
         protected Iterable<String> getCases() {
-            return BuiltInRegistries.BLOCK.keySet().stream().map(key -> key.getPath().toUpperCase(Locale.ENGLISH)).toList();
+            return BuiltInRegistries.BLOCK.keySet().stream().map(key -> key.getPath().toUpperCase(Locale.ENGLISH))
+                .sorted(Formatting.alphabeticKeyOrder()).toList();
         }
     }
 
     public static class IsSolid extends SwitchCaseRewriter {
 
-        public IsSolid(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
+        public IsSolid(final String pattern) {
+            super(Material.class, pattern, false);
         }
 
         @Override
         protected Iterable<String> getCases() {
-            return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value().defaultBlockState().blocksMotion()).map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).toList();
+            return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value().defaultBlockState().blocksMotion())
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
         }
     }
 
     public static class IsAir extends SwitchCaseRewriter {
 
-        public IsAir(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
+        public IsAir(final String pattern) {
+            super(Material.class, pattern, false);
         }
 
         @Override
         protected Iterable<String> getCases() {
-            return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value().defaultBlockState().isAir()).map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).toList();
+            return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value().defaultBlockState().isAir())
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
         }
     }
 
     /* todo test is broken
     public static class IsTransparent extends SwitchCaseRewriter {
 
-        public IsTransparent(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
+        public IsTransparent(final String pattern) {
+            super(Material.class, pattern, false);
         }
 
         @Override
         protected Iterable<String> getCases() {
-            return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value().defaultBlockState().useShapeForLightOcclusion()).map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).toList();
+            return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value().defaultBlockState().useShapeForLightOcclusion())
+            .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
         }
     }*/
 
     public static class IsFlammable extends SwitchCaseRewriter {
 
-        public IsFlammable(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
+        public IsFlammable(final String pattern) {
+            super(Material.class, pattern, false);
         }
 
         @Override
         protected Iterable<String> getCases() {
-            return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value().defaultBlockState().ignitedByLava()).map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).toList();
+            return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value().defaultBlockState().ignitedByLava())
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
         }
     }
 
     public static class IsBurnable extends SwitchCaseRewriter {
 
-        public IsBurnable(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
+        public IsBurnable(final String pattern) {
+            super(Material.class, pattern, false);
         }
 
         @Override
         protected Iterable<String> getCases() {
-            return BuiltInRegistries.BLOCK.holders().filter(reference -> ((FireBlock) Blocks.FIRE).igniteOdds.getInt(reference.value()) > 0)
-                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).toList();
+            return BuiltInRegistries.BLOCK.holders().filter(reference -> ((FireBlock) net.minecraft.world.level.block.Blocks.FIRE).igniteOdds.getInt(reference.value()) > 0)
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
         }
     }
 
     public static class IsOccluding extends SwitchCaseRewriter {
 
-        public IsOccluding(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
+        public IsOccluding(final String pattern) {
+            super(Material.class, pattern, false);
         }
 
         @Override
         protected Iterable<String> getCases() {
             return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value().defaultBlockState().isRedstoneConductor(EmptyBlockGetter.INSTANCE, BlockPos.ZERO))
-                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).toList();
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
         }
     }
 
     public static class HasGravity extends SwitchCaseRewriter {
 
-        public HasGravity(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
+        public HasGravity(final String pattern) {
+            super(Material.class, pattern, false);
         }
 
         @Override
         protected Iterable<String> getCases() {
             return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value() instanceof FallingBlock)
-                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).toList();
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
         }
     }
 
     public static class IsInteractable extends SwitchCaseRewriter {
 
-        public IsInteractable(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
+        public IsInteractable(final String pattern) {
+            super(Material.class, pattern, false);
         }
 
         @Override
@@ -148,64 +202,70 @@ public class MaterialRewriter { // todo sort values?
                         .getDeclaringClass().equals(BlockBehaviour.class);
                 } catch (ReflectiveOperationException ignored) {}
                 return false;
-            }).map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).toList();
+            }).map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
         }
     }
 
-    public static class GetHardness extends SwitchRewriter {
+    public static class GetHardness extends SwitchRewriter<Float> {
 
-        public GetHardness(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
-            this.defaultValue = floatStr(0.0F);
+        public GetHardness(final String pattern) {
+            super(Material.class, pattern, false);
+            this.defaultValue = returnOf(0.0F, floatStr(0.0F));
         }
 
         @Override
-        protected Multimap<String, String> getContent() {
-            Multimap<String, String> map = HashMultimap.create();
+        protected Multimap<Return<Float>, String> getContent() {
+            Multimap<Return<Float>, String> map = MultimapBuilder.treeKeys(Comparator.<Return<Float>>comparingDouble(Return::object))
+                                                                 .treeSetValues(Formatting.alphabeticKeyOrder()).build();
             BuiltInRegistries.BLOCK.holders().forEach(reference -> {
-                String destroySpeed = floatStr(reference.value().defaultBlockState().getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO));
-                if (!destroySpeed.equals(this.defaultValue)) {
-                    map.put(destroySpeed, reference.key().location().getPath().toUpperCase(Locale.ENGLISH));
+                float destroySpeed = reference.value().defaultBlockState().getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO);
+                if (destroySpeed != this.defaultValue.object()) {
+                    map.put(returnOf(destroySpeed, floatStr(destroySpeed)), reference.key().location().getPath().toUpperCase(Locale.ENGLISH));
+                }
+            });
+
+            return map;
+        }
+    }
+
+    public static class GetBlastResistance extends SwitchRewriter<Float> {
+
+        public GetBlastResistance(final String pattern) {
+            super(Material.class, pattern, false);
+            this.defaultValue = returnOf(0.0F, floatStr(0.0F));
+        }
+
+        @Override
+        protected Multimap<Return<Float>, String> getContent() {
+            Multimap<Return<Float>, String> map = MultimapBuilder.treeKeys(Comparator.<Return<Float>>comparingDouble(Return::object))
+                                                                 .treeSetValues(Formatting.alphabeticKeyOrder()).build();
+            BuiltInRegistries.BLOCK.holders().forEach(reference -> {
+                float explosionResistance = reference.value().getExplosionResistance();
+                if (explosionResistance != this.defaultValue.object()) {
+                    map.put(returnOf(explosionResistance, floatStr(explosionResistance)), reference.key().location().getPath().toUpperCase(Locale.ENGLISH));
                 }
             });
             return map;
         }
     }
 
-    public static class GetBlastResistance extends SwitchRewriter {
+    public static class GetSlipperiness extends SwitchRewriter<Float> {
 
-        public GetBlastResistance(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
-            this.defaultValue = floatStr(0.0F);
+        private static final float DEFAULT_SLIPPERINESS = 0.6F;
+
+        public GetSlipperiness(final String pattern) {
+            super(Material.class, pattern, false);
+            this.defaultValue = returnOf(DEFAULT_SLIPPERINESS, floatStr(DEFAULT_SLIPPERINESS));
         }
 
         @Override
-        protected Multimap<String, String> getContent() {
-            Multimap<String, String> map = HashMultimap.create();
+        protected Multimap<Return<Float>, String> getContent() {
+            Multimap<Return<Float>, String> map = MultimapBuilder.treeKeys(Comparator.<Return<Float>>comparingDouble(Return::object))
+                                                                 .treeSetValues(Formatting.alphabeticKeyOrder()).build();
             BuiltInRegistries.BLOCK.holders().forEach(reference -> {
-                String explosionResistance = floatStr(reference.value().getExplosionResistance());
-                if (!explosionResistance.equals(this.defaultValue)) {
-                    map.put(explosionResistance, reference.key().location().getPath().toUpperCase(Locale.ENGLISH));
-                }
-            });
-            return map;
-        }
-    }
-
-    public static class GetSlipperiness extends SwitchRewriter {
-
-        public GetSlipperiness(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
-            this.defaultValue = floatStr(0.6F);
-        }
-
-        @Override
-        protected Multimap<String, String> getContent() {
-            Multimap<String, String> map = HashMultimap.create();
-            BuiltInRegistries.BLOCK.holders().forEach(reference -> {
-                String friction = floatStr(reference.value().getFriction());
-                if (!friction.equals(this.defaultValue)) {
-                    map.put(friction, reference.key().location().getPath().toUpperCase(Locale.ENGLISH));
+                float friction = reference.value().getFriction();
+                if (friction != this.defaultValue.object()) {
+                    map.put(returnOf(friction, floatStr(friction)), reference.key().location().getPath().toUpperCase(Locale.ENGLISH));
                 }
             });
             return map;
@@ -214,10 +274,40 @@ public class MaterialRewriter { // todo sort values?
 
     // items
 
+    public static class Items extends EnumRegistryRewriter<Item, Material> {
+
+        public Items(final String pattern) {
+            super(Material.class, Registries.ITEM, pattern, true);
+        }
+
+        @Override
+        protected Iterable<Holder.Reference<Item>> getValues() {
+            return BuiltInRegistries.ITEM.holders().filter(reference -> BuiltInRegistries.BLOCK.getOptional(reference.key().location()).isEmpty() || reference.value().equals(net.minecraft.world.item.Items.AIR))
+                .sorted(Formatting.alphabeticKeyOrder(reference -> reference.key().location().getPath())).toList();
+        }
+
+        @Override
+        protected String rewriteEnumValue(Holder.Reference<Item> reference) { // bundle doesn't have the experimental annot
+            Item item = reference.value();
+            if (item.equals(net.minecraft.world.item.Items.AIR)) {
+                return "%d, %d".formatted(-1, 0); // item+block
+            }
+
+            if (item.getMaxStackSize() != Item.MAX_STACK_SIZE) {
+                if (item.getMaxDamage() != 0) {
+                    return "%d, %d, %d".formatted(-1, item.getMaxStackSize(), item.getMaxDamage());
+                }
+                return "%d, %d".formatted(-1, item.getMaxStackSize());
+            }
+
+            return String.valueOf(-1); // id not needed for non legacy material
+        }
+    }
+
     public static class IsItem extends SwitchCaseRewriter {
 
-        public IsItem(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
+        public IsItem(final String pattern) {
+            super(Material.class, pattern, false);
         }
 
         @Override
@@ -225,83 +315,94 @@ public class MaterialRewriter { // todo sort values?
             Set<String> items = BuiltInRegistries.ITEM.keySet().stream().map(key -> key.getPath().toUpperCase(Locale.ENGLISH)).collect(Collectors.toSet());
             Set<String> blocks = BuiltInRegistries.BLOCK.keySet().stream().map(key -> key.getPath().toUpperCase(Locale.ENGLISH)).collect(Collectors.toSet());
 
-            return Sets.difference(blocks, items).immutableCopy(); // those cases return false
+            List<String> result = new ArrayList<>(Sets.difference(blocks, items).copyInto(new HashSet<>())); // too much copy happens here
+            result.sort(Formatting.alphabeticKeyOrder());
+            return result; // those cases return false
         }
     }
 
     public static class IsEdible extends SwitchCaseRewriter {
 
-        public IsEdible(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
+        public IsEdible(final String pattern) {
+            super(Material.class, pattern, false);
         }
 
         @Override
         protected Iterable<String> getCases() {
-            return BuiltInRegistries.ITEM.holders().filter(reference -> reference.value().isEdible()).map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).toList();
+            return BuiltInRegistries.ITEM.holders().filter(reference -> reference.value().isEdible())
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
         }
     }
 
     public static class IsRecord extends SwitchCaseRewriter {
 
-        public IsRecord(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
+        public IsRecord(final String pattern) {
+            super(Material.class, pattern, false);
         }
 
         @Override
         protected Iterable<String> getCases() {
-            return BuiltInRegistries.ITEM.holders().filter(reference -> reference.is(ItemTags.MUSIC_DISCS)).map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).toList();
+            Optional<HolderSet.Named<Item>> musicDiscs = BuiltInRegistries.ITEM.getTag(ItemTags.MUSIC_DISCS);
+            if (musicDiscs.isEmpty()) {
+                return Collections.emptyList();
+            }
+            return musicDiscs.get().stream().map(reference -> reference.unwrapKey().orElseThrow().location().getPath().toUpperCase(Locale.ENGLISH))
+                .sorted(Formatting.alphabeticKeyOrder()).toList();
         }
     }
 
     public static class IsFuel extends SwitchCaseRewriter {
 
-        public IsFuel(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
+        public IsFuel(final String pattern) {
+            super(Material.class, pattern, false);
         }
 
         @Override
         protected Iterable<String> getCases() {
             return BuiltInRegistries.ITEM.holders().filter(reference -> AbstractFurnaceBlockEntity.getFuel().containsKey(reference.value()))
-                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).toList();
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
         }
     }
 
-    public static class GetCraftingRemainingItem extends SwitchRewriter {
+    public static class GetCraftingRemainingItem extends SwitchRewriter<Item> {
 
-        public GetCraftingRemainingItem(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
-            this.defaultValue = "null";
+        public GetCraftingRemainingItem(final String pattern) {
+            super(Material.class, pattern, false);
+            this.defaultValue = returnOf(null, "null");
         }
 
         @Override
-        protected Multimap<String, String> getContent() {
-            Multimap<String, String> map = HashMultimap.create();
+        protected Multimap<Return<Item>, String> getContent() {
+            Multimap<Return<Item>, String> map = MultimapBuilder.treeKeys(Formatting.<Return<Item>>alphabeticKeyOrder(Return::code))
+                                                                         .treeSetValues(Formatting.alphabeticKeyOrder()).build();
             BuiltInRegistries.ITEM.holders().forEach(reference -> {
                 Item item = reference.value().getCraftingRemainingItem();
-                String itemKey = item == null ? this.defaultValue : BuiltInRegistries.ITEM.getKey(item).getPath().toUpperCase(Locale.ENGLISH);
-                if (!itemKey.equals(this.defaultValue)) {
-                    map.put(itemKey, reference.key().location().getPath().toUpperCase(Locale.ENGLISH));
+                if (item != this.defaultValue.object()) {
+                    String itemKey = BuiltInRegistries.ITEM.getKey(item).getPath().toUpperCase(Locale.ENGLISH);
+                    map.put(returnOf(item, itemKey), reference.key().location().getPath().toUpperCase(Locale.ENGLISH));
                 }
             });
             return map;
         }
     }
 
-    public static class GetEquipmentSlot extends SwitchRewriter {
+    public static class GetEquipmentSlot extends SwitchRewriter<EquipmentSlot> {
 
-        public GetEquipmentSlot(final String pattern, final boolean equalsSize) {
-            super(Material.class, pattern, equalsSize);
-            this.defaultValue = "%s.%s".formatted(EquipmentSlot.class.getSimpleName(), EquipmentSlot.HAND.name());
+        public GetEquipmentSlot(final String pattern) {
+            super(Material.class, pattern, false);
+            this.defaultValue = returnOf(EquipmentSlot.HAND, "%s.%s".formatted(EquipmentSlot.class.getSimpleName(), EquipmentSlot.HAND.name()));
         }
 
         @Override
-        protected Multimap<String, String> getContent() {
-            Multimap<String, String> map = HashMultimap.create();
+        protected Multimap<Return<EquipmentSlot>, String> getContent() {
+            Multimap<Return<EquipmentSlot>, String> map = MultimapBuilder.treeKeys(Comparator.<Return<EquipmentSlot>>comparingInt(key -> key.object().ordinal()).reversed())
+                                                                         .treeSetValues(Formatting.alphabeticKeyOrder()).build();
             BuiltInRegistries.ITEM.holders().forEach(reference -> {
                 net.minecraft.world.entity.EquipmentSlot slot = Mob.getEquipmentSlotForItem(new ItemStack(reference.value()));
-                String apiSlot = "%s.%s".formatted(EquipmentSlot.class.getSimpleName(), EquipmentSlot.values()[slot.ordinal()].name()); // name doesn't match
-                if (!apiSlot.equals(this.defaultValue)) {
-                    map.put(apiSlot, reference.key().location().getPath().toUpperCase(Locale.ENGLISH));
+                EquipmentSlot apiSlot = EquipmentSlot.values()[slot.ordinal()];
+                if (apiSlot != this.defaultValue.object()) {
+                    String formattedSlot = "%s.%s".formatted(EquipmentSlot.class.getSimpleName(), EquipmentSlot.values()[slot.ordinal()].name()); // name doesn't match
+                    map.put(returnOf(apiSlot, formattedSlot), reference.key().location().getPath().toUpperCase(Locale.ENGLISH));
                 }
             });
             return map;

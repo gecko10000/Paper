@@ -4,6 +4,7 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.mojang.logging.LogUtils;
 import io.papermc.generator.rewriter.SourceRewriter;
 import io.papermc.generator.types.SourceGenerator;
+import io.papermc.generator.utils.BlockStateMapping;
 import io.papermc.generator.utils.TagCollector;
 import io.papermc.generator.utils.TagResult;
 import java.nio.file.Files;
@@ -55,6 +56,7 @@ public final class Main {
         Main.generatedPath = Path.of(args[0]); // todo remove
         generate(Main.generatedPath, Generators.API);
         apply(Path.of(args[1]), Generators.API_REWRITE);
+        BlockStateMapping d = new BlockStateMapping();
     }
 
     private static void generate(Path output, SourceGenerator[] generators) {
