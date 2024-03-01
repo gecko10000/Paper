@@ -1,0 +1,325 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Lulu13022002 <41980282+Lulu13022002@users.noreply.github.com>
+Date: Fri, 1 Mar 2024 22:51:14 +0100
+Subject: [PATCH] move spigot scrap
+
+
+diff --git a/build.gradle.kts b/build.gradle.kts
+index 376e8983fdfdbb6c3e5fd8ad0f6a05e655b622bf..19ed2a23bed5b98b5c1a2339570d25e25f3de2ea 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -2,6 +2,7 @@ import io.papermc.paperweight.util.*
+ 
+ plugins {
+     java
++    idea
+     `maven-publish`
+     id("com.github.johnrengelman.shadow")
+ }
+@@ -185,6 +186,18 @@ fun TaskContainer.registerRunTask(
+     block(this)
+ }
+ 
++sourceSets.main {
++    java {
++        exclude("excluded/**")
++    }
++}
++
++idea {
++    module {
++        excludeDirs.add(projectDir.resolve("src/${SourceSet.MAIN_SOURCE_SET_NAME}/java/excluded"))
++    }
++}
++
+ val runtimeClasspathWithoutVanillaServer = configurations.runtimeClasspath.flatMap { it.elements }
+     .zip(configurations.vanillaServer.map { it.singleFile.absolutePath }) { runtime, vanilla ->
+         runtime.filterNot { it.asFile.absolutePath == vanilla }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftAgeable.java b/src/main/java/excluded/spigot/block/data/CraftAgeable.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftAgeable.java
+rename to src/main/java/excluded/spigot/block/data/CraftAgeable.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftAnaloguePowerable.java b/src/main/java/excluded/spigot/block/data/CraftAnaloguePowerable.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftAnaloguePowerable.java
+rename to src/main/java/excluded/spigot/block/data/CraftAnaloguePowerable.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftAttachable.java b/src/main/java/excluded/spigot/block/data/CraftAttachable.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftAttachable.java
+rename to src/main/java/excluded/spigot/block/data/CraftAttachable.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftBisected.java b/src/main/java/excluded/spigot/block/data/CraftBisected.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftBisected.java
+rename to src/main/java/excluded/spigot/block/data/CraftBisected.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftBrushable.java b/src/main/java/excluded/spigot/block/data/CraftBrushable.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftBrushable.java
+rename to src/main/java/excluded/spigot/block/data/CraftBrushable.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftDirectional.java b/src/main/java/excluded/spigot/block/data/CraftDirectional.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftDirectional.java
+rename to src/main/java/excluded/spigot/block/data/CraftDirectional.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftFaceAttachable.java b/src/main/java/excluded/spigot/block/data/CraftFaceAttachable.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftFaceAttachable.java
+rename to src/main/java/excluded/spigot/block/data/CraftFaceAttachable.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftHangable.java b/src/main/java/excluded/spigot/block/data/CraftHangable.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftHangable.java
+rename to src/main/java/excluded/spigot/block/data/CraftHangable.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftHatchable.java b/src/main/java/excluded/spigot/block/data/CraftHatchable.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftHatchable.java
+rename to src/main/java/excluded/spigot/block/data/CraftHatchable.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftLevelled.java b/src/main/java/excluded/spigot/block/data/CraftLevelled.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftLevelled.java
+rename to src/main/java/excluded/spigot/block/data/CraftLevelled.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftLightable.java b/src/main/java/excluded/spigot/block/data/CraftLightable.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftLightable.java
+rename to src/main/java/excluded/spigot/block/data/CraftLightable.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftMultipleFacing.java b/src/main/java/excluded/spigot/block/data/CraftMultipleFacing.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftMultipleFacing.java
+rename to src/main/java/excluded/spigot/block/data/CraftMultipleFacing.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftOpenable.java b/src/main/java/excluded/spigot/block/data/CraftOpenable.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftOpenable.java
+rename to src/main/java/excluded/spigot/block/data/CraftOpenable.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftOrientable.java b/src/main/java/excluded/spigot/block/data/CraftOrientable.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftOrientable.java
+rename to src/main/java/excluded/spigot/block/data/CraftOrientable.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftPowerable.java b/src/main/java/excluded/spigot/block/data/CraftPowerable.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftPowerable.java
+rename to src/main/java/excluded/spigot/block/data/CraftPowerable.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftRail.java b/src/main/java/excluded/spigot/block/data/CraftRail.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftRail.java
+rename to src/main/java/excluded/spigot/block/data/CraftRail.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftRotatable.java b/src/main/java/excluded/spigot/block/data/CraftRotatable.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftRotatable.java
+rename to src/main/java/excluded/spigot/block/data/CraftRotatable.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftSnowable.java b/src/main/java/excluded/spigot/block/data/CraftSnowable.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftSnowable.java
+rename to src/main/java/excluded/spigot/block/data/CraftSnowable.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftWaterlogged.java b/src/main/java/excluded/spigot/block/data/CraftWaterlogged.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/CraftWaterlogged.java
+rename to src/main/java/excluded/spigot/block/data/CraftWaterlogged.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBamboo.java b/src/main/java/excluded/spigot/block/data/type/CraftBamboo.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBamboo.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftBamboo.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBed.java b/src/main/java/excluded/spigot/block/data/type/CraftBed.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBed.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftBed.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBeehive.java b/src/main/java/excluded/spigot/block/data/type/CraftBeehive.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBeehive.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftBeehive.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBell.java b/src/main/java/excluded/spigot/block/data/type/CraftBell.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBell.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftBell.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBigDripleaf.java b/src/main/java/excluded/spigot/block/data/type/CraftBigDripleaf.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBigDripleaf.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftBigDripleaf.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBrewingStand.java b/src/main/java/excluded/spigot/block/data/type/CraftBrewingStand.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBrewingStand.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftBrewingStand.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBrushable.java b/src/main/java/excluded/spigot/block/data/type/CraftBrushable.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBrushable.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftBrushable.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBubbleColumn.java b/src/main/java/excluded/spigot/block/data/type/CraftBubbleColumn.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftBubbleColumn.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftBubbleColumn.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftCake.java b/src/main/java/excluded/spigot/block/data/type/CraftCake.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftCake.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftCake.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftCampfire.java b/src/main/java/excluded/spigot/block/data/type/CraftCampfire.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftCampfire.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftCampfire.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftCandle.java b/src/main/java/excluded/spigot/block/data/type/CraftCandle.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftCandle.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftCandle.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftCaveVinesPlant.java b/src/main/java/excluded/spigot/block/data/type/CraftCaveVinesPlant.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftCaveVinesPlant.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftCaveVinesPlant.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftChest.java b/src/main/java/excluded/spigot/block/data/type/CraftChest.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftChest.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftChest.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftChiseledBookshelf.java b/src/main/java/excluded/spigot/block/data/type/CraftChiseledBookshelf.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftChiseledBookshelf.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftChiseledBookshelf.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftCommandBlock.java b/src/main/java/excluded/spigot/block/data/type/CraftCommandBlock.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftCommandBlock.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftCommandBlock.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftComparator.java b/src/main/java/excluded/spigot/block/data/type/CraftComparator.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftComparator.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftComparator.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftCrafter.java b/src/main/java/excluded/spigot/block/data/type/CraftCrafter.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftCrafter.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftCrafter.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftDaylightDetector.java b/src/main/java/excluded/spigot/block/data/type/CraftDaylightDetector.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftDaylightDetector.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftDaylightDetector.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftDispenser.java b/src/main/java/excluded/spigot/block/data/type/CraftDispenser.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftDispenser.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftDispenser.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftDoor.java b/src/main/java/excluded/spigot/block/data/type/CraftDoor.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftDoor.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftDoor.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftEndPortalFrame.java b/src/main/java/excluded/spigot/block/data/type/CraftEndPortalFrame.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftEndPortalFrame.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftEndPortalFrame.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftFarmland.java b/src/main/java/excluded/spigot/block/data/type/CraftFarmland.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftFarmland.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftFarmland.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftGate.java b/src/main/java/excluded/spigot/block/data/type/CraftGate.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftGate.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftGate.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftHopper.java b/src/main/java/excluded/spigot/block/data/type/CraftHopper.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftHopper.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftHopper.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftJigsaw.java b/src/main/java/excluded/spigot/block/data/type/CraftJigsaw.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftJigsaw.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftJigsaw.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftJukebox.java b/src/main/java/excluded/spigot/block/data/type/CraftJukebox.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftJukebox.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftJukebox.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftLeaves.java b/src/main/java/excluded/spigot/block/data/type/CraftLeaves.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftLeaves.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftLeaves.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftLectern.java b/src/main/java/excluded/spigot/block/data/type/CraftLectern.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftLectern.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftLectern.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftNoteBlock.java b/src/main/java/excluded/spigot/block/data/type/CraftNoteBlock.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftNoteBlock.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftNoteBlock.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftPinkPetals.java b/src/main/java/excluded/spigot/block/data/type/CraftPinkPetals.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftPinkPetals.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftPinkPetals.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftPiston.java b/src/main/java/excluded/spigot/block/data/type/CraftPiston.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftPiston.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftPiston.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftPistonHead.java b/src/main/java/excluded/spigot/block/data/type/CraftPistonHead.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftPistonHead.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftPistonHead.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftPointedDripstone.java b/src/main/java/excluded/spigot/block/data/type/CraftPointedDripstone.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftPointedDripstone.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftPointedDripstone.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftRedstoneWire.java b/src/main/java/excluded/spigot/block/data/type/CraftRedstoneWire.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftRedstoneWire.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftRedstoneWire.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftRepeater.java b/src/main/java/excluded/spigot/block/data/type/CraftRepeater.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftRepeater.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftRepeater.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftRespawnAnchor.java b/src/main/java/excluded/spigot/block/data/type/CraftRespawnAnchor.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftRespawnAnchor.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftRespawnAnchor.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSapling.java b/src/main/java/excluded/spigot/block/data/type/CraftSapling.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSapling.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftSapling.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftScaffolding.java b/src/main/java/excluded/spigot/block/data/type/CraftScaffolding.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftScaffolding.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftScaffolding.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSculkCatalyst.java b/src/main/java/excluded/spigot/block/data/type/CraftSculkCatalyst.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSculkCatalyst.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftSculkCatalyst.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSculkSensor.java b/src/main/java/excluded/spigot/block/data/type/CraftSculkSensor.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSculkSensor.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftSculkSensor.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSculkShrieker.java b/src/main/java/excluded/spigot/block/data/type/CraftSculkShrieker.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSculkShrieker.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftSculkShrieker.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSeaPickle.java b/src/main/java/excluded/spigot/block/data/type/CraftSeaPickle.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSeaPickle.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftSeaPickle.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSlab.java b/src/main/java/excluded/spigot/block/data/type/CraftSlab.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSlab.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftSlab.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSnow.java b/src/main/java/excluded/spigot/block/data/type/CraftSnow.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSnow.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftSnow.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftStairs.java b/src/main/java/excluded/spigot/block/data/type/CraftStairs.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftStairs.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftStairs.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftStructureBlock.java b/src/main/java/excluded/spigot/block/data/type/CraftStructureBlock.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftStructureBlock.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftStructureBlock.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSwitch.java b/src/main/java/excluded/spigot/block/data/type/CraftSwitch.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftSwitch.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftSwitch.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftTNT.java b/src/main/java/excluded/spigot/block/data/type/CraftTNT.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftTNT.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftTNT.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftTechnicalPiston.java b/src/main/java/excluded/spigot/block/data/type/CraftTechnicalPiston.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftTechnicalPiston.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftTechnicalPiston.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftTrialSpawner.java b/src/main/java/excluded/spigot/block/data/type/CraftTrialSpawner.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftTrialSpawner.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftTrialSpawner.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftTripwire.java b/src/main/java/excluded/spigot/block/data/type/CraftTripwire.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftTripwire.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftTripwire.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftTurtleEgg.java b/src/main/java/excluded/spigot/block/data/type/CraftTurtleEgg.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftTurtleEgg.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftTurtleEgg.java
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/type/CraftWall.java b/src/main/java/excluded/spigot/block/data/type/CraftWall.java
+similarity index 100%
+rename from src/main/java/org/bukkit/craftbukkit/block/data/type/CraftWall.java
+rename to src/main/java/excluded/spigot/block/data/type/CraftWall.java

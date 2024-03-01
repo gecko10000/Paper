@@ -12,9 +12,9 @@ minecraft {
     runs {
         server("generate") {
             mainClass("io.papermc.generator.Main")
-            accessWideners(projectDir.toPath().resolve("wideners.at"))
-            args(projectDir.toPath().resolve("generated").toString(),
-                project(":paper-api").sourceSets.main.get().java.srcDirs.first().toPath().toString())
+            accessWideners(file("wideners.at"))
+            args(file("generated").toString(),
+                project(":paper-api").sourceSets.main.get().java.srcDirs.first().toString())
         }
     }
 }
@@ -27,4 +27,3 @@ dependencies {
 
 group = "io.papermc.paper"
 version = "1.0-SNAPSHOT"
-

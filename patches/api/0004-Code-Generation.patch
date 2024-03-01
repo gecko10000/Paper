@@ -23,16 +23,16 @@ index be4d301b305f5cd92d2ff352bfb9c6ff9f82fd9b..01e3a5ba74f8d4c4c2eb010b289e2a77
  }
  
 +// Paper start
-+val generatedApiPath: java.nio.file.Path = rootProject.projectDir.toPath().resolve("paper-api-generator/generated")
++val generatedApiFolder: File = rootProject.file("paper-api-generator/generated")
 +idea {
 +    module {
-+        generatedSourceDirs.add(generatedApiPath.toFile())
++        generatedSourceDirs.add(generatedApiFolder)
 +    }
 +}
 +sourceSets {
 +    main {
 +        java {
-+            srcDir(generatedApiPath)
++            srcDir(generatedApiFolder)
 +        }
 +    }
 +}
