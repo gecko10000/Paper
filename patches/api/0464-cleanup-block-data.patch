@@ -1,0 +1,288 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Lulu13022002 <41980282+Lulu13022002@users.noreply.github.com>
+Date: Sun, 3 Mar 2024 16:02:25 +0100
+Subject: [PATCH] cleanup block data
+
+
+diff --git a/src/main/java/org/bukkit/Material.java b/src/main/java/org/bukkit/Material.java
+index 63ff4ab251f27c3c94ba775dc288ff8ef9b3b334..1d0ecea530caa5febbe3f08e77ff7c80cd0b49d5 100644
+--- a/src/main/java/org/bukkit/Material.java
++++ b/src/main/java/org/bukkit/Material.java
+@@ -96,6 +96,8 @@ import org.bukkit.block.data.type.SculkShrieker;
+ import org.bukkit.block.data.type.SculkVein;
+ import org.bukkit.block.data.type.SeaPickle;
+ import org.bukkit.block.data.type.Sign;
++import org.bukkit.block.data.type.Skull;
++import org.bukkit.block.data.type.SkullWall;
+ import org.bukkit.block.data.type.Slab;
+ import org.bukkit.block.data.type.SmallDripleaf;
+ import org.bukkit.block.data.type.Snow;
+@@ -2794,33 +2796,33 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
+     MAP(21655),
+     GOLDEN_CARROT(5300),
+     /**
+-     * BlockData: {@link Rotatable}
++     * BlockData: {@link Skull}
+      */
+-    SKELETON_SKULL(13270, Rotatable.class),
++    SKELETON_SKULL(13270, Skull.class),
+     /**
+-     * BlockData: {@link Rotatable}
++     * BlockData: {@link Skull}
+      */
+-    WITHER_SKELETON_SKULL(31487, Rotatable.class),
++    WITHER_SKELETON_SKULL(31487, Skull.class),
+     /**
+-     * BlockData: {@link Rotatable}
++     * BlockData: {@link Skull}
+      */
+-    PLAYER_HEAD(21174, Rotatable.class),
++    PLAYER_HEAD(21174, Skull.class),
+     /**
+-     * BlockData: {@link Rotatable}
++     * BlockData: {@link Skull}
+      */
+-    ZOMBIE_HEAD(9304, Rotatable.class),
++    ZOMBIE_HEAD(9304, Skull.class),
+     /**
+-     * BlockData: {@link Rotatable}
++     * BlockData: {@link Skull}
+      */
+-    CREEPER_HEAD(29146, Rotatable.class),
++    CREEPER_HEAD(29146, Skull.class),
+     /**
+-     * BlockData: {@link Rotatable}
++     * BlockData: {@link Skull}
+      */
+-    DRAGON_HEAD(20084, Rotatable.class),
++    DRAGON_HEAD(20084, Skull.class),
+     /**
+-     * BlockData: {@link Rotatable}
++     * BlockData: {@link Skull}
+      */
+-    PIGLIN_HEAD(5512, Rotatable.class),
++    PIGLIN_HEAD(5512, Skull.class),
+     NETHER_STAR(12469),
+     PUMPKIN_PIE(28725),
+     FIREWORK_ROCKET(23841),
+@@ -3498,33 +3500,33 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
+      */
+     POTATOES(10879, Ageable.class),
+     /**
+-     * BlockData: {@link Directional}
++     * BlockData: {@link SkullWall}
+      */
+-    SKELETON_WALL_SKULL(31650, Directional.class),
++    SKELETON_WALL_SKULL(31650, SkullWall.class),
+     /**
+-     * BlockData: {@link Directional}
++     * BlockData: {@link SkullWall}
+      */
+-    WITHER_SKELETON_WALL_SKULL(9326, Directional.class),
++    WITHER_SKELETON_WALL_SKULL(9326, SkullWall.class),
+     /**
+-     * BlockData: {@link Directional}
++     * BlockData: {@link SkullWall}
+      */
+-    ZOMBIE_WALL_HEAD(16296, Directional.class),
++    ZOMBIE_WALL_HEAD(16296, SkullWall.class),
+     /**
+-     * BlockData: {@link Directional}
++     * BlockData: {@link SkullWall}
+      */
+-    PLAYER_WALL_HEAD(13164, Directional.class),
++    PLAYER_WALL_HEAD(13164, SkullWall.class),
+     /**
+-     * BlockData: {@link Directional}
++     * BlockData: {@link SkullWall}
+      */
+-    CREEPER_WALL_HEAD(30123, Directional.class),
++    CREEPER_WALL_HEAD(30123, SkullWall.class),
+     /**
+-     * BlockData: {@link Directional}
++     * BlockData: {@link SkullWall}
+      */
+-    DRAGON_WALL_HEAD(19818, Directional.class),
++    DRAGON_WALL_HEAD(19818, SkullWall.class),
+     /**
+-     * BlockData: {@link Directional}
++     * BlockData: {@link SkullWall}
+      */
+-    PIGLIN_WALL_HEAD(4446, Directional.class),
++    PIGLIN_WALL_HEAD(4446, SkullWall.class),
+     /**
+      * BlockData: {@link Directional}
+      */
+diff --git a/src/main/java/org/bukkit/block/data/type/CaveVinesPlant.java b/src/main/java/org/bukkit/block/data/type/CaveVinesPlant.java
+index a7f75a98e018c63280f49aff1654ed1baea1f97f..2255ed831d0779d140cca5a6ec04f4db5c27ef9f 100644
+--- a/src/main/java/org/bukkit/block/data/type/CaveVinesPlant.java
++++ b/src/main/java/org/bukkit/block/data/type/CaveVinesPlant.java
+@@ -11,8 +11,21 @@ public interface CaveVinesPlant extends BlockData {
+      * Gets the value of the 'berries' property.
+      *
+      * @return the 'berries' value
++     * @deprecated bad name, use {@link #hasBerries()}
+      */
+-    boolean isBerries();
++    // Paper start
++    @Deprecated
++    default boolean isBerries() {
++        return this.hasBerries();
++    }
++
++    /**
++     * Gets the value of the 'berries' property.
++     *
++     * @return the 'berries' value
++     */
++    boolean hasBerries();
++    // Paper end
+ 
+     /**
+      * Sets the value of the 'berries' property.
+diff --git a/src/main/java/org/bukkit/block/data/type/DecoratedPot.java b/src/main/java/org/bukkit/block/data/type/DecoratedPot.java
+index eb0ffa977450ef0c79caa78302cfe75ee35b34b7..d03f03449af356d71344595255acda0f4490f845 100644
+--- a/src/main/java/org/bukkit/block/data/type/DecoratedPot.java
++++ b/src/main/java/org/bukkit/block/data/type/DecoratedPot.java
+@@ -4,4 +4,20 @@ import org.bukkit.block.data.Directional;
+ import org.bukkit.block.data.Waterlogged;
+ 
+ public interface DecoratedPot extends Directional, Waterlogged {
++
++    // Paper start - missing api
++    /**
++     * Gets the value of the 'cracked' property.
++     *
++     * @return the 'cracked' value
++     */
++    boolean isCracked();
++
++    /**
++     * Sets the value of the 'cracked' property.
++     *
++     * @param cracked the new 'cracked' value
++     */
++    void setCracked(boolean cracked);
++    // Paper end - missing api
+ }
+diff --git a/src/main/java/org/bukkit/block/data/type/SculkSensor.java b/src/main/java/org/bukkit/block/data/type/SculkSensor.java
+index 1af390e2ec3b8d8943c58e64edf8869b1820110f..4d779b676e81bd4cb79a8d8ee56436f2fabff5c0 100644
+--- a/src/main/java/org/bukkit/block/data/type/SculkSensor.java
++++ b/src/main/java/org/bukkit/block/data/type/SculkSensor.java
+@@ -13,16 +13,43 @@ public interface SculkSensor extends AnaloguePowerable, Waterlogged {
+      * Gets the value of the 'sculk_sensor_phase' property.
+      *
+      * @return the 'sculk_sensor_phase' value
++     * @deprecated bad name, use {@link #getSculkSensorPhase()}
+      */
+     @NotNull
+-    Phase getPhase();
++    // Paper start
++    @Deprecated
++    default Phase getPhase() {
++        return this.getSculkSensorPhase();
++    }
++    // Paper end
++
++    /**
++     * Sets the value of the 'sculk_sensor_phase' property.
++     *
++     * @param phase the new 'sculk_sensor_phase' value
++     * @deprecated bad name, use {@link #setSculkSensorPhase(Phase)}
++     */
++    // Paper start
++    @Deprecated
++    default void setPhase(@NotNull Phase phase) {
++        this.setSculkSensorPhase(phase);
++    }
++
++    /**
++     * Gets the value of the 'sculk_sensor_phase' property.
++     *
++     * @return the 'sculk_sensor_phase' value
++     */
++    @NotNull
++    Phase getSculkSensorPhase();
+ 
+     /**
+      * Sets the value of the 'sculk_sensor_phase' property.
+      *
+      * @param phase the new 'sculk_sensor_phase' value
+      */
+-    void setPhase(@NotNull Phase phase);
++    void setSculkSensorPhase(@NotNull Phase phase);
++    // Paper end
+ 
+     /**
+      * The Phase of the sensor.
+diff --git a/src/main/java/org/bukkit/block/data/type/Skull.java b/src/main/java/org/bukkit/block/data/type/Skull.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..75ae580eb725a4fe4a3b9575ffbcca09a9250b46
+--- /dev/null
++++ b/src/main/java/org/bukkit/block/data/type/Skull.java
+@@ -0,0 +1,7 @@
++package org.bukkit.block.data.type;
++
++import org.bukkit.block.data.Powerable;
++import org.bukkit.block.data.Rotatable;
++
++public interface Skull extends Rotatable, Powerable {
++}
+diff --git a/src/main/java/org/bukkit/block/data/type/SkullWall.java b/src/main/java/org/bukkit/block/data/type/SkullWall.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..dec031339ae01165f1fcad7638d2b602471693ad
+--- /dev/null
++++ b/src/main/java/org/bukkit/block/data/type/SkullWall.java
+@@ -0,0 +1,7 @@
++package org.bukkit.block.data.type;
++
++import org.bukkit.block.data.Directional;
++import org.bukkit.block.data.Powerable;
++
++public interface SkullWall extends Directional, Powerable {
++}
+diff --git a/src/main/java/org/bukkit/block/data/type/Switch.java b/src/main/java/org/bukkit/block/data/type/Switch.java
+index d91a07c7bcb36b3810bb2db89afef1eefd89253d..6b20ab2cf9681f0a9014106846cf8fd1770ebf90 100644
+--- a/src/main/java/org/bukkit/block/data/type/Switch.java
++++ b/src/main/java/org/bukkit/block/data/type/Switch.java
+@@ -7,6 +7,12 @@ import org.jetbrains.annotations.NotNull;
+ 
+ public interface Switch extends Directional, FaceAttachable, Powerable {
+ 
++    // Paper start
++    AttachedFace getAttachedFace();
++
++    void setAttachedFace(@NotNull AttachedFace face);
++    // Paper end
++
+     /**
+      * Gets the value of the 'face' property.
+      *
+@@ -14,8 +20,12 @@ public interface Switch extends Directional, FaceAttachable, Powerable {
+      * @deprecated use {@link #getAttachedFace()}
+      */
+     @NotNull
++    // Paper start
+     @Deprecated
+-    Face getFace();
++    default Face getFace() {
++        return Face.valueOf(this.getAttachedFace().name());
++    }
++    // Paper end
+ 
+     /**
+      * Sets the value of the 'face' property.
+@@ -23,8 +33,12 @@ public interface Switch extends Directional, FaceAttachable, Powerable {
+      * @param face the new 'face' value
+      * @deprecated use {@link #setAttachedFace(AttachedFace)}
+      */
++    // Paper start
+     @Deprecated
+-    void setFace(@NotNull Face face);
++    default void setFace(@NotNull Face face) {
++        this.setAttachedFace(AttachedFace.valueOf(face.name()));
++    }
++    // Paper end
+ 
+     /**
+      * The face to which a switch type block is stuck.

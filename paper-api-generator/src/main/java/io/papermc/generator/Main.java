@@ -4,8 +4,11 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.mojang.logging.LogUtils;
 import io.papermc.generator.rewriter.SourceRewriter;
 import io.papermc.generator.types.SourceGenerator;
+import io.papermc.generator.types.craftblockdata.CraftBlockDataGenerators;
 import io.papermc.generator.utils.TagCollector;
 import io.papermc.generator.utils.TagResult;
+
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import net.minecraft.SharedConstants;
@@ -36,6 +39,8 @@ public final class Main {
     static {
         SharedConstants.tryDetectVersion();
         Bootstrap.bootStrap();
+        Bootstrap.validate();
+
         final PackRepository resourceRepository = ServerPacksSource.createVanillaTrustedRepository();
         resourceRepository.reload();
         final MultiPackResourceManager resourceManager = new MultiPackResourceManager(PackType.SERVER_DATA, resourceRepository.getAvailablePacks().stream().map(Pack::open).toList());
@@ -52,39 +57,43 @@ public final class Main {
 
     public static void main(final String[] args) {
         LOGGER.info("Running API generators...");
+
         Main.generatedPath = Path.of(args[0]); // todo remove
-        generate(Main.generatedPath, Generators.API);
-        apply(Path.of(args[1]), Generators.API_REWRITE);
-    }
-
-    private static void generate(Path output, SourceGenerator[] generators) {
         try {
-            if (Files.exists(output)) {
-                PathUtils.deleteDirectory(output);
-            }
-            Files.createDirectories(output);
-
-            for (final SourceGenerator generator : generators) {
-                generator.writeToFile(output);
-            }
-
-            LOGGER.info("Files written to {}", output.toAbsolutePath());
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    private static void apply(Path output, SourceRewriter[] generators) {
-        try {
-            for (final SourceRewriter generator : generators) {
-                generator.writeToFile(output);
-            }
-
-            LOGGER.info("Files written to {}", output.toAbsolutePath());
+            generate(Main.generatedPath, Generators.API);
+            apply(Path.of(args[1]), Generators.API_REWRITE);
+            generateCraftBlockData(Path.of(args[2]));
         } catch (final RuntimeException ex) {
             throw ex;
-        } catch (final Exception ex) {
-            throw new RuntimeException(ex);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
+    }
+
+    private static void generate(Path output, SourceGenerator[] generators) throws IOException {
+        if (Files.exists(Main.generatedPath)) {
+            PathUtils.deleteDirectory(Main.generatedPath);
+        }
+
+        for (final SourceGenerator generator : generators) {
+            generator.writeToFile(output);
+        }
+
+        LOGGER.info("Files written to {}", output.toAbsolutePath());
+    }
+
+    private static void apply(Path output, SourceRewriter[] rewriters) throws IOException {
+        for (final SourceRewriter rewriter : rewriters) {
+            rewriter.writeToFile(output);
+        }
+
+        LOGGER.info("Files written to {}", output.toAbsolutePath());
+    }
+
+    private static void generateCraftBlockData(Path output) throws IOException {
+        if (Files.exists(output)) {
+            PathUtils.deleteDirectory(output);
+        }
+        new CraftBlockDataGenerators(output).generate();
     }
 }

@@ -1,0 +1,3336 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Lulu13022002 <41980282+Lulu13022002@users.noreply.github.com>
+Date: Sun, 3 Mar 2024 15:51:47 +0100
+Subject: [PATCH] cleanup block data
+
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java b/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
+index d6480b44f94f1a8d21eb5b5ded2956889883c560..a4f8ce8ec70256403ff162092f8ff51babd395bf 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
+@@ -363,9 +363,9 @@ public class CraftBlockData implements BlockData {
+         register(net.minecraft.world.level.block.BigDripleafBlock.class, org.bukkit.craftbukkit.block.impl.CraftBigDripleaf::new);
+         register(net.minecraft.world.level.block.BigDripleafStemBlock.class, org.bukkit.craftbukkit.block.impl.CraftBigDripleafStem::new);
+         register(net.minecraft.world.level.block.AnvilBlock.class, org.bukkit.craftbukkit.block.impl.CraftAnvil::new);
+-        register(net.minecraft.world.level.block.BambooStalkBlock.class, org.bukkit.craftbukkit.block.impl.CraftBamboo::new);
++        register(net.minecraft.world.level.block.BambooStalkBlock.class, org.bukkit.craftbukkit.block.impl.CraftBambooStalk::new);
+         register(net.minecraft.world.level.block.BannerBlock.class, org.bukkit.craftbukkit.block.impl.CraftBanner::new);
+-        register(net.minecraft.world.level.block.WallBannerBlock.class, org.bukkit.craftbukkit.block.impl.CraftBannerWall::new);
++        register(net.minecraft.world.level.block.WallBannerBlock.class, org.bukkit.craftbukkit.block.impl.CraftWallBanner::new);
+         register(net.minecraft.world.level.block.BarrelBlock.class, org.bukkit.craftbukkit.block.impl.CraftBarrel::new);
+         register(net.minecraft.world.level.block.BarrierBlock.class, org.bukkit.craftbukkit.block.impl.CraftBarrier::new);
+         register(net.minecraft.world.level.block.BedBlock.class, org.bukkit.craftbukkit.block.impl.CraftBed::new);
+@@ -375,52 +375,52 @@ public class CraftBlockData implements BlockData {
+         register(net.minecraft.world.level.block.BlastFurnaceBlock.class, org.bukkit.craftbukkit.block.impl.CraftBlastFurnace::new);
+         register(net.minecraft.world.level.block.BrewingStandBlock.class, org.bukkit.craftbukkit.block.impl.CraftBrewingStand::new);
+         register(net.minecraft.world.level.block.BubbleColumnBlock.class, org.bukkit.craftbukkit.block.impl.CraftBubbleColumn::new);
+-        register(net.minecraft.world.level.block.ButtonBlock.class, org.bukkit.craftbukkit.block.impl.CraftButtonAbstract::new);
++        register(net.minecraft.world.level.block.ButtonBlock.class, org.bukkit.craftbukkit.block.impl.CraftButton::new);
+         register(net.minecraft.world.level.block.CactusBlock.class, org.bukkit.craftbukkit.block.impl.CraftCactus::new);
+         register(net.minecraft.world.level.block.CakeBlock.class, org.bukkit.craftbukkit.block.impl.CraftCake::new);
+         register(net.minecraft.world.level.block.CampfireBlock.class, org.bukkit.craftbukkit.block.impl.CraftCampfire::new);
+-        register(net.minecraft.world.level.block.CarrotBlock.class, org.bukkit.craftbukkit.block.impl.CraftCarrots::new);
++        register(net.minecraft.world.level.block.CarrotBlock.class, org.bukkit.craftbukkit.block.impl.CraftCarrot::new);
+         register(net.minecraft.world.level.block.ChainBlock.class, org.bukkit.craftbukkit.block.impl.CraftChain::new);
+         register(net.minecraft.world.level.block.ChestBlock.class, org.bukkit.craftbukkit.block.impl.CraftChest::new);
+-        register(net.minecraft.world.level.block.TrappedChestBlock.class, org.bukkit.craftbukkit.block.impl.CraftChestTrapped::new);
++        register(net.minecraft.world.level.block.TrappedChestBlock.class, org.bukkit.craftbukkit.block.impl.CraftTrappedChest::new);
+         register(net.minecraft.world.level.block.ChorusFlowerBlock.class, org.bukkit.craftbukkit.block.impl.CraftChorusFlower::new);
+-        register(net.minecraft.world.level.block.ChorusPlantBlock.class, org.bukkit.craftbukkit.block.impl.CraftChorusFruit::new);
+-        register(net.minecraft.world.level.block.WallBlock.class, org.bukkit.craftbukkit.block.impl.CraftCobbleWall::new);
++        register(net.minecraft.world.level.block.ChorusPlantBlock.class, org.bukkit.craftbukkit.block.impl.CraftChorusPlant::new);
++        register(net.minecraft.world.level.block.WallBlock.class, org.bukkit.craftbukkit.block.impl.CraftWall::new);
+         register(net.minecraft.world.level.block.CocoaBlock.class, org.bukkit.craftbukkit.block.impl.CraftCocoa::new);
+-        register(net.minecraft.world.level.block.CommandBlock.class, org.bukkit.craftbukkit.block.impl.CraftCommand::new);
++        register(net.minecraft.world.level.block.CommandBlock.class, org.bukkit.craftbukkit.block.impl.CraftCommandBlock::new);
+         register(net.minecraft.world.level.block.ComposterBlock.class, org.bukkit.craftbukkit.block.impl.CraftComposter::new);
+         register(net.minecraft.world.level.block.ConduitBlock.class, org.bukkit.craftbukkit.block.impl.CraftConduit::new);
+-        register(net.minecraft.world.level.block.BaseCoralPlantBlock.class, org.bukkit.craftbukkit.block.impl.CraftCoralDead::new);
++        register(net.minecraft.world.level.block.BaseCoralPlantBlock.class, org.bukkit.craftbukkit.block.impl.CraftBaseCoralPlant::new);
+         register(net.minecraft.world.level.block.CoralFanBlock.class, org.bukkit.craftbukkit.block.impl.CraftCoralFan::new);
+-        register(net.minecraft.world.level.block.BaseCoralFanBlock.class, org.bukkit.craftbukkit.block.impl.CraftCoralFanAbstract::new);
+-        register(net.minecraft.world.level.block.CoralWallFanBlock.class, org.bukkit.craftbukkit.block.impl.CraftCoralFanWall::new);
+-        register(net.minecraft.world.level.block.BaseCoralWallFanBlock.class, org.bukkit.craftbukkit.block.impl.CraftCoralFanWallAbstract::new);
++        register(net.minecraft.world.level.block.BaseCoralFanBlock.class, org.bukkit.craftbukkit.block.impl.CraftBaseCoralFan::new);
++        register(net.minecraft.world.level.block.CoralWallFanBlock.class, org.bukkit.craftbukkit.block.impl.CraftCoralWallFan::new);
++        register(net.minecraft.world.level.block.BaseCoralWallFanBlock.class, org.bukkit.craftbukkit.block.impl.CraftBaseCoralWallFan::new);
+         register(net.minecraft.world.level.block.CoralPlantBlock.class, org.bukkit.craftbukkit.block.impl.CraftCoralPlant::new);
+-        register(net.minecraft.world.level.block.CropBlock.class, org.bukkit.craftbukkit.block.impl.CraftCrops::new);
++        register(net.minecraft.world.level.block.CropBlock.class, org.bukkit.craftbukkit.block.impl.CraftCrop::new);
+         register(net.minecraft.world.level.block.DaylightDetectorBlock.class, org.bukkit.craftbukkit.block.impl.CraftDaylightDetector::new);
+-        register(net.minecraft.world.level.block.SnowyDirtBlock.class, org.bukkit.craftbukkit.block.impl.CraftDirtSnow::new);
++        register(net.minecraft.world.level.block.SnowyDirtBlock.class, org.bukkit.craftbukkit.block.impl.CraftSnowyDirt::new);
+         register(net.minecraft.world.level.block.DispenserBlock.class, org.bukkit.craftbukkit.block.impl.CraftDispenser::new);
+         register(net.minecraft.world.level.block.DoorBlock.class, org.bukkit.craftbukkit.block.impl.CraftDoor::new);
+         register(net.minecraft.world.level.block.DropperBlock.class, org.bukkit.craftbukkit.block.impl.CraftDropper::new);
+         register(net.minecraft.world.level.block.EndRodBlock.class, org.bukkit.craftbukkit.block.impl.CraftEndRod::new);
+         register(net.minecraft.world.level.block.EnderChestBlock.class, org.bukkit.craftbukkit.block.impl.CraftEnderChest::new);
+-        register(net.minecraft.world.level.block.EndPortalFrameBlock.class, org.bukkit.craftbukkit.block.impl.CraftEnderPortalFrame::new);
++        register(net.minecraft.world.level.block.EndPortalFrameBlock.class, org.bukkit.craftbukkit.block.impl.CraftEndPortalFrame::new);
+         register(net.minecraft.world.level.block.FenceBlock.class, org.bukkit.craftbukkit.block.impl.CraftFence::new);
+         register(net.minecraft.world.level.block.FenceGateBlock.class, org.bukkit.craftbukkit.block.impl.CraftFenceGate::new);
+         register(net.minecraft.world.level.block.FireBlock.class, org.bukkit.craftbukkit.block.impl.CraftFire::new);
+-        register(net.minecraft.world.level.block.StandingSignBlock.class, org.bukkit.craftbukkit.block.impl.CraftFloorSign::new);
+-        register(net.minecraft.world.level.block.LiquidBlock.class, org.bukkit.craftbukkit.block.impl.CraftFluids::new);
+-        register(net.minecraft.world.level.block.FurnaceBlock.class, org.bukkit.craftbukkit.block.impl.CraftFurnaceFurace::new);
++        register(net.minecraft.world.level.block.StandingSignBlock.class, org.bukkit.craftbukkit.block.impl.CraftStandingSign::new);
++        register(net.minecraft.world.level.block.LiquidBlock.class, org.bukkit.craftbukkit.block.impl.CraftLiquid::new);
++        register(net.minecraft.world.level.block.FurnaceBlock.class, org.bukkit.craftbukkit.block.impl.CraftFurnace::new);
+         register(net.minecraft.world.level.block.GlazedTerracottaBlock.class, org.bukkit.craftbukkit.block.impl.CraftGlazedTerracotta::new);
+         register(net.minecraft.world.level.block.GrassBlock.class, org.bukkit.craftbukkit.block.impl.CraftGrass::new);
+         register(net.minecraft.world.level.block.GrindstoneBlock.class, org.bukkit.craftbukkit.block.impl.CraftGrindstone::new);
+         register(net.minecraft.world.level.block.HayBlock.class, org.bukkit.craftbukkit.block.impl.CraftHay::new);
+         register(net.minecraft.world.level.block.HopperBlock.class, org.bukkit.craftbukkit.block.impl.CraftHopper::new);
+         register(net.minecraft.world.level.block.HugeMushroomBlock.class, org.bukkit.craftbukkit.block.impl.CraftHugeMushroom::new);
+-        register(net.minecraft.world.level.block.FrostedIceBlock.class, org.bukkit.craftbukkit.block.impl.CraftIceFrost::new);
++        register(net.minecraft.world.level.block.FrostedIceBlock.class, org.bukkit.craftbukkit.block.impl.CraftFrostedIce::new);
+         register(net.minecraft.world.level.block.IronBarsBlock.class, org.bukkit.craftbukkit.block.impl.CraftIronBars::new);
+         register(net.minecraft.world.level.block.JigsawBlock.class, org.bukkit.craftbukkit.block.impl.CraftJigsaw::new);
+-        register(net.minecraft.world.level.block.JukeboxBlock.class, org.bukkit.craftbukkit.block.impl.CraftJukeBox::new);
++        register(net.minecraft.world.level.block.JukeboxBlock.class, org.bukkit.craftbukkit.block.impl.CraftJukebox::new);
+         register(net.minecraft.world.level.block.KelpBlock.class, org.bukkit.craftbukkit.block.impl.CraftKelp::new);
+         register(net.minecraft.world.level.block.LadderBlock.class, org.bukkit.craftbukkit.block.impl.CraftLadder::new);
+         register(net.minecraft.world.level.block.LanternBlock.class, org.bukkit.craftbukkit.block.impl.CraftLantern::new);
+@@ -428,62 +428,62 @@ public class CraftBlockData implements BlockData {
+         register(net.minecraft.world.level.block.LecternBlock.class, org.bukkit.craftbukkit.block.impl.CraftLectern::new);
+         register(net.minecraft.world.level.block.LeverBlock.class, org.bukkit.craftbukkit.block.impl.CraftLever::new);
+         register(net.minecraft.world.level.block.LoomBlock.class, org.bukkit.craftbukkit.block.impl.CraftLoom::new);
+-        register(net.minecraft.world.level.block.DetectorRailBlock.class, org.bukkit.craftbukkit.block.impl.CraftMinecartDetector::new);
+-        register(net.minecraft.world.level.block.RailBlock.class, org.bukkit.craftbukkit.block.impl.CraftMinecartTrack::new);
+-        register(net.minecraft.world.level.block.MyceliumBlock.class, org.bukkit.craftbukkit.block.impl.CraftMycel::new);
++        register(net.minecraft.world.level.block.DetectorRailBlock.class, org.bukkit.craftbukkit.block.impl.CraftDetectorRail::new);
++        register(net.minecraft.world.level.block.RailBlock.class, org.bukkit.craftbukkit.block.impl.CraftRail::new);
++        register(net.minecraft.world.level.block.MyceliumBlock.class, org.bukkit.craftbukkit.block.impl.CraftMycelium::new);
+         register(net.minecraft.world.level.block.NetherWartBlock.class, org.bukkit.craftbukkit.block.impl.CraftNetherWart::new);
+-        register(net.minecraft.world.level.block.NoteBlock.class, org.bukkit.craftbukkit.block.impl.CraftNote::new);
++        register(net.minecraft.world.level.block.NoteBlock.class, org.bukkit.craftbukkit.block.impl.CraftNoteBlock::new);
+         register(net.minecraft.world.level.block.ObserverBlock.class, org.bukkit.craftbukkit.block.impl.CraftObserver::new);
+-        register(net.minecraft.world.level.block.NetherPortalBlock.class, org.bukkit.craftbukkit.block.impl.CraftPortal::new);
+-        register(net.minecraft.world.level.block.PotatoBlock.class, org.bukkit.craftbukkit.block.impl.CraftPotatoes::new);
++        register(net.minecraft.world.level.block.NetherPortalBlock.class, org.bukkit.craftbukkit.block.impl.CraftNetherPortal::new);
++        register(net.minecraft.world.level.block.PotatoBlock.class, org.bukkit.craftbukkit.block.impl.CraftPotato::new);
+         register(net.minecraft.world.level.block.PoweredRailBlock.class, org.bukkit.craftbukkit.block.impl.CraftPoweredRail::new);
+-        register(net.minecraft.world.level.block.PressurePlateBlock.class, org.bukkit.craftbukkit.block.impl.CraftPressurePlateBinary::new);
+-        register(net.minecraft.world.level.block.WeightedPressurePlateBlock.class, org.bukkit.craftbukkit.block.impl.CraftPressurePlateWeighted::new);
+-        register(net.minecraft.world.level.block.CarvedPumpkinBlock.class, org.bukkit.craftbukkit.block.impl.CraftPumpkinCarved::new);
+-        register(net.minecraft.world.level.block.ComparatorBlock.class, org.bukkit.craftbukkit.block.impl.CraftRedstoneComparator::new);
++        register(net.minecraft.world.level.block.PressurePlateBlock.class, org.bukkit.craftbukkit.block.impl.CraftPressurePlate::new);
++        register(net.minecraft.world.level.block.WeightedPressurePlateBlock.class, org.bukkit.craftbukkit.block.impl.CraftWeightedPressurePlate::new);
++        register(net.minecraft.world.level.block.CarvedPumpkinBlock.class, org.bukkit.craftbukkit.block.impl.CraftCarvedPumpkin::new);
++        register(net.minecraft.world.level.block.ComparatorBlock.class, org.bukkit.craftbukkit.block.impl.CraftComparator::new);
+         register(net.minecraft.world.level.block.RedstoneLampBlock.class, org.bukkit.craftbukkit.block.impl.CraftRedstoneLamp::new);
+-        register(net.minecraft.world.level.block.RedStoneOreBlock.class, org.bukkit.craftbukkit.block.impl.CraftRedstoneOre::new);
++        register(net.minecraft.world.level.block.RedStoneOreBlock.class, org.bukkit.craftbukkit.block.impl.CraftRedStoneOre::new);
+         register(net.minecraft.world.level.block.RedstoneTorchBlock.class, org.bukkit.craftbukkit.block.impl.CraftRedstoneTorch::new);
+-        register(net.minecraft.world.level.block.RedstoneWallTorchBlock.class, org.bukkit.craftbukkit.block.impl.CraftRedstoneTorchWall::new);
+-        register(net.minecraft.world.level.block.RedStoneWireBlock.class, org.bukkit.craftbukkit.block.impl.CraftRedstoneWire::new);
+-        register(net.minecraft.world.level.block.SugarCaneBlock.class, org.bukkit.craftbukkit.block.impl.CraftReed::new);
++        register(net.minecraft.world.level.block.RedstoneWallTorchBlock.class, org.bukkit.craftbukkit.block.impl.CraftRedstoneWallTorch::new);
++        register(net.minecraft.world.level.block.RedStoneWireBlock.class, org.bukkit.craftbukkit.block.impl.CraftRedStoneWire::new);
++        register(net.minecraft.world.level.block.SugarCaneBlock.class, org.bukkit.craftbukkit.block.impl.CraftSugarCane::new);
+         register(net.minecraft.world.level.block.RepeaterBlock.class, org.bukkit.craftbukkit.block.impl.CraftRepeater::new);
+         register(net.minecraft.world.level.block.RespawnAnchorBlock.class, org.bukkit.craftbukkit.block.impl.CraftRespawnAnchor::new);
+-        register(net.minecraft.world.level.block.RotatedPillarBlock.class, org.bukkit.craftbukkit.block.impl.CraftRotatable::new);
++        register(net.minecraft.world.level.block.RotatedPillarBlock.class, org.bukkit.craftbukkit.block.impl.CraftRotatedPillar::new);
+         register(net.minecraft.world.level.block.SaplingBlock.class, org.bukkit.craftbukkit.block.impl.CraftSapling::new);
+         register(net.minecraft.world.level.block.ScaffoldingBlock.class, org.bukkit.craftbukkit.block.impl.CraftScaffolding::new);
+         register(net.minecraft.world.level.block.SeaPickleBlock.class, org.bukkit.craftbukkit.block.impl.CraftSeaPickle::new);
+         register(net.minecraft.world.level.block.ShulkerBoxBlock.class, org.bukkit.craftbukkit.block.impl.CraftShulkerBox::new);
+         register(net.minecraft.world.level.block.SkullBlock.class, org.bukkit.craftbukkit.block.impl.CraftSkull::new);
+-        register(net.minecraft.world.level.block.PlayerHeadBlock.class, org.bukkit.craftbukkit.block.impl.CraftSkullPlayer::new);
+-        register(net.minecraft.world.level.block.PlayerWallHeadBlock.class, org.bukkit.craftbukkit.block.impl.CraftSkullPlayerWall::new);
+-        register(net.minecraft.world.level.block.WallSkullBlock.class, org.bukkit.craftbukkit.block.impl.CraftSkullWall::new);
++        register(net.minecraft.world.level.block.PlayerHeadBlock.class, org.bukkit.craftbukkit.block.impl.CraftPlayerHead::new);
++        register(net.minecraft.world.level.block.PlayerWallHeadBlock.class, org.bukkit.craftbukkit.block.impl.CraftPlayerWallHead::new);
++        register(net.minecraft.world.level.block.WallSkullBlock.class, org.bukkit.craftbukkit.block.impl.CraftWallSkull::new);
+         register(net.minecraft.world.level.block.SmokerBlock.class, org.bukkit.craftbukkit.block.impl.CraftSmoker::new);
+-        register(net.minecraft.world.level.block.SnowLayerBlock.class, org.bukkit.craftbukkit.block.impl.CraftSnow::new);
+-        register(net.minecraft.world.level.block.FarmBlock.class, org.bukkit.craftbukkit.block.impl.CraftSoil::new);
++        register(net.minecraft.world.level.block.SnowLayerBlock.class, org.bukkit.craftbukkit.block.impl.CraftSnowLayer::new);
++        register(net.minecraft.world.level.block.FarmBlock.class, org.bukkit.craftbukkit.block.impl.CraftFarm::new);
+         register(net.minecraft.world.level.block.StainedGlassPaneBlock.class, org.bukkit.craftbukkit.block.impl.CraftStainedGlassPane::new);
+-        register(net.minecraft.world.level.block.StairBlock.class, org.bukkit.craftbukkit.block.impl.CraftStairs::new);
++        register(net.minecraft.world.level.block.StairBlock.class, org.bukkit.craftbukkit.block.impl.CraftStair::new);
+         register(net.minecraft.world.level.block.StemBlock.class, org.bukkit.craftbukkit.block.impl.CraftStem::new);
+-        register(net.minecraft.world.level.block.AttachedStemBlock.class, org.bukkit.craftbukkit.block.impl.CraftStemAttached::new);
+-        register(net.minecraft.world.level.block.SlabBlock.class, org.bukkit.craftbukkit.block.impl.CraftStepAbstract::new);
++        register(net.minecraft.world.level.block.AttachedStemBlock.class, org.bukkit.craftbukkit.block.impl.CraftAttachedStem::new);
++        register(net.minecraft.world.level.block.SlabBlock.class, org.bukkit.craftbukkit.block.impl.CraftSlab::new);
+         register(net.minecraft.world.level.block.StonecutterBlock.class, org.bukkit.craftbukkit.block.impl.CraftStonecutter::new);
+-        register(net.minecraft.world.level.block.StructureBlock.class, org.bukkit.craftbukkit.block.impl.CraftStructure::new);
++        register(net.minecraft.world.level.block.StructureBlock.class, org.bukkit.craftbukkit.block.impl.CraftStructureBlock::new);
+         register(net.minecraft.world.level.block.SweetBerryBushBlock.class, org.bukkit.craftbukkit.block.impl.CraftSweetBerryBush::new);
+-        register(net.minecraft.world.level.block.TntBlock.class, org.bukkit.craftbukkit.block.impl.CraftTNT::new);
+-        register(net.minecraft.world.level.block.DoublePlantBlock.class, org.bukkit.craftbukkit.block.impl.CraftTallPlant::new);
+-        register(net.minecraft.world.level.block.TallFlowerBlock.class, org.bukkit.craftbukkit.block.impl.CraftTallPlantFlower::new);
++        register(net.minecraft.world.level.block.TntBlock.class, org.bukkit.craftbukkit.block.impl.CraftTnt::new);
++        register(net.minecraft.world.level.block.DoublePlantBlock.class, org.bukkit.craftbukkit.block.impl.CraftDoublePlant::new);
++        register(net.minecraft.world.level.block.TallFlowerBlock.class, org.bukkit.craftbukkit.block.impl.CraftTallFlower::new);
+         register(net.minecraft.world.level.block.TargetBlock.class, org.bukkit.craftbukkit.block.impl.CraftTarget::new);
+-        register(net.minecraft.world.level.block.WallTorchBlock.class, org.bukkit.craftbukkit.block.impl.CraftTorchWall::new);
+-        register(net.minecraft.world.level.block.TrapDoorBlock.class, org.bukkit.craftbukkit.block.impl.CraftTrapdoor::new);
+-        register(net.minecraft.world.level.block.TripWireBlock.class, org.bukkit.craftbukkit.block.impl.CraftTripwire::new);
+-        register(net.minecraft.world.level.block.TripWireHookBlock.class, org.bukkit.craftbukkit.block.impl.CraftTripwireHook::new);
++        register(net.minecraft.world.level.block.WallTorchBlock.class, org.bukkit.craftbukkit.block.impl.CraftWallTorch::new);
++        register(net.minecraft.world.level.block.TrapDoorBlock.class, org.bukkit.craftbukkit.block.impl.CraftTrapDoor::new);
++        register(net.minecraft.world.level.block.TripWireBlock.class, org.bukkit.craftbukkit.block.impl.CraftTripWire::new);
++        register(net.minecraft.world.level.block.TripWireHookBlock.class, org.bukkit.craftbukkit.block.impl.CraftTripWireHook::new);
+         register(net.minecraft.world.level.block.TurtleEggBlock.class, org.bukkit.craftbukkit.block.impl.CraftTurtleEgg::new);
+         register(net.minecraft.world.level.block.TwistingVinesBlock.class, org.bukkit.craftbukkit.block.impl.CraftTwistingVines::new);
+         register(net.minecraft.world.level.block.VineBlock.class, org.bukkit.craftbukkit.block.impl.CraftVine::new);
+         register(net.minecraft.world.level.block.WallSignBlock.class, org.bukkit.craftbukkit.block.impl.CraftWallSign::new);
+         register(net.minecraft.world.level.block.WeepingVinesBlock.class, org.bukkit.craftbukkit.block.impl.CraftWeepingVines::new);
+         register(net.minecraft.world.level.block.WitherSkullBlock.class, org.bukkit.craftbukkit.block.impl.CraftWitherSkull::new);
+-        register(net.minecraft.world.level.block.WitherWallSkullBlock.class, org.bukkit.craftbukkit.block.impl.CraftWitherSkullWall::new);
++        register(net.minecraft.world.level.block.WitherWallSkullBlock.class, org.bukkit.craftbukkit.block.impl.CraftWitherWallSkull::new);
+         register(net.minecraft.world.level.block.BrushableBlock.class, org.bukkit.craftbukkit.block.impl.CraftBrushable::new);
+         register(net.minecraft.world.level.block.CalibratedSculkSensorBlock.class, org.bukkit.craftbukkit.block.impl.CraftCalibratedSculkSensor::new);
+         register(net.minecraft.world.level.block.CandleBlock.class, org.bukkit.craftbukkit.block.impl.CraftCandle::new);
+@@ -527,9 +527,9 @@ public class CraftBlockData implements BlockData {
+         register(net.minecraft.world.level.block.WeatheringCopperSlabBlock.class, org.bukkit.craftbukkit.block.impl.CraftWeatheringCopperSlab::new);
+         register(net.minecraft.world.level.block.WeatheringCopperStairBlock.class, org.bukkit.craftbukkit.block.impl.CraftWeatheringCopperStair::new);
+         register(net.minecraft.world.level.block.WeatheringCopperTrapDoorBlock.class, org.bukkit.craftbukkit.block.impl.CraftWeatheringCopperTrapDoor::new);
+-        register(net.minecraft.world.level.block.piston.PistonBaseBlock.class, org.bukkit.craftbukkit.block.impl.CraftPiston::new);
+-        register(net.minecraft.world.level.block.piston.PistonHeadBlock.class, org.bukkit.craftbukkit.block.impl.CraftPistonExtension::new);
+-        register(net.minecraft.world.level.block.piston.MovingPistonBlock.class, org.bukkit.craftbukkit.block.impl.CraftPistonMoving::new);
++        register(net.minecraft.world.level.block.piston.PistonBaseBlock.class, org.bukkit.craftbukkit.block.impl.CraftPistonBase::new);
++        register(net.minecraft.world.level.block.piston.PistonHeadBlock.class, org.bukkit.craftbukkit.block.impl.CraftPistonHead::new);
++        register(net.minecraft.world.level.block.piston.MovingPistonBlock.class, org.bukkit.craftbukkit.block.impl.CraftMovingPiston::new);
+         //</editor-fold>
+     }
+ 
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftStemAttached.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftAttachedStem.java
+similarity index 69%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftStemAttached.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftAttachedStem.java
+index 6da1ae7a8f938468843d4af5bd43c4f61497d7fe..071ac26f9b54dccd75b0a7f475b97d69f6b1d51f 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftStemAttached.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftAttachedStem.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftStemAttached extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Directional {
++public final class CraftAttachedStem extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Directional {
+ 
+-    public CraftStemAttached() {
++    public CraftAttachedStem() {
+         super();
+     }
+ 
+-    public CraftStemAttached(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftAttachedStem(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,16 +19,16 @@ public final class CraftStemAttached extends org.bukkit.craftbukkit.block.data.C
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftStemAttached.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftAttachedStem.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftStemAttached.FACING, facing);
++        this.set(CraftAttachedStem.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftStemAttached.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftAttachedStem.FACING, org.bukkit.block.BlockFace.class);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftBamboo.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftBambooStalk.java
+similarity index 64%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftBamboo.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftBambooStalk.java
+index ef37065539d5884300d62c3103763a31af35b653..eb3f6644ad98506b1f16d4f82a14f95811d6022a 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftBamboo.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftBambooStalk.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftBamboo extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Bamboo, org.bukkit.block.data.Ageable, org.bukkit.block.data.type.Sapling {
++public final class CraftBambooStalk extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Bamboo, org.bukkit.block.data.Ageable, org.bukkit.block.data.type.Sapling {
+ 
+-    public CraftBamboo() {
++    public CraftBambooStalk() {
+         super();
+     }
+ 
+-    public CraftBamboo(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftBambooStalk(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,12 +19,12 @@ public final class CraftBamboo extends org.bukkit.craftbukkit.block.data.CraftBl
+ 
+     @Override
+     public org.bukkit.block.data.type.Bamboo.Leaves getLeaves() {
+-        return this.get(CraftBamboo.LEAVES, org.bukkit.block.data.type.Bamboo.Leaves.class);
++        return this.get(CraftBambooStalk.LEAVES, org.bukkit.block.data.type.Bamboo.Leaves.class);
+     }
+ 
+     @Override
+     public void setLeaves(org.bukkit.block.data.type.Bamboo.Leaves leaves) {
+-        this.set(CraftBamboo.LEAVES, leaves);
++        this.set(CraftBambooStalk.LEAVES, leaves);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftAgeable
+@@ -33,17 +33,17 @@ public final class CraftBamboo extends org.bukkit.craftbukkit.block.data.CraftBl
+ 
+     @Override
+     public int getAge() {
+-        return this.get(CraftBamboo.AGE);
++        return this.get(CraftBambooStalk.AGE);
+     }
+ 
+     @Override
+     public void setAge(int age) {
+-        this.set(CraftBamboo.AGE, age);
++        this.set(CraftBambooStalk.AGE, age);
+     }
+ 
+     @Override
+     public int getMaximumAge() {
+-        return getMax(CraftBamboo.AGE);
++        return getMax(CraftBambooStalk.AGE);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.type.CraftSapling
+@@ -52,16 +52,16 @@ public final class CraftBamboo extends org.bukkit.craftbukkit.block.data.CraftBl
+ 
+     @Override
+     public int getStage() {
+-        return this.get(CraftBamboo.STAGE);
++        return this.get(CraftBambooStalk.STAGE);
+     }
+ 
+     @Override
+     public void setStage(int stage) {
+-        this.set(CraftBamboo.STAGE, stage);
++        this.set(CraftBambooStalk.STAGE, stage);
+     }
+ 
+     @Override
+     public int getMaximumStage() {
+-        return getMax(CraftBamboo.STAGE);
++        return getMax(CraftBambooStalk.STAGE);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCoralFanAbstract.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftBaseCoralFan.java
+similarity index 57%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftCoralFanAbstract.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftBaseCoralFan.java
+index 88c371ca28fb02d71bbfe3746bd75538963d14a6..22641798645cf85372b69ddb7fed0bcb61f6cf2b 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCoralFanAbstract.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftBaseCoralFan.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftCoralFanAbstract extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Waterlogged {
++public final class CraftBaseCoralFan extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Waterlogged {
+ 
+-    public CraftCoralFanAbstract() {
++    public CraftBaseCoralFan() {
+         super();
+     }
+ 
+-    public CraftCoralFanAbstract(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftBaseCoralFan(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,11 +19,11 @@ public final class CraftCoralFanAbstract extends org.bukkit.craftbukkit.block.da
+ 
+     @Override
+     public boolean isWaterlogged() {
+-        return this.get(CraftCoralFanAbstract.WATERLOGGED);
++        return this.get(CraftBaseCoralFan.WATERLOGGED);
+     }
+ 
+     @Override
+     public void setWaterlogged(boolean waterlogged) {
+-        this.set(CraftCoralFanAbstract.WATERLOGGED, waterlogged);
++        this.set(CraftBaseCoralFan.WATERLOGGED, waterlogged);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCoralDead.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftBaseCoralPlant.java
+similarity index 58%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftCoralDead.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftBaseCoralPlant.java
+index 927ee9b69af1cab84775114c0a6e089271cdf144..500d821e2293ac1a62c40075c55bd8537bf00020 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCoralDead.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftBaseCoralPlant.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftCoralDead extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Waterlogged {
++public final class CraftBaseCoralPlant extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Waterlogged {
+ 
+-    public CraftCoralDead() {
++    public CraftBaseCoralPlant() {
+         super();
+     }
+ 
+-    public CraftCoralDead(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftBaseCoralPlant(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,11 +19,11 @@ public final class CraftCoralDead extends org.bukkit.craftbukkit.block.data.Craf
+ 
+     @Override
+     public boolean isWaterlogged() {
+-        return this.get(CraftCoralDead.WATERLOGGED);
++        return this.get(CraftBaseCoralPlant.WATERLOGGED);
+     }
+ 
+     @Override
+     public void setWaterlogged(boolean waterlogged) {
+-        this.set(CraftCoralDead.WATERLOGGED, waterlogged);
++        this.set(CraftBaseCoralPlant.WATERLOGGED, waterlogged);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCoralFanWallAbstract.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftBaseCoralWallFan.java
+similarity index 57%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftCoralFanWallAbstract.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftBaseCoralWallFan.java
+index b1715fcac88c7aad3f707e819036986d93af35f1..b0d5ba7f32b68a008375e89444aad078045ed7d1 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCoralFanWallAbstract.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftBaseCoralWallFan.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftCoralFanWallAbstract extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.CoralWallFan, org.bukkit.block.data.Directional, org.bukkit.block.data.Waterlogged {
++public final class CraftBaseCoralWallFan extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.CoralWallFan, org.bukkit.block.data.Directional, org.bukkit.block.data.Waterlogged {
+ 
+-    public CraftCoralFanWallAbstract() {
++    public CraftBaseCoralWallFan() {
+         super();
+     }
+ 
+-    public CraftCoralFanWallAbstract(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftBaseCoralWallFan(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,17 +19,17 @@ public final class CraftCoralFanWallAbstract extends org.bukkit.craftbukkit.bloc
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftCoralFanWallAbstract.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftBaseCoralWallFan.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftCoralFanWallAbstract.FACING, facing);
++        this.set(CraftBaseCoralWallFan.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftCoralFanWallAbstract.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftBaseCoralWallFan.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftWaterlogged
+@@ -38,11 +38,11 @@ public final class CraftCoralFanWallAbstract extends org.bukkit.craftbukkit.bloc
+ 
+     @Override
+     public boolean isWaterlogged() {
+-        return this.get(CraftCoralFanWallAbstract.WATERLOGGED);
++        return this.get(CraftBaseCoralWallFan.WATERLOGGED);
+     }
+ 
+     @Override
+     public void setWaterlogged(boolean waterlogged) {
+-        this.set(CraftCoralFanWallAbstract.WATERLOGGED, waterlogged);
++        this.set(CraftBaseCoralWallFan.WATERLOGGED, waterlogged);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftButtonAbstract.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftButton.java
+similarity index 63%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftButtonAbstract.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftButton.java
+index e71fd199fd8eb7472c6f41908e2e711a338587c7..09e177b66648e03be53c758893ab71d380e96bc1 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftButtonAbstract.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftButton.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftButtonAbstract extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Switch, org.bukkit.block.data.Directional, org.bukkit.block.data.FaceAttachable, org.bukkit.block.data.Powerable {
++public final class CraftButton extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Switch, org.bukkit.block.data.Directional, org.bukkit.block.data.FaceAttachable, org.bukkit.block.data.Powerable {
+ 
+-    public CraftButtonAbstract() {
++    public CraftButton() {
+         super();
+     }
+ 
+-    public CraftButtonAbstract(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftButton(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,12 +19,12 @@ public final class CraftButtonAbstract extends org.bukkit.craftbukkit.block.data
+ 
+     @Override
+     public org.bukkit.block.data.type.Switch.Face getFace() {
+-        return this.get(CraftButtonAbstract.FACE, org.bukkit.block.data.type.Switch.Face.class);
++        return this.get(CraftButton.FACE, org.bukkit.block.data.type.Switch.Face.class);
+     }
+ 
+     @Override
+     public void setFace(org.bukkit.block.data.type.Switch.Face face) {
+-        this.set(CraftButtonAbstract.FACE, face);
++        this.set(CraftButton.FACE, face);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftDirectional
+@@ -33,17 +33,17 @@ public final class CraftButtonAbstract extends org.bukkit.craftbukkit.block.data
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftButtonAbstract.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftButton.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftButtonAbstract.FACING, facing);
++        this.set(CraftButton.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftButtonAbstract.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftButton.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftFaceAttachable
+@@ -52,12 +52,12 @@ public final class CraftButtonAbstract extends org.bukkit.craftbukkit.block.data
+ 
+     @Override
+     public org.bukkit.block.data.FaceAttachable.AttachedFace getAttachedFace() {
+-        return this.get(CraftButtonAbstract.ATTACH_FACE, org.bukkit.block.data.FaceAttachable.AttachedFace.class);
++        return this.get(CraftButton.ATTACH_FACE, org.bukkit.block.data.FaceAttachable.AttachedFace.class);
+     }
+ 
+     @Override
+     public void setAttachedFace(org.bukkit.block.data.FaceAttachable.AttachedFace face) {
+-        this.set(CraftButtonAbstract.ATTACH_FACE, face);
++        this.set(CraftButton.ATTACH_FACE, face);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftPowerable
+@@ -66,11 +66,11 @@ public final class CraftButtonAbstract extends org.bukkit.craftbukkit.block.data
+ 
+     @Override
+     public boolean isPowered() {
+-        return this.get(CraftButtonAbstract.POWERED);
++        return this.get(CraftButton.POWERED);
+     }
+ 
+     @Override
+     public void setPowered(boolean powered) {
+-        this.set(CraftButtonAbstract.POWERED, powered);
++        this.set(CraftButton.POWERED, powered);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCarrots.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCarrot.java
+similarity index 59%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftCarrots.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftCarrot.java
+index 270416eb51c4aac676969bf51d8a719f2d5da0ac..1673cddda58db8c5c30f74fabc7f6d5729007274 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCarrots.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCarrot.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftCarrots extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Ageable {
++public final class CraftCarrot extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Ageable {
+ 
+-    public CraftCarrots() {
++    public CraftCarrot() {
+         super();
+     }
+ 
+-    public CraftCarrots(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftCarrot(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,16 +19,16 @@ public final class CraftCarrots extends org.bukkit.craftbukkit.block.data.CraftB
+ 
+     @Override
+     public int getAge() {
+-        return this.get(CraftCarrots.AGE);
++        return this.get(CraftCarrot.AGE);
+     }
+ 
+     @Override
+     public void setAge(int age) {
+-        this.set(CraftCarrots.AGE, age);
++        this.set(CraftCarrot.AGE, age);
+     }
+ 
+     @Override
+     public int getMaximumAge() {
+-        return getMax(CraftCarrots.AGE);
++        return getMax(CraftCarrot.AGE);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPumpkinCarved.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCarvedPumpkin.java
+similarity index 69%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftPumpkinCarved.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftCarvedPumpkin.java
+index ddd573ae55dfbad98465b34432760fadbc97047f..70656fee95457ae367aa4b9cbe657698ec777636 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPumpkinCarved.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCarvedPumpkin.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftPumpkinCarved extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Directional {
++public final class CraftCarvedPumpkin extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Directional {
+ 
+-    public CraftPumpkinCarved() {
++    public CraftCarvedPumpkin() {
+         super();
+     }
+ 
+-    public CraftPumpkinCarved(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftCarvedPumpkin(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,16 +19,16 @@ public final class CraftPumpkinCarved extends org.bukkit.craftbukkit.block.data.
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftPumpkinCarved.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftCarvedPumpkin.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftPumpkinCarved.FACING, facing);
++        this.set(CraftCarvedPumpkin.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftPumpkinCarved.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftCarvedPumpkin.FACING, org.bukkit.block.BlockFace.class);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftChorusFruit.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftChorusPlant.java
+similarity index 81%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftChorusFruit.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftChorusPlant.java
+index 60190a7ce9ff4fff8f926534977305801c746ba0..4078776393950e8df8ddc4dbb3f2d8ee3fe230d3 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftChorusFruit.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftChorusPlant.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftChorusFruit extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.MultipleFacing {
++public final class CraftChorusPlant extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.MultipleFacing {
+ 
+-    public CraftChorusFruit() {
++    public CraftChorusPlant() {
+         super();
+     }
+ 
+-    public CraftChorusFruit(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftChorusPlant(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -21,7 +21,7 @@ public final class CraftChorusFruit extends org.bukkit.craftbukkit.block.data.Cr
+ 
+     @Override
+     public boolean hasFace(org.bukkit.block.BlockFace face) {
+-        net.minecraft.world.level.block.state.properties.BooleanProperty state = CraftChorusFruit.FACES[face.ordinal()];
++        net.minecraft.world.level.block.state.properties.BooleanProperty state = CraftChorusPlant.FACES[face.ordinal()];
+         if (state == null) {
+             throw new IllegalArgumentException("Non-allowed face " + face + ". Check MultipleFacing.getAllowedFaces.");
+         }
+@@ -30,7 +30,7 @@ public final class CraftChorusFruit extends org.bukkit.craftbukkit.block.data.Cr
+ 
+     @Override
+     public void setFace(org.bukkit.block.BlockFace face, boolean has) {
+-        net.minecraft.world.level.block.state.properties.BooleanProperty state = CraftChorusFruit.FACES[face.ordinal()];
++        net.minecraft.world.level.block.state.properties.BooleanProperty state = CraftChorusPlant.FACES[face.ordinal()];
+         if (state == null) {
+             throw new IllegalArgumentException("Non-allowed face " + face + ". Check MultipleFacing.getAllowedFaces.");
+         }
+@@ -41,8 +41,8 @@ public final class CraftChorusFruit extends org.bukkit.craftbukkit.block.data.Cr
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+         com.google.common.collect.ImmutableSet.Builder<org.bukkit.block.BlockFace> faces = com.google.common.collect.ImmutableSet.builder();
+ 
+-        for (int i = 0; i < CraftChorusFruit.FACES.length; i++) {
+-            if (CraftChorusFruit.FACES[i] != null && this.get(CraftChorusFruit.FACES[i])) {
++        for (int i = 0; i < CraftChorusPlant.FACES.length; i++) {
++            if (CraftChorusPlant.FACES[i] != null && this.get(CraftChorusPlant.FACES[i])) {
+                 faces.add(org.bukkit.block.BlockFace.values()[i]);
+             }
+         }
+@@ -54,8 +54,8 @@ public final class CraftChorusFruit extends org.bukkit.craftbukkit.block.data.Cr
+     public java.util.Set<org.bukkit.block.BlockFace> getAllowedFaces() {
+         com.google.common.collect.ImmutableSet.Builder<org.bukkit.block.BlockFace> faces = com.google.common.collect.ImmutableSet.builder();
+ 
+-        for (int i = 0; i < CraftChorusFruit.FACES.length; i++) {
+-            if (CraftChorusFruit.FACES[i] != null) {
++        for (int i = 0; i < CraftChorusPlant.FACES.length; i++) {
++            if (CraftChorusPlant.FACES[i] != null) {
+                 faces.add(org.bukkit.block.BlockFace.values()[i]);
+             }
+         }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCommand.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCommandBlock.java
+similarity index 61%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftCommand.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftCommandBlock.java
+index 14a788410c91c4f45d26dc806fb3f01ee8010324..2e69af960276c0832f672e925d8cd6bcdff35a60 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCommand.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCommandBlock.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftCommand extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.CommandBlock, org.bukkit.block.data.Directional {
++public final class CraftCommandBlock extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.CommandBlock, org.bukkit.block.data.Directional {
+ 
+-    public CraftCommand() {
++    public CraftCommandBlock() {
+         super();
+     }
+ 
+-    public CraftCommand(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftCommandBlock(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,12 +19,12 @@ public final class CraftCommand extends org.bukkit.craftbukkit.block.data.CraftB
+ 
+     @Override
+     public boolean isConditional() {
+-        return this.get(CraftCommand.CONDITIONAL);
++        return this.get(CraftCommandBlock.CONDITIONAL);
+     }
+ 
+     @Override
+     public void setConditional(boolean conditional) {
+-        this.set(CraftCommand.CONDITIONAL, conditional);
++        this.set(CraftCommandBlock.CONDITIONAL, conditional);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftDirectional
+@@ -33,16 +33,16 @@ public final class CraftCommand extends org.bukkit.craftbukkit.block.data.CraftB
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftCommand.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftCommandBlock.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftCommand.FACING, facing);
++        this.set(CraftCommandBlock.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftCommand.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftCommandBlock.FACING, org.bukkit.block.BlockFace.class);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedstoneComparator.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftComparator.java
+similarity index 61%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedstoneComparator.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftComparator.java
+index d3d68ae06eb9faff0511f8d7c250ff9433285fb6..65bf4337c2505145551fe677ace57904aec8f898 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedstoneComparator.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftComparator.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftRedstoneComparator extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Comparator, org.bukkit.block.data.Directional, org.bukkit.block.data.Powerable {
++public final class CraftComparator extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Comparator, org.bukkit.block.data.Directional, org.bukkit.block.data.Powerable {
+ 
+-    public CraftRedstoneComparator() {
++    public CraftComparator() {
+         super();
+     }
+ 
+-    public CraftRedstoneComparator(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftComparator(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,12 +19,12 @@ public final class CraftRedstoneComparator extends org.bukkit.craftbukkit.block.
+ 
+     @Override
+     public org.bukkit.block.data.type.Comparator.Mode getMode() {
+-        return this.get(CraftRedstoneComparator.MODE, org.bukkit.block.data.type.Comparator.Mode.class);
++        return this.get(CraftComparator.MODE, org.bukkit.block.data.type.Comparator.Mode.class);
+     }
+ 
+     @Override
+     public void setMode(org.bukkit.block.data.type.Comparator.Mode mode) {
+-        this.set(CraftRedstoneComparator.MODE, mode);
++        this.set(CraftComparator.MODE, mode);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftDirectional
+@@ -33,17 +33,17 @@ public final class CraftRedstoneComparator extends org.bukkit.craftbukkit.block.
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftRedstoneComparator.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftComparator.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftRedstoneComparator.FACING, facing);
++        this.set(CraftComparator.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftRedstoneComparator.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftComparator.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftPowerable
+@@ -52,11 +52,11 @@ public final class CraftRedstoneComparator extends org.bukkit.craftbukkit.block.
+ 
+     @Override
+     public boolean isPowered() {
+-        return this.get(CraftRedstoneComparator.POWERED);
++        return this.get(CraftComparator.POWERED);
+     }
+ 
+     @Override
+     public void setPowered(boolean powered) {
+-        this.set(CraftRedstoneComparator.POWERED, powered);
++        this.set(CraftComparator.POWERED, powered);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCoralFanWall.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCoralWallFan.java
+similarity index 73%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftCoralFanWall.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftCoralWallFan.java
+index 0928c60c29a32336db3a6f0a623da516542315d6..970669c8bdf5b060ea3aa934dc0939a03253dbb2 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCoralFanWall.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCoralWallFan.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftCoralFanWall extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.CoralWallFan, org.bukkit.block.data.Directional, org.bukkit.block.data.Waterlogged {
++public final class CraftCoralWallFan extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.CoralWallFan, org.bukkit.block.data.Directional, org.bukkit.block.data.Waterlogged {
+ 
+-    public CraftCoralFanWall() {
++    public CraftCoralWallFan() {
+         super();
+     }
+ 
+-    public CraftCoralFanWall(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftCoralWallFan(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,17 +19,17 @@ public final class CraftCoralFanWall extends org.bukkit.craftbukkit.block.data.C
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftCoralFanWall.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftCoralWallFan.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftCoralFanWall.FACING, facing);
++        this.set(CraftCoralWallFan.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftCoralFanWall.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftCoralWallFan.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftWaterlogged
+@@ -38,11 +38,11 @@ public final class CraftCoralFanWall extends org.bukkit.craftbukkit.block.data.C
+ 
+     @Override
+     public boolean isWaterlogged() {
+-        return this.get(CraftCoralFanWall.WATERLOGGED);
++        return this.get(CraftCoralWallFan.WATERLOGGED);
+     }
+ 
+     @Override
+     public void setWaterlogged(boolean waterlogged) {
+-        this.set(CraftCoralFanWall.WATERLOGGED, waterlogged);
++        this.set(CraftCoralWallFan.WATERLOGGED, waterlogged);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftReed.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCrop.java
+similarity index 65%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftReed.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftCrop.java
+index 4d613c6703895db2a6ad07c38d8c3e6443c1680a..89913249e79547733e8021933e3b34d5e0cfa6a8 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftReed.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCrop.java
+@@ -3,32 +3,32 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftReed extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Ageable {
++public final class CraftCrop extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Ageable {
+ 
+-    public CraftReed() {
++    public CraftCrop() {
+         super();
+     }
+ 
+-    public CraftReed(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftCrop(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftAgeable
+ 
+-    private static final net.minecraft.world.level.block.state.properties.IntegerProperty AGE = getInteger(net.minecraft.world.level.block.SugarCaneBlock.class, "age");
++    private static final net.minecraft.world.level.block.state.properties.IntegerProperty AGE = getInteger(net.minecraft.world.level.block.CropBlock.class, "age");
+ 
+     @Override
+     public int getAge() {
+-        return this.get(CraftReed.AGE);
++        return this.get(CraftCrop.AGE);
+     }
+ 
+     @Override
+     public void setAge(int age) {
+-        this.set(CraftReed.AGE, age);
++        this.set(CraftCrop.AGE, age);
+     }
+ 
+     @Override
+     public int getMaximumAge() {
+-        return getMax(CraftReed.AGE);
++        return getMax(CraftCrop.AGE);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftDecoratedPot.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftDecoratedPot.java
+index 356230b9b266974e36d0508f8c239714d673504d..1f4af1338b0d701148e40bcd2c326197ee5e660b 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftDecoratedPot.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftDecoratedPot.java
+@@ -13,6 +13,20 @@ public final class CraftDecoratedPot extends org.bukkit.craftbukkit.block.data.C
+         super(state);
+     }
+ 
++    // org.bukkit.craftbukkit.block.data.CraftDecoratedPot
++
++    private static final net.minecraft.world.level.block.state.properties.BooleanProperty CRACKED = getBoolean(net.minecraft.world.level.block.DecoratedPotBlock.class, "cracked");
++
++    @Override
++    public boolean isCracked() {
++        return this.get(CraftDecoratedPot.CRACKED);
++    }
++
++    @Override
++    public void setCracked(boolean cracked) {
++        this.set(CraftDecoratedPot.CRACKED, cracked);
++    }
++
+     // org.bukkit.craftbukkit.block.data.CraftDirectional
+ 
+     private static final net.minecraft.world.level.block.state.properties.EnumProperty<?> FACING = getEnum(net.minecraft.world.level.block.DecoratedPotBlock.class, "facing");
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftMinecartDetector.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftDetectorRail.java
+similarity index 61%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftMinecartDetector.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftDetectorRail.java
+index a462ef71becae4a720d766277c19c70a7239794e..7c7daa7af629e755955284581f5ec736e28fa38f 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftMinecartDetector.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftDetectorRail.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftMinecartDetector extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.RedstoneRail, org.bukkit.block.data.Powerable, org.bukkit.block.data.Rail, org.bukkit.block.data.Waterlogged {
++public final class CraftDetectorRail extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.RedstoneRail, org.bukkit.block.data.Powerable, org.bukkit.block.data.Rail, org.bukkit.block.data.Waterlogged {
+ 
+-    public CraftMinecartDetector() {
++    public CraftDetectorRail() {
+         super();
+     }
+ 
+-    public CraftMinecartDetector(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftDetectorRail(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,12 +19,12 @@ public final class CraftMinecartDetector extends org.bukkit.craftbukkit.block.da
+ 
+     @Override
+     public boolean isPowered() {
+-        return this.get(CraftMinecartDetector.POWERED);
++        return this.get(CraftDetectorRail.POWERED);
+     }
+ 
+     @Override
+     public void setPowered(boolean powered) {
+-        this.set(CraftMinecartDetector.POWERED, powered);
++        this.set(CraftDetectorRail.POWERED, powered);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftRail
+@@ -33,17 +33,17 @@ public final class CraftMinecartDetector extends org.bukkit.craftbukkit.block.da
+ 
+     @Override
+     public org.bukkit.block.data.Rail.Shape getShape() {
+-        return this.get(CraftMinecartDetector.SHAPE, org.bukkit.block.data.Rail.Shape.class);
++        return this.get(CraftDetectorRail.SHAPE, org.bukkit.block.data.Rail.Shape.class);
+     }
+ 
+     @Override
+     public void setShape(org.bukkit.block.data.Rail.Shape shape) {
+-        this.set(CraftMinecartDetector.SHAPE, shape);
++        this.set(CraftDetectorRail.SHAPE, shape);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.data.Rail.Shape> getShapes() {
+-        return this.getValues(CraftMinecartDetector.SHAPE, org.bukkit.block.data.Rail.Shape.class);
++        return this.getValues(CraftDetectorRail.SHAPE, org.bukkit.block.data.Rail.Shape.class);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftWaterlogged
+@@ -52,11 +52,11 @@ public final class CraftMinecartDetector extends org.bukkit.craftbukkit.block.da
+ 
+     @Override
+     public boolean isWaterlogged() {
+-        return this.get(CraftMinecartDetector.WATERLOGGED);
++        return this.get(CraftDetectorRail.WATERLOGGED);
+     }
+ 
+     @Override
+     public void setWaterlogged(boolean waterlogged) {
+-        this.set(CraftMinecartDetector.WATERLOGGED, waterlogged);
++        this.set(CraftDetectorRail.WATERLOGGED, waterlogged);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTallPlant.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftDoublePlant.java
+similarity index 58%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftTallPlant.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftDoublePlant.java
+index 0bbe254ba2fc19fb43cec2c8fe4a2dc3386d8da7..b34d99f1f37ed53da22b8b2bb792ea5bc66bd39b 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTallPlant.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftDoublePlant.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftTallPlant extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Bisected {
++public final class CraftDoublePlant extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Bisected {
+ 
+-    public CraftTallPlant() {
++    public CraftDoublePlant() {
+         super();
+     }
+ 
+-    public CraftTallPlant(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftDoublePlant(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,11 +19,11 @@ public final class CraftTallPlant extends org.bukkit.craftbukkit.block.data.Craf
+ 
+     @Override
+     public org.bukkit.block.data.Bisected.Half getHalf() {
+-        return this.get(CraftTallPlant.HALF, org.bukkit.block.data.Bisected.Half.class);
++        return this.get(CraftDoublePlant.HALF, org.bukkit.block.data.Bisected.Half.class);
+     }
+ 
+     @Override
+     public void setHalf(org.bukkit.block.data.Bisected.Half half) {
+-        this.set(CraftTallPlant.HALF, half);
++        this.set(CraftDoublePlant.HALF, half);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftEnderPortalFrame.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftEndPortalFrame.java
+similarity index 60%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftEnderPortalFrame.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftEndPortalFrame.java
+index d1959292a5e9d68dcf65ef03af376b47daa39c8b..c9d6b45a32f81584052803bf191af995a1f440f4 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftEnderPortalFrame.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftEndPortalFrame.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftEnderPortalFrame extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.EndPortalFrame, org.bukkit.block.data.Directional {
++public final class CraftEndPortalFrame extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.EndPortalFrame, org.bukkit.block.data.Directional {
+ 
+-    public CraftEnderPortalFrame() {
++    public CraftEndPortalFrame() {
+         super();
+     }
+ 
+-    public CraftEnderPortalFrame(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftEndPortalFrame(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,12 +19,12 @@ public final class CraftEnderPortalFrame extends org.bukkit.craftbukkit.block.da
+ 
+     @Override
+     public boolean hasEye() {
+-        return this.get(CraftEnderPortalFrame.EYE);
++        return this.get(CraftEndPortalFrame.EYE);
+     }
+ 
+     @Override
+     public void setEye(boolean eye) {
+-        this.set(CraftEnderPortalFrame.EYE, eye);
++        this.set(CraftEndPortalFrame.EYE, eye);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftDirectional
+@@ -33,16 +33,16 @@ public final class CraftEnderPortalFrame extends org.bukkit.craftbukkit.block.da
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftEnderPortalFrame.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftEndPortalFrame.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftEnderPortalFrame.FACING, facing);
++        this.set(CraftEndPortalFrame.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftEnderPortalFrame.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftEndPortalFrame.FACING, org.bukkit.block.BlockFace.class);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSoil.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftFarm.java
+similarity index 69%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftSoil.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftFarm.java
+index 56f701e9f088a3bd4579b9a093ef7ee0bce11f95..939c464c07b5c23aed1f884cbbc52f0417f0534b 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSoil.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftFarm.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftSoil extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Farmland {
++public final class CraftFarm extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Farmland {
+ 
+-    public CraftSoil() {
++    public CraftFarm() {
+         super();
+     }
+ 
+-    public CraftSoil(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftFarm(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,16 +19,16 @@ public final class CraftSoil extends org.bukkit.craftbukkit.block.data.CraftBloc
+ 
+     @Override
+     public int getMoisture() {
+-        return this.get(CraftSoil.MOISTURE);
++        return this.get(CraftFarm.MOISTURE);
+     }
+ 
+     @Override
+     public void setMoisture(int moisture) {
+-        this.set(CraftSoil.MOISTURE, moisture);
++        this.set(CraftFarm.MOISTURE, moisture);
+     }
+ 
+     @Override
+     public int getMaximumMoisture() {
+-        return getMax(CraftSoil.MOISTURE);
++        return getMax(CraftFarm.MOISTURE);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftIceFrost.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftFrostedIce.java
+similarity index 58%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftIceFrost.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftFrostedIce.java
+index 85367beeccdc127e4798b0f626d40209586074d6..4a1a3df5460a0f8b82cc86d84f98179d9722b169 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftIceFrost.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftFrostedIce.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftIceFrost extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Ageable {
++public final class CraftFrostedIce extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Ageable {
+ 
+-    public CraftIceFrost() {
++    public CraftFrostedIce() {
+         super();
+     }
+ 
+-    public CraftIceFrost(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftFrostedIce(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,16 +19,16 @@ public final class CraftIceFrost extends org.bukkit.craftbukkit.block.data.Craft
+ 
+     @Override
+     public int getAge() {
+-        return this.get(CraftIceFrost.AGE);
++        return this.get(CraftFrostedIce.AGE);
+     }
+ 
+     @Override
+     public void setAge(int age) {
+-        this.set(CraftIceFrost.AGE, age);
++        this.set(CraftFrostedIce.AGE, age);
+     }
+ 
+     @Override
+     public int getMaximumAge() {
+-        return getMax(CraftIceFrost.AGE);
++        return getMax(CraftFrostedIce.AGE);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftFurnaceFurace.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftFurnace.java
+similarity index 60%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftFurnaceFurace.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftFurnace.java
+index 5698cb115ba6dcf50686bb8cfb82e97d6afecd9f..74b7a975885730d6015edf128c6de558a01760e3 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftFurnaceFurace.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftFurnace.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftFurnaceFurace extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Furnace, org.bukkit.block.data.Directional, org.bukkit.block.data.Lightable {
++public final class CraftFurnace extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Furnace, org.bukkit.block.data.Directional, org.bukkit.block.data.Lightable {
+ 
+-    public CraftFurnaceFurace() {
++    public CraftFurnace() {
+         super();
+     }
+ 
+-    public CraftFurnaceFurace(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftFurnace(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,17 +19,17 @@ public final class CraftFurnaceFurace extends org.bukkit.craftbukkit.block.data.
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftFurnaceFurace.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftFurnace.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftFurnaceFurace.FACING, facing);
++        this.set(CraftFurnace.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftFurnaceFurace.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftFurnace.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftLightable
+@@ -38,11 +38,11 @@ public final class CraftFurnaceFurace extends org.bukkit.craftbukkit.block.data.
+ 
+     @Override
+     public boolean isLit() {
+-        return this.get(CraftFurnaceFurace.LIT);
++        return this.get(CraftFurnace.LIT);
+     }
+ 
+     @Override
+     public void setLit(boolean lit) {
+-        this.set(CraftFurnaceFurace.LIT, lit);
++        this.set(CraftFurnace.LIT, lit);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftJukeBox.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftJukebox.java
+similarity index 72%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftJukeBox.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftJukebox.java
+index 3e37557bf63597908949c6f8bbb2478cdb0557f3..fd76021cf2de3a872e37e7d8a43d20e070b75704 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftJukeBox.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftJukebox.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftJukeBox extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Jukebox {
++public final class CraftJukebox extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Jukebox {
+ 
+-    public CraftJukeBox() {
++    public CraftJukebox() {
+         super();
+     }
+ 
+-    public CraftJukeBox(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftJukebox(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,6 +19,6 @@ public final class CraftJukeBox extends org.bukkit.craftbukkit.block.data.CraftB
+ 
+     @Override
+     public boolean hasRecord() {
+-        return this.get(CraftJukeBox.HAS_RECORD);
++        return this.get(CraftJukebox.HAS_RECORD);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftFluids.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftLiquid.java
+similarity index 69%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftFluids.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftLiquid.java
+index 1af5fe48c5861077555e6bdeb6312859b7b37eb2..0441597d0836b35e59fcecdc638876437cf803e6 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftFluids.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftLiquid.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftFluids extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Levelled {
++public final class CraftLiquid extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Levelled {
+ 
+-    public CraftFluids() {
++    public CraftLiquid() {
+         super();
+     }
+ 
+-    public CraftFluids(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftLiquid(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,23 +19,23 @@ public final class CraftFluids extends org.bukkit.craftbukkit.block.data.CraftBl
+ 
+     @Override
+     public int getLevel() {
+-        return this.get(CraftFluids.LEVEL);
++        return this.get(CraftLiquid.LEVEL);
+     }
+ 
+     @Override
+     public void setLevel(int level) {
+-        this.set(CraftFluids.LEVEL, level);
++        this.set(CraftLiquid.LEVEL, level);
+     }
+ 
+     @Override
+     public int getMaximumLevel() {
+-        return getMax(CraftFluids.LEVEL);
++        return getMax(CraftLiquid.LEVEL);
+     }
+ 
+     // Paper start
+     @Override
+     public int getMinimumLevel() {
+-        return getMin(CraftFluids.LEVEL);
++        return getMin(CraftLiquid.LEVEL);
+     }
+     // Paper end
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPistonMoving.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftMovingPiston.java
+similarity index 74%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftPistonMoving.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftMovingPiston.java
+index 497843a5e6bfd8f9dc811b38cf469bb062a2ec8e..f3caf6d682a5d3c76d9a69432bbbb391b8d49668 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPistonMoving.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftMovingPiston.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftPistonMoving extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.TechnicalPiston, org.bukkit.block.data.Directional {
++public final class CraftMovingPiston extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.TechnicalPiston, org.bukkit.block.data.Directional {
+ 
+-    public CraftPistonMoving() {
++    public CraftMovingPiston() {
+         super();
+     }
+ 
+-    public CraftPistonMoving(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftMovingPiston(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,12 +19,12 @@ public final class CraftPistonMoving extends org.bukkit.craftbukkit.block.data.C
+ 
+     @Override
+     public org.bukkit.block.data.type.TechnicalPiston.Type getType() {
+-        return this.get(CraftPistonMoving.TYPE, org.bukkit.block.data.type.TechnicalPiston.Type.class);
++        return this.get(CraftMovingPiston.TYPE, org.bukkit.block.data.type.TechnicalPiston.Type.class);
+     }
+ 
+     @Override
+     public void setType(org.bukkit.block.data.type.TechnicalPiston.Type type) {
+-        this.set(CraftPistonMoving.TYPE, type);
++        this.set(CraftMovingPiston.TYPE, type);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftDirectional
+@@ -33,16 +33,16 @@ public final class CraftPistonMoving extends org.bukkit.craftbukkit.block.data.C
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftPistonMoving.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftMovingPiston.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftPistonMoving.FACING, facing);
++        this.set(CraftMovingPiston.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftPistonMoving.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftMovingPiston.FACING, org.bukkit.block.BlockFace.class);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftDirtSnow.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftMycelium.java
+similarity index 65%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftDirtSnow.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftMycelium.java
+index a2d3b1f7a7990db003b6f0ceeb5c16c23b2f516b..ea49a048e2018cba136fc65c4921314881ff8faa 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftDirtSnow.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftMycelium.java
+@@ -3,27 +3,27 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftDirtSnow extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Snowable {
++public final class CraftMycelium extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Snowable {
+ 
+-    public CraftDirtSnow() {
++    public CraftMycelium() {
+         super();
+     }
+ 
+-    public CraftDirtSnow(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftMycelium(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftSnowable
+ 
+-    private static final net.minecraft.world.level.block.state.properties.BooleanProperty SNOWY = getBoolean(net.minecraft.world.level.block.SnowyDirtBlock.class, "snowy");
++    private static final net.minecraft.world.level.block.state.properties.BooleanProperty SNOWY = getBoolean(net.minecraft.world.level.block.MyceliumBlock.class, "snowy");
+ 
+     @Override
+     public boolean isSnowy() {
+-        return this.get(CraftDirtSnow.SNOWY);
++        return this.get(CraftMycelium.SNOWY);
+     }
+ 
+     @Override
+     public void setSnowy(boolean snowy) {
+-        this.set(CraftDirtSnow.SNOWY, snowy);
++        this.set(CraftMycelium.SNOWY, snowy);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPortal.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftNetherPortal.java
+similarity index 57%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftPortal.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftNetherPortal.java
+index 0f182381c1c098cd1bdc91c239731f2e8b4eeef1..834c0aff8fd6d04fc92a1b4423ffb7ed80f8d518 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPortal.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftNetherPortal.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftPortal extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Orientable {
++public final class CraftNetherPortal extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Orientable {
+ 
+-    public CraftPortal() {
++    public CraftNetherPortal() {
+         super();
+     }
+ 
+-    public CraftPortal(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftNetherPortal(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,16 +19,16 @@ public final class CraftPortal extends org.bukkit.craftbukkit.block.data.CraftBl
+ 
+     @Override
+     public org.bukkit.Axis getAxis() {
+-        return this.get(CraftPortal.AXIS, org.bukkit.Axis.class);
++        return this.get(CraftNetherPortal.AXIS, org.bukkit.Axis.class);
+     }
+ 
+     @Override
+     public void setAxis(org.bukkit.Axis axis) {
+-        this.set(CraftPortal.AXIS, axis);
++        this.set(CraftNetherPortal.AXIS, axis);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.Axis> getAxes() {
+-        return this.getValues(CraftPortal.AXIS, org.bukkit.Axis.class);
++        return this.getValues(CraftNetherPortal.AXIS, org.bukkit.Axis.class);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftNote.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftNoteBlock.java
+similarity index 64%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftNote.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftNoteBlock.java
+index 60675e55191f8d68ee7694eaad7393604cd2bc4a..94c67d73270d79858d75e21fb5afa59af5124d94 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftNote.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftNoteBlock.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftNote extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.NoteBlock, org.bukkit.block.data.Powerable {
++public final class CraftNoteBlock extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.NoteBlock, org.bukkit.block.data.Powerable {
+ 
+-    public CraftNote() {
++    public CraftNoteBlock() {
+         super();
+     }
+ 
+-    public CraftNote(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftNoteBlock(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -20,22 +20,22 @@ public final class CraftNote extends org.bukkit.craftbukkit.block.data.CraftBloc
+ 
+     @Override
+     public org.bukkit.Instrument getInstrument() {
+-        return this.get(CraftNote.INSTRUMENT, org.bukkit.Instrument.class);
++        return this.get(CraftNoteBlock.INSTRUMENT, org.bukkit.Instrument.class);
+     }
+ 
+     @Override
+     public void setInstrument(org.bukkit.Instrument instrument) {
+-        this.set(CraftNote.INSTRUMENT, instrument);
++        this.set(CraftNoteBlock.INSTRUMENT, instrument);
+     }
+ 
+     @Override
+     public org.bukkit.Note getNote() {
+-       return new org.bukkit.Note(this.get(CraftNote.NOTE));
++       return new org.bukkit.Note(this.get(CraftNoteBlock.NOTE));
+     }
+ 
+     @Override
+     public void setNote(org.bukkit.Note note) {
+-        this.set(CraftNote.NOTE, (int) note.getId());
++        this.set(CraftNoteBlock.NOTE, (int) note.getId());
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftPowerable
+@@ -44,11 +44,11 @@ public final class CraftNote extends org.bukkit.craftbukkit.block.data.CraftBloc
+ 
+     @Override
+     public boolean isPowered() {
+-        return this.get(CraftNote.POWERED);
++        return this.get(CraftNoteBlock.POWERED);
+     }
+ 
+     @Override
+     public void setPowered(boolean powered) {
+-        this.set(CraftNote.POWERED, powered);
++        this.set(CraftNoteBlock.POWERED, powered);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPiston.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPistonBase.java
+similarity index 62%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftPiston.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftPistonBase.java
+index f31db7daf2b9369aa3a93e83a5878c7db5cbee11..68aa984c3a2beb90b33e8185bc816e4121b3b616 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPiston.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPistonBase.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftPiston extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Piston, org.bukkit.block.data.Directional {
++public final class CraftPistonBase extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Piston, org.bukkit.block.data.Directional {
+ 
+-    public CraftPiston() {
++    public CraftPistonBase() {
+         super();
+     }
+ 
+-    public CraftPiston(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftPistonBase(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,12 +19,12 @@ public final class CraftPiston extends org.bukkit.craftbukkit.block.data.CraftBl
+ 
+     @Override
+     public boolean isExtended() {
+-        return this.get(CraftPiston.EXTENDED);
++        return this.get(CraftPistonBase.EXTENDED);
+     }
+ 
+     @Override
+     public void setExtended(boolean extended) {
+-        this.set(CraftPiston.EXTENDED, extended);
++        this.set(CraftPistonBase.EXTENDED, extended);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftDirectional
+@@ -33,16 +33,16 @@ public final class CraftPiston extends org.bukkit.craftbukkit.block.data.CraftBl
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftPiston.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftPistonBase.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftPiston.FACING, facing);
++        this.set(CraftPistonBase.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftPiston.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftPistonBase.FACING, org.bukkit.block.BlockFace.class);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPistonExtension.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPistonHead.java
+similarity index 62%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftPistonExtension.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftPistonHead.java
+index 21b6d3c11c454b7fb3d021423d8b40893e391406..965e110e453173bbeae11614d2a2987a1bec4a00 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPistonExtension.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPistonHead.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftPistonExtension extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.PistonHead, org.bukkit.block.data.type.TechnicalPiston, org.bukkit.block.data.Directional {
++public final class CraftPistonHead extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.PistonHead, org.bukkit.block.data.type.TechnicalPiston, org.bukkit.block.data.Directional {
+ 
+-    public CraftPistonExtension() {
++    public CraftPistonHead() {
+         super();
+     }
+ 
+-    public CraftPistonExtension(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftPistonHead(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,12 +19,12 @@ public final class CraftPistonExtension extends org.bukkit.craftbukkit.block.dat
+ 
+     @Override
+     public boolean isShort() {
+-        return this.get(CraftPistonExtension.SHORT);
++        return this.get(CraftPistonHead.SHORT);
+     }
+ 
+     @Override
+     public void setShort(boolean _short) {
+-        this.set(CraftPistonExtension.SHORT, _short);
++        this.set(CraftPistonHead.SHORT, _short);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.type.CraftTechnicalPiston
+@@ -33,12 +33,12 @@ public final class CraftPistonExtension extends org.bukkit.craftbukkit.block.dat
+ 
+     @Override
+     public org.bukkit.block.data.type.TechnicalPiston.Type getType() {
+-        return this.get(CraftPistonExtension.TYPE, org.bukkit.block.data.type.TechnicalPiston.Type.class);
++        return this.get(CraftPistonHead.TYPE, org.bukkit.block.data.type.TechnicalPiston.Type.class);
+     }
+ 
+     @Override
+     public void setType(org.bukkit.block.data.type.TechnicalPiston.Type type) {
+-        this.set(CraftPistonExtension.TYPE, type);
++        this.set(CraftPistonHead.TYPE, type);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftDirectional
+@@ -47,16 +47,16 @@ public final class CraftPistonExtension extends org.bukkit.craftbukkit.block.dat
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftPistonExtension.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftPistonHead.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftPistonExtension.FACING, facing);
++        this.set(CraftPistonHead.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftPistonExtension.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftPistonHead.FACING, org.bukkit.block.BlockFace.class);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkullPlayer.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPlayerHead.java
+similarity index 90%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkullPlayer.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftPlayerHead.java
+index 11a3401bbc0e36a667489ee7a789f1049ab7f9f3..964d08c883b0b76acaf2b39869c6c0a2a589ea82 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkullPlayer.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPlayerHead.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftSkullPlayer extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Rotatable {
++public final class CraftPlayerHead extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Rotatable {
+ 
+-    public CraftSkullPlayer() {
++    public CraftPlayerHead() {
+         super();
+     }
+ 
+-    public CraftSkullPlayer(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftPlayerHead(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,7 +19,7 @@ public final class CraftSkullPlayer extends org.bukkit.craftbukkit.block.data.Cr
+ 
+     @Override
+     public org.bukkit.block.BlockFace getRotation() {
+-        int data = this.get(CraftSkullPlayer.ROTATION);
++        int data = this.get(CraftPlayerHead.ROTATION);
+         switch (data) {
+             case 0x0:
+                 return org.bukkit.block.BlockFace.SOUTH;
+@@ -113,6 +113,6 @@ public final class CraftSkullPlayer extends org.bukkit.craftbukkit.block.data.Cr
+             default:
+                 throw new IllegalArgumentException("Illegal rotation " + rotation);
+         }
+-        this.set(CraftSkullPlayer.ROTATION, val);
++        this.set(CraftPlayerHead.ROTATION, val);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkullPlayerWall.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPlayerWallHead.java
+similarity index 55%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkullPlayerWall.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftPlayerWallHead.java
+index 9056861e2f3cde255bf72ca44b93ecb4feb7ab47..fe8a9ca5f868991ac771e8dd5d951f7473f01c8e 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkullPlayerWall.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPlayerWallHead.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftSkullPlayerWall extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Directional {
++public final class CraftPlayerWallHead extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Directional {
+ 
+-    public CraftSkullPlayerWall() {
++    public CraftPlayerWallHead() {
+         super();
+     }
+ 
+-    public CraftSkullPlayerWall(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftPlayerWallHead(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,16 +19,16 @@ public final class CraftSkullPlayerWall extends org.bukkit.craftbukkit.block.dat
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftSkullPlayerWall.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftPlayerWallHead.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftSkullPlayerWall.FACING, facing);
++        this.set(CraftPlayerWallHead.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftSkullPlayerWall.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftPlayerWallHead.FACING, org.bukkit.block.BlockFace.class);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPotatoes.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPotato.java
+similarity index 59%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftPotatoes.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftPotato.java
+index ee3faab6b3d2371579dfdb619c1aae2109e22211..ebd28af68a7ecc8e02b492aee37d7d428f265a8d 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPotatoes.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPotato.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftPotatoes extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Ageable {
++public final class CraftPotato extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Ageable {
+ 
+-    public CraftPotatoes() {
++    public CraftPotato() {
+         super();
+     }
+ 
+-    public CraftPotatoes(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftPotato(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,16 +19,16 @@ public final class CraftPotatoes extends org.bukkit.craftbukkit.block.data.Craft
+ 
+     @Override
+     public int getAge() {
+-        return this.get(CraftPotatoes.AGE);
++        return this.get(CraftPotato.AGE);
+     }
+ 
+     @Override
+     public void setAge(int age) {
+-        this.set(CraftPotatoes.AGE, age);
++        this.set(CraftPotato.AGE, age);
+     }
+ 
+     @Override
+     public int getMaximumAge() {
+-        return getMax(CraftPotatoes.AGE);
++        return getMax(CraftPotato.AGE);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPressurePlateBinary.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPressurePlate.java
+similarity index 56%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftPressurePlateBinary.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftPressurePlate.java
+index 05c7662f441cbbc9d6b82a169dbfc6a7f9093d4d..ca5f1977a8fd54f53d7ada152a9a1a5bc3c1c690 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPressurePlateBinary.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPressurePlate.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftPressurePlateBinary extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Powerable {
++public final class CraftPressurePlate extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Powerable {
+ 
+-    public CraftPressurePlateBinary() {
++    public CraftPressurePlate() {
+         super();
+     }
+ 
+-    public CraftPressurePlateBinary(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftPressurePlate(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,11 +19,11 @@ public final class CraftPressurePlateBinary extends org.bukkit.craftbukkit.block
+ 
+     @Override
+     public boolean isPowered() {
+-        return this.get(CraftPressurePlateBinary.POWERED);
++        return this.get(CraftPressurePlate.POWERED);
+     }
+ 
+     @Override
+     public void setPowered(boolean powered) {
+-        this.set(CraftPressurePlateBinary.POWERED, powered);
++        this.set(CraftPressurePlate.POWERED, powered);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftMinecartTrack.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRail.java
+similarity index 60%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftMinecartTrack.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftRail.java
+index f58d2af86a2cd0363ceb8caa094a93cf2ecaced6..944ded791d331a5498d62461beb70730368b129a 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftMinecartTrack.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRail.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftMinecartTrack extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Rail, org.bukkit.block.data.Waterlogged {
++public final class CraftRail extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Rail, org.bukkit.block.data.Waterlogged {
+ 
+-    public CraftMinecartTrack() {
++    public CraftRail() {
+         super();
+     }
+ 
+-    public CraftMinecartTrack(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftRail(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,17 +19,17 @@ public final class CraftMinecartTrack extends org.bukkit.craftbukkit.block.data.
+ 
+     @Override
+     public org.bukkit.block.data.Rail.Shape getShape() {
+-        return this.get(CraftMinecartTrack.SHAPE, org.bukkit.block.data.Rail.Shape.class);
++        return this.get(CraftRail.SHAPE, org.bukkit.block.data.Rail.Shape.class);
+     }
+ 
+     @Override
+     public void setShape(org.bukkit.block.data.Rail.Shape shape) {
+-        this.set(CraftMinecartTrack.SHAPE, shape);
++        this.set(CraftRail.SHAPE, shape);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.data.Rail.Shape> getShapes() {
+-        return this.getValues(CraftMinecartTrack.SHAPE, org.bukkit.block.data.Rail.Shape.class);
++        return this.getValues(CraftRail.SHAPE, org.bukkit.block.data.Rail.Shape.class);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftWaterlogged
+@@ -38,11 +38,11 @@ public final class CraftMinecartTrack extends org.bukkit.craftbukkit.block.data.
+ 
+     @Override
+     public boolean isWaterlogged() {
+-        return this.get(CraftMinecartTrack.WATERLOGGED);
++        return this.get(CraftRail.WATERLOGGED);
+     }
+ 
+     @Override
+     public void setWaterlogged(boolean waterlogged) {
+-        this.set(CraftMinecartTrack.WATERLOGGED, waterlogged);
++        this.set(CraftRail.WATERLOGGED, waterlogged);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedstoneOre.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedStoneOre.java
+similarity index 70%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedstoneOre.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedStoneOre.java
+index 5069c1ba0752eec6d4f9dcbd08c666d2869cc1e1..637ac1dcd4eb2e2dc6de8c4b51ccb5d3be259489 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedstoneOre.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedStoneOre.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftRedstoneOre extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Lightable {
++public final class CraftRedStoneOre extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Lightable {
+ 
+-    public CraftRedstoneOre() {
++    public CraftRedStoneOre() {
+         super();
+     }
+ 
+-    public CraftRedstoneOre(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftRedStoneOre(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,11 +19,11 @@ public final class CraftRedstoneOre extends org.bukkit.craftbukkit.block.data.Cr
+ 
+     @Override
+     public boolean isLit() {
+-        return this.get(CraftRedstoneOre.LIT);
++        return this.get(CraftRedStoneOre.LIT);
+     }
+ 
+     @Override
+     public void setLit(boolean lit) {
+-        this.set(CraftRedstoneOre.LIT, lit);
++        this.set(CraftRedStoneOre.LIT, lit);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedstoneWire.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedStoneWire.java
+similarity index 77%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedstoneWire.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedStoneWire.java
+index 009be1c9a485933242a00107f442e4dfa31fe798..6fb40bdfb95aec79cd5e0ceec648afceb4f5b7f5 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedstoneWire.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedStoneWire.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftRedstoneWire extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.RedstoneWire, org.bukkit.block.data.AnaloguePowerable {
++public final class CraftRedStoneWire extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.RedstoneWire, org.bukkit.block.data.AnaloguePowerable {
+ 
+-    public CraftRedstoneWire() {
++    public CraftRedStoneWire() {
+         super();
+     }
+ 
+-    public CraftRedstoneWire(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftRedStoneWire(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -24,13 +24,13 @@ public final class CraftRedstoneWire extends org.bukkit.craftbukkit.block.data.C
+     public org.bukkit.block.data.type.RedstoneWire.Connection getFace(org.bukkit.block.BlockFace face) {
+         switch (face) {
+             case NORTH:
+-                return this.get(CraftRedstoneWire.NORTH, org.bukkit.block.data.type.RedstoneWire.Connection.class);
++                return this.get(CraftRedStoneWire.NORTH, org.bukkit.block.data.type.RedstoneWire.Connection.class);
+             case EAST:
+-                return this.get(CraftRedstoneWire.EAST, org.bukkit.block.data.type.RedstoneWire.Connection.class);
++                return this.get(CraftRedStoneWire.EAST, org.bukkit.block.data.type.RedstoneWire.Connection.class);
+             case SOUTH:
+-                return this.get(CraftRedstoneWire.SOUTH, org.bukkit.block.data.type.RedstoneWire.Connection.class);
++                return this.get(CraftRedStoneWire.SOUTH, org.bukkit.block.data.type.RedstoneWire.Connection.class);
+             case WEST:
+-                return this.get(CraftRedstoneWire.WEST, org.bukkit.block.data.type.RedstoneWire.Connection.class);
++                return this.get(CraftRedStoneWire.WEST, org.bukkit.block.data.type.RedstoneWire.Connection.class);
+             default:
+                 throw new IllegalArgumentException("Cannot have face " + face);
+         }
+@@ -40,16 +40,16 @@ public final class CraftRedstoneWire extends org.bukkit.craftbukkit.block.data.C
+     public void setFace(org.bukkit.block.BlockFace face, org.bukkit.block.data.type.RedstoneWire.Connection connection) {
+         switch (face) {
+             case NORTH:
+-                this.set(CraftRedstoneWire.NORTH, connection);
++                this.set(CraftRedStoneWire.NORTH, connection);
+                 break;
+             case EAST:
+-                this.set(CraftRedstoneWire.EAST, connection);
++                this.set(CraftRedStoneWire.EAST, connection);
+                 break;
+             case SOUTH:
+-                this.set(CraftRedstoneWire.SOUTH, connection);
++                this.set(CraftRedStoneWire.SOUTH, connection);
+                 break;
+             case WEST:
+-                this.set(CraftRedstoneWire.WEST, connection);
++                this.set(CraftRedStoneWire.WEST, connection);
+                 break;
+             default:
+                 throw new IllegalArgumentException("Cannot have face " + face);
+@@ -67,16 +67,16 @@ public final class CraftRedstoneWire extends org.bukkit.craftbukkit.block.data.C
+ 
+     @Override
+     public int getPower() {
+-        return this.get(CraftRedstoneWire.POWER);
++        return this.get(CraftRedStoneWire.POWER);
+     }
+ 
+     @Override
+     public void setPower(int power) {
+-        this.set(CraftRedstoneWire.POWER, power);
++        this.set(CraftRedStoneWire.POWER, power);
+     }
+ 
+     @Override
+     public int getMaximumPower() {
+-        return getMax(CraftRedstoneWire.POWER);
++        return getMax(CraftRedStoneWire.POWER);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedstoneTorchWall.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedstoneWallTorch.java
+similarity index 73%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedstoneTorchWall.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedstoneWallTorch.java
+index 4df2452825bfc852f62ccb6133a702cae11a4cab..10a038bdf849d6ebbc1600d23bbfa10a38d0ca81 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedstoneTorchWall.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRedstoneWallTorch.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftRedstoneTorchWall extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.RedstoneWallTorch, org.bukkit.block.data.Directional, org.bukkit.block.data.Lightable {
++public final class CraftRedstoneWallTorch extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.RedstoneWallTorch, org.bukkit.block.data.Directional, org.bukkit.block.data.Lightable {
+ 
+-    public CraftRedstoneTorchWall() {
++    public CraftRedstoneWallTorch() {
+         super();
+     }
+ 
+-    public CraftRedstoneTorchWall(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftRedstoneWallTorch(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,17 +19,17 @@ public final class CraftRedstoneTorchWall extends org.bukkit.craftbukkit.block.d
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftRedstoneTorchWall.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftRedstoneWallTorch.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftRedstoneTorchWall.FACING, facing);
++        this.set(CraftRedstoneWallTorch.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftRedstoneTorchWall.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftRedstoneWallTorch.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftLightable
+@@ -38,11 +38,11 @@ public final class CraftRedstoneTorchWall extends org.bukkit.craftbukkit.block.d
+ 
+     @Override
+     public boolean isLit() {
+-        return this.get(CraftRedstoneTorchWall.LIT);
++        return this.get(CraftRedstoneWallTorch.LIT);
+     }
+ 
+     @Override
+     public void setLit(boolean lit) {
+-        this.set(CraftRedstoneTorchWall.LIT, lit);
++        this.set(CraftRedstoneWallTorch.LIT, lit);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRotatable.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRotatedPillar.java
+similarity index 56%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftRotatable.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftRotatedPillar.java
+index 4f28a405db6c0d1acc0b1a8bc5a1aca3ef392ad0..c745efc498ddd97e6fa6911c928e2891a6d64ed9 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRotatable.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftRotatedPillar.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftRotatable extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Orientable {
++public final class CraftRotatedPillar extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Orientable {
+ 
+-    public CraftRotatable() {
++    public CraftRotatedPillar() {
+         super();
+     }
+ 
+-    public CraftRotatable(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftRotatedPillar(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,16 +19,16 @@ public final class CraftRotatable extends org.bukkit.craftbukkit.block.data.Craf
+ 
+     @Override
+     public org.bukkit.Axis getAxis() {
+-        return this.get(CraftRotatable.AXIS, org.bukkit.Axis.class);
++        return this.get(CraftRotatedPillar.AXIS, org.bukkit.Axis.class);
+     }
+ 
+     @Override
+     public void setAxis(org.bukkit.Axis axis) {
+-        this.set(CraftRotatable.AXIS, axis);
++        this.set(CraftRotatedPillar.AXIS, axis);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.Axis> getAxes() {
+-        return this.getValues(CraftRotatable.AXIS, org.bukkit.Axis.class);
++        return this.getValues(CraftRotatedPillar.AXIS, org.bukkit.Axis.class);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkull.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkull.java
+index 47fc10d85d533f33e7c069ef0f20b23fa40d9f88..0b0175b1b01a21006126c987cefb061f547ad68b 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkull.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkull.java
+@@ -3,7 +3,7 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftSkull extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Rotatable {
++public final class CraftSkull extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Skull {
+ 
+     public CraftSkull() {
+         super();
+@@ -115,4 +115,18 @@ public final class CraftSkull extends org.bukkit.craftbukkit.block.data.CraftBlo
+         }
+         this.set(CraftSkull.ROTATION, val);
+     }
++
++    // org.bukkit.craftbukkit.block.data.CraftPowerable
++
++    private static final net.minecraft.world.level.block.state.properties.BooleanProperty POWERED = getBoolean(net.minecraft.world.level.block.SkullBlock.class, "powered");
++
++    @Override
++    public boolean isPowered() {
++        return this.get(CraftSkull.POWERED);
++    }
++
++    @Override
++    public void setPowered(boolean powered) {
++        this.set(CraftSkull.POWERED, powered);
++    }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkullWall.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkullWall.java
+deleted file mode 100644
+index 2e69bd514b72dd04c373ebcdbe715cc8e7300f19..0000000000000000000000000000000000000000
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkullWall.java
++++ /dev/null
+@@ -1,34 +0,0 @@
+-/**
+- * Automatically generated file, changes will be lost.
+- */
+-package org.bukkit.craftbukkit.block.impl;
+-
+-public final class CraftSkullWall extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Directional {
+-
+-    public CraftSkullWall() {
+-        super();
+-    }
+-
+-    public CraftSkullWall(net.minecraft.world.level.block.state.BlockState state) {
+-        super(state);
+-    }
+-
+-    // org.bukkit.craftbukkit.block.data.CraftDirectional
+-
+-    private static final net.minecraft.world.level.block.state.properties.EnumProperty<?> FACING = getEnum(net.minecraft.world.level.block.WallSkullBlock.class, "facing");
+-
+-    @Override
+-    public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftSkullWall.FACING, org.bukkit.block.BlockFace.class);
+-    }
+-
+-    @Override
+-    public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftSkullWall.FACING, facing);
+-    }
+-
+-    @Override
+-    public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftSkullWall.FACING, org.bukkit.block.BlockFace.class);
+-    }
+-}
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftStepAbstract.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSlab.java
+similarity index 62%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftStepAbstract.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftSlab.java
+index a0d01902c4b1d412f4cd89e159010f0e47707cf6..00af54ef2db16723def8db57ea26698863b7a96d 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftStepAbstract.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSlab.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftStepAbstract extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Slab, org.bukkit.block.data.Waterlogged {
++public final class CraftSlab extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Slab, org.bukkit.block.data.Waterlogged {
+ 
+-    public CraftStepAbstract() {
++    public CraftSlab() {
+         super();
+     }
+ 
+-    public CraftStepAbstract(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftSlab(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,12 +19,12 @@ public final class CraftStepAbstract extends org.bukkit.craftbukkit.block.data.C
+ 
+     @Override
+     public org.bukkit.block.data.type.Slab.Type getType() {
+-        return this.get(CraftStepAbstract.TYPE, org.bukkit.block.data.type.Slab.Type.class);
++        return this.get(CraftSlab.TYPE, org.bukkit.block.data.type.Slab.Type.class);
+     }
+ 
+     @Override
+     public void setType(org.bukkit.block.data.type.Slab.Type type) {
+-        this.set(CraftStepAbstract.TYPE, type);
++        this.set(CraftSlab.TYPE, type);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftWaterlogged
+@@ -33,11 +33,11 @@ public final class CraftStepAbstract extends org.bukkit.craftbukkit.block.data.C
+ 
+     @Override
+     public boolean isWaterlogged() {
+-        return this.get(CraftStepAbstract.WATERLOGGED);
++        return this.get(CraftSlab.WATERLOGGED);
+     }
+ 
+     @Override
+     public void setWaterlogged(boolean waterlogged) {
+-        this.set(CraftStepAbstract.WATERLOGGED, waterlogged);
++        this.set(CraftSlab.WATERLOGGED, waterlogged);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSnow.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSnowLayer.java
+similarity index 58%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftSnow.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftSnowLayer.java
+index ff340637f1bb2f2b8cf49b5f148ef26f94ced896..16df033301bab44b67770f688c53b163a7afb956 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSnow.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSnowLayer.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftSnow extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Snow {
++public final class CraftSnowLayer extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Snow {
+ 
+-    public CraftSnow() {
++    public CraftSnowLayer() {
+         super();
+     }
+ 
+-    public CraftSnow(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftSnowLayer(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,21 +19,21 @@ public final class CraftSnow extends org.bukkit.craftbukkit.block.data.CraftBloc
+ 
+     @Override
+     public int getLayers() {
+-        return this.get(CraftSnow.LAYERS);
++        return this.get(CraftSnowLayer.LAYERS);
+     }
+ 
+     @Override
+     public void setLayers(int layers) {
+-        this.set(CraftSnow.LAYERS, layers);
++        this.set(CraftSnowLayer.LAYERS, layers);
+     }
+ 
+     @Override
+     public int getMinimumLayers() {
+-        return getMin(CraftSnow.LAYERS);
++        return getMin(CraftSnowLayer.LAYERS);
+     }
+ 
+     @Override
+     public int getMaximumLayers() {
+-        return getMax(CraftSnow.LAYERS);
++        return getMax(CraftSnowLayer.LAYERS);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftMycel.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSnowyDirt.java
+similarity index 54%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftMycel.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftSnowyDirt.java
+index ec10c721e83f159c8e51e0d982436fbe04682593..ac25e74a2a91d1f367181dcc6b0adb590aa9dc0e 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftMycel.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSnowyDirt.java
+@@ -3,27 +3,27 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftMycel extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Snowable {
++public final class CraftSnowyDirt extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Snowable {
+ 
+-    public CraftMycel() {
++    public CraftSnowyDirt() {
+         super();
+     }
+ 
+-    public CraftMycel(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftSnowyDirt(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftSnowable
+ 
+-    private static final net.minecraft.world.level.block.state.properties.BooleanProperty SNOWY = getBoolean(net.minecraft.world.level.block.MyceliumBlock.class, "snowy");
++    private static final net.minecraft.world.level.block.state.properties.BooleanProperty SNOWY = getBoolean(net.minecraft.world.level.block.SnowyDirtBlock.class, "snowy");
+ 
+     @Override
+     public boolean isSnowy() {
+-        return this.get(CraftMycel.SNOWY);
++        return this.get(CraftSnowyDirt.SNOWY);
+     }
+ 
+     @Override
+     public void setSnowy(boolean snowy) {
+-        this.set(CraftMycel.SNOWY, snowy);
++        this.set(CraftSnowyDirt.SNOWY, snowy);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftStairs.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftStair.java
+similarity index 66%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftStairs.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftStair.java
+index 4cec82549632c1696ae01be717f2f4c1b281ae6d..f3e8837e4cff869ba366d8ea9ced6ff0863199e7 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftStairs.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftStair.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftStairs extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Stairs, org.bukkit.block.data.Bisected, org.bukkit.block.data.Directional, org.bukkit.block.data.Waterlogged {
++public final class CraftStair extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Stairs, org.bukkit.block.data.Bisected, org.bukkit.block.data.Directional, org.bukkit.block.data.Waterlogged {
+ 
+-    public CraftStairs() {
++    public CraftStair() {
+         super();
+     }
+ 
+-    public CraftStairs(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftStair(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,12 +19,12 @@ public final class CraftStairs extends org.bukkit.craftbukkit.block.data.CraftBl
+ 
+     @Override
+     public org.bukkit.block.data.type.Stairs.Shape getShape() {
+-        return this.get(CraftStairs.SHAPE, org.bukkit.block.data.type.Stairs.Shape.class);
++        return this.get(CraftStair.SHAPE, org.bukkit.block.data.type.Stairs.Shape.class);
+     }
+ 
+     @Override
+     public void setShape(org.bukkit.block.data.type.Stairs.Shape shape) {
+-        this.set(CraftStairs.SHAPE, shape);
++        this.set(CraftStair.SHAPE, shape);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftBisected
+@@ -33,12 +33,12 @@ public final class CraftStairs extends org.bukkit.craftbukkit.block.data.CraftBl
+ 
+     @Override
+     public org.bukkit.block.data.Bisected.Half getHalf() {
+-        return this.get(CraftStairs.HALF, org.bukkit.block.data.Bisected.Half.class);
++        return this.get(CraftStair.HALF, org.bukkit.block.data.Bisected.Half.class);
+     }
+ 
+     @Override
+     public void setHalf(org.bukkit.block.data.Bisected.Half half) {
+-        this.set(CraftStairs.HALF, half);
++        this.set(CraftStair.HALF, half);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftDirectional
+@@ -47,17 +47,17 @@ public final class CraftStairs extends org.bukkit.craftbukkit.block.data.CraftBl
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftStairs.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftStair.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftStairs.FACING, facing);
++        this.set(CraftStair.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftStairs.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftStair.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftWaterlogged
+@@ -66,11 +66,11 @@ public final class CraftStairs extends org.bukkit.craftbukkit.block.data.CraftBl
+ 
+     @Override
+     public boolean isWaterlogged() {
+-        return this.get(CraftStairs.WATERLOGGED);
++        return this.get(CraftStair.WATERLOGGED);
+     }
+ 
+     @Override
+     public void setWaterlogged(boolean waterlogged) {
+-        this.set(CraftStairs.WATERLOGGED, waterlogged);
++        this.set(CraftStair.WATERLOGGED, waterlogged);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftFloorSign.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftStandingSign.java
+similarity index 87%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftFloorSign.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftStandingSign.java
+index 6c5c012370710265c747904112b37ec7f6ce8761..41152d0ac0ea3f3fc4079f114709c84a8b692a49 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftFloorSign.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftStandingSign.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftFloorSign extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Sign, org.bukkit.block.data.Rotatable, org.bukkit.block.data.Waterlogged {
++public final class CraftStandingSign extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Sign, org.bukkit.block.data.Rotatable, org.bukkit.block.data.Waterlogged {
+ 
+-    public CraftFloorSign() {
++    public CraftStandingSign() {
+         super();
+     }
+ 
+-    public CraftFloorSign(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftStandingSign(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,7 +19,7 @@ public final class CraftFloorSign extends org.bukkit.craftbukkit.block.data.Craf
+ 
+     @Override
+     public org.bukkit.block.BlockFace getRotation() {
+-        int data = this.get(CraftFloorSign.ROTATION);
++        int data = this.get(CraftStandingSign.ROTATION);
+         switch (data) {
+             case 0x0:
+                 return org.bukkit.block.BlockFace.SOUTH;
+@@ -113,7 +113,7 @@ public final class CraftFloorSign extends org.bukkit.craftbukkit.block.data.Craf
+             default:
+                 throw new IllegalArgumentException("Illegal rotation " + rotation);
+         }
+-        this.set(CraftFloorSign.ROTATION, val);
++        this.set(CraftStandingSign.ROTATION, val);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftWaterlogged
+@@ -122,11 +122,11 @@ public final class CraftFloorSign extends org.bukkit.craftbukkit.block.data.Craf
+ 
+     @Override
+     public boolean isWaterlogged() {
+-        return this.get(CraftFloorSign.WATERLOGGED);
++        return this.get(CraftStandingSign.WATERLOGGED);
+     }
+ 
+     @Override
+     public void setWaterlogged(boolean waterlogged) {
+-        this.set(CraftFloorSign.WATERLOGGED, waterlogged);
++        this.set(CraftStandingSign.WATERLOGGED, waterlogged);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftStructure.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftStructureBlock.java
+similarity index 57%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftStructure.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftStructureBlock.java
+index f505d440b9453c96e41d05adf5f5fc236539f7b9..45aed7a3279d005064d80501316aa3be64895dba 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftStructure.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftStructureBlock.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftStructure extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.StructureBlock {
++public final class CraftStructureBlock extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.StructureBlock {
+ 
+-    public CraftStructure() {
++    public CraftStructureBlock() {
+         super();
+     }
+ 
+-    public CraftStructure(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftStructureBlock(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,11 +19,11 @@ public final class CraftStructure extends org.bukkit.craftbukkit.block.data.Craf
+ 
+     @Override
+     public org.bukkit.block.data.type.StructureBlock.Mode getMode() {
+-        return this.get(CraftStructure.MODE, org.bukkit.block.data.type.StructureBlock.Mode.class);
++        return this.get(CraftStructureBlock.MODE, org.bukkit.block.data.type.StructureBlock.Mode.class);
+     }
+ 
+     @Override
+     public void setMode(org.bukkit.block.data.type.StructureBlock.Mode mode) {
+-        this.set(CraftStructure.MODE, mode);
++        this.set(CraftStructureBlock.MODE, mode);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCrops.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSugarCane.java
+similarity index 54%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftCrops.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftSugarCane.java
+index d186de7098a63a8667c39ff1749f65d6ab82e4e8..3f1b875a98b4d624b90a322f6fabd00a722f0345 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCrops.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSugarCane.java
+@@ -3,32 +3,32 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftCrops extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Ageable {
++public final class CraftSugarCane extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Ageable {
+ 
+-    public CraftCrops() {
++    public CraftSugarCane() {
+         super();
+     }
+ 
+-    public CraftCrops(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftSugarCane(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftAgeable
+ 
+-    private static final net.minecraft.world.level.block.state.properties.IntegerProperty AGE = getInteger(net.minecraft.world.level.block.CropBlock.class, "age");
++    private static final net.minecraft.world.level.block.state.properties.IntegerProperty AGE = getInteger(net.minecraft.world.level.block.SugarCaneBlock.class, "age");
+ 
+     @Override
+     public int getAge() {
+-        return this.get(CraftCrops.AGE);
++        return this.get(CraftSugarCane.AGE);
+     }
+ 
+     @Override
+     public void setAge(int age) {
+-        this.set(CraftCrops.AGE, age);
++        this.set(CraftSugarCane.AGE, age);
+     }
+ 
+     @Override
+     public int getMaximumAge() {
+-        return getMax(CraftCrops.AGE);
++        return getMax(CraftSugarCane.AGE);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTallPlantFlower.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTallFlower.java
+similarity index 57%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftTallPlantFlower.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftTallFlower.java
+index f13cdcd3aff45c8294d6e2ca3ff227dd8781f5ef..5f9df4aaec27d5a8e2972ce5430e1bfb95ccd975 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTallPlantFlower.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTallFlower.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftTallPlantFlower extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Bisected {
++public final class CraftTallFlower extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Bisected {
+ 
+-    public CraftTallPlantFlower() {
++    public CraftTallFlower() {
+         super();
+     }
+ 
+-    public CraftTallPlantFlower(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftTallFlower(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,11 +19,11 @@ public final class CraftTallPlantFlower extends org.bukkit.craftbukkit.block.dat
+ 
+     @Override
+     public org.bukkit.block.data.Bisected.Half getHalf() {
+-        return this.get(CraftTallPlantFlower.HALF, org.bukkit.block.data.Bisected.Half.class);
++        return this.get(CraftTallFlower.HALF, org.bukkit.block.data.Bisected.Half.class);
+     }
+ 
+     @Override
+     public void setHalf(org.bukkit.block.data.Bisected.Half half) {
+-        this.set(CraftTallPlantFlower.HALF, half);
++        this.set(CraftTallFlower.HALF, half);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTNT.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTnt.java
+similarity index 71%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftTNT.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftTnt.java
+index 75fc4fe97763f526062bfabc61e5816fcc04929b..24980a4d1625c62d67b1e04b1a29dec23aeac739 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTNT.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTnt.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftTNT extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.TNT {
++public final class CraftTnt extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.TNT {
+ 
+-    public CraftTNT() {
++    public CraftTnt() {
+         super();
+     }
+ 
+-    public CraftTNT(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftTnt(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,11 +19,11 @@ public final class CraftTNT extends org.bukkit.craftbukkit.block.data.CraftBlock
+ 
+     @Override
+     public boolean isUnstable() {
+-        return this.get(CraftTNT.UNSTABLE);
++        return this.get(CraftTnt.UNSTABLE);
+     }
+ 
+     @Override
+     public void setUnstable(boolean unstable) {
+-        this.set(CraftTNT.UNSTABLE, unstable);
++        this.set(CraftTnt.UNSTABLE, unstable);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTrapdoor.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTrapDoor.java
+similarity index 76%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftTrapdoor.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftTrapDoor.java
+index 5e88ff74bb5dbc3b8e85295b0edd069ada24e640..6604035d08e03b34b29bca2a375856cf0887b833 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTrapdoor.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTrapDoor.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftTrapdoor extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.TrapDoor, org.bukkit.block.data.Bisected, org.bukkit.block.data.Directional, org.bukkit.block.data.Openable, org.bukkit.block.data.Powerable, org.bukkit.block.data.Waterlogged {
++public final class CraftTrapDoor extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.TrapDoor, org.bukkit.block.data.Bisected, org.bukkit.block.data.Directional, org.bukkit.block.data.Openable, org.bukkit.block.data.Powerable, org.bukkit.block.data.Waterlogged {
+ 
+-    public CraftTrapdoor() {
++    public CraftTrapDoor() {
+         super();
+     }
+ 
+-    public CraftTrapdoor(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftTrapDoor(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,12 +19,12 @@ public final class CraftTrapdoor extends org.bukkit.craftbukkit.block.data.Craft
+ 
+     @Override
+     public org.bukkit.block.data.Bisected.Half getHalf() {
+-        return this.get(CraftTrapdoor.HALF, org.bukkit.block.data.Bisected.Half.class);
++        return this.get(CraftTrapDoor.HALF, org.bukkit.block.data.Bisected.Half.class);
+     }
+ 
+     @Override
+     public void setHalf(org.bukkit.block.data.Bisected.Half half) {
+-        this.set(CraftTrapdoor.HALF, half);
++        this.set(CraftTrapDoor.HALF, half);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftDirectional
+@@ -33,17 +33,17 @@ public final class CraftTrapdoor extends org.bukkit.craftbukkit.block.data.Craft
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftTrapdoor.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftTrapDoor.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftTrapdoor.FACING, facing);
++        this.set(CraftTrapDoor.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftTrapdoor.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftTrapDoor.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftOpenable
+@@ -52,12 +52,12 @@ public final class CraftTrapdoor extends org.bukkit.craftbukkit.block.data.Craft
+ 
+     @Override
+     public boolean isOpen() {
+-        return this.get(CraftTrapdoor.OPEN);
++        return this.get(CraftTrapDoor.OPEN);
+     }
+ 
+     @Override
+     public void setOpen(boolean open) {
+-        this.set(CraftTrapdoor.OPEN, open);
++        this.set(CraftTrapDoor.OPEN, open);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftPowerable
+@@ -66,12 +66,12 @@ public final class CraftTrapdoor extends org.bukkit.craftbukkit.block.data.Craft
+ 
+     @Override
+     public boolean isPowered() {
+-        return this.get(CraftTrapdoor.POWERED);
++        return this.get(CraftTrapDoor.POWERED);
+     }
+ 
+     @Override
+     public void setPowered(boolean powered) {
+-        this.set(CraftTrapdoor.POWERED, powered);
++        this.set(CraftTrapDoor.POWERED, powered);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftWaterlogged
+@@ -80,11 +80,11 @@ public final class CraftTrapdoor extends org.bukkit.craftbukkit.block.data.Craft
+ 
+     @Override
+     public boolean isWaterlogged() {
+-        return this.get(CraftTrapdoor.WATERLOGGED);
++        return this.get(CraftTrapDoor.WATERLOGGED);
+     }
+ 
+     @Override
+     public void setWaterlogged(boolean waterlogged) {
+-        this.set(CraftTrapdoor.WATERLOGGED, waterlogged);
++        this.set(CraftTrapDoor.WATERLOGGED, waterlogged);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftChestTrapped.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTrappedChest.java
+similarity index 74%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftChestTrapped.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftTrappedChest.java
+index b24a40c084c566c91d862cd57aa97305e511bd68..7f5d3dc1e108c1a9d2be4265a94e6536f396cbb7 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftChestTrapped.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTrappedChest.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftChestTrapped extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Chest, org.bukkit.block.data.Directional, org.bukkit.block.data.Waterlogged {
++public final class CraftTrappedChest extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Chest, org.bukkit.block.data.Directional, org.bukkit.block.data.Waterlogged {
+ 
+-    public CraftChestTrapped() {
++    public CraftTrappedChest() {
+         super();
+     }
+ 
+-    public CraftChestTrapped(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftTrappedChest(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,12 +19,12 @@ public final class CraftChestTrapped extends org.bukkit.craftbukkit.block.data.C
+ 
+     @Override
+     public org.bukkit.block.data.type.Chest.Type getType() {
+-        return this.get(CraftChestTrapped.TYPE, org.bukkit.block.data.type.Chest.Type.class);
++        return this.get(CraftTrappedChest.TYPE, org.bukkit.block.data.type.Chest.Type.class);
+     }
+ 
+     @Override
+     public void setType(org.bukkit.block.data.type.Chest.Type type) {
+-        this.set(CraftChestTrapped.TYPE, type);
++        this.set(CraftTrappedChest.TYPE, type);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftDirectional
+@@ -33,17 +33,17 @@ public final class CraftChestTrapped extends org.bukkit.craftbukkit.block.data.C
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftChestTrapped.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftTrappedChest.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftChestTrapped.FACING, facing);
++        this.set(CraftTrappedChest.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftChestTrapped.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftTrappedChest.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftWaterlogged
+@@ -52,11 +52,11 @@ public final class CraftChestTrapped extends org.bukkit.craftbukkit.block.data.C
+ 
+     @Override
+     public boolean isWaterlogged() {
+-        return this.get(CraftChestTrapped.WATERLOGGED);
++        return this.get(CraftTrappedChest.WATERLOGGED);
+     }
+ 
+     @Override
+     public void setWaterlogged(boolean waterlogged) {
+-        this.set(CraftChestTrapped.WATERLOGGED, waterlogged);
++        this.set(CraftTrappedChest.WATERLOGGED, waterlogged);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTripwire.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTripWire.java
+similarity index 81%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftTripwire.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftTripWire.java
+index 83375648cc8fa6a531663297a5042651a6ce75c6..12fb3a3886e8c2b55736ee7c7f182ebb65a81e7a 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTripwire.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTripWire.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftTripwire extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Tripwire, org.bukkit.block.data.Attachable, org.bukkit.block.data.MultipleFacing, org.bukkit.block.data.Powerable {
++public final class CraftTripWire extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Tripwire, org.bukkit.block.data.Attachable, org.bukkit.block.data.MultipleFacing, org.bukkit.block.data.Powerable {
+ 
+-    public CraftTripwire() {
++    public CraftTripWire() {
+         super();
+     }
+ 
+-    public CraftTripwire(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftTripWire(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,12 +19,12 @@ public final class CraftTripwire extends org.bukkit.craftbukkit.block.data.Craft
+ 
+     @Override
+     public boolean isDisarmed() {
+-        return this.get(CraftTripwire.DISARMED);
++        return this.get(CraftTripWire.DISARMED);
+     }
+ 
+     @Override
+     public void setDisarmed(boolean disarmed) {
+-        this.set(CraftTripwire.DISARMED, disarmed);
++        this.set(CraftTripWire.DISARMED, disarmed);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftAttachable
+@@ -33,12 +33,12 @@ public final class CraftTripwire extends org.bukkit.craftbukkit.block.data.Craft
+ 
+     @Override
+     public boolean isAttached() {
+-        return this.get(CraftTripwire.ATTACHED);
++        return this.get(CraftTripWire.ATTACHED);
+     }
+ 
+     @Override
+     public void setAttached(boolean attached) {
+-        this.set(CraftTripwire.ATTACHED, attached);
++        this.set(CraftTripWire.ATTACHED, attached);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftMultipleFacing
+@@ -49,7 +49,7 @@ public final class CraftTripwire extends org.bukkit.craftbukkit.block.data.Craft
+ 
+     @Override
+     public boolean hasFace(org.bukkit.block.BlockFace face) {
+-        net.minecraft.world.level.block.state.properties.BooleanProperty state = CraftTripwire.FACES[face.ordinal()];
++        net.minecraft.world.level.block.state.properties.BooleanProperty state = CraftTripWire.FACES[face.ordinal()];
+         if (state == null) {
+             throw new IllegalArgumentException("Non-allowed face " + face + ". Check MultipleFacing.getAllowedFaces.");
+         }
+@@ -58,7 +58,7 @@ public final class CraftTripwire extends org.bukkit.craftbukkit.block.data.Craft
+ 
+     @Override
+     public void setFace(org.bukkit.block.BlockFace face, boolean has) {
+-        net.minecraft.world.level.block.state.properties.BooleanProperty state = CraftTripwire.FACES[face.ordinal()];
++        net.minecraft.world.level.block.state.properties.BooleanProperty state = CraftTripWire.FACES[face.ordinal()];
+         if (state == null) {
+             throw new IllegalArgumentException("Non-allowed face " + face + ". Check MultipleFacing.getAllowedFaces.");
+         }
+@@ -69,8 +69,8 @@ public final class CraftTripwire extends org.bukkit.craftbukkit.block.data.Craft
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+         com.google.common.collect.ImmutableSet.Builder<org.bukkit.block.BlockFace> faces = com.google.common.collect.ImmutableSet.builder();
+ 
+-        for (int i = 0; i < CraftTripwire.FACES.length; i++) {
+-            if (CraftTripwire.FACES[i] != null && this.get(CraftTripwire.FACES[i])) {
++        for (int i = 0; i < CraftTripWire.FACES.length; i++) {
++            if (CraftTripWire.FACES[i] != null && this.get(CraftTripWire.FACES[i])) {
+                 faces.add(org.bukkit.block.BlockFace.values()[i]);
+             }
+         }
+@@ -82,8 +82,8 @@ public final class CraftTripwire extends org.bukkit.craftbukkit.block.data.Craft
+     public java.util.Set<org.bukkit.block.BlockFace> getAllowedFaces() {
+         com.google.common.collect.ImmutableSet.Builder<org.bukkit.block.BlockFace> faces = com.google.common.collect.ImmutableSet.builder();
+ 
+-        for (int i = 0; i < CraftTripwire.FACES.length; i++) {
+-            if (CraftTripwire.FACES[i] != null) {
++        for (int i = 0; i < CraftTripWire.FACES.length; i++) {
++            if (CraftTripWire.FACES[i] != null) {
+                 faces.add(org.bukkit.block.BlockFace.values()[i]);
+             }
+         }
+@@ -97,11 +97,11 @@ public final class CraftTripwire extends org.bukkit.craftbukkit.block.data.Craft
+ 
+     @Override
+     public boolean isPowered() {
+-        return this.get(CraftTripwire.POWERED);
++        return this.get(CraftTripWire.POWERED);
+     }
+ 
+     @Override
+     public void setPowered(boolean powered) {
+-        this.set(CraftTripwire.POWERED, powered);
++        this.set(CraftTripWire.POWERED, powered);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTripwireHook.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTripWireHook.java
+similarity index 74%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftTripwireHook.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftTripWireHook.java
+index e072799d84d44dbda5f854735d01d436107c5b48..4efbb9e402425d764d48ce1987e47ffa65534f67 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTripwireHook.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTripWireHook.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftTripwireHook extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.TripwireHook, org.bukkit.block.data.Attachable, org.bukkit.block.data.Directional, org.bukkit.block.data.Powerable {
++public final class CraftTripWireHook extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.TripwireHook, org.bukkit.block.data.Attachable, org.bukkit.block.data.Directional, org.bukkit.block.data.Powerable {
+ 
+-    public CraftTripwireHook() {
++    public CraftTripWireHook() {
+         super();
+     }
+ 
+-    public CraftTripwireHook(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftTripWireHook(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,12 +19,12 @@ public final class CraftTripwireHook extends org.bukkit.craftbukkit.block.data.C
+ 
+     @Override
+     public boolean isAttached() {
+-        return this.get(CraftTripwireHook.ATTACHED);
++        return this.get(CraftTripWireHook.ATTACHED);
+     }
+ 
+     @Override
+     public void setAttached(boolean attached) {
+-        this.set(CraftTripwireHook.ATTACHED, attached);
++        this.set(CraftTripWireHook.ATTACHED, attached);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftDirectional
+@@ -33,17 +33,17 @@ public final class CraftTripwireHook extends org.bukkit.craftbukkit.block.data.C
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftTripwireHook.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftTripWireHook.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftTripwireHook.FACING, facing);
++        this.set(CraftTripWireHook.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftTripwireHook.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftTripWireHook.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftPowerable
+@@ -52,11 +52,11 @@ public final class CraftTripwireHook extends org.bukkit.craftbukkit.block.data.C
+ 
+     @Override
+     public boolean isPowered() {
+-        return this.get(CraftTripwireHook.POWERED);
++        return this.get(CraftTripWireHook.POWERED);
+     }
+ 
+     @Override
+     public void setPowered(boolean powered) {
+-        this.set(CraftTripwireHook.POWERED, powered);
++        this.set(CraftTripWireHook.POWERED, powered);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCobbleWall.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftWall.java
+similarity index 69%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftCobbleWall.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftWall.java
+index f860bb309a64e104aa52d76f967cd7c2bedd8e99..e2808406f9a97ad017d7fc149be70708ebfbc6bc 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCobbleWall.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftWall.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftCobbleWall extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Wall, org.bukkit.block.data.Waterlogged {
++public final class CraftWall extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.Wall, org.bukkit.block.data.Waterlogged {
+ 
+-    public CraftCobbleWall() {
++    public CraftWall() {
+         super();
+     }
+ 
+-    public CraftCobbleWall(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftWall(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -22,22 +22,22 @@ public final class CraftCobbleWall extends org.bukkit.craftbukkit.block.data.Cra
+ 
+     @Override
+     public boolean isUp() {
+-        return this.get(CraftCobbleWall.UP);
++        return this.get(CraftWall.UP);
+     }
+ 
+     @Override
+     public void setUp(boolean up) {
+-        this.set(CraftCobbleWall.UP, up);
++        this.set(CraftWall.UP, up);
+     }
+ 
+     @Override
+     public org.bukkit.block.data.type.Wall.Height getHeight(org.bukkit.block.BlockFace face) {
+-        return this.get(CraftCobbleWall.HEIGHTS[face.ordinal()], org.bukkit.block.data.type.Wall.Height.class);
++        return this.get(CraftWall.HEIGHTS[face.ordinal()], org.bukkit.block.data.type.Wall.Height.class);
+     }
+ 
+     @Override
+     public void setHeight(org.bukkit.block.BlockFace face, org.bukkit.block.data.type.Wall.Height height) {
+-        this.set(CraftCobbleWall.HEIGHTS[face.ordinal()], height);
++        this.set(CraftWall.HEIGHTS[face.ordinal()], height);
+     }
+ 
+     // org.bukkit.craftbukkit.block.data.CraftWaterlogged
+@@ -46,11 +46,11 @@ public final class CraftCobbleWall extends org.bukkit.craftbukkit.block.data.Cra
+ 
+     @Override
+     public boolean isWaterlogged() {
+-        return this.get(CraftCobbleWall.WATERLOGGED);
++        return this.get(CraftWall.WATERLOGGED);
+     }
+ 
+     @Override
+     public void setWaterlogged(boolean waterlogged) {
+-        this.set(CraftCobbleWall.WATERLOGGED, waterlogged);
++        this.set(CraftWall.WATERLOGGED, waterlogged);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftBannerWall.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftWallBanner.java
+similarity index 69%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftBannerWall.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftWallBanner.java
+index 03f2ca67841ba5b6e653eea132ec030fdf2f09b2..8ba57dcad453e54467556126ff567ec6e108f49f 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftBannerWall.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftWallBanner.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftBannerWall extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Directional {
++public final class CraftWallBanner extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Directional {
+ 
+-    public CraftBannerWall() {
++    public CraftWallBanner() {
+         super();
+     }
+ 
+-    public CraftBannerWall(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftWallBanner(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,16 +19,16 @@ public final class CraftBannerWall extends org.bukkit.craftbukkit.block.data.Cra
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftBannerWall.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftWallBanner.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftBannerWall.FACING, facing);
++        this.set(CraftWallBanner.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftBannerWall.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftWallBanner.FACING, org.bukkit.block.BlockFace.class);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftWallSkull.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftWallSkull.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..1209ab064b8285befcca583b9be704137fbca802
+--- /dev/null
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftWallSkull.java
+@@ -0,0 +1,48 @@
++/**
++ * Automatically generated file, changes will be lost.
++ */
++package org.bukkit.craftbukkit.block.impl;
++
++public final class CraftWallSkull extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.type.SkullWall {
++
++    public CraftWallSkull() {
++        super();
++    }
++
++    public CraftWallSkull(net.minecraft.world.level.block.state.BlockState state) {
++        super(state);
++    }
++
++    // org.bukkit.craftbukkit.block.data.CraftDirectional
++
++    private static final net.minecraft.world.level.block.state.properties.EnumProperty<?> FACING = getEnum(net.minecraft.world.level.block.WallSkullBlock.class, "facing");
++
++    @Override
++    public org.bukkit.block.BlockFace getFacing() {
++        return this.get(CraftWallSkull.FACING, org.bukkit.block.BlockFace.class);
++    }
++
++    @Override
++    public void setFacing(org.bukkit.block.BlockFace facing) {
++        this.set(CraftWallSkull.FACING, facing);
++    }
++
++    @Override
++    public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
++        return this.getValues(CraftWallSkull.FACING, org.bukkit.block.BlockFace.class);
++    }
++
++    // org.bukkit.craftbukkit.block.data.CraftPowerable
++
++    private static final net.minecraft.world.level.block.state.properties.BooleanProperty POWERED = getBoolean(net.minecraft.world.level.block.WallSkullBlock.class, "powered");
++
++    @Override
++    public boolean isPowered() {
++        return this.get(CraftWallSkull.POWERED);
++    }
++
++    @Override
++    public void setPowered(boolean powered) {
++        this.set(CraftWallSkull.POWERED, powered);
++    }
++}
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTorchWall.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftWallTorch.java
+similarity index 69%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftTorchWall.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftWallTorch.java
+index 2d5eefabb2818fc5439591a330da2c7e198f861f..fdfd23ee2d84b7d00a224524f52a011ebcacd305 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftTorchWall.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftWallTorch.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftTorchWall extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Directional {
++public final class CraftWallTorch extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Directional {
+ 
+-    public CraftTorchWall() {
++    public CraftWallTorch() {
+         super();
+     }
+ 
+-    public CraftTorchWall(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftWallTorch(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,16 +19,16 @@ public final class CraftTorchWall extends org.bukkit.craftbukkit.block.data.Craf
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftTorchWall.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftWallTorch.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftTorchWall.FACING, facing);
++        this.set(CraftWallTorch.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftTorchWall.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftWallTorch.FACING, org.bukkit.block.BlockFace.class);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPressurePlateWeighted.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftWeightedPressurePlate.java
+similarity index 67%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftPressurePlateWeighted.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftWeightedPressurePlate.java
+index 0eb4b7bdee1863e8e851fb52301d61d867bbdbbd..8285787110c83e790888b0506a3a8b90ba03f1d0 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftPressurePlateWeighted.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftWeightedPressurePlate.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftPressurePlateWeighted extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.AnaloguePowerable {
++public final class CraftWeightedPressurePlate extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.AnaloguePowerable {
+ 
+-    public CraftPressurePlateWeighted() {
++    public CraftWeightedPressurePlate() {
+         super();
+     }
+ 
+-    public CraftPressurePlateWeighted(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftWeightedPressurePlate(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,16 +19,16 @@ public final class CraftPressurePlateWeighted extends org.bukkit.craftbukkit.blo
+ 
+     @Override
+     public int getPower() {
+-        return this.get(CraftPressurePlateWeighted.POWER);
++        return this.get(CraftWeightedPressurePlate.POWER);
+     }
+ 
+     @Override
+     public void setPower(int power) {
+-        this.set(CraftPressurePlateWeighted.POWER, power);
++        this.set(CraftWeightedPressurePlate.POWER, power);
+     }
+ 
+     @Override
+     public int getMaximumPower() {
+-        return getMax(CraftPressurePlateWeighted.POWER);
++        return getMax(CraftWeightedPressurePlate.POWER);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftWitherSkullWall.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftWitherWallSkull.java
+similarity index 69%
+rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftWitherSkullWall.java
+rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftWitherWallSkull.java
+index 67b212d9395335f59b6f33741aac7a57c823c966..ca232ba24a66d234155fbb706c5b30c633ec1b9c 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftWitherSkullWall.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftWitherWallSkull.java
+@@ -3,13 +3,13 @@
+  */
+ package org.bukkit.craftbukkit.block.impl;
+ 
+-public final class CraftWitherSkullWall extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Directional {
++public final class CraftWitherWallSkull extends org.bukkit.craftbukkit.block.data.CraftBlockData implements org.bukkit.block.data.Directional {
+ 
+-    public CraftWitherSkullWall() {
++    public CraftWitherWallSkull() {
+         super();
+     }
+ 
+-    public CraftWitherSkullWall(net.minecraft.world.level.block.state.BlockState state) {
++    public CraftWitherWallSkull(net.minecraft.world.level.block.state.BlockState state) {
+         super(state);
+     }
+ 
+@@ -19,16 +19,16 @@ public final class CraftWitherSkullWall extends org.bukkit.craftbukkit.block.dat
+ 
+     @Override
+     public org.bukkit.block.BlockFace getFacing() {
+-        return this.get(CraftWitherSkullWall.FACING, org.bukkit.block.BlockFace.class);
++        return this.get(CraftWitherWallSkull.FACING, org.bukkit.block.BlockFace.class);
+     }
+ 
+     @Override
+     public void setFacing(org.bukkit.block.BlockFace facing) {
+-        this.set(CraftWitherSkullWall.FACING, facing);
++        this.set(CraftWitherWallSkull.FACING, facing);
+     }
+ 
+     @Override
+     public java.util.Set<org.bukkit.block.BlockFace> getFaces() {
+-        return this.getValues(CraftWitherSkullWall.FACING, org.bukkit.block.BlockFace.class);
++        return this.getValues(CraftWitherWallSkull.FACING, org.bukkit.block.BlockFace.class);
+     }
+ }

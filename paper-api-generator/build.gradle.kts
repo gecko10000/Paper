@@ -14,7 +14,8 @@ minecraft {
             mainClass("io.papermc.generator.Main")
             accessWideners(file("wideners.at"))
             args(file("generated").toString(),
-                project(":paper-api").sourceSets.main.get().java.srcDirs.first().toString())
+                project(":paper-api").sourceSets["main"].java.srcDirs.first().toString(),
+                file("generatedServerTest").toString())
         }
     }
 }

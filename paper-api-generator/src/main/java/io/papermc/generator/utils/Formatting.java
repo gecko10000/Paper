@@ -3,10 +3,10 @@ package io.papermc.generator.utils;
 import com.google.common.base.Function;
 import java.util.Comparator;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
-import java.util.Set;
-import net.kyori.adventure.key.Key;
+import com.google.common.collect.HashBiMap;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -17,10 +17,6 @@ import net.minecraft.world.flag.FeatureFlags;
 import org.apache.commons.lang3.math.NumberUtils;
 
 public final class Formatting {
-
-    public static String formatKeyAsField(Key key) {
-        return formatPathAsField(key.value());
-    }
 
     public static String formatPathAsField(String path) {
         return path.toUpperCase(Locale.ENGLISH).replaceAll("[.-/]", "_"); // replace invalid field name chars
@@ -42,16 +38,16 @@ public final class Formatting {
                 continue;
             }
             if (featureFlagSet.contains(flag)) {
-                return formatFeatureFlag(flag);
+                return formatFeatureFlag(flag); // support multiple flags?
             }
         }
         return "";
     }
 
+    private static final Map<FeatureFlag, ResourceLocation> FEATURE_FLAG_NAME = HashBiMap.create(FeatureFlags.REGISTRY.names).inverse();
+
     public static String formatFeatureFlag(FeatureFlag featureFlag) {
-        Set<ResourceLocation> names = FeatureFlags.REGISTRY.toNames(FeatureFlagSet.of(featureFlag));
-        String name = names.iterator().next().getPath(); // eww
-        return formatFeatureFlagName(name);
+        return formatFeatureFlagName(FEATURE_FLAG_NAME.get(featureFlag).getPath());
     }
 
     public static String formatFeatureFlagName(String name) {
@@ -87,6 +83,30 @@ public final class Formatting {
 
     public static String floatStr(float value) {
         return Float.toString(value) + 'F';
+    }
+
+    public static String stripWordOfCamelCaseName(String name, String word, boolean onlyOnce) {
+        String newName = name;
+        int startIndex = 0;
+        while (true) {
+            int baseIndex = newName.indexOf(word, startIndex);
+            if (baseIndex == -1) {
+                return newName;
+            }
+
+            if ((baseIndex > 0 && !Character.isLowerCase(newName.charAt(baseIndex - 1))) ||
+                (baseIndex + word.length() < newName.length() && !Character.isUpperCase(newName.charAt(baseIndex + word.length())))) {
+                startIndex = baseIndex + word.length();
+                continue;
+            }
+
+            newName = newName.substring(0, baseIndex) + newName.substring(baseIndex + word.length());
+            startIndex = baseIndex;
+            if (onlyOnce) {
+                break;
+            }
+        }
+        return newName;
     }
 
     public static Comparator<String> alphabeticKeyOrder() {

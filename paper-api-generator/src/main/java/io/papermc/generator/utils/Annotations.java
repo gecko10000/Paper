@@ -18,7 +18,7 @@ public final class Annotations {
 
     public static List<AnnotationSpec> experimentalAnnotations(final String value) {
         AnnotationSpec.Builder builder = AnnotationSpec.builder(MinecraftExperimental.class);
-        if (!value.isBlank()) {
+        if (!value.isEmpty()) {
             builder.addMember("value", "$S", value);
         }
 
@@ -40,21 +40,26 @@ public final class Annotations {
         return annotationSpec.build();
     }
 
-    public static AnnotationSpec scheduledRemoval(final @Nullable String version) {
+    public static AnnotationSpec scheduledRemoval(final String version) {
         return AnnotationSpec.builder(ApiStatus.ScheduledForRemoval.class)
             .addMember("inVersion", "$S", version)
             .build();
+    }
+
+    public static AnnotationSpec suppressWarnings(final String... values) {
+        final AnnotationSpec.Builder builder = AnnotationSpec.builder(SuppressWarnings.class);
+        for (final String value : values) {
+            builder.addMember("value", "$S", value);
+        }
+        return builder.build();
     }
 
     @ApiStatus.Experimental
     public static final AnnotationSpec EXPERIMENTAL_API_ANNOTATION = AnnotationSpec.builder(ApiStatus.Experimental.class).build();
     public static final AnnotationSpec NOT_NULL = AnnotationSpec.builder(NotNull.class).build();
     public static final AnnotationSpec OVERRIDE = AnnotationSpec.builder(Override.class).build();
-    private static final AnnotationSpec SUPPRESS_WARNINGS = AnnotationSpec.builder(SuppressWarnings.class)
-        .addMember("value", "$S", "unused")
-        .addMember("value", "$S", "SpellCheckingInspection")
-        .build();
-    private static final AnnotationSpec GENERATED_FROM = AnnotationSpec.builder(GeneratedFrom.class)
+    private static final AnnotationSpec SUPPRESS_WARNINGS = suppressWarnings("unused", "SpellCheckingInspection");
+    public static final AnnotationSpec GENERATED_FROM = AnnotationSpec.builder(GeneratedFrom.class)
         .addMember("value", "$S", SharedConstants.getCurrentVersion().getName())
         .build();
     public static final Iterable<AnnotationSpec> CLASS_HEADER = List.of(

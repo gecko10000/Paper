@@ -1,0 +1,47 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Lulu13022002 <41980282+Lulu13022002@users.noreply.github.com>
+Date: Sun, 3 Mar 2024 18:05:10 +0100
+Subject: [PATCH] server gen test
+
+
+diff --git a/build.gradle.kts b/build.gradle.kts
+index 19ed2a23bed5b98b5c1a2339570d25e25f3de2ea..e9f82eb19641970152592d5399172fbf2cdf079c 100644
+--- a/build.gradle.kts
++++ b/build.gradle.kts
+@@ -186,14 +186,18 @@ fun TaskContainer.registerRunTask(
+     block(this)
+ }
+ 
++val generatedServerFolder: File = rootProject.file("paper-api-generator/generatedServerTest")
++
+ sourceSets.main {
+     java {
++        srcDir(generatedServerFolder)
+         exclude("excluded/**")
+     }
+ }
+ 
+ idea {
+     module {
++        generatedSourceDirs.add(generatedServerFolder)
+         excludeDirs.add(projectDir.resolve("src/${SourceSet.MAIN_SOURCE_SET_NAME}/java/excluded"))
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java b/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
+index a4f8ce8ec70256403ff162092f8ff51babd395bf..80584646464b58406150f7146d68969a3353aaa8 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
+@@ -354,6 +354,13 @@ public class CraftBlockData implements BlockData {
+         return state.max;
+     }
+ 
++    public static final BlockFace[] ROTATION_CYCLE = {
++        BlockFace.SOUTH, BlockFace.SOUTH_SOUTH_WEST, BlockFace.SOUTH_WEST, BlockFace.WEST_SOUTH_WEST,
++        BlockFace.WEST, BlockFace.WEST_NORTH_WEST, BlockFace.NORTH_WEST, BlockFace.NORTH_NORTH_WEST,
++        BlockFace.NORTH, BlockFace.NORTH_NORTH_EAST, BlockFace.NORTH_EAST, BlockFace.EAST_NORTH_EAST,
++        BlockFace.EAST, BlockFace.EAST_SOUTH_EAST, BlockFace.SOUTH_EAST, BlockFace.SOUTH_SOUTH_EAST
++    };
++
+     //
+     private static final Map<Class<? extends Block>, Function<net.minecraft.world.level.block.state.BlockState, CraftBlockData>> MAP = new HashMap<>();
+ 

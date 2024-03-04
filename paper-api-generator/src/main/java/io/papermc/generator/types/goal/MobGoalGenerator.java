@@ -161,6 +161,14 @@ public class MobGoalGenerator extends SimpleGenerator {
 
     @Override
     protected TypeSpec getTypeSpec() {
+        TypeVariableName type = TypeVariableName.get("T", Mob.class);
+        TypeSpec.Builder typeBuilder = TypeSpec.interfaceBuilder(this.className)
+            .addSuperinterface(ParameterizedTypeName.get(ClassName.get(com.destroystokyo.paper.entity.ai.Goal.class), type))
+            .addModifiers(Modifier.PUBLIC)
+            .addTypeVariable(type)
+            .addAnnotations(Annotations.CLASS_HEADER)
+            .addJavadoc(CLASS_HEADER);
+
         TypeName entityType = ParameterizedTypeName.get(ClassName.get(Class.class), WildcardTypeName.subtypeOf(Mob.class))
             .annotated(Annotations.NOT_NULL);
         TypeName keyType = TypeName.get(String.class)
@@ -174,16 +182,6 @@ public class MobGoalGenerator extends SimpleGenerator {
             .addParameter(typeParam)
             .addCode("return $T.of($N, $T.minecraft($N));", GoalKey.class, typeParam, NamespacedKey.class, keyParam)
             .returns(ParameterizedTypeName.get(GoalKey.class).annotated(Annotations.NOT_NULL));
-
-
-        TypeVariableName type = TypeVariableName.get("T", Mob.class);
-        TypeSpec.Builder typeBuilder = TypeSpec.interfaceBuilder(this.className)
-            .addSuperinterface(ParameterizedTypeName.get(ClassName.get(com.destroystokyo.paper.entity.ai.Goal.class), type))
-            .addModifiers(Modifier.PUBLIC)
-            .addTypeVariable(type)
-            .addAnnotations(Annotations.CLASS_HEADER)
-            .addJavadoc(CLASS_HEADER);
-
 
         List<Class<Goal>> classes;
         try (ScanResult scanResult = new ClassGraph().enableAllInfo().whitelistPackages("net.minecraft").scan()) {
