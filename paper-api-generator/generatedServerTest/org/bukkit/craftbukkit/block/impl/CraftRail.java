@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.Set;
 import net.minecraft.world.level.block.RailBlock;
@@ -28,6 +29,7 @@ public class CraftRail extends CraftBlockData implements Rail {
 
     @Override
     public void setShape(final Rail.Shape shape) {
+        Preconditions.checkArgument(shape != null, "shape cannot be null!");
         this.set(SHAPE, shape);
     }
 

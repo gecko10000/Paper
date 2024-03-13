@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
@@ -23,6 +24,7 @@ public class CraftStructureBlock extends CraftBlockData implements StructureBloc
 
     @Override
     public void setMode(final StructureBlock.Mode mode) {
+        Preconditions.checkArgument(mode != null, "mode cannot be null!");
         this.set(MODE, mode);
     }
 }

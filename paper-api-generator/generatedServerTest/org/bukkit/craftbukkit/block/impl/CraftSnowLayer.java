@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.bukkit.block.data.type.Snow;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
+import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -17,12 +18,16 @@ public class CraftSnowLayer extends CraftBlockData implements Snow {
     }
 
     @Override
+    @Range(
+            from = 1,
+            to = 8
+    )
     public int getLayers() {
         return this.get(LAYERS);
     }
 
     @Override
-    public void setLayers(final int layers) {
+    public void setLayers(@Range(from = 1, to = 8) final int layers) {
         this.set(LAYERS, layers);
     }
 

@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.Set;
 import net.minecraft.world.level.block.ShulkerBoxBlock;
@@ -25,6 +26,8 @@ public class CraftShulkerBox extends CraftBlockData implements Directional {
 
     @Override
     public void setFacing(final BlockFace blockFace) {
+        Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
+        Preconditions.checkArgument(blockFace.isCartesian(), "Invalid face, only cartesian face are allowed for this property!");
         this.set(FACING, blockFace);
     }
 

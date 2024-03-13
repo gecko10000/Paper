@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.bukkit.block.data.type.MangrovePropagule;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
+import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -25,12 +26,16 @@ public class CraftMangrovePropagule extends CraftBlockData implements MangrovePr
     }
 
     @Override
+    @Range(
+            from = 0,
+            to = 4
+    )
     public int getAge() {
         return this.get(AGE);
     }
 
     @Override
-    public void setAge(final int age) {
+    public void setAge(@Range(from = 0, to = 4) final int age) {
         this.set(AGE, age);
     }
 
@@ -50,12 +55,16 @@ public class CraftMangrovePropagule extends CraftBlockData implements MangrovePr
     }
 
     @Override
+    @Range(
+            from = 0,
+            to = 1
+    )
     public int getStage() {
         return this.get(STAGE);
     }
 
     @Override
-    public void setStage(final int stage) {
+    public void setStage(@Range(from = 0, to = 1) final int stage) {
         this.set(STAGE, stage);
     }
 

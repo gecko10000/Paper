@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.Set;
 import net.minecraft.world.level.block.DetectorRailBlock;
@@ -40,6 +41,8 @@ public class CraftDetectorRail extends CraftBlockData implements RedstoneRail {
 
     @Override
     public void setShape(final org.bukkit.block.data.Rail.Shape shape) {
+        Preconditions.checkArgument(shape != null, "shape cannot be null!");
+        Preconditions.checkArgument(shape != org.bukkit.block.data.Rail.Shape.NORTH_EAST && shape != org.bukkit.block.data.Rail.Shape.NORTH_WEST && shape != org.bukkit.block.data.Rail.Shape.SOUTH_EAST && shape != org.bukkit.block.data.Rail.Shape.SOUTH_WEST, "Invalid rail shape, only straight rail are allowed for this property!");
         this.set(SHAPE, shape);
     }
 

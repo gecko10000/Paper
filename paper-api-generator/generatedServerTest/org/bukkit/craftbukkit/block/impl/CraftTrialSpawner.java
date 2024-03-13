@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import net.minecraft.world.level.block.TrialSpawnerBlock;
 import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerState;
@@ -24,6 +25,7 @@ public class CraftTrialSpawner extends CraftBlockData implements TrialSpawner {
 
     @Override
     public void setTrialSpawnerState(final TrialSpawner.State state) {
+        Preconditions.checkArgument(state != null, "state cannot be null!");
         this.set(STATE, state);
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.bukkit.block.data.type.DaylightDetector;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
+import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -30,12 +31,16 @@ public class CraftDaylightDetector extends CraftBlockData implements DaylightDet
     }
 
     @Override
+    @Range(
+            from = 0,
+            to = 15
+    )
     public int getPower() {
         return this.get(POWER);
     }
 
     @Override
-    public void setPower(final int power) {
+    public void setPower(@Range(from = 0, to = 15) final int power) {
         this.set(POWER, power);
     }
 

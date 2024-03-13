@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.Set;
 import net.minecraft.world.level.block.RepeaterBlock;
@@ -10,6 +11,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Repeater;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
+import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -27,12 +29,16 @@ public class CraftRepeater extends CraftBlockData implements Repeater {
     }
 
     @Override
+    @Range(
+            from = 1,
+            to = 4
+    )
     public int getDelay() {
         return this.get(DELAY);
     }
 
     @Override
-    public void setDelay(final int delay) {
+    public void setDelay(@Range(from = 1, to = 4) final int delay) {
         this.set(DELAY, delay);
     }
 
@@ -53,6 +59,8 @@ public class CraftRepeater extends CraftBlockData implements Repeater {
 
     @Override
     public void setFacing(final BlockFace blockFace) {
+        Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
+        Preconditions.checkArgument(blockFace.isCartesian() && blockFace.getModY() == 0, "Invalid face, only cartesian horizontal face are allowed for this property!");
         this.set(FACING, blockFace);
     }
 

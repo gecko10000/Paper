@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.bukkit.block.data.type.Candle;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
+import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -22,12 +23,16 @@ public class CraftCandle extends CraftBlockData implements Candle {
     }
 
     @Override
+    @Range(
+            from = 1,
+            to = 4
+    )
     public int getCandles() {
         return this.get(CANDLES);
     }
 
     @Override
-    public void setCandles(final int candles) {
+    public void setCandles(@Range(from = 1, to = 4) final int candles) {
         this.set(CANDLES, candles);
     }
 

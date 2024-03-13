@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.Set;
 import net.minecraft.world.level.block.TrappedChestBlock;
@@ -32,6 +33,8 @@ public class CraftTrappedChest extends CraftBlockData implements Chest {
 
     @Override
     public void setFacing(final BlockFace blockFace) {
+        Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
+        Preconditions.checkArgument(blockFace.isCartesian() && blockFace.getModY() == 0, "Invalid face, only cartesian horizontal face are allowed for this property!");
         this.set(FACING, blockFace);
     }
 
@@ -47,6 +50,7 @@ public class CraftTrappedChest extends CraftBlockData implements Chest {
 
     @Override
     public void setType(final Chest.Type type) {
+        Preconditions.checkArgument(type != null, "type cannot be null!");
         this.set(TYPE, type);
     }
 

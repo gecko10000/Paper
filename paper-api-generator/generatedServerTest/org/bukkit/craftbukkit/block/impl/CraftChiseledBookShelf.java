@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.List;
@@ -31,6 +32,8 @@ public class CraftChiseledBookShelf extends CraftBlockData implements ChiseledBo
 
     @Override
     public void setFacing(final BlockFace blockFace) {
+        Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
+        Preconditions.checkArgument(blockFace.isCartesian() && blockFace.getModY() == 0, "Invalid face, only cartesian horizontal face are allowed for this property!");
         this.set(HORIZONTAL_FACING, blockFace);
     }
 

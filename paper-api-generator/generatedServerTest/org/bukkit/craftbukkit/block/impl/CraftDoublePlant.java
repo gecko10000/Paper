@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,6 +25,7 @@ public class CraftDoublePlant extends CraftBlockData implements Bisected {
 
     @Override
     public void setHalf(final Bisected.Half half) {
+        Preconditions.checkArgument(half != null, "half cannot be null!");
         this.set(HALF, half);
     }
 }

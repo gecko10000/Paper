@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.Set;
 import net.minecraft.world.level.block.PointedDripstoneBlock;
@@ -32,6 +33,7 @@ public class CraftPointedDripstone extends CraftBlockData implements PointedDrip
 
     @Override
     public void setThickness(final PointedDripstone.Thickness thickness) {
+        Preconditions.checkArgument(thickness != null, "thickness cannot be null!");
         this.set(THICKNESS, thickness);
     }
 
@@ -42,6 +44,8 @@ public class CraftPointedDripstone extends CraftBlockData implements PointedDrip
 
     @Override
     public void setVerticalDirection(final BlockFace blockFace) {
+        Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
+        Preconditions.checkArgument(blockFace.getModY() != 0, "Invalid face, only vertical face are allowed for this property!");
         this.set(TIP_DIRECTION, blockFace);
     }
 

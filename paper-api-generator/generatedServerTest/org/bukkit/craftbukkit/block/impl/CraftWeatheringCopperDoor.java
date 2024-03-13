@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.Set;
 import net.minecraft.world.level.block.WeatheringCopperDoorBlock;
@@ -37,6 +38,8 @@ public class CraftWeatheringCopperDoor extends CraftBlockData implements Door {
 
     @Override
     public void setFacing(final BlockFace blockFace) {
+        Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
+        Preconditions.checkArgument(blockFace.isCartesian() && blockFace.getModY() == 0, "Invalid face, only cartesian horizontal face are allowed for this property!");
         this.set(FACING, blockFace);
     }
 
@@ -52,6 +55,7 @@ public class CraftWeatheringCopperDoor extends CraftBlockData implements Door {
 
     @Override
     public void setHalf(final org.bukkit.block.data.Bisected.Half half) {
+        Preconditions.checkArgument(half != null, "half cannot be null!");
         this.set(HALF, half);
     }
 
@@ -62,6 +66,7 @@ public class CraftWeatheringCopperDoor extends CraftBlockData implements Door {
 
     @Override
     public void setHinge(final Door.Hinge hinge) {
+        Preconditions.checkArgument(hinge != null, "hinge cannot be null!");
         this.set(HINGE, hinge);
     }
 

@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.Set;
 import net.minecraft.world.level.block.BellBlock;
@@ -32,6 +33,7 @@ public class CraftBell extends CraftBlockData implements Bell {
 
     @Override
     public void setAttachment(final Bell.Attachment attachment) {
+        Preconditions.checkArgument(attachment != null, "attachment cannot be null!");
         this.set(ATTACHMENT, attachment);
     }
 
@@ -42,6 +44,8 @@ public class CraftBell extends CraftBlockData implements Bell {
 
     @Override
     public void setFacing(final BlockFace blockFace) {
+        Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
+        Preconditions.checkArgument(blockFace.isCartesian() && blockFace.getModY() == 0, "Invalid face, only cartesian horizontal face are allowed for this property!");
         this.set(FACING, blockFace);
     }
 

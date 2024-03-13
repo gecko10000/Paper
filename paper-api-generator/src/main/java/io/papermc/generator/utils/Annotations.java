@@ -9,6 +9,7 @@ import org.bukkit.MinecraftExperimental;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Range;
 
 public final class Annotations {
 
@@ -51,6 +52,13 @@ public final class Annotations {
         for (final String value : values) {
             builder.addMember("value", "$S", value);
         }
+        return builder.build();
+    }
+
+    public static AnnotationSpec intRange(final long from, final long to) {
+        final AnnotationSpec.Builder builder = AnnotationSpec.builder(Range.class);
+        builder.addMember("from", "$L", from);
+        builder.addMember("to", "$L", to);
         return builder.build();
     }
 

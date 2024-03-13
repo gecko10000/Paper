@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import net.minecraft.world.level.block.CeilingHangingSignBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -41,6 +42,8 @@ public class CraftCeilingHangingSign extends CraftBlockData implements HangingSi
 
     @Override
     public void setRotation(final BlockFace blockFace) {
+        Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
+        Preconditions.checkArgument(blockFace != BlockFace.SELF && blockFace.getModY() == 0, "Invalid face, only horizontal face are allowed for this property!");
         Vector dir = blockFace.getDirection();
         float angle = (float) -Math.toDegrees(Math.atan2(dir.getX(), dir.getZ()));
         this.set(ROTATION, RotationSegment.convertToSegment(angle));

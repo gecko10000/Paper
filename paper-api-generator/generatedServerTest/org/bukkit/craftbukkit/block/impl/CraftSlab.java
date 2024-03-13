@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,6 +28,7 @@ public class CraftSlab extends CraftBlockData implements Slab {
 
     @Override
     public void setType(final Slab.Type type) {
+        Preconditions.checkArgument(type != null, "type cannot be null!");
         this.set(TYPE, type);
     }
 

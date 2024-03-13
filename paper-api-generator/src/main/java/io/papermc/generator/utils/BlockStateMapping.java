@@ -250,14 +250,14 @@ public final class BlockStateMapping {
         .put(BlockStateProperties.DOUBLE_BLOCK_HALF, Bisected.class)
         .put(BlockStateProperties.DUSTED, Brushable.class)
         .put(BlockStateProperties.FACING, Directional.class)
-        .put(BlockStateProperties.HORIZONTAL_FACING, Directional.class) // todo check impl restriction
+        .put(BlockStateProperties.HORIZONTAL_FACING, Directional.class)
         .put(BlockStateProperties.ATTACH_FACE, FaceAttachable.class)
         .put(BlockStateProperties.HANGING, Hangable.class)
         .put(BlockStateProperties.HATCH, Hatchable.class)
         .put(BlockStateProperties.LIT, Lightable.class)
         // multiple facing is done by matching two or more pipe block properties
         .put(BlockStateProperties.OPEN, Openable.class)
-        .put(BlockStateProperties.HORIZONTAL_AXIS, Orientable.class) // todo check impl restriction
+        .put(BlockStateProperties.HORIZONTAL_AXIS, Orientable.class)
         .put(BlockStateProperties.AXIS, Orientable.class)
         .put(BlockStateProperties.POWERED, Powerable.class)
         .put(BlockStateProperties.RAIL_SHAPE, Rail.class)

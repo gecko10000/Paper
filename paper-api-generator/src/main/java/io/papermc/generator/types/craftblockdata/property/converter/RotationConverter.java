@@ -24,7 +24,7 @@ public class RotationConverter implements Converter<Integer, BlockFace> {
     @Override
     public void convertSetter(final MethodSpec.Builder method, final FieldSpec field, final ParameterSpec parameter) {
         method.addStatement("$T dir = $N.getDirection()", Vector.class, parameter);
-        method.addStatement("$T angle = ($T) -$T.toDegrees($T.atan2(dir.getX(), dir.getZ()))", Float.TYPE, Float.TYPE, Math.class, Math.class);
+        method.addStatement("$1T angle = ($1T) -$2T.toDegrees($2T.atan2(dir.getX(), dir.getZ()))", Float.TYPE, Math.class);
         method.addStatement(this.rawSetExprent().formatted("$N"), field, RotationSegment.class);
     }
 

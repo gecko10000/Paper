@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.Set;
 import net.minecraft.world.level.block.LeverBlock;
@@ -33,6 +34,7 @@ public class CraftLever extends CraftBlockData implements Switch {
     @Override
     public void setAttachedFace(
             final org.bukkit.block.data.FaceAttachable.AttachedFace attachedFace) {
+        Preconditions.checkArgument(attachedFace != null, "attachedFace cannot be null!");
         this.set(FACE, attachedFace);
     }
 
@@ -43,6 +45,8 @@ public class CraftLever extends CraftBlockData implements Switch {
 
     @Override
     public void setFacing(final BlockFace blockFace) {
+        Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
+        Preconditions.checkArgument(blockFace.isCartesian() && blockFace.getModY() == 0, "Invalid face, only cartesian horizontal face are allowed for this property!");
         this.set(FACING, blockFace);
     }
 

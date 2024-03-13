@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.Set;
 import net.minecraft.world.level.block.PinkPetalsBlock;
@@ -9,6 +10,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.PinkPetals;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
+import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -28,6 +30,8 @@ public class CraftPinkPetals extends CraftBlockData implements PinkPetals {
 
     @Override
     public void setFacing(final BlockFace blockFace) {
+        Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
+        Preconditions.checkArgument(blockFace.isCartesian() && blockFace.getModY() == 0, "Invalid face, only cartesian horizontal face are allowed for this property!");
         this.set(FACING, blockFace);
     }
 
@@ -37,12 +41,16 @@ public class CraftPinkPetals extends CraftBlockData implements PinkPetals {
     }
 
     @Override
+    @Range(
+            from = 1,
+            to = 4
+    )
     public int getFlowerAmount() {
         return this.get(AMOUNT);
     }
 
     @Override
-    public void setFlowerAmount(final int flowerAmount) {
+    public void setFlowerAmount(@Range(from = 1, to = 4) final int flowerAmount) {
         this.set(AMOUNT, flowerAmount);
     }
 

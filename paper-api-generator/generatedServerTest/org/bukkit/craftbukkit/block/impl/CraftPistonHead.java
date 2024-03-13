@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.Set;
 import net.minecraft.world.level.block.piston.PistonHeadBlock;
@@ -32,6 +33,8 @@ public class CraftPistonHead extends CraftBlockData implements PistonHead {
 
     @Override
     public void setFacing(final BlockFace blockFace) {
+        Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
+        Preconditions.checkArgument(blockFace.isCartesian(), "Invalid face, only cartesian face are allowed for this property!");
         this.set(FACING, blockFace);
     }
 
@@ -57,6 +60,7 @@ public class CraftPistonHead extends CraftBlockData implements PistonHead {
 
     @Override
     public void setType(final org.bukkit.block.data.type.TechnicalPiston.Type type) {
+        Preconditions.checkArgument(type != null, "type cannot be null!");
         this.set(TYPE, type);
     }
 }

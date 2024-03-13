@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import net.minecraft.world.level.block.SculkSensorBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -9,6 +10,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.SculkSensorPhase;
 import org.bukkit.block.data.type.SculkSensor;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
+import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -24,12 +26,16 @@ public class CraftSculkSensor extends CraftBlockData implements SculkSensor {
     }
 
     @Override
+    @Range(
+            from = 0,
+            to = 15
+    )
     public int getPower() {
         return this.get(POWER);
     }
 
     @Override
-    public void setPower(final int power) {
+    public void setPower(@Range(from = 0, to = 15) final int power) {
         this.set(POWER, power);
     }
 
@@ -45,6 +51,7 @@ public class CraftSculkSensor extends CraftBlockData implements SculkSensor {
 
     @Override
     public void setSculkSensorPhase(final SculkSensor.Phase phase) {
+        Preconditions.checkArgument(phase != null, "phase cannot be null!");
         this.set(PHASE, phase);
     }
 

@@ -6,6 +6,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.bukkit.block.data.Brushable;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
+import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -17,12 +18,16 @@ public class CraftBrushable extends CraftBlockData implements Brushable {
     }
 
     @Override
+    @Range(
+            from = 0,
+            to = 3
+    )
     public int getDusted() {
         return this.get(DUSTED);
     }
 
     @Override
-    public void setDusted(final int dusted) {
+    public void setDusted(@Range(from = 0, to = 3) final int dusted) {
         this.set(DUSTED, dusted);
     }
 

@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.Set;
 import net.minecraft.world.level.block.BedBlock;
@@ -32,6 +33,8 @@ public class CraftBed extends CraftBlockData implements Bed {
 
     @Override
     public void setFacing(final BlockFace blockFace) {
+        Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
+        Preconditions.checkArgument(blockFace.isCartesian() && blockFace.getModY() == 0, "Invalid face, only cartesian horizontal face are allowed for this property!");
         this.set(FACING, blockFace);
     }
 
@@ -57,6 +60,7 @@ public class CraftBed extends CraftBlockData implements Bed {
 
     @Override
     public void setPart(final Bed.Part part) {
+        Preconditions.checkArgument(part != null, "part cannot be null!");
         this.set(PART, part);
     }
 }

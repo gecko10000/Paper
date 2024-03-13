@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.Set;
 import net.minecraft.world.level.block.HopperBlock;
@@ -38,6 +39,8 @@ public class CraftHopper extends CraftBlockData implements Hopper {
 
     @Override
     public void setFacing(final BlockFace blockFace) {
+        Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
+        Preconditions.checkArgument(blockFace.isCartesian() && blockFace != BlockFace.UP, "Invalid face, only cartesian face (excluding UP) are allowed for this property!");
         this.set(FACING, blockFace);
     }
 

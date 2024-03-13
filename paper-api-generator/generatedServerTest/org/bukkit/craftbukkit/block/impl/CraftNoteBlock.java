@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -31,6 +32,7 @@ public class CraftNoteBlock extends CraftBlockData implements NoteBlock {
 
     @Override
     public void setInstrument(final Instrument instrument) {
+        Preconditions.checkArgument(instrument != null, "instrument cannot be null!");
         this.set(INSTRUMENT, instrument);
     }
 
@@ -41,6 +43,7 @@ public class CraftNoteBlock extends CraftBlockData implements NoteBlock {
 
     @Override
     public void setNote(final Note note) {
+        Preconditions.checkArgument(note != null, "note cannot be null!");
         this.set(NOTE, (int) note.getId());
     }
 

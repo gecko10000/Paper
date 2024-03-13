@@ -1,6 +1,7 @@
 package io.papermc.generator.types.craftblockdata;
 
 import com.google.common.base.CaseFormat;
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
@@ -21,14 +22,18 @@ import net.minecraft.core.FrontAndTop;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BrewingStandBlock;
 import net.minecraft.world.level.block.ChiseledBookShelfBlock;
-import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
+import org.bukkit.Axis;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.block.data.Rail;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.function.BiConsumer;
 
 import static io.papermc.generator.utils.NamingManager.keywordGet;
 import static io.papermc.generator.utils.NamingManager.keywordGetSet;
@@ -79,13 +84,36 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
         .put(BlockStateProperties.ATTACHED, IS_KEYWORD)
         .put(BlockStateProperties.SHORT, IS_KEYWORD)
         .put(BlockStateProperties.SHRIEKING, IS_KEYWORD)
-        .put(BlockStateProperties.CAN_SUMMON, IS_KEYWORD) // todo change this one isCan is weird
+        .put(BlockStateProperties.CAN_SUMMON, IS_KEYWORD)
         .put(BlockStateProperties.BERRIES, keywordGet("has")) // spigot method rename
         // data holder keywords is only needed for the first property they hold
         .put(BrewingStandBlock.HAS_BOTTLE[0], keywordGet("has"))
         .put(ChiseledBookShelfBlock.SLOT_OCCUPIED_PROPERTIES.get(0), keywordGet("is"))
-        //.put(RedStoneWireBlock.PROPERTY_BY_DIRECTION.values().iterator().next(), keywordGet("get"))
         .build();
+
+    private static final Map<Property<?>, BiConsumer<ParameterSpec, MethodSpec.Builder>> SETTER_PRECONDITIONS = Map.of(
+        BlockStateProperties.FACING, (param, method) -> {
+            method.addStatement("$T.checkArgument($N.isCartesian(), $S)", Preconditions.class, param, "Invalid face, only cartesian face are allowed for this property!");
+        },
+        BlockStateProperties.HORIZONTAL_FACING, (param, method) -> {
+            method.addStatement("$1T.checkArgument($2N.isCartesian() && $2N.getModY() == 0, $3S)", Preconditions.class, param, "Invalid face, only cartesian horizontal face are allowed for this property!");
+        },
+        BlockStateProperties.FACING_HOPPER, (param, method) -> {
+            method.addStatement("$1T.checkArgument($2N.isCartesian() && $2N != $3T.UP, $4S)", Preconditions.class, param, BlockFace.class, "Invalid face, only cartesian face (excluding UP) are allowed for this property!");
+        },
+        BlockStateProperties.VERTICAL_DIRECTION, (param, method) -> {
+            method.addStatement("$T.checkArgument($N.getModY() != 0, $S)", Preconditions.class, param, "Invalid face, only vertical face are allowed for this property!");
+        },
+        BlockStateProperties.ROTATION_16, (param, method) -> {
+            method.addStatement("$1T.checkArgument($2N != $3T.SELF && $2N.getModY() == 0, $4S)", Preconditions.class, param, BlockFace.class, "Invalid face, only horizontal face are allowed for this property!");
+        },
+        BlockStateProperties.HORIZONTAL_AXIS, (param, method) -> {
+            method.addStatement("$1T.checkArgument($2N == $3T.X || $2N == $3T.Z, $4S)", Preconditions.class, param, Axis.class, "Invalid axis, only horizontal axis are allowed for this property!");
+        },
+        BlockStateProperties.RAIL_SHAPE_STRAIGHT, (param, method) -> {
+            method.addStatement("$1T.checkArgument($2N != $3T.NORTH_EAST && $2N != $3T.NORTH_WEST && $2N != $3T.SOUTH_EAST && $2N != $3T.SOUTH_WEST, $4S)", Preconditions.class, param, Rail.Shape.class, "Invalid rail shape, only straight rail are allowed for this property!");
+        }
+    );
 
     private TypeSpec.Builder propertyHolder() {
         TypeSpec.Builder typeBuilder = TypeSpec.classBuilder(this.className)
@@ -105,8 +133,6 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
         typeBuilder.addMethod(constructor);
         return typeBuilder;
     }
-
-    public static final String INDEX_VARIABLE = "index";
 
     @Override
     protected TypeSpec getTypeSpec() {
@@ -141,6 +167,9 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
             // get
             {
                 MethodSpec.Builder methodBuilder = createMethod(naming.simpleGetterName(name -> !name.startsWith("is_") && !name.startsWith("has_")));
+                if (property instanceof IntegerProperty intProperty && apiClass == Integer.TYPE) {
+                    methodBuilder.addAnnotation(Annotations.intRange(intProperty.min, intProperty.max));
+                }
                 converter.convertGetter(methodBuilder, field);
                 methodBuilder.returns(apiClass);
 
@@ -149,9 +178,20 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
 
             // set
             {
-                ParameterSpec parameter = ParameterSpec.builder(apiClass, naming.paramName(apiClass), FINAL).build();
+                String paramName = naming.paramName(apiClass);
+                ParameterSpec.Builder parameterBuilder = ParameterSpec.builder(apiClass, paramName, FINAL);
+                if (property instanceof IntegerProperty intProperty && apiClass == Integer.TYPE) {
+                    parameterBuilder.addAnnotation(Annotations.intRange(intProperty.min, intProperty.max));
+                }
+                ParameterSpec parameter = parameterBuilder.build();
 
                 MethodSpec.Builder methodBuilder = createMethod(naming.simpleSetterName(name -> !name.startsWith("is_")), apiClass).addParameter(parameter);
+                if (!apiClass.isPrimitive()) {
+                    methodBuilder.addStatement("$T.checkArgument($N != null, $S)", Preconditions.class, parameter, "%s cannot be null!".formatted(paramName));
+                }
+                if (SETTER_PRECONDITIONS.containsKey(property)) {
+                    SETTER_PRECONDITIONS.get(property).accept(parameter, methodBuilder);
+                }
                 converter.convertSetter(methodBuilder, field, parameter);
 
                 typeBuilder.addMethod(methodBuilder.build());
@@ -180,12 +220,15 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
             NamingManager.AccessKeyword accessKeyword = FLUENT_KEYWORD.getOrDefault(firstProperty, dataPropertyMaker.getKeyword());
             NamingManager naming = new NamingManager(accessKeyword, CaseFormat.UPPER_UNDERSCORE, NamingManager.stripFieldAccessKeyword(dataPropertyMaker.getBaseName()));
 
-            ParameterSpec indexParameter = ParameterSpec.builder(dataPropertyMaker.getIndexClass(), dataPropertyMaker.getIndexClass() == Integer.TYPE ? INDEX_VARIABLE : naming.paramName(dataPropertyMaker.getIndexClass()), FINAL).build();
+            ParameterSpec indexParameter = ParameterSpec.builder(dataPropertyMaker.getIndexClass(), dataPropertyMaker.getIndexClass() == Integer.TYPE ? Types.INDEX_VARIABLE : naming.paramName(dataPropertyMaker.getIndexClass()), FINAL).build();
 
             // get
             {
                 MethodSpec.Builder methodBuilder = createMethod(naming.simpleGetterName(name -> true), dataPropertyMaker.getIndexClass())
                     .addParameter(indexParameter);
+                if (!dataPropertyMaker.getIndexClass().isPrimitive()) {
+                    methodBuilder.addStatement("$T.checkArgument($N != null, $S)", Preconditions.class, indexParameter, "%s cannot be null!".formatted(indexParameter.name));
+                }
                 converter.convertGetter(propertyConverter, methodBuilder, field, indexParameter);
                 methodBuilder.returns(apiClass);
 
@@ -194,11 +237,21 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
 
             // set
             {
-                ParameterSpec parameter = ParameterSpec.builder(apiClass, naming.paramName(apiClass), FINAL).build();
+                String paramName = naming.paramName(apiClass);
+                ParameterSpec parameter = ParameterSpec.builder(apiClass, paramName, FINAL).build();
 
                 MethodSpec.Builder methodBuilder = createMethod(naming.simpleSetterName(name -> true), dataPropertyMaker.getIndexClass(), apiClass)
                     .addParameter(indexParameter)
                     .addParameter(parameter);
+                if (!dataPropertyMaker.getIndexClass().isPrimitive()) {
+                    methodBuilder.addStatement("$T.checkArgument($N != null, $S)", Preconditions.class, indexParameter, "%s cannot be null!".formatted(indexParameter.name));
+                }
+                if (!apiClass.isPrimitive()) {
+                    methodBuilder.addStatement("$T.checkArgument($N != null, $S)", Preconditions.class, parameter, "%s cannot be null!".formatted(paramName));
+                }
+                if (SETTER_PRECONDITIONS.containsKey(firstProperty)) {
+                    SETTER_PRECONDITIONS.get(firstProperty).accept(parameter, methodBuilder);
+                }
                 converter.convertSetter(propertyConverter, methodBuilder, field, indexParameter, parameter);
 
                 typeBuilder.addMethod(methodBuilder.build());

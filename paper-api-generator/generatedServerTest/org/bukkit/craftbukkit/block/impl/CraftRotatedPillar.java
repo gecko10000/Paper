@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
 import java.util.Set;
 import net.minecraft.core.Direction;
@@ -26,6 +27,7 @@ public class CraftRotatedPillar extends CraftBlockData implements Orientable {
 
     @Override
     public void setAxis(final Axis axis) {
+        Preconditions.checkArgument(axis != null, "axis cannot be null!");
         this.set(AXIS, axis);
     }
 

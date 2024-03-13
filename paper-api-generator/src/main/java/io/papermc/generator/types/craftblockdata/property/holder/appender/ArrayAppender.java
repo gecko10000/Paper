@@ -8,6 +8,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import io.papermc.generator.types.StructuredGenerator;
 import io.papermc.generator.types.craftblockdata.CraftBlockDataGenerator;
+import io.papermc.generator.types.craftblockdata.Types;
 import io.papermc.generator.types.craftblockdata.property.converter.ConverterBase;
 import io.papermc.generator.types.craftblockdata.property.holder.DataHolderType;
 import io.papermc.generator.utils.NamingManager;
@@ -26,11 +27,11 @@ public class ArrayAppender implements DataAppender {
             String collectFieldName = naming.getVariableNameWrapper().post("s").concat();
             MethodSpec.Builder methodBuilder = generator.createMethod(naming.getMethodNameWrapper().post("s").concat());
             methodBuilder.addStatement("$T $L = $T.builder()", ParameterizedTypeName.get(ImmutableSet.Builder.class, Integer.class), collectFieldName, ImmutableSet.class);
-            methodBuilder.beginControlFlow("for (int $L = 0, len = $N.length; $L < len; $L++)", CraftBlockDataGenerator.INDEX_VARIABLE, field, CraftBlockDataGenerator.INDEX_VARIABLE, CraftBlockDataGenerator.INDEX_VARIABLE);
+            methodBuilder.beginControlFlow("for (int $1L = 0, len = $2N.length; $1L < len; $1L++)", Types.INDEX_VARIABLE, field);
             {
                 methodBuilder.beginControlFlow("if (" + childConverter.rawGetExprent().formatted("$N[$N]") + ")", field, indexParameter);
                 {
-                    methodBuilder.addStatement("$L.add($L)", collectFieldName, CraftBlockDataGenerator.INDEX_VARIABLE);
+                    methodBuilder.addStatement("$L.add($L)", collectFieldName, Types.INDEX_VARIABLE);
                 }
                 methodBuilder.endControlFlow();
             }
