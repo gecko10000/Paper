@@ -1,15 +1,12 @@
-package io.papermc.generator.types.craftblockdata.converter;
+package io.papermc.generator.types.craftblockdata.property.converter;
 
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterSpec;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
-import net.minecraft.world.level.block.state.properties.RotationSegment;
 import org.bukkit.Note;
-import org.bukkit.util.Vector;
 
-public class NoteConverter extends Converter<Integer, Note> {
+public class NoteConverter implements Converter<Integer, Note> {
     @Override
     public Property<Integer> getProperty() {
         return BlockStateProperties.NOTE;
@@ -21,12 +18,17 @@ public class NoteConverter extends Converter<Integer, Note> {
     }
 
     @Override
-    public void convertSetter(final MethodSpec.Builder method, final FieldSpec field, final ParameterSpec parameter) {
-        method.addCode("this.set($N, (int) $N.getId());", field, parameter);
+    public String rawSetExprent() {
+        return "this.set(%s, (int) $N.getId())";
     }
 
     @Override
     public void convertGetter(final MethodSpec.Builder method, final FieldSpec field) {
-        method.addCode("return new $T(this.get($N));", Note.class, field);
+        method.addStatement("return " + this.rawGetExprent().formatted("$N"), this.getApiType(), field);
+    }
+
+    @Override
+    public String rawGetExprent() {
+        return "new $T(this.get(%s))";
     }
 }

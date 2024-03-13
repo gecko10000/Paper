@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.block.impl;
 
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Set;
 import net.minecraft.world.level.block.DecoratedPotBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -41,6 +42,11 @@ public class CraftDecoratedPot extends CraftBlockData implements DecoratedPot {
     @Override
     public void setFacing(final BlockFace blockFace) {
         this.set(HORIZONTAL_FACING, blockFace);
+    }
+
+    @Override
+    public Set<BlockFace> getFaces() {
+        return this.getValues(HORIZONTAL_FACING, BlockFace.class);
     }
 
     @Override

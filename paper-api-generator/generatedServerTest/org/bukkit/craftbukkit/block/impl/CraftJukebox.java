@@ -21,7 +21,8 @@ public class CraftJukebox extends CraftBlockData implements Jukebox {
         return this.get(HAS_RECORD);
     }
 
-    public void hasRecord(final boolean hasRecord) {
+    @Override
+    public void setHasRecord(final boolean hasRecord) {
         this.set(HAS_RECORD, hasRecord);
     }
 }

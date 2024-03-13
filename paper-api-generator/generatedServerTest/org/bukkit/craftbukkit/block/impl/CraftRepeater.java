@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.block.impl;
 
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Set;
 import net.minecraft.world.level.block.RepeaterBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -36,6 +37,16 @@ public class CraftRepeater extends CraftBlockData implements Repeater {
     }
 
     @Override
+    public int getMinimumDelay() {
+        return DELAY.min;
+    }
+
+    @Override
+    public int getMaximumDelay() {
+        return DELAY.max;
+    }
+
+    @Override
     public BlockFace getFacing() {
         return this.get(FACING, BlockFace.class);
     }
@@ -43,6 +54,11 @@ public class CraftRepeater extends CraftBlockData implements Repeater {
     @Override
     public void setFacing(final BlockFace blockFace) {
         this.set(FACING, blockFace);
+    }
+
+    @Override
+    public Set<BlockFace> getFaces() {
+        return this.getValues(FACING, BlockFace.class);
     }
 
     @Override

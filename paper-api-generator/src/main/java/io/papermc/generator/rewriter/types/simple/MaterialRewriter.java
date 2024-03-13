@@ -3,9 +3,11 @@ package io.papermc.generator.rewriter.types.simple;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.MultimapBuilder;
 import com.google.common.collect.Sets;
+import io.papermc.generator.rewriter.SearchMetadata;
 import io.papermc.generator.rewriter.types.EnumRegistryRewriter;
 import io.papermc.generator.rewriter.types.SwitchCaseRewriter;
 import io.papermc.generator.rewriter.types.SwitchRewriter;
+import io.papermc.generator.rewriter.utils.Annotations;
 import io.papermc.generator.utils.BlockStateMapping;
 import io.papermc.generator.utils.Formatting;
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.BundleItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.EmptyBlockGetter;
@@ -291,7 +295,7 @@ public class MaterialRewriter {
         }
 
         @Override
-        protected String rewriteEnumValue(Holder.Reference<Item> reference) { // bundle doesn't have the experimental annot
+        protected String rewriteEnumValue(Holder.Reference<Item> reference) {
             Item item = reference.value();
             if (item.equals(net.minecraft.world.item.Items.AIR)) {
                 return "%d, %d".formatted(-1, 0); // item+block
@@ -305,6 +309,15 @@ public class MaterialRewriter {
             }
 
             return String.valueOf(-1); // id not needed for non legacy material
+        }
+
+        @Override
+        protected void rewriteAnnotation(Holder.Reference<Item> reference, StringBuilder builder, SearchMetadata metadata) {
+            if (reference.value() instanceof BundleItem) {
+                Annotations.experimentalAnnotations(builder, metadata, FeatureFlags.BUNDLE); // special case since the item is not locked itself just in the creative menu
+            } else {
+                super.rewriteAnnotation(reference, builder, metadata);
+            }
         }
     }
 

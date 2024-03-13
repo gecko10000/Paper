@@ -29,6 +29,16 @@ public class CraftTurtleEgg extends CraftBlockData implements TurtleEgg {
     }
 
     @Override
+    public int getMinimumEggs() {
+        return EGGS.min;
+    }
+
+    @Override
+    public int getMaximumEggs() {
+        return EGGS.max;
+    }
+
+    @Override
     public int getHatch() {
         return this.get(HATCH);
     }
@@ -36,5 +46,10 @@ public class CraftTurtleEgg extends CraftBlockData implements TurtleEgg {
     @Override
     public void setHatch(final int hatch) {
         this.set(HATCH, hatch);
+    }
+
+    @Override
+    public int getMaximumHatch() {
+        return HATCH.max;
     }
 }

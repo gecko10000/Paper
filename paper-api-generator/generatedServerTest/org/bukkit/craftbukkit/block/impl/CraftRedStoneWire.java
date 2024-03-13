@@ -1,45 +1,30 @@
 package org.bukkit.craftbukkit.block.impl;
 
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.RedstoneSide;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.RedstoneWire;
+import org.bukkit.craftbukkit.block.CraftBlock;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
 public class CraftRedStoneWire extends CraftBlockData implements RedstoneWire {
-    private static final EnumProperty<RedstoneSide> EAST = RedStoneWireBlock.EAST;
-
-    private static final EnumProperty<RedstoneSide> NORTH = RedStoneWireBlock.NORTH;
-
     private static final IntegerProperty POWER = RedStoneWireBlock.POWER;
 
-    private static final EnumProperty<RedstoneSide> SOUTH = RedStoneWireBlock.SOUTH;
-
-    private static final EnumProperty<RedstoneSide> WEST = RedStoneWireBlock.WEST;
+    private static final Map<BlockFace, EnumProperty<RedstoneSide>> PROPERTY_BY_DIRECTION = RedStoneWireBlock.PROPERTY_BY_DIRECTION.entrySet().stream()
+            .collect(Collectors.toMap(entry -> CraftBlock.notchToBlockFace(entry.getKey()), entry -> entry.getValue()));
 
     public CraftRedStoneWire(BlockState state) {
         super(state);
-    }
-
-    public RedstoneWire.Connection getEast() {
-        return this.get(EAST, RedstoneWire.Connection.class);
-    }
-
-    public void setEast(final RedstoneWire.Connection connection) {
-        this.set(EAST, connection);
-    }
-
-    public RedstoneWire.Connection getNorth() {
-        return this.get(NORTH, RedstoneWire.Connection.class);
-    }
-
-    public void setNorth(final RedstoneWire.Connection connection) {
-        this.set(NORTH, connection);
     }
 
     @Override
@@ -52,19 +37,23 @@ public class CraftRedStoneWire extends CraftBlockData implements RedstoneWire {
         this.set(POWER, power);
     }
 
-    public RedstoneWire.Connection getSouth() {
-        return this.get(SOUTH, RedstoneWire.Connection.class);
+    @Override
+    public int getMaximumPower() {
+        return POWER.max;
     }
 
-    public void setSouth(final RedstoneWire.Connection connection) {
-        this.set(SOUTH, connection);
+    @Override
+    public RedstoneWire.Connection getFace(final BlockFace blockFace) {
+        return this.get(PROPERTY_BY_DIRECTION.get(blockFace), RedstoneWire.Connection.class);
     }
 
-    public RedstoneWire.Connection getWest() {
-        return this.get(WEST, RedstoneWire.Connection.class);
+    @Override
+    public void setFace(final BlockFace blockFace, final RedstoneWire.Connection connection) {
+        this.set(PROPERTY_BY_DIRECTION.get(blockFace), connection);
     }
 
-    public void setWest(final RedstoneWire.Connection connection) {
-        this.set(WEST, connection);
+    @Override
+    public Set<BlockFace> getAllowedFaces() {
+        return Collections.unmodifiableSet(PROPERTY_BY_DIRECTION.keySet());
     }
 }

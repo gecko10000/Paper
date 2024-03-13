@@ -25,4 +25,14 @@ public class CraftSnowLayer extends CraftBlockData implements Snow {
     public void setLayers(final int layers) {
         this.set(LAYERS, layers);
     }
+
+    @Override
+    public int getMinimumLayers() {
+        return LAYERS.min;
+    }
+
+    @Override
+    public int getMaximumLayers() {
+        return LAYERS.max;
+    }
 }

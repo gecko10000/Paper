@@ -1,6 +1,8 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.collect.ImmutableSet;
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Set;
 import net.minecraft.world.level.block.BrewingStandBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -10,37 +12,35 @@ import org.bukkit.craftbukkit.block.data.CraftBlockData;
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
 public class CraftBrewingStand extends CraftBlockData implements BrewingStand {
-    private static final BooleanProperty HAS_BOTTLE = BrewingStandBlock.HAS_BOTTLE;
-
-    private static final BooleanProperty HAS_BOTTLE = BrewingStandBlock.HAS_BOTTLE;
-
-    private static final BooleanProperty HAS_BOTTLE = BrewingStandBlock.HAS_BOTTLE;
+    private static final BooleanProperty[] HAS_BOTTLE = BrewingStandBlock.HAS_BOTTLE;
 
     public CraftBrewingStand(BlockState state) {
         super(state);
     }
 
-    public boolean hasBottle0() {
-        return this.get(HAS_BOTTLE);
+    @Override
+    public boolean hasBottle(final int index) {
+        return this.get(HAS_BOTTLE[index]);
     }
 
-    public void hasBottle0(final boolean hasBottle0) {
-        this.set(HAS_BOTTLE, hasBottle0);
+    @Override
+    public void setBottle(final int index, final boolean bottle) {
+        this.set(HAS_BOTTLE[index], bottle);
     }
 
-    public boolean hasBottle1() {
-        return this.get(HAS_BOTTLE);
+    @Override
+    public Set<Integer> getBottles() {
+        ImmutableSet.Builder<Integer> bottles = ImmutableSet.builder();
+        for (int index = 0, len = HAS_BOTTLE.length; index < len; index++) {
+            if (this.get(HAS_BOTTLE[index])) {
+                bottles.add(index);
+            }
+        }
+        return bottles.build();
     }
 
-    public void hasBottle1(final boolean hasBottle1) {
-        this.set(HAS_BOTTLE, hasBottle1);
-    }
-
-    public boolean hasBottle2() {
-        return this.get(HAS_BOTTLE);
-    }
-
-    public void hasBottle2(final boolean hasBottle2) {
-        this.set(HAS_BOTTLE, hasBottle2);
+    @Override
+    public int getMaximumBottles() {
+        return HAS_BOTTLE.length;
     }
 }

@@ -25,4 +25,9 @@ public class CraftSnifferEgg extends CraftBlockData implements Hatchable {
     public void setHatch(final int hatch) {
         this.set(HATCH, hatch);
     }
+
+    @Override
+    public int getMaximumHatch() {
+        return HATCH.max;
+    }
 }

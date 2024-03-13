@@ -4,7 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 import io.papermc.generator.Main;
 import io.papermc.generator.rewriter.utils.Annotations;
-import io.papermc.generator.rewriter.utils.ClassHelper;
+import io.papermc.generator.utils.ClassHelper;
 import io.papermc.generator.rewriter.utils.ImportCollector;
 import io.papermc.generator.utils.Formatting;
 import io.papermc.paper.generated.GeneratedFrom;
@@ -52,7 +52,7 @@ public class SearchReplaceRewriter implements SourceRewriter {
     private SearchReplaceRewriter foundRewriter;
 
     private void searchAndReplace(BufferedReader reader, StringBuilder content) throws IOException {
-        searchAndReplace(reader, content, this.pattern == null ? new HashMap<>() : Map.of(this.pattern, this));
+        searchAndReplace(reader, content, this.pattern == null ? new HashMap<>() : Map.of(this.pattern, this)); // todo collect srt per pattern on bootstrap
     }
 
     protected void searchAndReplace(BufferedReader reader, StringBuilder content, Map<String, SearchReplaceRewriter> patternInfo) throws IOException {

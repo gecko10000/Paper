@@ -25,4 +25,9 @@ public class CraftRespawnAnchor extends CraftBlockData implements RespawnAnchor 
     public void setCharges(final int charges) {
         this.set(CHARGE, charges);
     }
+
+    @Override
+    public int getMaximumCharges() {
+        return CHARGE.max;
+    }
 }

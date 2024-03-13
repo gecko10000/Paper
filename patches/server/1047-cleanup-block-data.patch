@@ -4,6 +4,19 @@ Date: Sun, 3 Mar 2024 15:51:47 +0100
 Subject: [PATCH] cleanup block data
 
 
+diff --git a/src/main/java/net/minecraft/world/level/block/ShulkerBoxBlock.java b/src/main/java/net/minecraft/world/level/block/ShulkerBoxBlock.java
+index 42407c5c0c09cd9d19bc7af92af8868bb038c686..c601b9397de7b42dc2bc2aa88ca90b55f4345013 100644
+--- a/src/main/java/net/minecraft/world/level/block/ShulkerBoxBlock.java
++++ b/src/main/java/net/minecraft/world/level/block/ShulkerBoxBlock.java
+@@ -73,7 +73,7 @@ public class ShulkerBoxBlock extends BaseEntityBlock {
+         map.put(Direction.UP, UP_OPEN_AABB);
+         map.put(Direction.DOWN, DOWN_OPEN_AABB);
+     });
+-    public static final EnumProperty<Direction> FACING = DirectionalBlock.FACING;
++    public static final net.minecraft.world.level.block.state.properties.DirectionProperty FACING = DirectionalBlock.FACING; // Paper - this is needed for the generator in theory it's a flaw in the generator but there's no reason to have that generic access here
+     public static final ResourceLocation CONTENTS = new ResourceLocation("contents");
+     @Nullable
+     public final DyeColor color;
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java b/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
 index d6480b44f94f1a8d21eb5b5ded2956889883c560..a4f8ce8ec70256403ff162092f8ff51babd395bf 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
@@ -547,6 +560,25 @@ index e71fd199fd8eb7472c6f41908e2e711a338587c7..09e177b66648e03be53c758893ab71d3
 +        this.set(CraftButton.POWERED, powered);
      }
  }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCalibratedSculkSensor.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCalibratedSculkSensor.java
+index decacf616d9c6f269890d5d4801775714eef4501..e438a66ca44451d78447479329e0ab860192f056 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCalibratedSculkSensor.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCalibratedSculkSensor.java
+@@ -37,12 +37,12 @@ public final class CraftCalibratedSculkSensor extends org.bukkit.craftbukkit.blo
+     private static final net.minecraft.world.level.block.state.properties.EnumProperty<?> PHASE = getEnum(net.minecraft.world.level.block.CalibratedSculkSensorBlock.class, "sculk_sensor_phase");
+ 
+     @Override
+-    public org.bukkit.block.data.type.SculkSensor.Phase getPhase() {
++    public org.bukkit.block.data.type.SculkSensor.Phase getSculkSensorPhase() {
+         return this.get(CraftCalibratedSculkSensor.PHASE, org.bukkit.block.data.type.SculkSensor.Phase.class);
+     }
+ 
+     @Override
+-    public void setPhase(org.bukkit.block.data.type.SculkSensor.Phase phase) {
++    public void setSculkSensorPhase(org.bukkit.block.data.type.SculkSensor.Phase phase) {
+         this.set(CraftCalibratedSculkSensor.PHASE, phase);
+     }
+ 
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCarrots.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCarrot.java
 similarity index 59%
 rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftCarrots.java
@@ -635,6 +667,32 @@ index ddd573ae55dfbad98465b34432760fadbc97047f..70656fee95457ae367aa4b9cbe657698
 +        return this.getValues(CraftCarvedPumpkin.FACING, org.bukkit.block.BlockFace.class);
      }
  }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCaveVines.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCaveVines.java
+index 5b387ce833e27298f85618fa922362e613aa9913..d038315271d3a2fa1ffe503c1fad48587079fc4d 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCaveVines.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCaveVines.java
+@@ -37,7 +37,7 @@ public final class CraftCaveVines extends org.bukkit.craftbukkit.block.data.Craf
+     private static final net.minecraft.world.level.block.state.properties.BooleanProperty BERRIES = getBoolean(net.minecraft.world.level.block.CaveVinesBlock.class, "berries");
+ 
+     @Override
+-    public boolean isBerries() {
++    public boolean hasBerries() {
+         return this.get(CraftCaveVines.BERRIES);
+     }
+ 
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCaveVinesPlant.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCaveVinesPlant.java
+index b8c199bfbe5bd7a965f408404e752a5c017e7fa5..bc1b127e7973df62e2f2b542dd8232409ad2d231 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCaveVinesPlant.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCaveVinesPlant.java
+@@ -18,7 +18,7 @@ public final class CraftCaveVinesPlant extends org.bukkit.craftbukkit.block.data
+     private static final net.minecraft.world.level.block.state.properties.BooleanProperty BERRIES = getBoolean(net.minecraft.world.level.block.CaveVinesPlantBlock.class, "berries");
+ 
+     @Override
+-    public boolean isBerries() {
++    public boolean hasBerries() {
+         return this.get(CraftCaveVinesPlant.BERRIES);
+     }
+ 
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftChorusFruit.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftChorusPlant.java
 similarity index 81%
 rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftChorusFruit.java
@@ -1282,10 +1340,10 @@ index 5698cb115ba6dcf50686bb8cfb82e97d6afecd9f..74b7a975885730d6015edf128c6de558
      }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftJukeBox.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftJukebox.java
-similarity index 72%
+similarity index 62%
 rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftJukeBox.java
 rename to src/main/java/org/bukkit/craftbukkit/block/impl/CraftJukebox.java
-index 3e37557bf63597908949c6f8bbb2478cdb0557f3..fd76021cf2de3a872e37e7d8a43d20e070b75704 100644
+index 3e37557bf63597908949c6f8bbb2478cdb0557f3..42a113f262ac6e65b1e333ff18be9ee430e98e22 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftJukeBox.java
 +++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftJukebox.java
 @@ -3,13 +3,13 @@
@@ -1305,14 +1363,35 @@ index 3e37557bf63597908949c6f8bbb2478cdb0557f3..fd76021cf2de3a872e37e7d8a43d20e0
          super(state);
      }
  
-@@ -19,6 +19,6 @@ public final class CraftJukeBox extends org.bukkit.craftbukkit.block.data.CraftB
+@@ -19,6 +19,11 @@ public final class CraftJukeBox extends org.bukkit.craftbukkit.block.data.CraftB
  
      @Override
      public boolean hasRecord() {
 -        return this.get(CraftJukeBox.HAS_RECORD);
 +        return this.get(CraftJukebox.HAS_RECORD);
++    }
++
++    @Override
++    public void setHasRecord(boolean hasRecord) {
++        this.set(CraftJukebox.HAS_RECORD, hasRecord);
      }
  }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftLectern.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftLectern.java
+index ee53b1520825b935f60cdb3fc271f6cc911b56ee..958cc06ba16cc6b81845163a8ea10957ee771e6f 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftLectern.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftLectern.java
+@@ -22,6 +22,11 @@ public final class CraftLectern extends org.bukkit.craftbukkit.block.data.CraftB
+         return this.get(CraftLectern.HAS_BOOK);
+     }
+ 
++    @Override
++    public void setHasBook(boolean hasBook) {
++        this.set(CraftLectern.HAS_BOOK, hasBook);
++    }
++
+     // org.bukkit.craftbukkit.block.data.CraftDirectional
+ 
+     private static final net.minecraft.world.level.block.state.properties.EnumProperty<?> FACING = getEnum(net.minecraft.world.level.block.LecternBlock.class, "facing");
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftFluids.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftLiquid.java
 similarity index 69%
 rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftFluids.java
@@ -2157,6 +2236,25 @@ index 4f28a405db6c0d1acc0b1a8bc5a1aca3ef392ad0..c745efc498ddd97e6fa6911c928e2891
 +        return this.getValues(CraftRotatedPillar.AXIS, org.bukkit.Axis.class);
      }
  }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSculkSensor.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSculkSensor.java
+index 10eb0ac019bcd6944206f73715a0f160f6fd6b87..0d5265dbcbdaa86dcc72eade5c55ae9c27525712 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSculkSensor.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSculkSensor.java
+@@ -18,12 +18,12 @@ public final class CraftSculkSensor extends org.bukkit.craftbukkit.block.data.Cr
+     private static final net.minecraft.world.level.block.state.properties.EnumProperty<?> PHASE = getEnum(net.minecraft.world.level.block.SculkSensorBlock.class, "sculk_sensor_phase");
+ 
+     @Override
+-    public org.bukkit.block.data.type.SculkSensor.Phase getPhase() {
++    public org.bukkit.block.data.type.SculkSensor.Phase getSculkSensorPhase() {
+         return this.get(CraftSculkSensor.PHASE, org.bukkit.block.data.type.SculkSensor.Phase.class);
+     }
+ 
+     @Override
+-    public void setPhase(org.bukkit.block.data.type.SculkSensor.Phase phase) {
++    public void setSculkSensorPhase(org.bukkit.block.data.type.SculkSensor.Phase phase) {
+         this.set(CraftSculkSensor.PHASE, phase);
+     }
+ 
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkull.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkull.java
 index 47fc10d85d533f33e7c069ef0f20b23fa40d9f88..0b0175b1b01a21006126c987cefb061f547ad68b 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftSkull.java

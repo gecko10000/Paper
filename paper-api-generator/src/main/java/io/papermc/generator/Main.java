@@ -5,8 +5,8 @@ import com.mojang.logging.LogUtils;
 import io.papermc.generator.rewriter.SourceRewriter;
 import io.papermc.generator.types.SourceGenerator;
 import io.papermc.generator.types.craftblockdata.CraftBlockDataGenerators;
-import io.papermc.generator.utils.TagCollector;
-import io.papermc.generator.utils.TagResult;
+import io.papermc.generator.utils.experimental.TagCollector;
+import io.papermc.generator.utils.experimental.TagResult;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -71,8 +71,8 @@ public final class Main {
     }
 
     private static void generate(Path output, SourceGenerator[] generators) throws IOException {
-        if (Files.exists(Main.generatedPath)) {
-            PathUtils.deleteDirectory(Main.generatedPath);
+        if (Files.exists(output)) {
+            PathUtils.deleteDirectory(output);
         }
 
         for (final SourceGenerator generator : generators) {
@@ -86,14 +86,13 @@ public final class Main {
         for (final SourceRewriter rewriter : rewriters) {
             rewriter.writeToFile(output);
         }
-
-        LOGGER.info("Files written to {}", output.toAbsolutePath());
     }
 
     private static void generateCraftBlockData(Path output) throws IOException {
         if (Files.exists(output)) {
             PathUtils.deleteDirectory(output);
         }
-        new CraftBlockDataGenerators(output).generate();
+        CraftBlockDataGenerators.generate(output);
+        LOGGER.info("Files written to {}", output.toAbsolutePath());
     }
 }

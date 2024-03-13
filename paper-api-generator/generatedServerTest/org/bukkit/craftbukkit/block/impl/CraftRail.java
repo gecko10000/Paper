@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.block.impl;
 
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Set;
 import net.minecraft.world.level.block.RailBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -28,6 +29,11 @@ public class CraftRail extends CraftBlockData implements Rail {
     @Override
     public void setShape(final Rail.Shape shape) {
         this.set(SHAPE, shape);
+    }
+
+    @Override
+    public Set<Rail.Shape> getShapes() {
+        return this.getValues(SHAPE, Rail.Shape.class);
     }
 
     @Override

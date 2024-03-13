@@ -1,7 +1,8 @@
-package io.papermc.generator.utils;
+package io.papermc.generator.utils.experimental;
 
 import com.google.common.base.Suppliers;
 import io.papermc.generator.Main;
+import io.papermc.generator.utils.Formatting;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;

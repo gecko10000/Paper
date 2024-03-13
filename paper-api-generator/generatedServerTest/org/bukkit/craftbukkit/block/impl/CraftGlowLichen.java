@@ -1,71 +1,33 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.collect.ImmutableSet;
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.GlowLichen;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
 public class CraftGlowLichen extends CraftBlockData implements GlowLichen {
-    private static final BooleanProperty DOWN = BlockStateProperties.DOWN;
-
-    private static final BooleanProperty EAST = BlockStateProperties.EAST;
-
-    private static final BooleanProperty NORTH = BlockStateProperties.NORTH;
-
-    private static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;
-
-    private static final BooleanProperty UP = BlockStateProperties.UP;
-
     private static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    private static final BooleanProperty WEST = BlockStateProperties.WEST;
+    private static final Map<BlockFace, BooleanProperty> PROPERTY_BY_DIRECTION = Map.of(
+        BlockFace.DOWN, BlockStateProperties.DOWN,
+        BlockFace.EAST, BlockStateProperties.EAST,
+        BlockFace.NORTH, BlockStateProperties.NORTH,
+        BlockFace.SOUTH, BlockStateProperties.SOUTH,
+        BlockFace.UP, BlockStateProperties.UP,
+        BlockFace.WEST, BlockStateProperties.WEST
+    );
 
     public CraftGlowLichen(BlockState state) {
         super(state);
-    }
-
-    public boolean getDown() {
-        return this.get(DOWN);
-    }
-
-    public void setDown(final boolean down) {
-        this.set(DOWN, down);
-    }
-
-    public boolean getEast() {
-        return this.get(EAST);
-    }
-
-    public void setEast(final boolean east) {
-        this.set(EAST, east);
-    }
-
-    public boolean getNorth() {
-        return this.get(NORTH);
-    }
-
-    public void setNorth(final boolean north) {
-        this.set(NORTH, north);
-    }
-
-    public boolean getSouth() {
-        return this.get(SOUTH);
-    }
-
-    public void setSouth(final boolean south) {
-        this.set(SOUTH, south);
-    }
-
-    public boolean isUp() {
-        return this.get(UP);
-    }
-
-    public void setUp(final boolean up) {
-        this.set(UP, up);
     }
 
     @Override
@@ -78,11 +40,29 @@ public class CraftGlowLichen extends CraftBlockData implements GlowLichen {
         this.set(WATERLOGGED, waterlogged);
     }
 
-    public boolean getWest() {
-        return this.get(WEST);
+    @Override
+    public boolean hasFace(final BlockFace blockFace) {
+        return this.get(PROPERTY_BY_DIRECTION.get(blockFace));
     }
 
-    public void setWest(final boolean west) {
-        this.set(WEST, west);
+    @Override
+    public void setFace(final BlockFace blockFace, final boolean face) {
+        this.set(PROPERTY_BY_DIRECTION.get(blockFace), face);
+    }
+
+    @Override
+    public Set<BlockFace> getFaces() {
+        ImmutableSet.Builder<BlockFace> faces = ImmutableSet.builder();
+        for (BlockFace blockFace : PROPERTY_BY_DIRECTION.keySet()) {
+            if (this.get(PROPERTY_BY_DIRECTION.get(blockFace))) {
+                faces.add(blockFace);
+            }
+        }
+        return faces.build();
+    }
+
+    @Override
+    public Set<BlockFace> getAllowedFaces() {
+        return Collections.unmodifiableSet(PROPERTY_BY_DIRECTION.keySet());
     }
 }

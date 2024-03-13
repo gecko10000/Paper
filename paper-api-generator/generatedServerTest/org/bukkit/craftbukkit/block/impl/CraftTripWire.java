@@ -1,9 +1,14 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.collect.ImmutableSet;
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
 import net.minecraft.world.level.block.TripWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Tripwire;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
 
@@ -14,15 +19,14 @@ public class CraftTripWire extends CraftBlockData implements Tripwire {
 
     private static final BooleanProperty DISARMED = TripWireBlock.DISARMED;
 
-    private static final BooleanProperty EAST = TripWireBlock.EAST;
-
-    private static final BooleanProperty NORTH = TripWireBlock.NORTH;
-
     private static final BooleanProperty POWERED = TripWireBlock.POWERED;
 
-    private static final BooleanProperty SOUTH = TripWireBlock.SOUTH;
-
-    private static final BooleanProperty WEST = TripWireBlock.WEST;
+    private static final Map<BlockFace, BooleanProperty> PROPERTY_BY_DIRECTION = Map.of(
+        BlockFace.EAST, TripWireBlock.EAST,
+        BlockFace.NORTH, TripWireBlock.NORTH,
+        BlockFace.SOUTH, TripWireBlock.SOUTH,
+        BlockFace.WEST, TripWireBlock.WEST
+    );
 
     public CraftTripWire(BlockState state) {
         super(state);
@@ -48,22 +52,6 @@ public class CraftTripWire extends CraftBlockData implements Tripwire {
         this.set(DISARMED, disarmed);
     }
 
-    public boolean getEast() {
-        return this.get(EAST);
-    }
-
-    public void setEast(final boolean east) {
-        this.set(EAST, east);
-    }
-
-    public boolean getNorth() {
-        return this.get(NORTH);
-    }
-
-    public void setNorth(final boolean north) {
-        this.set(NORTH, north);
-    }
-
     @Override
     public boolean isPowered() {
         return this.get(POWERED);
@@ -74,19 +62,29 @@ public class CraftTripWire extends CraftBlockData implements Tripwire {
         this.set(POWERED, powered);
     }
 
-    public boolean getSouth() {
-        return this.get(SOUTH);
+    @Override
+    public boolean hasFace(final BlockFace blockFace) {
+        return this.get(PROPERTY_BY_DIRECTION.get(blockFace));
     }
 
-    public void setSouth(final boolean south) {
-        this.set(SOUTH, south);
+    @Override
+    public void setFace(final BlockFace blockFace, final boolean face) {
+        this.set(PROPERTY_BY_DIRECTION.get(blockFace), face);
     }
 
-    public boolean getWest() {
-        return this.get(WEST);
+    @Override
+    public Set<BlockFace> getFaces() {
+        ImmutableSet.Builder<BlockFace> faces = ImmutableSet.builder();
+        for (BlockFace blockFace : PROPERTY_BY_DIRECTION.keySet()) {
+            if (this.get(PROPERTY_BY_DIRECTION.get(blockFace))) {
+                faces.add(blockFace);
+            }
+        }
+        return faces.build();
     }
 
-    public void setWest(final boolean west) {
-        this.set(WEST, west);
+    @Override
+    public Set<BlockFace> getAllowedFaces() {
+        return Collections.unmodifiableSet(PROPERTY_BY_DIRECTION.keySet());
     }
 }

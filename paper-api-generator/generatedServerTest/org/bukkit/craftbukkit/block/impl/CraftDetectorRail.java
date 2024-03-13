@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.block.impl;
 
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Set;
 import net.minecraft.world.level.block.DetectorRailBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -40,6 +41,11 @@ public class CraftDetectorRail extends CraftBlockData implements RedstoneRail {
     @Override
     public void setShape(final org.bukkit.block.data.Rail.Shape shape) {
         this.set(SHAPE, shape);
+    }
+
+    @Override
+    public Set<org.bukkit.block.data.Rail.Shape> getShapes() {
+        return this.getValues(SHAPE, org.bukkit.block.data.Rail.Shape.class);
     }
 
     @Override

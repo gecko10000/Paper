@@ -30,6 +30,16 @@ public class CraftSeaPickle extends CraftBlockData implements SeaPickle {
     }
 
     @Override
+    public int getMinimumPickles() {
+        return PICKLES.min;
+    }
+
+    @Override
+    public int getMaximumPickles() {
+        return PICKLES.max;
+    }
+
+    @Override
     public boolean isWaterlogged() {
         return this.get(WATERLOGGED);
     }

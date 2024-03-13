@@ -30,6 +30,16 @@ public class CraftLight extends CraftBlockData implements Light {
     }
 
     @Override
+    public int getMinimumLevel() {
+        return LEVEL.min;
+    }
+
+    @Override
+    public int getMaximumLevel() {
+        return LEVEL.max;
+    }
+
+    @Override
     public boolean isWaterlogged() {
         return this.get(WATERLOGGED);
     }

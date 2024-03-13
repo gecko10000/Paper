@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.block.impl;
 
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Set;
 import net.minecraft.world.level.block.LecternBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -33,11 +34,17 @@ public class CraftLectern extends CraftBlockData implements Lectern {
     }
 
     @Override
+    public Set<BlockFace> getFaces() {
+        return this.getValues(FACING, BlockFace.class);
+    }
+
+    @Override
     public boolean hasBook() {
         return this.get(HAS_BOOK);
     }
 
-    public void hasBook(final boolean hasBook) {
+    @Override
+    public void setHasBook(final boolean hasBook) {
         this.set(HAS_BOOK, hasBook);
     }
 

@@ -25,4 +25,14 @@ public class CraftLayeredCauldron extends CraftBlockData implements Levelled {
     public void setLevel(final int level) {
         this.set(LEVEL, level);
     }
+
+    @Override
+    public int getMinimumLevel() {
+        return LEVEL.min;
+    }
+
+    @Override
+    public int getMaximumLevel() {
+        return LEVEL.max;
+    }
 }

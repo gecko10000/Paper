@@ -2,7 +2,7 @@ package io.papermc.generator.types.registry;
 
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.TypeSpec;
-import io.papermc.generator.utils.ExperimentalSounds;
+import io.papermc.generator.utils.experimental.ExperimentalSounds;
 import io.papermc.generator.utils.Javadocs;
 import net.kyori.adventure.sound.Sound;
 import net.minecraft.core.Holder;

@@ -32,6 +32,16 @@ public class CraftLeaves extends CraftBlockData implements Leaves {
     }
 
     @Override
+    public int getMinimumDistance() {
+        return DISTANCE.min;
+    }
+
+    @Override
+    public int getMaximumDistance() {
+        return DISTANCE.max;
+    }
+
+    @Override
     public boolean isPersistent() {
         return this.get(PERSISTENT);
     }

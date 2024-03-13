@@ -34,6 +34,11 @@ public class CraftSculkSensor extends CraftBlockData implements SculkSensor {
     }
 
     @Override
+    public int getMaximumPower() {
+        return POWER.max;
+    }
+
+    @Override
     public SculkSensor.Phase getSculkSensorPhase() {
         return this.get(PHASE, SculkSensor.Phase.class);
     }

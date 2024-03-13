@@ -165,6 +165,42 @@ index eb0ffa977450ef0c79caa78302cfe75ee35b34b7..d03f03449af356d71344595255acda0f
 +    void setCracked(boolean cracked);
 +    // Paper end - missing api
  }
+diff --git a/src/main/java/org/bukkit/block/data/type/Jukebox.java b/src/main/java/org/bukkit/block/data/type/Jukebox.java
+index 5e37136207e939c6278c6c2589051fc34eca3496..e599824cc4e9c6e32cf37c2301bb767e4bc67dd9 100644
+--- a/src/main/java/org/bukkit/block/data/type/Jukebox.java
++++ b/src/main/java/org/bukkit/block/data/type/Jukebox.java
+@@ -14,4 +14,13 @@ public interface Jukebox extends BlockData {
+      * @return the 'has_record' value
+      */
+     boolean hasRecord();
++
++    // Paper start - missing api
++    /**
++     * Sets the value of the 'has_record' property.
++     *
++     * @param hasRecord the new 'has_record' value
++     */
++    void setHasRecord(boolean hasRecord);
++    // Paper end - missing api
+ }
+diff --git a/src/main/java/org/bukkit/block/data/type/Lectern.java b/src/main/java/org/bukkit/block/data/type/Lectern.java
+index 11b4a173f96e8c7cd92ef0146c3b0cca91e87c90..229577b82b917c7c4aa0e1b8ce66c832c5aca004 100644
+--- a/src/main/java/org/bukkit/block/data/type/Lectern.java
++++ b/src/main/java/org/bukkit/block/data/type/Lectern.java
+@@ -15,4 +15,13 @@ public interface Lectern extends Directional, Powerable {
+      * @return the 'has_book' value
+      */
+     boolean hasBook();
++
++    // Paper start - missing api
++    /**
++     * Sets the value of the 'has_book' property.
++     *
++     * @param hasBook the new 'has_book' value
++     */
++    void setHasBook(boolean hasBook);
++    // Paper end - missing api
+ }
 diff --git a/src/main/java/org/bukkit/block/data/type/SculkSensor.java b/src/main/java/org/bukkit/block/data/type/SculkSensor.java
 index 1af390e2ec3b8d8943c58e64edf8869b1820110f..4d779b676e81bd4cb79a8d8ee56436f2fabff5c0 100644
 --- a/src/main/java/org/bukkit/block/data/type/SculkSensor.java

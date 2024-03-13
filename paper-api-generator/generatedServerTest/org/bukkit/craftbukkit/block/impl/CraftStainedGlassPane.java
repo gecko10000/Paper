@@ -1,51 +1,31 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.collect.ImmutableSet;
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
 import net.minecraft.world.level.block.StainedGlassPaneBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.GlassPane;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
 public class CraftStainedGlassPane extends CraftBlockData implements GlassPane {
-    private static final BooleanProperty EAST = StainedGlassPaneBlock.EAST;
-
-    private static final BooleanProperty NORTH = StainedGlassPaneBlock.NORTH;
-
-    private static final BooleanProperty SOUTH = StainedGlassPaneBlock.SOUTH;
-
     private static final BooleanProperty WATERLOGGED = StainedGlassPaneBlock.WATERLOGGED;
 
-    private static final BooleanProperty WEST = StainedGlassPaneBlock.WEST;
+    private static final Map<BlockFace, BooleanProperty> PROPERTY_BY_DIRECTION = Map.of(
+        BlockFace.EAST, StainedGlassPaneBlock.EAST,
+        BlockFace.NORTH, StainedGlassPaneBlock.NORTH,
+        BlockFace.SOUTH, StainedGlassPaneBlock.SOUTH,
+        BlockFace.WEST, StainedGlassPaneBlock.WEST
+    );
 
     public CraftStainedGlassPane(BlockState state) {
         super(state);
-    }
-
-    public boolean getEast() {
-        return this.get(EAST);
-    }
-
-    public void setEast(final boolean east) {
-        this.set(EAST, east);
-    }
-
-    public boolean getNorth() {
-        return this.get(NORTH);
-    }
-
-    public void setNorth(final boolean north) {
-        this.set(NORTH, north);
-    }
-
-    public boolean getSouth() {
-        return this.get(SOUTH);
-    }
-
-    public void setSouth(final boolean south) {
-        this.set(SOUTH, south);
     }
 
     @Override
@@ -58,11 +38,29 @@ public class CraftStainedGlassPane extends CraftBlockData implements GlassPane {
         this.set(WATERLOGGED, waterlogged);
     }
 
-    public boolean getWest() {
-        return this.get(WEST);
+    @Override
+    public boolean hasFace(final BlockFace blockFace) {
+        return this.get(PROPERTY_BY_DIRECTION.get(blockFace));
     }
 
-    public void setWest(final boolean west) {
-        this.set(WEST, west);
+    @Override
+    public void setFace(final BlockFace blockFace, final boolean face) {
+        this.set(PROPERTY_BY_DIRECTION.get(blockFace), face);
+    }
+
+    @Override
+    public Set<BlockFace> getFaces() {
+        ImmutableSet.Builder<BlockFace> faces = ImmutableSet.builder();
+        for (BlockFace blockFace : PROPERTY_BY_DIRECTION.keySet()) {
+            if (this.get(PROPERTY_BY_DIRECTION.get(blockFace))) {
+                faces.add(blockFace);
+            }
+        }
+        return faces.build();
+    }
+
+    @Override
+    public Set<BlockFace> getAllowedFaces() {
+        return Collections.unmodifiableSet(PROPERTY_BY_DIRECTION.keySet());
     }
 }

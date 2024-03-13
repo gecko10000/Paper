@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.block.impl;
 
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Set;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -26,5 +27,10 @@ public class CraftInfestedRotatedPillar extends CraftBlockData implements Orient
     @Override
     public void setAxis(final Axis axis) {
         this.set(AXIS, axis);
+    }
+
+    @Override
+    public Set<Axis> getAxes() {
+        return this.getValues(AXIS, Axis.class);
     }
 }

@@ -20,7 +20,8 @@ public class CraftSculkShrieker extends CraftBlockData implements SculkShrieker 
         super(state);
     }
 
-    public boolean getCanSummon() {
+    @Override
+    public boolean isCanSummon() {
         return this.get(CAN_SUMMON);
     }
 
@@ -29,7 +30,8 @@ public class CraftSculkShrieker extends CraftBlockData implements SculkShrieker 
         this.set(CAN_SUMMON, canSummon);
     }
 
-    public boolean getShrieking() {
+    @Override
+    public boolean isShrieking() {
         return this.get(SHRIEKING);
     }
 

@@ -172,6 +172,8 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
     BROWN_DYE(-1),
     BRUSH(-1, 1, 64),
     BUCKET(-1, 16),
+    @MinecraftExperimental("bundle feature")
+    @org.jetbrains.annotations.ApiStatus.Experimental
     BUNDLE(-1, 1),
     BURN_POTTERY_SHERD(-1),
     CAMEL_SPAWN_EGG(-1),
@@ -948,7 +950,7 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
     FURNACE(-1, Furnace.class),
     GILDED_BLACKSTONE(-1),
     GLASS(-1),
-    GLASS_PANE(-1, Waterlogged.class),
+    GLASS_PANE(-1, Fence.class),
     GLOW_LICHEN(-1, GlowLichen.class),
     GLOWSTONE(-1),
     GOLD_BLOCK(-1),
@@ -1006,7 +1008,7 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
     INFESTED_MOSSY_STONE_BRICKS(-1),
     INFESTED_STONE(-1),
     INFESTED_STONE_BRICKS(-1),
-    IRON_BARS(-1, Waterlogged.class),
+    IRON_BARS(-1, Fence.class),
     IRON_BLOCK(-1),
     IRON_DOOR(-1, Door.class),
     IRON_ORE(-1),

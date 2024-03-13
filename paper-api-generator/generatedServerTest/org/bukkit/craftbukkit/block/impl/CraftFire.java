@@ -1,10 +1,15 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.collect.ImmutableSet;
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Set;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Fire;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
 
@@ -13,15 +18,13 @@ import org.bukkit.craftbukkit.block.data.CraftBlockData;
 public class CraftFire extends CraftBlockData implements Fire {
     private static final IntegerProperty AGE = FireBlock.AGE;
 
-    private static final BooleanProperty EAST = FireBlock.EAST;
-
-    private static final BooleanProperty NORTH = FireBlock.NORTH;
-
-    private static final BooleanProperty SOUTH = FireBlock.SOUTH;
-
-    private static final BooleanProperty UP = FireBlock.UP;
-
-    private static final BooleanProperty WEST = FireBlock.WEST;
+    private static final Map<BlockFace, BooleanProperty> PROPERTY_BY_DIRECTION = Map.of(
+        BlockFace.EAST, FireBlock.EAST,
+        BlockFace.NORTH, FireBlock.NORTH,
+        BlockFace.SOUTH, FireBlock.SOUTH,
+        BlockFace.UP, FireBlock.UP,
+        BlockFace.WEST, FireBlock.WEST
+    );
 
     public CraftFire(BlockState state) {
         super(state);
@@ -37,43 +40,34 @@ public class CraftFire extends CraftBlockData implements Fire {
         this.set(AGE, age);
     }
 
-    public boolean getEast() {
-        return this.get(EAST);
+    @Override
+    public int getMaximumAge() {
+        return AGE.max;
     }
 
-    public void setEast(final boolean east) {
-        this.set(EAST, east);
+    @Override
+    public boolean hasFace(final BlockFace blockFace) {
+        return this.get(PROPERTY_BY_DIRECTION.get(blockFace));
     }
 
-    public boolean getNorth() {
-        return this.get(NORTH);
+    @Override
+    public void setFace(final BlockFace blockFace, final boolean face) {
+        this.set(PROPERTY_BY_DIRECTION.get(blockFace), face);
     }
 
-    public void setNorth(final boolean north) {
-        this.set(NORTH, north);
+    @Override
+    public Set<BlockFace> getFaces() {
+        ImmutableSet.Builder<BlockFace> faces = ImmutableSet.builder();
+        for (BlockFace blockFace : PROPERTY_BY_DIRECTION.keySet()) {
+            if (this.get(PROPERTY_BY_DIRECTION.get(blockFace))) {
+                faces.add(blockFace);
+            }
+        }
+        return faces.build();
     }
 
-    public boolean getSouth() {
-        return this.get(SOUTH);
-    }
-
-    public void setSouth(final boolean south) {
-        this.set(SOUTH, south);
-    }
-
-    public boolean isUp() {
-        return this.get(UP);
-    }
-
-    public void setUp(final boolean up) {
-        this.set(UP, up);
-    }
-
-    public boolean getWest() {
-        return this.get(WEST);
-    }
-
-    public void setWest(final boolean west) {
-        this.set(WEST, west);
+    @Override
+    public Set<BlockFace> getAllowedFaces() {
+        return Collections.unmodifiableSet(PROPERTY_BY_DIRECTION.keySet());
     }
 }

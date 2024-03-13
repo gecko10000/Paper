@@ -25,4 +25,9 @@ public class CraftFarm extends CraftBlockData implements Farmland {
     public void setMoisture(final int moisture) {
         this.set(MOISTURE, moisture);
     }
+
+    @Override
+    public int getMaximumMoisture() {
+        return MOISTURE.max;
+    }
 }

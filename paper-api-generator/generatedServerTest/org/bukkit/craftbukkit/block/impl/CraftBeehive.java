@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.block.impl;
 
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Set;
 import net.minecraft.world.level.block.BeehiveBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -31,6 +32,11 @@ public class CraftBeehive extends CraftBlockData implements Beehive {
     }
 
     @Override
+    public Set<BlockFace> getFaces() {
+        return this.getValues(FACING, BlockFace.class);
+    }
+
+    @Override
     public int getHoneyLevel() {
         return this.get(HONEY_LEVEL);
     }
@@ -38,5 +44,10 @@ public class CraftBeehive extends CraftBlockData implements Beehive {
     @Override
     public void setHoneyLevel(final int honeyLevel) {
         this.set(HONEY_LEVEL, honeyLevel);
+    }
+
+    @Override
+    public int getMaximumHoneyLevel() {
+        return HONEY_LEVEL.max;
     }
 }

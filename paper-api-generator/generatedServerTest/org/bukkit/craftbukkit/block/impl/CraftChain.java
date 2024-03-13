@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.block.impl;
 
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Set;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.ChainBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -29,6 +30,11 @@ public class CraftChain extends CraftBlockData implements Chain {
     @Override
     public void setAxis(final Axis axis) {
         this.set(AXIS, axis);
+    }
+
+    @Override
+    public Set<Axis> getAxes() {
+        return this.getValues(AXIS, Axis.class);
     }
 
     @Override

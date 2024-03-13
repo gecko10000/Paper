@@ -29,8 +29,8 @@ public class CraftStandingSign extends CraftBlockData implements Sign {
 
     @Override
     public void setRotation(final BlockFace blockFace) {
-        Vector vec = blockFace.getDirection();
-        float angle = (float) -Math.toDegrees(Math.atan2(vec.getX(), vec.getZ()));
+        Vector dir = blockFace.getDirection();
+        float angle = (float) -Math.toDegrees(Math.atan2(dir.getX(), dir.getZ()));
         this.set(ROTATION, RotationSegment.convertToSegment(angle));
     }
 

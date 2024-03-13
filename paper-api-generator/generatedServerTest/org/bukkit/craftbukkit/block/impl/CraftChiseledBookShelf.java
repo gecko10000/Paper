@@ -1,6 +1,9 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.collect.ImmutableSet;
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.List;
+import java.util.Set;
 import net.minecraft.world.level.block.ChiseledBookShelfBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -15,17 +18,7 @@ import org.bukkit.craftbukkit.block.data.CraftBlockData;
 public class CraftChiseledBookShelf extends CraftBlockData implements ChiseledBookshelf {
     private static final DirectionProperty HORIZONTAL_FACING = BlockStateProperties.HORIZONTAL_FACING;
 
-    private static final BooleanProperty SLOT_OCCUPIED_PROPERTIES = ChiseledBookShelfBlock.SLOT_OCCUPIED_PROPERTIES;
-
-    private static final BooleanProperty SLOT_OCCUPIED_PROPERTIES = ChiseledBookShelfBlock.SLOT_OCCUPIED_PROPERTIES;
-
-    private static final BooleanProperty SLOT_OCCUPIED_PROPERTIES = ChiseledBookShelfBlock.SLOT_OCCUPIED_PROPERTIES;
-
-    private static final BooleanProperty SLOT_OCCUPIED_PROPERTIES = ChiseledBookShelfBlock.SLOT_OCCUPIED_PROPERTIES;
-
-    private static final BooleanProperty SLOT_OCCUPIED_PROPERTIES = ChiseledBookShelfBlock.SLOT_OCCUPIED_PROPERTIES;
-
-    private static final BooleanProperty SLOT_OCCUPIED_PROPERTIES = ChiseledBookShelfBlock.SLOT_OCCUPIED_PROPERTIES;
+    private static final List<BooleanProperty> SLOT_OCCUPIED_PROPERTIES = ChiseledBookShelfBlock.SLOT_OCCUPIED_PROPERTIES;
 
     public CraftChiseledBookShelf(BlockState state) {
         super(state);
@@ -41,51 +34,34 @@ public class CraftChiseledBookShelf extends CraftBlockData implements ChiseledBo
         this.set(HORIZONTAL_FACING, blockFace);
     }
 
-    public boolean getSlot0Occupied() {
-        return this.get(SLOT_OCCUPIED_PROPERTIES);
+    @Override
+    public Set<BlockFace> getFaces() {
+        return this.getValues(HORIZONTAL_FACING, BlockFace.class);
     }
 
-    public void setSlot0Occupied(final boolean slot0Occupied) {
-        this.set(SLOT_OCCUPIED_PROPERTIES, slot0Occupied);
+    @Override
+    public boolean isSlotOccupied(final int index) {
+        return this.get(SLOT_OCCUPIED_PROPERTIES.get(index));
     }
 
-    public boolean getSlot1Occupied() {
-        return this.get(SLOT_OCCUPIED_PROPERTIES);
+    @Override
+    public void setSlotOccupied(final int index, final boolean slotOccupied) {
+        this.set(SLOT_OCCUPIED_PROPERTIES.get(index), slotOccupied);
     }
 
-    public void setSlot1Occupied(final boolean slot1Occupied) {
-        this.set(SLOT_OCCUPIED_PROPERTIES, slot1Occupied);
+    @Override
+    public Set<Integer> getOccupiedSlots() {
+        ImmutableSet.Builder<Integer> slotOccupieds = ImmutableSet.builder();
+        for (int index = 0, size = SLOT_OCCUPIED_PROPERTIES.size(); index < size; index++) {
+            if (this.get(SLOT_OCCUPIED_PROPERTIES.get(index))) {
+                slotOccupieds.add(index);
+            }
+        }
+        return slotOccupieds.build();
     }
 
-    public boolean getSlot2Occupied() {
-        return this.get(SLOT_OCCUPIED_PROPERTIES);
-    }
-
-    public void setSlot2Occupied(final boolean slot2Occupied) {
-        this.set(SLOT_OCCUPIED_PROPERTIES, slot2Occupied);
-    }
-
-    public boolean getSlot3Occupied() {
-        return this.get(SLOT_OCCUPIED_PROPERTIES);
-    }
-
-    public void setSlot3Occupied(final boolean slot3Occupied) {
-        this.set(SLOT_OCCUPIED_PROPERTIES, slot3Occupied);
-    }
-
-    public boolean getSlot4Occupied() {
-        return this.get(SLOT_OCCUPIED_PROPERTIES);
-    }
-
-    public void setSlot4Occupied(final boolean slot4Occupied) {
-        this.set(SLOT_OCCUPIED_PROPERTIES, slot4Occupied);
-    }
-
-    public boolean getSlot5Occupied() {
-        return this.get(SLOT_OCCUPIED_PROPERTIES);
-    }
-
-    public void setSlot5Occupied(final boolean slot5Occupied) {
-        this.set(SLOT_OCCUPIED_PROPERTIES, slot5Occupied);
+    @Override
+    public int getMaximumOccupiedSlots() {
+        return SLOT_OCCUPIED_PROPERTIES.size();
     }
 }

@@ -1,5 +1,6 @@
 package io.papermc.generator.rewriter.utils;
 
+import io.papermc.generator.utils.ClassHelper;
 import org.jetbrains.annotations.VisibleForTesting;
 import java.util.HashMap;
 import java.util.HashSet;

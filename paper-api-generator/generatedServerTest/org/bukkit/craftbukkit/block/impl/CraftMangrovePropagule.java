@@ -35,6 +35,11 @@ public class CraftMangrovePropagule extends CraftBlockData implements MangrovePr
     }
 
     @Override
+    public int getMaximumAge() {
+        return AGE.max;
+    }
+
+    @Override
     public boolean isHanging() {
         return this.get(HANGING);
     }
@@ -52,6 +57,11 @@ public class CraftMangrovePropagule extends CraftBlockData implements MangrovePr
     @Override
     public void setStage(final int stage) {
         this.set(STAGE, stage);
+    }
+
+    @Override
+    public int getMaximumStage() {
+        return STAGE.max;
     }
 
     @Override

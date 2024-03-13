@@ -25,4 +25,9 @@ public class CraftSapling extends CraftBlockData implements Sapling {
     public void setStage(final int stage) {
         this.set(STAGE, stage);
     }
+
+    @Override
+    public int getMaximumStage() {
+        return STAGE.max;
+    }
 }

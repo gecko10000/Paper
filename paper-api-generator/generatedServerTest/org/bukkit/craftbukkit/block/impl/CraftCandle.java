@@ -32,6 +32,16 @@ public class CraftCandle extends CraftBlockData implements Candle {
     }
 
     @Override
+    public int getMinimumCandles() {
+        return CANDLES.min;
+    }
+
+    @Override
+    public int getMaximumCandles() {
+        return CANDLES.max;
+    }
+
+    @Override
     public boolean isLit() {
         return this.get(LIT);
     }

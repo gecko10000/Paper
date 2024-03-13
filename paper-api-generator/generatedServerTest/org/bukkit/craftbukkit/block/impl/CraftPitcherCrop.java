@@ -31,6 +31,11 @@ public class CraftPitcherCrop extends CraftBlockData implements PitcherCrop {
     }
 
     @Override
+    public int getMaximumAge() {
+        return AGE.max;
+    }
+
+    @Override
     public org.bukkit.block.data.Bisected.Half getHalf() {
         return this.get(HALF, org.bukkit.block.data.Bisected.Half.class);
     }

@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.block.impl;
 
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Set;
 import net.minecraft.world.level.block.PinkPetalsBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -31,6 +32,11 @@ public class CraftPinkPetals extends CraftBlockData implements PinkPetals {
     }
 
     @Override
+    public Set<BlockFace> getFaces() {
+        return this.getValues(FACING, BlockFace.class);
+    }
+
+    @Override
     public int getFlowerAmount() {
         return this.get(AMOUNT);
     }
@@ -38,5 +44,15 @@ public class CraftPinkPetals extends CraftBlockData implements PinkPetals {
     @Override
     public void setFlowerAmount(final int flowerAmount) {
         this.set(AMOUNT, flowerAmount);
+    }
+
+    @Override
+    public int getMinimumFlowerAmount() {
+        return AMOUNT.min;
+    }
+
+    @Override
+    public int getMaximumFlowerAmount() {
+        return AMOUNT.max;
     }
 }

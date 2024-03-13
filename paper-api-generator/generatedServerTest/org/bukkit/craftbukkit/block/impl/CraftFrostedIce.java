@@ -25,4 +25,9 @@ public class CraftFrostedIce extends CraftBlockData implements Ageable {
     public void setAge(final int age) {
         this.set(AGE, age);
     }
+
+    @Override
+    public int getMaximumAge() {
+        return AGE.max;
+    }
 }

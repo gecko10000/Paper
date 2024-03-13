@@ -42,6 +42,11 @@ public class CraftScaffolding extends CraftBlockData implements Scaffolding {
     }
 
     @Override
+    public int getMaximumDistance() {
+        return DISTANCE.max;
+    }
+
+    @Override
     public boolean isWaterlogged() {
         return this.get(WATERLOGGED);
     }

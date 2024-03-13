@@ -25,4 +25,9 @@ public class CraftTarget extends CraftBlockData implements AnaloguePowerable {
     public void setPower(final int power) {
         this.set(POWER, power);
     }
+
+    @Override
+    public int getMaximumPower() {
+        return POWER.max;
+    }
 }

@@ -1,6 +1,7 @@
 package io.papermc.generator.rewriter.utils;
 
 import io.papermc.generator.rewriter.SearchMetadata;
+import io.papermc.generator.utils.ClassHelper;
 import io.papermc.generator.utils.Formatting;
 import net.minecraft.world.flag.FeatureFlag;
 import org.bukkit.MinecraftExperimental;

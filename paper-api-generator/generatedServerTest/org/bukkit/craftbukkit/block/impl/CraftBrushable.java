@@ -25,4 +25,9 @@ public class CraftBrushable extends CraftBlockData implements Brushable {
     public void setDusted(final int dusted) {
         this.set(DUSTED, dusted);
     }
+
+    @Override
+    public int getMaximumDusted() {
+        return DUSTED.max;
+    }
 }

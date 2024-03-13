@@ -25,4 +25,9 @@ public class CraftCake extends CraftBlockData implements Cake {
     public void setBites(final int bites) {
         this.set(BITES, bites);
     }
+
+    @Override
+    public int getMaximumBites() {
+        return BITES.max;
+    }
 }

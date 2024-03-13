@@ -1,11 +1,13 @@
 package io.papermc.generator.utils;
 
+import com.google.common.base.CaseFormat;
 import com.google.common.base.Function;
 import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.regex.Pattern;
 import com.google.common.collect.HashBiMap;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
@@ -15,11 +17,14 @@ import net.minecraft.world.flag.FeatureFlag;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
 import org.apache.commons.lang3.math.NumberUtils;
+import javax.lang.model.SourceVersion;
 
 public final class Formatting {
 
+    private static final Pattern ILLEGAL_FIELD_CHARACTERS = Pattern.compile("[.-/]");
+
     public static String formatPathAsField(String path) {
-        return path.toUpperCase(Locale.ENGLISH).replaceAll("[.-/]", "_"); // replace invalid field name chars
+        return ILLEGAL_FIELD_CHARACTERS.matcher(path.toUpperCase(Locale.ENGLISH)).replaceAll("_");
     }
 
     public static String formatTagFieldPrefix(String name, ResourceKey<? extends Registry<?>> registryKey) {
@@ -107,6 +112,13 @@ public final class Formatting {
             }
         }
         return newName;
+    }
+
+    public static String ensureValidName(String name) {
+        if (!SourceVersion.isName(name)) {
+            return "_" + name;
+        }
+        return name;
     }
 
     public static Comparator<String> alphabeticKeyOrder() {

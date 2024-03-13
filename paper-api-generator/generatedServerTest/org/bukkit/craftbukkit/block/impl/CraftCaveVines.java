@@ -30,6 +30,11 @@ public class CraftCaveVines extends CraftBlockData implements CaveVines {
     }
 
     @Override
+    public int getMaximumAge() {
+        return AGE.max;
+    }
+
+    @Override
     public boolean hasBerries() {
         return this.get(BERRIES);
     }

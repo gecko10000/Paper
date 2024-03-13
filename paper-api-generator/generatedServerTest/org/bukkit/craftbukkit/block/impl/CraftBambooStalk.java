@@ -33,6 +33,11 @@ public class CraftBambooStalk extends CraftBlockData implements Bamboo {
     }
 
     @Override
+    public int getMaximumAge() {
+        return AGE.max;
+    }
+
+    @Override
     public Bamboo.Leaves getLeaves() {
         return this.get(LEAVES, Bamboo.Leaves.class);
     }
@@ -50,5 +55,10 @@ public class CraftBambooStalk extends CraftBlockData implements Bamboo {
     @Override
     public void setStage(final int stage) {
         this.set(STAGE, stage);
+    }
+
+    @Override
+    public int getMaximumStage() {
+        return STAGE.max;
     }
 }

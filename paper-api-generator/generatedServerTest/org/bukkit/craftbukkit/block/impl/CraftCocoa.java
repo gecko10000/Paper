@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.block.impl;
 
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Set;
 import net.minecraft.world.level.block.CocoaBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
@@ -31,6 +32,11 @@ public class CraftCocoa extends CraftBlockData implements Cocoa {
     }
 
     @Override
+    public int getMaximumAge() {
+        return AGE.max;
+    }
+
+    @Override
     public BlockFace getFacing() {
         return this.get(FACING, BlockFace.class);
     }
@@ -38,5 +44,10 @@ public class CraftCocoa extends CraftBlockData implements Cocoa {
     @Override
     public void setFacing(final BlockFace blockFace) {
         this.set(FACING, blockFace);
+    }
+
+    @Override
+    public Set<BlockFace> getFaces() {
+        return this.getValues(FACING, BlockFace.class);
     }
 }

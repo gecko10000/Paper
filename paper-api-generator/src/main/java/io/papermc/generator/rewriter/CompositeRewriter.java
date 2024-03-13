@@ -1,7 +1,7 @@
 package io.papermc.generator.rewriter;
 
 import com.google.common.base.Preconditions;
-import io.papermc.generator.rewriter.utils.ClassHelper;
+import io.papermc.generator.utils.ClassHelper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Arrays;

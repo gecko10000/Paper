@@ -1,4 +1,4 @@
-package io.papermc.generator.utils;
+package io.papermc.generator.utils.experimental;
 
 import com.mojang.serialization.Lifecycle;
 import io.papermc.generator.Main;

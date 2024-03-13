@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.block.impl;
 
 import io.papermc.paper.generated.GeneratedFrom;
+import java.util.Set;
 import net.minecraft.world.level.block.PointedDripstoneBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
@@ -42,6 +43,11 @@ public class CraftPointedDripstone extends CraftBlockData implements PointedDrip
     @Override
     public void setVerticalDirection(final BlockFace blockFace) {
         this.set(TIP_DIRECTION, blockFace);
+    }
+
+    @Override
+    public Set<BlockFace> getVerticalDirections() {
+        return this.getValues(TIP_DIRECTION, BlockFace.class);
     }
 
     @Override

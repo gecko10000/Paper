@@ -1,18 +1,24 @@
 package io.papermc.generator.utils;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableMap;
-import io.papermc.generator.rewriter.utils.ClassHelper;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
+import io.papermc.generator.types.craftblockdata.property.holder.DataHolderType;
+import io.papermc.generator.types.craftblockdata.property.holder.VirtualFieldInfo;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.StringRepresentable;
@@ -23,12 +29,14 @@ import net.minecraft.world.level.block.CommandBlock;
 import net.minecraft.world.level.block.NoteBlock;
 import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.StructureBlock;
+import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.entity.trialspawner.TrialSpawnerState;
 import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BambooLeaves;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.BellAttachType;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.ChestType;
 import net.minecraft.world.level.block.state.properties.ComparatorMode;
 import net.minecraft.world.level.block.state.properties.DoorHingeSide;
@@ -90,13 +98,24 @@ import org.jetbrains.annotations.Nullable;
 
 public final class BlockStateMapping {
 
-    public record BlockData(String impl, @Nullable Class<? extends org.bukkit.block.data.BlockData> api, Collection<Property<?>> properties, Set<Class<?>> extensions, Map<String, String> fieldNames) {
+    public static final String PIPE_FIELD_NAME = "PROPERTY_BY_DIRECTION";
+    public static final String CHISELED_BOOKSHELF_FIELD_NAME = "SLOT_OCCUPIED_PROPERTIES";
+
+    public record BlockData(String impl, @Nullable Class<? extends org.bukkit.block.data.BlockData> api, Collection<Property<?>> properties, Map<String, String> fieldNames, Multimap<FieldDataHolder, Property<?>> complexFields) {
+    }
+
+    public record FieldDataHolder(@Nullable Field field, @Nullable VirtualFieldInfo virtualFieldInfo) { // might be Either
+    }
+
+    private static FieldDataHolder wrapHolderField(Field field) {
+        return new FieldDataHolder(field, null);
     }
 
     private static final Map<String, String> API_RENAMES = ImmutableMap.<String, String>builder()
         .put("WallSkull", "SkullWall")
         .put("SnowLayer", "Snow")
         .put("StainedGlassPane", "GlassPane")
+        .put("IronBars", "Fence") // could be handled differently but side effect is big with the glass pane that are both glob classes todo this tree is cursed need to look deeper
         .put("CeilingHangingSign", "HangingSign")
         .put("RedStoneWire", "RedstoneWire")
         .put("TripWire", "Tripwire")
@@ -115,6 +134,12 @@ public final class BlockStateMapping {
         NoteBlock.class
     );
 
+    // virtual data that doesn't exist as constant in the source but still organized this way in the api
+    public static final ImmutableMultimap<VirtualFieldInfo, Property<?>> VIRTUAL_NODES = ImmutableMultimap.<VirtualFieldInfo, Property<?>>builder()
+        .putAll(VirtualFieldInfo.create("PROPERTY_BY_FACE", WallBlock.class, DataHolderType.MAP, "HEIGHT").keyClass(BlockFace.class),
+                WallBlock.EAST_WALL, WallBlock.NORTH_WALL, WallBlock.SOUTH_WALL, WallBlock.WEST_WALL)
+        .build();
+
     public static final Map<Class<? extends Block>, BlockData> MAPPING;
     public static final Map<Property<?>, String> FALLBACK_GENERIC_FIELD_NAMES;
     static {
@@ -127,14 +152,58 @@ public final class BlockStateMapping {
         }
 
         Map<Property<?>, String> fallbackGenericFieldNames = new HashMap<>();
-        fetchProperties(BlockStateProperties.class, (name, property) -> fallbackGenericFieldNames.put(property, name));
+        fetchProperties(BlockStateProperties.class, (name, property) -> fallbackGenericFieldNames.put(property, name), null);
         FALLBACK_GENERIC_FIELD_NAMES = Map.copyOf(fallbackGenericFieldNames);
 
         for (Map.Entry<Class<? extends Block>, Collection<Property<?>>> entry : specialBlocks.entrySet()) {
             Class<? extends Block> specialBlock = entry.getKey();
-            Set<Class<?>> extensions = ClassHelper.getInterfacesUntil(specialBlock, Block.class, new LinkedHashSet<>());
-            Map<String, String> propertyNames = new HashMap<>();
-            fetchProperties(specialBlock, (name, property) -> propertyNames.put(property.getName(), name));
+
+            Collection<Property<?>> properties = new ArrayList<>(entry.getValue());
+            Map<String, String> propertyNames = new HashMap<>(properties.size());
+
+            Multimap<FieldDataHolder, Property<?>> complexProperties = ArrayListMultimap.create();
+            fetchProperties(specialBlock, (name, property) -> {
+                if (properties.contains(property)) {
+                    propertyNames.put(property.getName(), name);
+                }
+            }, (field, property) -> {
+                if (field.getName().equals(BlockStateMapping.PIPE_FIELD_NAME) &&
+                    PipeBlock.PROPERTY_BY_DIRECTION.containsValue(property)) { // need another check to avoid conflict with redstone connection
+                    // handled later with further check
+                    return;
+                }
+
+                if (properties.remove(property)) { // handle those separately and only count if the property was in the state definition
+                    complexProperties.put(wrapHolderField(field), property);
+                }
+            });
+
+            // multiple facing
+            List<Property<?>> commonPipeProperties = new ArrayList<>(properties);
+            commonPipeProperties.retainAll(PipeBlock.PROPERTY_BY_DIRECTION.values());
+            if (commonPipeProperties.size() >= 2) {
+                Field field = fetchPipeFieldMap(specialBlock);
+                if (field != null) {
+                    properties.removeAll(commonPipeProperties);
+                    complexProperties.putAll(wrapHolderField(field), commonPipeProperties);
+                }
+            }
+
+            // virtual nodes
+            for (VirtualFieldInfo info : VIRTUAL_NODES.keySet()) {
+                if (info.getValueClass() != specialBlock) {
+                    continue;
+                }
+
+                FieldDataHolder field = new FieldDataHolder(null, info);
+                for (Property<?> property : VIRTUAL_NODES.get(info)) {
+                    if (properties.remove(property)) {
+                        complexProperties.put(field, property);
+                    } else {
+                        throw new IllegalStateException("Unhandled virtual node " + info.getName() + " for " + property);
+                    }
+                }
+            }
 
             String apiName = formatApiName(specialBlock);
             String implName = String.format("Craft%s", apiName); // before renames
@@ -142,7 +211,7 @@ public final class BlockStateMapping {
             apiName = Formatting.stripWordOfCamelCaseName(apiName, "Base", true);
             apiName = API_RENAMES.getOrDefault(apiName, apiName);
 
-            Class<? extends org.bukkit.block.data.BlockData> api = classOr("org.bukkit.block.data.type." + apiName, null);
+            Class<? extends org.bukkit.block.data.BlockData> api = ClassHelper.classOr("org.bukkit.block.data.type." + apiName, null);
             if (api == null) {
                 Class<?> directParent = specialBlock.getSuperclass();
                 if (specialBlocks.containsKey(directParent)) {
@@ -152,7 +221,7 @@ public final class BlockStateMapping {
                         String parentApiName = formatApiName(directParent);
                         parentApiName = Formatting.stripWordOfCamelCaseName(parentApiName, "Base", true);
                         parentApiName = API_RENAMES.getOrDefault(parentApiName, parentApiName);
-                        api = classOr("org.bukkit.block.data.type." + parentApiName, api);
+                        api = ClassHelper.classOr("org.bukkit.block.data.type." + parentApiName, api);
                     }
                 }
             }
@@ -164,7 +233,7 @@ public final class BlockStateMapping {
                 }
             }
 
-            map.put(specialBlock, new BlockData(implName, api, entry.getValue(), extensions, propertyNames));
+            map.put(specialBlock, new BlockData(implName, api, properties, propertyNames, complexProperties));
         }
         MAPPING = Map.copyOf(map);
     }
@@ -232,7 +301,10 @@ public final class BlockStateMapping {
 
     /*
     TODO:
-    clear paper dataClass list now generated/remove patches not needed anymore
+    clear paper api list now generated/remove patches not needed anymore
+    remove some patches:
+      - Add missing block data mins and maxes
+      - Allow changing bed's 'occupied' property
     remove scrap of old spigot tooling (archetype)
      */
     @Nullable
@@ -279,6 +351,12 @@ public final class BlockStateMapping {
             return extensions.iterator().next();
         }
 
+        for (Property<?> property : data.complexFields().values()) {
+            if (PipeBlock.PROPERTY_BY_DIRECTION.containsValue(property)) {
+                pipeProps++;
+            }
+        }
+
         if (pipeProps >= 2) {
             return MultipleFacing.class;
         }
@@ -297,23 +375,81 @@ public final class BlockStateMapping {
         return apiName;
     }
 
-    private static void fetchProperties(Class<?> block, BiConsumer<String, Property<?>> callback) {
+    @Nullable
+    private static Field fetchPipeFieldMap(Class<?> block) { // this should be generalised for all map possibly
+        Field field = null;
+        Class<?> searchClass = block;
+        do {
+            try {
+                field = searchClass.getDeclaredField(PIPE_FIELD_NAME);
+            } catch (NoSuchFieldException ignored) {
+            }
+            searchClass = searchClass.getSuperclass();
+        } while (field == null && searchClass != Block.class);
+
+        if (field == null) {
+            return null;
+        }
+
+        if (!Modifier.isStatic(field.getModifiers()) || !Modifier.isFinal(field.getModifiers())) {
+            return null;
+        }
+
+        if (Map.class.isAssignableFrom(field.getType()) && field.getGenericType() instanceof ParameterizedType complexType) {
+            Type[] args = complexType.getActualTypeArguments();
+            if (args.length == 2 && args[0] == Direction.class && args[1] == BooleanProperty.class) {
+                if (field.trySetAccessible()) {
+                    try {
+                        List<BooleanProperty> properties = new ArrayList<>(((Map<Direction, BooleanProperty>) field.get(null)).values());
+                        int originalSize = properties.size();
+                        properties.retainAll(PipeBlock.PROPERTY_BY_DIRECTION.values());
+                        if (properties.size() != originalSize) {
+                            return null;
+                        }
+                    } catch (ReflectiveOperationException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                return field;
+            }
+        }
+        return null;
+    }
+
+    private static boolean handleComplexType(Field field, BiConsumer<Field, Property<?>> complexCallback) throws IllegalAccessException {
+        if (Iterable.class.isAssignableFrom(field.getType()) && field.getGenericType() instanceof ParameterizedType complexType) {
+            Type[] args = complexType.getActualTypeArguments();
+            if (args.length == 1 && Property.class.isAssignableFrom(ClassHelper.eraseType(args[0]))) {
+                for (Property<?> property : (Iterable<Property<?>>) field.get(null)) {
+                    complexCallback.accept(field, property);
+                }
+            }
+            return true;
+        }
+        if (field.getType().isArray() && Property.class.isAssignableFrom(field.getType().getComponentType())) {
+            for (Property<?> property : (Property<?>[]) field.get(null)) {
+                complexCallback.accept(field, property);
+            }
+            return true;
+        }
+        if (Map.class.isAssignableFrom(field.getType()) && field.getGenericType() instanceof ParameterizedType complexType) {
+            Type[] args = complexType.getActualTypeArguments();
+            if (args.length == 2 && Property.class.isAssignableFrom(ClassHelper.eraseType(args[1]))) {
+                for (Property<?> property : ((Map<?, Property<?>>) field.get(null)).values()) {
+                    complexCallback.accept(field, property);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void fetchProperties(Class<?> block, BiConsumer<String, Property<?>> simpleCallback, BiConsumer<Field, Property<?>> complexCallback) {
         try {
             for (Field field : block.getFields()) {
                 int mod = field.getModifiers();
                 if (Modifier.isPublic(mod) & Modifier.isStatic(mod) & Modifier.isFinal(mod)) {
-                    if (Iterable.class.isAssignableFrom(field.getType()) && field.getGenericType() instanceof ParameterizedType complexType) {
-                        if (complexType.getActualTypeArguments().length == 1 && Property.class.isAssignableFrom(unwrapType(complexType.getActualTypeArguments()[0]))) {
-                            for (Property<?> property : (Iterable<Property<?>>) field.get(null)) {
-                                callback.accept(field.getName(), property);
-                            }
-                        }
-                        continue;
-                    }
-                    if (field.getType().isArray() && Property.class.isAssignableFrom(field.getType().getComponentType())) {
-                        for (Property<?> property : (Property<?>[]) field.get(null)) {
-                            callback.accept(field.getName(), property);
-                        }
+                    if (complexCallback != null && handleComplexType(field, complexCallback)) {
                         continue;
                     }
 
@@ -322,29 +458,11 @@ public final class BlockStateMapping {
                     }
 
                     Property<?> property = ((Property<?>) field.get(null));
-                    callback.accept(field.getName(), property);
+                    simpleCallback.accept(field.getName(), property);
                 }
             }
         } catch (ReflectiveOperationException ex) {
             throw new RuntimeException(ex);
-        }
-    }
-
-    private static Class<?> unwrapType(Type type) {
-        if (type instanceof Class<?> clazz) {
-            return clazz;
-        }
-        if (type instanceof ParameterizedType complexType) {
-            return unwrapType(complexType.getRawType());
-        }
-        throw new UnsupportedOperationException("Don't know how to turn " + type + " into its base class!");
-    }
-
-    private static Class<? extends org.bukkit.block.data.BlockData> classOr(String className, Class<? extends org.bukkit.block.data.BlockData> defaultClass) {
-        try {
-            return (Class<? extends org.bukkit.block.data.BlockData>) Class.forName(className);
-        } catch (ClassNotFoundException ignored) {
-            return defaultClass;
         }
     }
 }

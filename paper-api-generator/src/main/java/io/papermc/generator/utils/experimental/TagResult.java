@@ -1,4 +1,4 @@
-package io.papermc.generator.utils;
+package io.papermc.generator.utils.experimental;
 
 import com.google.common.collect.Multimap;
 import net.minecraft.core.Registry;
