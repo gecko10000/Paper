@@ -136,7 +136,7 @@ public final class BlockStateMapping {
 
     // virtual data that doesn't exist as constant in the source but still organized this way in the api
     public static final ImmutableMultimap<VirtualFieldInfo, Property<?>> VIRTUAL_NODES = ImmutableMultimap.<VirtualFieldInfo, Property<?>>builder()
-        .putAll(VirtualFieldInfo.create("PROPERTY_BY_FACE", WallBlock.class, DataHolderType.MAP, "HEIGHT").keyClass(BlockFace.class),
+        .putAll(VirtualFieldInfo.createMap("PROPERTY_BY_FACE", BlockFace.class, WallBlock.class, "HEIGHT"),
                 WallBlock.EAST_WALL, WallBlock.NORTH_WALL, WallBlock.SOUTH_WALL, WallBlock.WEST_WALL)
         .build();
 

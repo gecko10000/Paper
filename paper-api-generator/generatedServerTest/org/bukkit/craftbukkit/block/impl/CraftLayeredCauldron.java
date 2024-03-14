@@ -6,7 +6,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
-import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -18,16 +17,12 @@ public class CraftLayeredCauldron extends CraftBlockData implements Levelled {
     }
 
     @Override
-    @Range(
-            from = 1,
-            to = 3
-    )
     public int getLevel() {
         return this.get(LEVEL);
     }
 
     @Override
-    public void setLevel(@Range(from = 1, to = 3) final int level) {
+    public void setLevel(final int level) {
         this.set(LEVEL, level);
     }
 

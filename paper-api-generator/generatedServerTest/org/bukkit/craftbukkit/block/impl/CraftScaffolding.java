@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.bukkit.block.data.type.Scaffolding;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
-import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -33,16 +32,12 @@ public class CraftScaffolding extends CraftBlockData implements Scaffolding {
     }
 
     @Override
-    @Range(
-            from = 0,
-            to = 7
-    )
     public int getDistance() {
         return this.get(DISTANCE);
     }
 
     @Override
-    public void setDistance(@Range(from = 0, to = 7) final int distance) {
+    public void setDistance(final int distance) {
         this.set(DISTANCE, distance);
     }
 

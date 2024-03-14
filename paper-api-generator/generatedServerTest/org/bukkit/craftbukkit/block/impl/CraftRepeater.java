@@ -11,7 +11,6 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Repeater;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
-import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -29,16 +28,12 @@ public class CraftRepeater extends CraftBlockData implements Repeater {
     }
 
     @Override
-    @Range(
-            from = 1,
-            to = 4
-    )
     public int getDelay() {
         return this.get(DELAY);
     }
 
     @Override
-    public void setDelay(@Range(from = 1, to = 4) final int delay) {
+    public void setDelay(final int delay) {
         this.set(DELAY, delay);
     }
 

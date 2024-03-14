@@ -1,32 +1,27 @@
 package io.papermc.generator.types.craftblockdata.property.holder;
 
-import com.google.common.base.Preconditions;
-import org.jetbrains.annotations.Contract;
-
 public class VirtualFieldInfo {
 
     private final String name;
     private final Class<?> valueClass;
     private final DataHolderType holderType;
     private final String baseName;
-    private Class<?> keyClass;
+    private final Class<?> keyClass;
 
-    private VirtualFieldInfo(String name, Class<?> valueClass, DataHolderType type, String baseName) {
+    private VirtualFieldInfo(String name, Class<?> valueClass, DataHolderType type, String baseName, Class<?> keyClass) {
         this.name = name;
         this.valueClass = valueClass;
         this.holderType = type;
         this.baseName = baseName;
-    }
-
-    public static VirtualFieldInfo create(String name, Class<?> valueClass, DataHolderType type, String baseName) {
-        return new VirtualFieldInfo(name, valueClass, type, baseName);
-    }
-
-    @Contract(value = "_ -> this", mutates = "this")
-    public VirtualFieldInfo keyClass(Class<?> keyClass) {
-        Preconditions.checkState(this.holderType == DataHolderType.MAP, "Custom key class is only relevant for map structure");
         this.keyClass = keyClass;
-        return this;
+    }
+
+    public static VirtualFieldInfo createCollection(String name, Class<?> valueClass, boolean isArray, String baseName) {
+        return new VirtualFieldInfo(name, valueClass, isArray ? DataHolderType.ARRAY : DataHolderType.LIST, baseName, null);
+    }
+
+    public static VirtualFieldInfo createMap(String name, Class<?> keyClass, Class<?> valueClass, String baseName) {
+        return new VirtualFieldInfo(name, valueClass, DataHolderType.MAP, baseName, keyClass);
     }
 
     public String getName() {

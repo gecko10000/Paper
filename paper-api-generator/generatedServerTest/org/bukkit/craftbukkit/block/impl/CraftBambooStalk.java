@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.bukkit.block.data.type.Bamboo;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
-import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -25,16 +24,12 @@ public class CraftBambooStalk extends CraftBlockData implements Bamboo {
     }
 
     @Override
-    @Range(
-            from = 0,
-            to = 1
-    )
     public int getAge() {
         return this.get(AGE);
     }
 
     @Override
-    public void setAge(@Range(from = 0, to = 1) final int age) {
+    public void setAge(final int age) {
         this.set(AGE, age);
     }
 
@@ -55,16 +50,12 @@ public class CraftBambooStalk extends CraftBlockData implements Bamboo {
     }
 
     @Override
-    @Range(
-            from = 0,
-            to = 1
-    )
     public int getStage() {
         return this.get(STAGE);
     }
 
     @Override
-    public void setStage(@Range(from = 0, to = 1) final int stage) {
+    public void setStage(final int stage) {
         this.set(STAGE, stage);
     }
 

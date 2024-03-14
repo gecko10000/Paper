@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.bukkit.block.data.type.Light;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
-import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -21,16 +20,12 @@ public class CraftLight extends CraftBlockData implements Light {
     }
 
     @Override
-    @Range(
-            from = 0,
-            to = 15
-    )
     public int getLevel() {
         return this.get(LEVEL);
     }
 
     @Override
-    public void setLevel(@Range(from = 0, to = 15) final int level) {
+    public void setLevel(final int level) {
         this.set(LEVEL, level);
     }
 

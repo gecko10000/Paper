@@ -7,7 +7,6 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.bukkit.block.data.type.SeaPickle;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
-import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -21,16 +20,12 @@ public class CraftSeaPickle extends CraftBlockData implements SeaPickle {
     }
 
     @Override
-    @Range(
-            from = 1,
-            to = 4
-    )
     public int getPickles() {
         return this.get(PICKLES);
     }
 
     @Override
-    public void setPickles(@Range(from = 1, to = 4) final int pickles) {
+    public void setPickles(final int pickles) {
         this.set(PICKLES, pickles);
     }
 

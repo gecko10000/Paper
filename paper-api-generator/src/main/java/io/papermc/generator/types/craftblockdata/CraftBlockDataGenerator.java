@@ -24,7 +24,6 @@ import net.minecraft.world.level.block.BrewingStandBlock;
 import net.minecraft.world.level.block.ChiseledBookShelfBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.bukkit.Axis;
 import org.bukkit.block.BlockFace;
@@ -53,38 +52,9 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
         this.blockData = blockData;
     }
 
-    private static final NamingManager.AccessKeyword IS_KEYWORD = keywordGet("is");
     private static final Map<Property<?>, NamingManager.AccessKeyword> FLUENT_KEYWORD = ImmutableMap.<Property<?>, NamingManager.AccessKeyword>builder()
-        .put(BlockStateProperties.WATERLOGGED, IS_KEYWORD)
-        .put(BlockStateProperties.OPEN, IS_KEYWORD)
-        .put(BlockStateProperties.OCCUPIED, IS_KEYWORD)
-        .put(BlockStateProperties.LIT, IS_KEYWORD)
-        .put(BlockStateProperties.DRAG, IS_KEYWORD)
         .put(BlockStateProperties.ATTACH_FACE, keywordGetSet("getAttached", "setAttached")) // todo remove this once switch methods are gone
-        .put(BlockStateProperties.SIGNAL_FIRE, IS_KEYWORD)
-        .put(BlockStateProperties.UP, IS_KEYWORD)
-        .put(BlockStateProperties.CONDITIONAL, IS_KEYWORD)
-        .put(BlockStateProperties.POWERED, IS_KEYWORD)
-        .put(BlockStateProperties.CRAFTING, IS_KEYWORD)
-        .put(BlockStateProperties.TRIGGERED, IS_KEYWORD)
-        .put(BlockStateProperties.INVERTED, IS_KEYWORD)
-        .put(BlockStateProperties.CRACKED, IS_KEYWORD)
         .put(BlockStateProperties.EYE, keywordGet("has"))
-        .put(BlockStateProperties.IN_WALL, IS_KEYWORD)
-        .put(BlockStateProperties.SNOWY, IS_KEYWORD)
-        .put(BlockStateProperties.ENABLED, IS_KEYWORD)
-        .put(BlockStateProperties.HANGING, IS_KEYWORD)
-        .put(BlockStateProperties.PERSISTENT, IS_KEYWORD)
-        .put(BlockStateProperties.EXTENDED, IS_KEYWORD)
-        .put(BlockStateProperties.LOCKED, IS_KEYWORD)
-        .put(BlockStateProperties.BOTTOM, IS_KEYWORD)
-        .put(BlockStateProperties.BLOOM, IS_KEYWORD)
-        .put(BlockStateProperties.UNSTABLE, IS_KEYWORD)
-        .put(BlockStateProperties.DISARMED, IS_KEYWORD)
-        .put(BlockStateProperties.ATTACHED, IS_KEYWORD)
-        .put(BlockStateProperties.SHORT, IS_KEYWORD)
-        .put(BlockStateProperties.SHRIEKING, IS_KEYWORD)
-        .put(BlockStateProperties.CAN_SUMMON, IS_KEYWORD)
         .put(BlockStateProperties.BERRIES, keywordGet("has")) // spigot method rename
         // data holder keywords is only needed for the first property they hold
         .put(BrewingStandBlock.HAS_BOTTLE[0], keywordGet("has"))
@@ -161,15 +131,16 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
             ConverterBase converter = Converters.getOrDefault(property, propertyMaker);
             Class<?> apiClass = converter.getApiType();
 
-            NamingManager.AccessKeyword accessKeyword = FLUENT_KEYWORD.get(property);
+            NamingManager.AccessKeyword accessKeyword = null;
+            if (apiClass == Boolean.TYPE) {
+                accessKeyword = keywordGet("is");
+            }
+            accessKeyword = FLUENT_KEYWORD.getOrDefault(property, accessKeyword);
             NamingManager naming = new NamingManager(accessKeyword, CaseFormat.LOWER_UNDERSCORE, property.getName());
 
             // get
             {
                 MethodSpec.Builder methodBuilder = createMethod(naming.simpleGetterName(name -> !name.startsWith("is_") && !name.startsWith("has_")));
-                if (property instanceof IntegerProperty intProperty && apiClass == Integer.TYPE) {
-                    methodBuilder.addAnnotation(Annotations.intRange(intProperty.min, intProperty.max));
-                }
                 converter.convertGetter(methodBuilder, field);
                 methodBuilder.returns(apiClass);
 
@@ -179,11 +150,7 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
             // set
             {
                 String paramName = naming.paramName(apiClass);
-                ParameterSpec.Builder parameterBuilder = ParameterSpec.builder(apiClass, paramName, FINAL);
-                if (property instanceof IntegerProperty intProperty && apiClass == Integer.TYPE) {
-                    parameterBuilder.addAnnotation(Annotations.intRange(intProperty.min, intProperty.max));
-                }
-                ParameterSpec parameter = parameterBuilder.build();
+                ParameterSpec parameter = ParameterSpec.builder(apiClass, paramName, FINAL).build();
 
                 MethodSpec.Builder methodBuilder = createMethod(naming.simpleSetterName(name -> !name.startsWith("is_")), apiClass).addParameter(parameter);
                 if (!apiClass.isPrimitive()) {
@@ -210,7 +177,7 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
             Class<?> apiClass = propertyConverter.getApiType();
 
             TypeName propertyType = propertyMaker.getPropertyType();
-            DataPropertyMaker dataPropertyMaker = DataPropertyMaker.make(properties, this.blockClass, fieldDataHolder, propertyType);
+            DataPropertyMaker dataPropertyMaker = DataPropertyMaker.make(properties, this.blockClass, fieldDataHolder, propertyType, apiClass);
 
             FieldSpec field = dataPropertyMaker.getOrCreateField(this.blockData.fieldNames()).build();
             typeBuilder.addField(field);

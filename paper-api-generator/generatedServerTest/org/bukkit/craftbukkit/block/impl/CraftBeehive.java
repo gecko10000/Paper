@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Beehive;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
-import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -41,16 +40,12 @@ public class CraftBeehive extends CraftBlockData implements Beehive {
     }
 
     @Override
-    @Range(
-            from = 0,
-            to = 5
-    )
     public int getHoneyLevel() {
         return this.get(HONEY_LEVEL);
     }
 
     @Override
-    public void setHoneyLevel(@Range(from = 0, to = 5) final int honeyLevel) {
+    public void setHoneyLevel(final int honeyLevel) {
         this.set(HONEY_LEVEL, honeyLevel);
     }
 

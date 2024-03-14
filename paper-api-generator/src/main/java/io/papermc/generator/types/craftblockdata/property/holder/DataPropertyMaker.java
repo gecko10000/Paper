@@ -3,11 +3,8 @@ package io.papermc.generator.types.craftblockdata.property.holder;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.TypeName;
 import io.papermc.generator.types.craftblockdata.property.holder.appender.DataAppender;
-import io.papermc.generator.types.craftblockdata.property.holder.named.ChiseledBookshelfDataPropertyWriter;
-import io.papermc.generator.types.craftblockdata.property.holder.named.MultipleFaceDataPropertyWriter;
 import io.papermc.generator.utils.BlockStateMapping;
 import io.papermc.generator.utils.NamingManager;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 
 import java.lang.reflect.Field;
@@ -27,18 +24,22 @@ public interface DataPropertyMaker extends DataAppender {
 
     NamingManager.AccessKeyword getKeyword();
 
-    static <T extends Property<?>> DataPropertyMaker make(Collection<T> properties, Class<?> blockClass, BlockStateMapping.FieldDataHolder fieldDataHolder, TypeName enclosedType) {
+    Map<String, String> FIELD_TO_BASE_NAME = Map.of(
+        BlockStateMapping.PIPE_FIELD_NAME, "FACE",
+        BlockStateMapping.CHISELED_BOOKSHELF_FIELD_NAME, "SLOT_OCCUPIED"
+    );
+
+    static <T extends Property<?>> DataPropertyMaker make(Collection<T> properties, Class<?> blockClass, BlockStateMapping.FieldDataHolder fieldDataHolder, TypeName enclosedType, Class<?> apiClass) {
         if (fieldDataHolder.field() == null) {
             return new VirtualDataPropertyWriter<>(fieldDataHolder.virtualFieldInfo(), properties, blockClass, enclosedType);
         }
 
         Field field = fieldDataHolder.field();
-        if (field.getName().equals(BlockStateMapping.PIPE_FIELD_NAME)) {
-            return new MultipleFaceDataPropertyWriter<>(properties, blockClass, field, enclosedType);
+        DataPropertyWriter<T> writer = new DataPropertyWriter<>(properties, blockClass, field, enclosedType);
+        if (apiClass == Boolean.TYPE) {
+            writer.setKeyword(NamingManager.keywordGet("has"));
         }
-        if (field.getName().equals(BlockStateMapping.CHISELED_BOOKSHELF_FIELD_NAME)) {
-            return new ChiseledBookshelfDataPropertyWriter((Collection<BooleanProperty>) properties, blockClass, field, enclosedType);
-        }
-        return new DataPropertyWriter<>(properties, blockClass, field, enclosedType);
+        writer.setBaseName(FIELD_TO_BASE_NAME.getOrDefault(field.getName(), field.getName()));
+        return writer;
     }
 }

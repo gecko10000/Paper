@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.state.properties.SculkSensorPhase;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.CalibratedSculkSensor;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
-import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -48,16 +47,12 @@ public class CraftCalibratedSculkSensor extends CraftBlockData implements Calibr
     }
 
     @Override
-    @Range(
-            from = 0,
-            to = 15
-    )
     public int getPower() {
         return this.get(POWER);
     }
 
     @Override
-    public void setPower(@Range(from = 0, to = 15) final int power) {
+    public void setPower(final int power) {
         this.set(POWER, power);
     }
 

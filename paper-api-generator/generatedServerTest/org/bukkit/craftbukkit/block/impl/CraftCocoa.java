@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.Cocoa;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
-import org.jetbrains.annotations.Range;
 
 @GeneratedFrom("1.20.4")
 @SuppressWarnings("unused")
@@ -24,16 +23,12 @@ public class CraftCocoa extends CraftBlockData implements Cocoa {
     }
 
     @Override
-    @Range(
-            from = 0,
-            to = 2
-    )
     public int getAge() {
         return this.get(AGE);
     }
 
     @Override
-    public void setAge(@Range(from = 0, to = 2) final int age) {
+    public void setAge(final int age) {
         this.set(AGE, age);
     }
 
