@@ -11,6 +11,7 @@ import io.papermc.paper.generated.GeneratedFrom;
 import net.minecraft.SharedConstants;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.VisibleForTesting;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -24,10 +25,13 @@ import java.util.Set;
 
 public class SearchReplaceRewriter implements SourceRewriter {
 
-    protected static final String INDENT_UNIT = "    ";
-    private static final String PAPER_START_FORMAT = "Paper start";
+    @VisibleForTesting
+    public static final String INDENT_UNIT = "    ";
+    @VisibleForTesting
+    public static final String PAPER_START_FORMAT = "Paper start";
     private static final String PAPER_END_FORMAT = "Paper end";
-    private static final String GENERATED_COMMENT_FORMAT = "// %s - Generated/%s"; // {0} = PAPER_START_FORMAT|PAPER_END_FORMAT {1} = pattern
+    @VisibleForTesting
+    public static final String GENERATED_COMMENT_FORMAT = "// %s - Generated/%s"; // {0} = PAPER_START_FORMAT|PAPER_END_FORMAT {1} = pattern
 
     protected final Class<?> rewriteClass;
     protected final String pattern;

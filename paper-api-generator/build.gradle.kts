@@ -24,6 +24,12 @@ dependencies {
     implementation("com.squareup:javapoet:1.13.0")
     implementation(project(":paper-api"))
     implementation("io.github.classgraph:classgraph:4.8.47")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+}
+
+tasks.test {
+    useJUnitPlatform()
+    systemProperty("paper.generator.rewriter.container", file("generated").toString()) // todo move to the sourceset
 }
 
 group = "io.papermc.paper"
