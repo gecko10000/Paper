@@ -83,7 +83,7 @@ public class DataPropertyWriter<T extends Property<?>> extends DataPropertyWrite
                 fieldBuilder.initializer("$[$T.$L.entrySet().stream()\n.collect($T.toMap(entry -> $T.notchToBlockFace(entry.getKey()), entry -> entry.getValue()))$]",
                     this.blockClass, this.field.getName(), Collectors.class, Types.CRAFT_BLOCK);
             } else {
-                fieldBuilder.initializer("$T.$N", this.blockClass, this.field.getName());
+                fieldBuilder.initializer("$T.$L", this.blockClass, this.field.getName());
             }
         } else {
             if (this.type == DataHolderType.ARRAY || this.type == DataHolderType.LIST) {

@@ -18,7 +18,6 @@ import io.papermc.generator.types.craftblockdata.property.holder.converter.DataC
 import io.papermc.generator.utils.Annotations;
 import io.papermc.generator.utils.BlockStateMapping;
 import io.papermc.generator.utils.NamingManager;
-import net.minecraft.core.FrontAndTop;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BrewingStandBlock;
 import net.minecraft.world.level.block.ChiseledBookShelfBlock;
@@ -109,10 +108,6 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
         TypeSpec.Builder typeBuilder = this.propertyHolder();
 
         for (Property<?> property : this.blockData.properties()) {
-            if (property.getValueClass() == FrontAndTop.class) {
-                continue; // broken todo change api a bit? to avoid duplicate enum (jigsaw+crafter)
-            }
-
             String fieldName = this.blockData.fieldNames().get(property.getName());
             Class<?> fieldAccess = this.blockClass;
             if (fieldName == null) {

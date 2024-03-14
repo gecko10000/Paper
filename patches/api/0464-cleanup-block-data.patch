@@ -113,6 +113,32 @@ index 63ff4ab251f27c3c94ba775dc288ff8ef9b3b334..1d0ecea530caa5febbe3f08e77ff7c80
      /**
       * BlockData: {@link Directional}
       */
+diff --git a/src/main/java/org/bukkit/block/Orientation.java b/src/main/java/org/bukkit/block/Orientation.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..f6b25ac08db75d4ddec498295b932d8efccdcfd4
+--- /dev/null
++++ b/src/main/java/org/bukkit/block/Orientation.java
+@@ -0,0 +1,20 @@
++package org.bukkit.block;
++
++/**
++ * Represents the face and the direction of a block
++ */
++public enum Orientation {
++
++    DOWN_EAST,
++    DOWN_NORTH,
++    DOWN_SOUTH,
++    DOWN_WEST,
++    UP_EAST,
++    UP_NORTH,
++    UP_SOUTH,
++    UP_WEST,
++    WEST_UP,
++    EAST_UP,
++    NORTH_UP,
++    SOUTH_UP;
++}
 diff --git a/src/main/java/org/bukkit/block/data/type/CaveVinesPlant.java b/src/main/java/org/bukkit/block/data/type/CaveVinesPlant.java
 index a7f75a98e018c63280f49aff1654ed1baea1f97f..2255ed831d0779d140cca5a6ec04f4db5c27ef9f 100644
 --- a/src/main/java/org/bukkit/block/data/type/CaveVinesPlant.java
@@ -140,6 +166,36 @@ index a7f75a98e018c63280f49aff1654ed1baea1f97f..2255ed831d0779d140cca5a6ec04f4db
  
      /**
       * Sets the value of the 'berries' property.
+diff --git a/src/main/java/org/bukkit/block/data/type/Crafter.java b/src/main/java/org/bukkit/block/data/type/Crafter.java
+index 282188ffa8f3314f3e48de0e18ffe854a55da06b..d9559718ecfcc808800b3be3f60cf346e3585a59 100644
+--- a/src/main/java/org/bukkit/block/data/type/Crafter.java
++++ b/src/main/java/org/bukkit/block/data/type/Crafter.java
+@@ -52,18 +52,23 @@ public interface Crafter extends BlockData {
+      * @return the 'orientation' value
+      */
+     @NotNull
+-    Orientation getOrientation();
++    org.bukkit.block.Orientation getOrientation(); // Paper
+ 
+     /**
+      * Sets the value of the 'orientation' property.
+      *
+      * @param orientation the new 'orientation' value
+      */
+-    void setOrientation(@NotNull Orientation orientation);
++    void setOrientation(@NotNull org.bukkit.block.Orientation orientation); // Paper
+ 
+     /**
+      * The directions the Crafter can be oriented.
++     *
++     * @deprecated This property is not specific to the Crafter, use
++     * {@link org.bukkit.block.Orientation} instead. All references
++     * to this enum will be redirected to that enum at runtime.
+      */
++    @Deprecated // Paper
+     public enum Orientation {
+ 
+         DOWN_EAST,
 diff --git a/src/main/java/org/bukkit/block/data/type/DecoratedPot.java b/src/main/java/org/bukkit/block/data/type/DecoratedPot.java
 index eb0ffa977450ef0c79caa78302cfe75ee35b34b7..d03f03449af356d71344595255acda0f4490f845 100644
 --- a/src/main/java/org/bukkit/block/data/type/DecoratedPot.java
@@ -165,6 +221,36 @@ index eb0ffa977450ef0c79caa78302cfe75ee35b34b7..d03f03449af356d71344595255acda0f
 +    void setCracked(boolean cracked);
 +    // Paper end - missing api
  }
+diff --git a/src/main/java/org/bukkit/block/data/type/Jigsaw.java b/src/main/java/org/bukkit/block/data/type/Jigsaw.java
+index c70c755cdb36c8afc70988340b061c39c492e14e..3b6758acd79fbfbce85d0d083304934874bf4796 100644
+--- a/src/main/java/org/bukkit/block/data/type/Jigsaw.java
++++ b/src/main/java/org/bukkit/block/data/type/Jigsaw.java
+@@ -14,18 +14,23 @@ public interface Jigsaw extends BlockData {
+      * @return the 'orientation' value
+      */
+     @NotNull
+-    Orientation getOrientation();
++    org.bukkit.block.Orientation getOrientation(); // Paper
+ 
+     /**
+      * Sets the value of the 'orientation' property.
+      *
+      * @param orientation the new 'orientation' value
+      */
+-    void setOrientation(@NotNull Orientation orientation);
++    void setOrientation(@NotNull org.bukkit.block.Orientation orientation); // Paper
+ 
+     /**
+      * The directions the Jigsaw can be oriented.
++     *
++     * @deprecated This property is not specific to the Jigsaw, use
++     * {@link org.bukkit.block.Orientation} instead. All references
++     * to this enum will be redirected to that enum at runtime.
+      */
++    @Deprecated // Paper
+     public enum Orientation {
+ 
+         DOWN_EAST,
 diff --git a/src/main/java/org/bukkit/block/data/type/Jukebox.java b/src/main/java/org/bukkit/block/data/type/Jukebox.java
 index 5e37136207e939c6278c6c2589051fc34eca3496..e599824cc4e9c6e32cf37c2301bb767e4bc67dd9 100644
 --- a/src/main/java/org/bukkit/block/data/type/Jukebox.java

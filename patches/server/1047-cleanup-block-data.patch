@@ -949,6 +949,26 @@ index 0928c60c29a32336db3a6f0a623da516542315d6..970669c8bdf5b060ea3aa934dc0939a0
 +        this.set(CraftCoralWallFan.WATERLOGGED, waterlogged);
      }
  }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCrafter.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCrafter.java
+index 78b8a7cda5171cd10fdc8f0986b62052cd7b9c88..458e9a835723d65f8b0afecd2c31180b56d3cdf4 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCrafter.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCrafter.java
+@@ -40,12 +40,12 @@ public final class CraftCrafter extends org.bukkit.craftbukkit.block.data.CraftB
+     }
+ 
+     @Override
+-    public org.bukkit.block.data.type.Crafter.Orientation getOrientation() {
+-        return this.get(CraftCrafter.ORIENTATION, org.bukkit.block.data.type.Crafter.Orientation.class);
++    public org.bukkit.block.Orientation getOrientation() {
++        return this.get(CraftCrafter.ORIENTATION, org.bukkit.block.Orientation.class);
+     }
+ 
+     @Override
+-    public void setOrientation(org.bukkit.block.data.type.Crafter.Orientation orientation) {
++    public void setOrientation(org.bukkit.block.Orientation orientation) {
+         this.set(CraftCrafter.ORIENTATION, orientation);
+     }
+ }
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftReed.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftCrop.java
 similarity index 65%
 rename from src/main/java/org/bukkit/craftbukkit/block/impl/CraftReed.java
@@ -1337,6 +1357,26 @@ index 5698cb115ba6dcf50686bb8cfb82e97d6afecd9f..74b7a975885730d6015edf128c6de558
      public void setLit(boolean lit) {
 -        this.set(CraftFurnaceFurace.LIT, lit);
 +        this.set(CraftFurnace.LIT, lit);
+     }
+ }
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftJigsaw.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftJigsaw.java
+index 12237538df404ebe6820418be0151ade2d6715f0..bc02aa25d3899c1dfdd3f9c2ccd217e69518f273 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftJigsaw.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftJigsaw.java
+@@ -18,12 +18,12 @@ public final class CraftJigsaw extends org.bukkit.craftbukkit.block.data.CraftBl
+     private static final net.minecraft.world.level.block.state.properties.EnumProperty<?> ORIENTATION = getEnum(net.minecraft.world.level.block.JigsawBlock.class, "orientation");
+ 
+     @Override
+-    public org.bukkit.block.data.type.Jigsaw.Orientation getOrientation() {
+-        return this.get(CraftJigsaw.ORIENTATION, org.bukkit.block.data.type.Jigsaw.Orientation.class);
++    public org.bukkit.block.Orientation getOrientation() {
++        return this.get(CraftJigsaw.ORIENTATION, org.bukkit.block.Orientation.class);
+     }
+ 
+     @Override
+-    public void setOrientation(org.bukkit.block.data.type.Jigsaw.Orientation orientation) {
++    public void setOrientation(org.bukkit.block.Orientation orientation) {
+         this.set(CraftJigsaw.ORIENTATION, orientation);
      }
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/impl/CraftJukeBox.java b/src/main/java/org/bukkit/craftbukkit/block/impl/CraftJukebox.java
@@ -3432,3 +3472,18 @@ index 67b212d9395335f59b6f33741aac7a57c823c966..ca232ba24a66d234155fbb706c5b30c6
 +        return this.getValues(CraftWitherWallSkull.FACING, org.bukkit.block.BlockFace.class);
      }
  }
+diff --git a/src/main/java/org/bukkit/craftbukkit/util/Commodore.java b/src/main/java/org/bukkit/craftbukkit/util/Commodore.java
+index bc008773f8cf0d416182152ecfc5a64b70744009..7f8871faafb13f5c5265bb833b096e18d07a82b2 100644
+--- a/src/main/java/org/bukkit/craftbukkit/util/Commodore.java
++++ b/src/main/java/org/bukkit/craftbukkit/util/Commodore.java
+@@ -52,7 +52,9 @@ public class Commodore {
+     private static final Map<String, String> RENAMES = Map.of(
+             "org/bukkit/entity/TextDisplay$TextAligment", "org/bukkit/entity/TextDisplay$TextAlignment", // SPIGOT-7335
+             "org/spigotmc/event/entity/EntityMountEvent", "org/bukkit/event/entity/EntityMountEvent",
+-            "org/spigotmc/event/entity/EntityDismountEvent", "org/bukkit/event/entity/EntityDismountEvent"
++            "org/spigotmc/event/entity/EntityDismountEvent", "org/bukkit/event/entity/EntityDismountEvent",
++            "org/bukkit/block/data/type/Crafter$Orientation", "org/bukkit/block/Orientation", // Paper
++            "org/bukkit/block/data/type/Jigsaw$Orientation", "org/bukkit/block/Orientation" // Paper
+     );
+ 
+     // Paper start - Plugin rewrites

@@ -1,9 +1,13 @@
 package org.bukkit.craftbukkit.block.impl;
 
+import com.google.common.base.Preconditions;
 import io.papermc.paper.generated.GeneratedFrom;
+import net.minecraft.core.FrontAndTop;
 import net.minecraft.world.level.block.CrafterBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
 import org.bukkit.block.data.type.Crafter;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
 
@@ -11,6 +15,8 @@ import org.bukkit.craftbukkit.block.data.CraftBlockData;
 @SuppressWarnings("unused")
 public class CraftCrafter extends CraftBlockData implements Crafter {
     private static final BooleanProperty CRAFTING = CrafterBlock.CRAFTING;
+
+    private static final EnumProperty<FrontAndTop> ORIENTATION = BlockStateProperties.ORIENTATION;
 
     private static final BooleanProperty TRIGGERED = CrafterBlock.TRIGGERED;
 
@@ -26,6 +32,17 @@ public class CraftCrafter extends CraftBlockData implements Crafter {
     @Override
     public void setCrafting(final boolean crafting) {
         this.set(CRAFTING, crafting);
+    }
+
+    @Override
+    public org.bukkit.block.Orientation getOrientation() {
+        return this.get(ORIENTATION, org.bukkit.block.Orientation.class);
+    }
+
+    @Override
+    public void setOrientation(final org.bukkit.block.Orientation orientation) {
+        Preconditions.checkArgument(orientation != null, "orientation cannot be null!");
+        this.set(ORIENTATION, orientation);
     }
 
     @Override

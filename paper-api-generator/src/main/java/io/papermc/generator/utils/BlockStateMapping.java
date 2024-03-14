@@ -17,9 +17,9 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import io.papermc.generator.types.craftblockdata.property.holder.DataHolderType;
 import io.papermc.generator.types.craftblockdata.property.holder.VirtualFieldInfo;
 import net.minecraft.core.Direction;
+import net.minecraft.core.FrontAndTop;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.AbstractFurnaceBlock;
@@ -57,6 +57,7 @@ import net.minecraft.world.level.block.state.properties.WallSide;
 import org.bukkit.Axis;
 import org.bukkit.Instrument;
 import org.bukkit.block.BlockFace;
+import org.bukkit.block.Orientation;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.block.data.AnaloguePowerable;
 import org.bukkit.block.data.Bisected;
@@ -296,8 +297,8 @@ public final class BlockStateMapping {
         .put(Direction.Axis.class, Axis.class)
         .put(BambooLeaves.class, Bamboo.Leaves.class)
         .put(TrialSpawnerState.class, TrialSpawner.State.class)
+        .put(FrontAndTop.class, Orientation.class)
         .build();
-    // todo a mess: Crafter.Orientation / Jigsaw.Orientation = FrontAndTop
 
     /*
     TODO:
