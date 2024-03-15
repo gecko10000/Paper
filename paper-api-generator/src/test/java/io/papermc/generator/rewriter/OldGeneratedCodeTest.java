@@ -26,10 +26,24 @@ public class OldGeneratedCodeTest {
         CURRENT_VERSION = SharedConstants.getCurrentVersion().getName();
     }
 
+    private boolean versionDependant(SearchReplaceRewriter srt) {
+        if (srt instanceof CompositeRewriter compositeRewriter) {
+            boolean versionDependant = false;
+            for (SearchReplaceRewriter rewriter : compositeRewriter.getRewriters()) {
+                if (!rewriter.equalsSize) {
+                    versionDependant = true;
+                    break;
+                }
+            }
+            return versionDependant;
+        }
+        return !srt.equalsSize;
+    }
+
     @Test
     public void testOutdatedCode() throws IOException {
         for (SourceRewriter rewriter : Generators.API_REWRITE) {
-            if (!(rewriter instanceof SearchReplaceRewriter srt)) {
+            if (!(rewriter instanceof SearchReplaceRewriter srt) || !versionDependant(srt)) {
                 continue;
             }
 
@@ -39,7 +53,7 @@ public class OldGeneratedCodeTest {
             );
 
             Path path = Path.of(CONTAINER, filePath);
-            if (false && !Files.exists(path)) {
+            if (!Files.exists(path)) {
                 continue;
             }
             try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {

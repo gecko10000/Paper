@@ -88,7 +88,7 @@ public class DataPropertyWriter<T extends Property<?>> extends DataPropertyWrite
         } else {
             if (this.type == DataHolderType.ARRAY || this.type == DataHolderType.LIST) {
                 CodeBlock.Builder code = CodeBlock.builder();
-                this.createSyntheticCollection(code, this.getType() == DataHolderType.ARRAY, fieldNames);
+                this.createSyntheticCollection(code, this.type == DataHolderType.ARRAY, fieldNames);
                 fieldBuilder.initializer(code.build());
             } else if (this.type == DataHolderType.MAP) {
                 CodeBlock.Builder code = CodeBlock.builder();

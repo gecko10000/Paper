@@ -167,7 +167,7 @@ index a7f75a98e018c63280f49aff1654ed1baea1f97f..2255ed831d0779d140cca5a6ec04f4db
      /**
       * Sets the value of the 'berries' property.
 diff --git a/src/main/java/org/bukkit/block/data/type/Crafter.java b/src/main/java/org/bukkit/block/data/type/Crafter.java
-index 282188ffa8f3314f3e48de0e18ffe854a55da06b..d9559718ecfcc808800b3be3f60cf346e3585a59 100644
+index 282188ffa8f3314f3e48de0e18ffe854a55da06b..1a2747fc7f004de8907da6ea26257196005ea983 100644
 --- a/src/main/java/org/bukkit/block/data/type/Crafter.java
 +++ b/src/main/java/org/bukkit/block/data/type/Crafter.java
 @@ -52,18 +52,23 @@ public interface Crafter extends BlockData {
@@ -188,7 +188,7 @@ index 282188ffa8f3314f3e48de0e18ffe854a55da06b..d9559718ecfcc808800b3be3f60cf346
      /**
       * The directions the Crafter can be oriented.
 +     *
-+     * @deprecated This property is not specific to the Crafter, use
++     * @deprecated this property is not specific to the Crafter, use
 +     * {@link org.bukkit.block.Orientation} instead. All references
 +     * to this enum will be redirected to that enum at runtime.
       */
@@ -222,7 +222,7 @@ index eb0ffa977450ef0c79caa78302cfe75ee35b34b7..d03f03449af356d71344595255acda0f
 +    // Paper end - missing api
  }
 diff --git a/src/main/java/org/bukkit/block/data/type/Jigsaw.java b/src/main/java/org/bukkit/block/data/type/Jigsaw.java
-index c70c755cdb36c8afc70988340b061c39c492e14e..3b6758acd79fbfbce85d0d083304934874bf4796 100644
+index c70c755cdb36c8afc70988340b061c39c492e14e..9517465a535231e29b0c9b4740f548051a9924d8 100644
 --- a/src/main/java/org/bukkit/block/data/type/Jigsaw.java
 +++ b/src/main/java/org/bukkit/block/data/type/Jigsaw.java
 @@ -14,18 +14,23 @@ public interface Jigsaw extends BlockData {
@@ -243,7 +243,7 @@ index c70c755cdb36c8afc70988340b061c39c492e14e..3b6758acd79fbfbce85d0d0833049348
      /**
       * The directions the Jigsaw can be oriented.
 +     *
-+     * @deprecated This property is not specific to the Jigsaw, use
++     * @deprecated this property is not specific to the Jigsaw, use
 +     * {@link org.bukkit.block.Orientation} instead. All references
 +     * to this enum will be redirected to that enum at runtime.
       */
@@ -364,14 +364,15 @@ index 0000000000000000000000000000000000000000..dec031339ae01165f1fcad7638d2b602
 +public interface SkullWall extends Directional, Powerable {
 +}
 diff --git a/src/main/java/org/bukkit/block/data/type/Switch.java b/src/main/java/org/bukkit/block/data/type/Switch.java
-index d91a07c7bcb36b3810bb2db89afef1eefd89253d..6b20ab2cf9681f0a9014106846cf8fd1770ebf90 100644
+index d91a07c7bcb36b3810bb2db89afef1eefd89253d..f00587773935b72d61d05acffb9c1ec865642c1e 100644
 --- a/src/main/java/org/bukkit/block/data/type/Switch.java
 +++ b/src/main/java/org/bukkit/block/data/type/Switch.java
-@@ -7,6 +7,12 @@ import org.jetbrains.annotations.NotNull;
+@@ -7,6 +7,13 @@ import org.jetbrains.annotations.NotNull;
  
  public interface Switch extends Directional, FaceAttachable, Powerable {
  
 +    // Paper start
++    @NotNull
 +    AttachedFace getAttachedFace();
 +
 +    void setAttachedFace(@NotNull AttachedFace face);
@@ -380,7 +381,7 @@ index d91a07c7bcb36b3810bb2db89afef1eefd89253d..6b20ab2cf9681f0a9014106846cf8fd1
      /**
       * Gets the value of the 'face' property.
       *
-@@ -14,8 +20,12 @@ public interface Switch extends Directional, FaceAttachable, Powerable {
+@@ -14,8 +21,12 @@ public interface Switch extends Directional, FaceAttachable, Powerable {
       * @deprecated use {@link #getAttachedFace()}
       */
      @NotNull
@@ -394,7 +395,7 @@ index d91a07c7bcb36b3810bb2db89afef1eefd89253d..6b20ab2cf9681f0a9014106846cf8fd1
  
      /**
       * Sets the value of the 'face' property.
-@@ -23,8 +33,12 @@ public interface Switch extends Directional, FaceAttachable, Powerable {
+@@ -23,8 +34,12 @@ public interface Switch extends Directional, FaceAttachable, Powerable {
       * @param face the new 'face' value
       * @deprecated use {@link #setAttachedFace(AttachedFace)}
       */

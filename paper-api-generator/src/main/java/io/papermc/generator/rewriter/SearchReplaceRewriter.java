@@ -35,7 +35,7 @@ public class SearchReplaceRewriter implements SourceRewriter {
 
     protected final Class<?> rewriteClass;
     protected final String pattern;
-    private final boolean equalsSize;
+    protected final boolean equalsSize;
 
     public SearchReplaceRewriter(Class<?> rewriteClass, String pattern, boolean equalsSize) {
         this.rewriteClass = rewriteClass;

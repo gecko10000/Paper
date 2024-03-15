@@ -869,6 +869,32 @@ index 3bc24457d143449e6a338d79becf7c39b9f81054..b6f07418ab7267cc43d1174fc023930e
          private final NamespacedKey key;
  
          private Type() {
+diff --git a/src/main/java/org/bukkit/entity/memory/MemoryKey.java b/src/main/java/org/bukkit/entity/memory/MemoryKey.java
+index 8f601e85df580ef8106eaff8b9eafb5691a4874b..6ae74bf3b4435434105c578b61fe7715f70402fc 100644
+--- a/src/main/java/org/bukkit/entity/memory/MemoryKey.java
++++ b/src/main/java/org/bukkit/entity/memory/MemoryKey.java
+@@ -46,6 +46,7 @@ public final class MemoryKey<T> implements Keyed {
+ 
+     private static final Map<NamespacedKey, MemoryKey> MEMORY_KEYS = new HashMap<>();
+     //
++    // Paper start - Generated/MemoryKey
+     public static final MemoryKey<Location> HOME = new MemoryKey<>(NamespacedKey.minecraft("home"), Location.class);
+     public static final MemoryKey<Location> POTENTIAL_JOB_SITE = new MemoryKey<>(NamespacedKey.minecraft("potential_job_site"), Location.class);
+     public static final MemoryKey<Location> JOB_SITE = new MemoryKey<>(NamespacedKey.minecraft("job_site"), Location.class);
+@@ -69,6 +70,13 @@ public final class MemoryKey<T> implements Keyed {
+     public static final MemoryKey<Location> LIKED_NOTEBLOCK_POSITION = new MemoryKey<>(NamespacedKey.minecraft("liked_noteblock"), Location.class);
+     public static final MemoryKey<Integer> LIKED_NOTEBLOCK_COOLDOWN_TICKS = new MemoryKey<>(NamespacedKey.minecraft("liked_noteblock_cooldown_ticks"), Integer.class);
+     public static final MemoryKey<Integer> ITEM_PICKUP_COOLDOWN_TICKS = new MemoryKey<>(NamespacedKey.minecraft("item_pickup_cooldown_ticks"), Integer.class);
++    // Paper end - Generated/MemoryKey
++    /**
++     * @deprecated this constant use the wrong generic type, the sniffer now store different positions
++     * from possibly different worlds. Use the relevant methods in the {@link org.bukkit.entity.Sniffer} directly
++     * for now.
++     */
++    @Deprecated // Paper
+     public static final MemoryKey<Location> SNIFFER_EXPLORED_POSITIONS = new MemoryKey<>(NamespacedKey.minecraft("sniffer_explored_positions"), Location.class);
+ 
+     /**
 diff --git a/src/main/java/org/bukkit/generator/structure/Structure.java b/src/main/java/org/bukkit/generator/structure/Structure.java
 index 8e39f282c771ddafe5d890dcf065c56f0c633647..5505705a63e9ed8a820f7f4e164d6c1dd2936b05 100644
 --- a/src/main/java/org/bukkit/generator/structure/Structure.java

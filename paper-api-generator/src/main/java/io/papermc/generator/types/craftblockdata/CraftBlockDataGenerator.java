@@ -118,7 +118,7 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
             PropertyMaker propertyMaker = PropertyMaker.make(property);
 
             FieldSpec.Builder fieldBuilder = FieldSpec.builder(propertyMaker.getPropertyType(), fieldName, PRIVATE, STATIC, FINAL)
-                .initializer("$T.$N", fieldAccess, fieldName);
+                .initializer("$T.$L", fieldAccess, fieldName);
             FieldSpec field = fieldBuilder.build();
 
             typeBuilder.addField(field);

@@ -9,6 +9,7 @@ import io.papermc.generator.rewriter.types.simple.MapPaletteRewriter;
 import io.papermc.generator.rewriter.types.RegistryFieldRewriter;
 import io.papermc.generator.rewriter.types.TagRewriter;
 import io.papermc.generator.rewriter.types.simple.MaterialRewriter;
+import io.papermc.generator.rewriter.types.simple.MemoryKeyRewriter;
 import io.papermc.generator.rewriter.types.simple.PatternTypeRewriter;
 import io.papermc.generator.rewriter.types.simple.PotionTypeRewriter;
 import io.papermc.generator.rewriter.types.simple.StatisticRewriter;
@@ -205,6 +206,7 @@ public interface Generators {
                 return goatHornSuffixIndex == -1 ? internalName : internalName.substring(0, goatHornSuffixIndex);
             }
         },
+        new MemoryKeyRewriter("MemoryKey"),
         new TagRewriter(Tag.class, "Tag"),
         new MapPaletteRewriter("MapPalette#colors"),
     };

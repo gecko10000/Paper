@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.AbstractFurnaceBlock;
 import net.minecraft.world.level.block.BigDripleafStemBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CommandBlock;
+import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.NoteBlock;
 import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.StructureBlock;
@@ -84,6 +85,7 @@ import org.bukkit.block.data.type.Chest;
 import org.bukkit.block.data.type.Comparator;
 import org.bukkit.block.data.type.Door;
 import org.bukkit.block.data.type.Dripleaf;
+import org.bukkit.block.data.type.Fence;
 import org.bukkit.block.data.type.Furnace;
 import org.bukkit.block.data.type.PointedDripstone;
 import org.bukkit.block.data.type.RedstoneRail;
@@ -108,15 +110,14 @@ public final class BlockStateMapping {
     public record FieldDataHolder(@Nullable Field field, @Nullable VirtualFieldInfo virtualFieldInfo) { // might be Either
     }
 
-    private static FieldDataHolder wrapHolderField(Field field) {
+    private static FieldDataHolder fieldHolder(Field field) {
         return new FieldDataHolder(field, null);
     }
 
     private static final Map<String, String> API_RENAMES = ImmutableMap.<String, String>builder()
         .put("WallSkull", "SkullWall")
         .put("SnowLayer", "Snow")
-        .put("StainedGlassPane", "GlassPane")
-        .put("IronBars", "Fence") // could be handled differently but side effect is big with the glass pane that are both glob classes todo this tree is cursed need to look deeper
+        .put("StainedGlassPane", "GlassPane") // weird that this one implements glass pane but not the regular glass pane
         .put("CeilingHangingSign", "HangingSign")
         .put("RedStoneWire", "RedstoneWire")
         .put("TripWire", "Tripwire")
@@ -144,7 +145,6 @@ public final class BlockStateMapping {
     public static final Map<Class<? extends Block>, BlockData> MAPPING;
     public static final Map<Property<?>, String> FALLBACK_GENERIC_FIELD_NAMES;
     static {
-        Map<Class<? extends Block>, BlockData> map = new HashMap<>();
         Map<Class<? extends Block>, Collection<Property<?>>> specialBlocks = new HashMap<>();
         for (Block block : BuiltInRegistries.BLOCK) {
             if (!block.getStateDefinition().getProperties().isEmpty()) {
@@ -156,6 +156,7 @@ public final class BlockStateMapping {
         fetchProperties(BlockStateProperties.class, (name, property) -> fallbackGenericFieldNames.put(property, name), null);
         FALLBACK_GENERIC_FIELD_NAMES = Map.copyOf(fallbackGenericFieldNames);
 
+        Map<Class<? extends Block>, BlockData> map = new HashMap<>();
         for (Map.Entry<Class<? extends Block>, Collection<Property<?>>> entry : specialBlocks.entrySet()) {
             Class<? extends Block> specialBlock = entry.getKey();
 
@@ -175,7 +176,7 @@ public final class BlockStateMapping {
                 }
 
                 if (properties.remove(property)) { // handle those separately and only count if the property was in the state definition
-                    complexProperties.put(wrapHolderField(field), property);
+                    complexProperties.put(fieldHolder(field), property);
                 }
             });
 
@@ -186,7 +187,7 @@ public final class BlockStateMapping {
                 Field field = fetchPipeFieldMap(specialBlock);
                 if (field != null) {
                     properties.removeAll(commonPipeProperties);
-                    complexProperties.putAll(wrapHolderField(field), commonPipeProperties);
+                    complexProperties.putAll(fieldHolder(field), commonPipeProperties);
                 }
             }
 
@@ -231,6 +232,8 @@ public final class BlockStateMapping {
                     api = Furnace.class; // for smoker and blast furnace
                 } else if (specialBlock == BigDripleafStemBlock.class) {
                     api = Dripleaf.class;
+                } else if (specialBlock == IronBarsBlock.class) {
+                    api = Fence.class; // for glass pane (regular) and iron bars
                 }
             }
 
@@ -371,13 +374,13 @@ public final class BlockStateMapping {
     private static String formatApiName(Class<?> specialBlock) {
         String apiName = specialBlock.getSimpleName();
         if (!BLOCK_SUFFIX_INTENDED.contains(specialBlock)) {
-            apiName = apiName.substring(0, apiName.length() - "Block".length());
+            return apiName.substring(0, apiName.length() - "Block".length());
         }
         return apiName;
     }
 
     @Nullable
-    private static Field fetchPipeFieldMap(Class<?> block) { // this should be generalised for all map possibly
+    private static Field fetchPipeFieldMap(Class<?> block) {
         Field field = null;
         Class<?> searchClass = block;
         do {
@@ -449,12 +452,12 @@ public final class BlockStateMapping {
         try {
             for (Field field : block.getFields()) {
                 int mod = field.getModifiers();
-                if (Modifier.isPublic(mod) & Modifier.isStatic(mod) & Modifier.isFinal(mod)) {
-                    if (complexCallback != null && handleComplexType(field, complexCallback)) {
+                if (Modifier.isStatic(mod) & Modifier.isFinal(mod)) {
+                    if (complexCallback != null && handleComplexType(field, complexCallback)) { // non public fields are recreated
                         continue;
                     }
 
-                    if (!Property.class.isAssignableFrom(field.getType())) {
+                    if (!Modifier.isPublic(mod) || !Property.class.isAssignableFrom(field.getType())) {
                         continue;
                     }
 

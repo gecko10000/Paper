@@ -5,6 +5,7 @@ import io.papermc.generator.utils.ClassHelper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -20,7 +21,7 @@ public class CompositeRewriter extends SearchReplaceRewriter {
 
     @Override
     protected void beginSearch() {
-        for (SearchReplaceRewriter rewriter : this.patternsInfo.values()) {
+        for (SearchReplaceRewriter rewriter : this.getRewriters()) {
             rewriter.beginSearch();
         }
     }
@@ -47,5 +48,9 @@ public class CompositeRewriter extends SearchReplaceRewriter {
     protected void searchAndReplace(BufferedReader reader, StringBuilder content, Map<String, SearchReplaceRewriter> patternInfo) throws IOException {
         Preconditions.checkState(patternInfo.isEmpty());
         super.searchAndReplace(reader, content, this.patternsInfo);
+    }
+
+    public Collection<SearchReplaceRewriter> getRewriters() {
+        return this.patternsInfo.values();
     }
 }

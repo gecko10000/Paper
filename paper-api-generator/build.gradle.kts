@@ -12,7 +12,7 @@ minecraft {
     runs {
         server("generate") {
             mainClass("io.papermc.generator.Main")
-            accessWideners(file("wideners.at"))
+            accessWideners("wideners.at")
             args(file("generated").toString(),
                 project(":paper-api").sourceSets["main"].java.srcDirs.first().toString(),
                 file("generatedServerTest").toString())
@@ -30,6 +30,7 @@ dependencies {
 tasks.test {
     useJUnitPlatform()
     systemProperty("paper.generator.rewriter.container", file("generated").toString()) // todo move to the sourceset
+    inputs.dir("generated")
 }
 
 group = "io.papermc.paper"
