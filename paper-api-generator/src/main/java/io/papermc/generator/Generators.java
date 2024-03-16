@@ -4,6 +4,7 @@ import io.papermc.generator.rewriter.CompositeRewriter;
 import io.papermc.generator.rewriter.SourceRewriter;
 import io.papermc.generator.rewriter.types.EnumCloneRewriter;
 import io.papermc.generator.rewriter.types.EnumRegistryRewriter;
+import io.papermc.generator.rewriter.types.simple.CraftBlockDataMapping;
 import io.papermc.generator.rewriter.types.simple.MapCursorTypeRewriter;
 import io.papermc.generator.rewriter.types.simple.MapPaletteRewriter;
 import io.papermc.generator.rewriter.types.RegistryFieldRewriter;
@@ -209,6 +210,10 @@ public interface Generators {
         new MemoryKeyRewriter("MemoryKey"),
         new TagRewriter(Tag.class, "Tag"),
         new MapPaletteRewriter("MapPalette#colors"),
+    };
+
+    SourceRewriter[] SERVER_REWRITE = {
+        new CraftBlockDataMapping("CraftBlockData#MAP")
     };
 
     private static <T, A> SourceGenerator simpleKey(final String className, final Class<A> apiType, final ResourceKey<? extends Registry<T>> registryKey, final RegistryKey<A> apiRegistryKey, final boolean publicCreateKeyMethod) {

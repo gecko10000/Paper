@@ -1,5 +1,6 @@
 package io.papermc.generator.rewriter.types;
 
+import com.google.common.base.Preconditions;
 import com.google.common.base.Suppliers;
 import io.papermc.generator.Main;
 import io.papermc.generator.rewriter.SearchMetadata;
@@ -67,8 +68,9 @@ public class RegistryFieldRewriter<T, A> extends SearchReplaceRewriter {
             return;
         }
 
+        Preconditions.checkState(this.rewriteClass.clazz() != null, "This rewriter doesn't support server gen!");
         try {
-            this.rewriteClass.getDeclaredMethod(this.fetchMethod, String.class);
+            this.rewriteClass.clazz().getDeclaredMethod(this.fetchMethod, String.class);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
@@ -92,10 +94,10 @@ public class RegistryFieldRewriter<T, A> extends SearchReplaceRewriter {
             if (!this.isInterface) {
                 builder.append("%s %s %s ".formatted(PUBLIC, STATIC, FINAL));
             }
-            builder.append(this.rewriteClass.getSimpleName()).append(' ').append(this.rewriteFieldName(reference));
+            builder.append(this.rewriteClass.simpleName()).append(' ').append(this.rewriteFieldName(reference));
             builder.append(" = ");
             if (this.fetchMethod == null) {
-                builder.append("%s.%s.get(%s.minecraft(%s))".formatted(org.bukkit.Registry.class.getSimpleName(), REGISTRY_FIELD_NAMES.get(this.rewriteClass), NamespacedKey.class.getSimpleName(), quoted(pathKey)));
+                builder.append("%s.%s.get(%s.minecraft(%s))".formatted(org.bukkit.Registry.class.getSimpleName(), REGISTRY_FIELD_NAMES.get(this.rewriteClass.clazz()), NamespacedKey.class.getSimpleName(), quoted(pathKey)));
             } else {
                 builder.append("%s(%s)".formatted(this.fetchMethod, quoted(pathKey)));
             }

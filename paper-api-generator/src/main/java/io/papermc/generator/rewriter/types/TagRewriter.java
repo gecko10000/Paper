@@ -4,6 +4,7 @@ import io.papermc.generator.Main;
 import io.papermc.generator.rewriter.SearchMetadata;
 import io.papermc.generator.rewriter.SearchReplaceRewriter;
 import io.papermc.generator.rewriter.utils.Annotations;
+import io.papermc.generator.rewriter.ClassNamed;
 import io.papermc.generator.utils.Formatting;
 import java.util.Collection;
 import java.util.Iterator;
@@ -39,6 +40,10 @@ public class TagRewriter extends SearchReplaceRewriter {
         super(rewriteClass, pattern, false);
     }
 
+    public TagRewriter(final ClassNamed rewriteClass, final String pattern) {
+        super(rewriteClass, pattern, false);
+    }
+
     @Override
     protected void insert(final SearchMetadata metadata, final StringBuilder builder) {
         for (int i = 0, len = TAG_REGISTRIES.size(); i < len; i++) {
@@ -71,7 +76,7 @@ public class TagRewriter extends SearchReplaceRewriter {
                 }
 
                 builder.append(metadata.indent());
-                builder.append("%s<%s>".formatted(this.rewriteClass.getSimpleName(), tagRegistry.apiType().getSimpleName())).append(' ').append(fieldName);
+                builder.append("%s<%s>".formatted(this.rewriteClass.simpleName(), tagRegistry.apiType().getSimpleName())).append(' ').append(fieldName);
                 builder.append(" = ");
                 builder.append("%s.getTag(%s, %s.minecraft(%s), %s.class)".formatted(Bukkit.class.getSimpleName(), registryFieldName, NamespacedKey.class.getSimpleName(), quoted(keyPath), tagRegistry.apiType().getSimpleName()));
                 builder.append(';');

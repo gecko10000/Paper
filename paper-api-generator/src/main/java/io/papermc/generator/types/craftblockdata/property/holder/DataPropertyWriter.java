@@ -11,7 +11,7 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import io.papermc.generator.types.StructuredGenerator;
-import io.papermc.generator.types.craftblockdata.Types;
+import io.papermc.generator.types.Types;
 import io.papermc.generator.types.craftblockdata.property.holder.appender.ArrayAppender;
 import io.papermc.generator.types.craftblockdata.property.holder.appender.DataAppender;
 import io.papermc.generator.types.craftblockdata.property.holder.appender.ListAppender;
@@ -19,6 +19,7 @@ import io.papermc.generator.types.craftblockdata.property.holder.appender.MapApp
 import io.papermc.generator.types.craftblockdata.property.converter.ConverterBase;
 import io.papermc.generator.utils.BlockStateMapping;
 import io.papermc.generator.utils.ClassHelper;
+import io.papermc.generator.utils.CommonVariable;
 import io.papermc.generator.utils.NamingManager;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.block.state.properties.Property;
@@ -80,8 +81,8 @@ public class DataPropertyWriter<T extends Property<?>> extends DataPropertyWrite
             if (this.type == DataHolderType.MAP && ClassHelper.eraseType(((ParameterizedType) this.field.getGenericType()).getActualTypeArguments()[0]) == Direction.class &&
                 this.indexClass == BlockFace.class) { // Direction -> BlockFace
                 // convert the key manually only this one is needed for now
-                fieldBuilder.initializer("$[$T.$L.entrySet().stream()\n.collect($T.toMap(entry -> $T.notchToBlockFace(entry.getKey()), entry -> entry.getValue()))$]",
-                    this.blockClass, this.field.getName(), Collectors.class, Types.CRAFT_BLOCK);
+                fieldBuilder.initializer("$[$1T.$2L.entrySet().stream()\n.collect($3T.toMap($4L -> $5T.notchToBlockFace($4L.getKey()), $4L -> $4L.getValue()))$]",
+                    this.blockClass, this.field.getName(), Collectors.class, CommonVariable.MAP_ENTRY, Types.CRAFT_BLOCK);
             } else {
                 fieldBuilder.initializer("$T.$L", this.blockClass, this.field.getName());
             }

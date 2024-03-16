@@ -35,6 +35,7 @@ public final class Main {
     public static final RegistryAccess.Frozen REGISTRY_ACCESS;
     public static final TagResult EXPERIMENTAL_TAGS;
     public static Path generatedPath;
+    public static Path generatedServerPath;
 
     static {
         SharedConstants.tryDetectVersion();
@@ -59,10 +60,13 @@ public final class Main {
         LOGGER.info("Running API generators...");
 
         Main.generatedPath = Path.of(args[0]); // todo remove
+        Main.generatedServerPath = Path.of(args[2]); // todo remove
         try {
             generate(Main.generatedPath, Generators.API);
             apply(Path.of(args[1]), Generators.API_REWRITE);
-            generateCraftBlockData(Path.of(args[2]));
+
+            generateCraftBlockData(Main.generatedServerPath);
+            apply(Path.of(args[3]), Generators.SERVER_REWRITE);
         } catch (final RuntimeException ex) {
             throw ex;
         } catch (IOException e) {

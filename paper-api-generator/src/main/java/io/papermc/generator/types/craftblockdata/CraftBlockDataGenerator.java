@@ -8,6 +8,7 @@ import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import io.papermc.generator.types.Types;
 import io.papermc.generator.types.StructuredGenerator;
 import io.papermc.generator.types.craftblockdata.property.holder.DataPropertyMaker;
 import io.papermc.generator.types.craftblockdata.property.PropertyMaker;
@@ -17,6 +18,7 @@ import io.papermc.generator.types.craftblockdata.property.holder.converter.DataC
 import io.papermc.generator.types.craftblockdata.property.holder.converter.DataConverters;
 import io.papermc.generator.utils.Annotations;
 import io.papermc.generator.utils.BlockStateMapping;
+import io.papermc.generator.utils.CommonVariable;
 import io.papermc.generator.utils.NamingManager;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BrewingStandBlock;
@@ -182,7 +184,7 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
             NamingManager.AccessKeyword accessKeyword = FLUENT_KEYWORD.getOrDefault(firstProperty, dataPropertyMaker.getKeyword());
             NamingManager naming = new NamingManager(accessKeyword, CaseFormat.UPPER_UNDERSCORE, NamingManager.stripFieldAccessKeyword(dataPropertyMaker.getBaseName()));
 
-            ParameterSpec indexParameter = ParameterSpec.builder(dataPropertyMaker.getIndexClass(), dataPropertyMaker.getIndexClass() == Integer.TYPE ? Types.INDEX_VARIABLE : naming.paramName(dataPropertyMaker.getIndexClass()), FINAL).build();
+            ParameterSpec indexParameter = ParameterSpec.builder(dataPropertyMaker.getIndexClass(), dataPropertyMaker.getIndexClass() == Integer.TYPE ? CommonVariable.INDEX : naming.paramName(dataPropertyMaker.getIndexClass()), FINAL).build();
 
             // get
             {

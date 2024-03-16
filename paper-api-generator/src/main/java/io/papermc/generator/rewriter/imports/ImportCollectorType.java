@@ -1,4 +1,4 @@
-package io.papermc.generator.rewriter.utils;
+package io.papermc.generator.rewriter.imports;
 
 import io.papermc.generator.utils.ClassHelper;
 import org.jetbrains.annotations.VisibleForTesting;
@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class ImportCollector {
+public class ImportCollectorType implements ImportCollector {
 
     private final Map<Class<?>, String> typeCache = new HashMap<>();
 
@@ -17,7 +17,7 @@ public class ImportCollector {
 
     private final Class<?> rewriteClass;
 
-    public ImportCollector(Class<?> rewriteClass) {
+    public ImportCollectorType(Class<?> rewriteClass) {
         this.rewriteClass = rewriteClass;
     }
 

@@ -8,9 +8,10 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import io.papermc.generator.types.StructuredGenerator;
-import io.papermc.generator.types.craftblockdata.Types;
+import io.papermc.generator.types.Types;
 import io.papermc.generator.types.craftblockdata.property.converter.ConverterBase;
 import io.papermc.generator.types.craftblockdata.property.holder.DataHolderType;
+import io.papermc.generator.utils.CommonVariable;
 import io.papermc.generator.utils.NamingManager;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import java.util.Collections;
@@ -30,11 +31,11 @@ public class MapAppender implements DataAppender {
             String collectFieldName = naming.getVariableNameWrapper().post("s").concat();
             MethodSpec.Builder methodBuilder = generator.createMethod(naming.getMethodNameWrapper().post("s").concat());
             methodBuilder.addStatement("$T $L = $T.builder()", ParameterizedTypeName.get(ClassName.get(ImmutableSet.Builder.class), indexParameter.type), collectFieldName, ImmutableSet.class);
-            methodBuilder.beginControlFlow("for ($T $N : $N.entrySet())", ParameterizedTypeName.get(ClassName.get(Map.Entry.class), indexParameter.type, ClassName.get(BooleanProperty.class)), Types.ENTRY_VARIABLE, field);
+            methodBuilder.beginControlFlow("for ($T $N : $N.entrySet())", ParameterizedTypeName.get(ClassName.get(Map.Entry.class), indexParameter.type, ClassName.get(BooleanProperty.class)), CommonVariable.MAP_ENTRY, field);
             {
-                methodBuilder.beginControlFlow("if (" + childConverter.rawGetExprent().formatted("$L.getValue()") + ")", Types.ENTRY_VARIABLE);
+                methodBuilder.beginControlFlow("if (" + childConverter.rawGetExprent().formatted("$L.getValue()") + ")", CommonVariable.MAP_ENTRY);
                 {
-                    methodBuilder.addStatement("$L.add($N.getKey())", collectFieldName, Types.ENTRY_VARIABLE);
+                    methodBuilder.addStatement("$L.add($N.getKey())", collectFieldName, CommonVariable.MAP_ENTRY);
                 }
                 methodBuilder.endControlFlow();
             }

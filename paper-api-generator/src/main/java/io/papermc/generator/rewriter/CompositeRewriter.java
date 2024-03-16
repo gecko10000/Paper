@@ -1,7 +1,6 @@
 package io.papermc.generator.rewriter;
 
 import com.google.common.base.Preconditions;
-import io.papermc.generator.utils.ClassHelper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Arrays;
@@ -14,7 +13,7 @@ public class CompositeRewriter extends SearchReplaceRewriter {
 
     private final Map<String, SearchReplaceRewriter> patternsInfo;
 
-    private CompositeRewriter(Class<?> rewriteClass, List<SearchReplaceRewriter> rewriters) {
+    private CompositeRewriter(ClassNamed rewriteClass, List<SearchReplaceRewriter> rewriters) {
         super(rewriteClass, null, false);
         this.patternsInfo = rewriters.stream().collect(Collectors.toMap(rewriter -> rewriter.pattern, rewriter -> rewriter));
     }
@@ -32,13 +31,14 @@ public class CompositeRewriter extends SearchReplaceRewriter {
 
     public static CompositeRewriter bind(List<SearchReplaceRewriter> rewriters) {
         Preconditions.checkArgument(!rewriters.isEmpty(), "Rewriter list cannot be empty!");
-        Class<?> rewriteClass = rewriters.get(0).rewriteClass;
-        Class<?> rootClass = ClassHelper.getRootClass(rewriteClass);
+        ClassNamed rewriteClass = rewriters.get(0).rewriteClass;
+        String rootClassName = rewriteClass.rootClassCanonicalName();
 
         for (SearchReplaceRewriter rewriter : rewriters) {
+            Preconditions.checkState(!(rewriter instanceof CompositeRewriter), "Nested composite rewriters are not allowed!");
             Preconditions.checkArgument(rewriter.pattern != null, "Rewriter pattern cannot be null!");
-            Preconditions.checkState(rewriteClass.getPackageName().equals(rewriter.rewriteClass.getPackageName()) &&
-                rootClass == ClassHelper.getRootClass(rewriter.rewriteClass), "Composite rewriter only works for one file!");
+            Preconditions.checkState(rewriteClass.packageName().equals(rewriter.rewriteClass.packageName()) &&
+                rootClassName.equals(rewriter.rewriteClass.rootClassCanonicalName()), "Composite rewriter only works for one file!");
         }
 
         return new CompositeRewriter(rewriteClass, rewriters);

@@ -2,7 +2,6 @@ package io.papermc.generator.rewriter;
 
 import io.papermc.generator.Generators;
 import io.papermc.generator.rewriter.utils.Annotations;
-import io.papermc.generator.utils.ClassHelper;
 import io.papermc.paper.generated.GeneratedFrom;
 import net.minecraft.SharedConstants;
 import org.junit.jupiter.api.Assertions;
@@ -16,7 +15,8 @@ import java.nio.file.Path;
 
 public class OldGeneratedCodeTest {
 
-    private static final String CONTAINER = System.getProperty("paper.generator.rewriter.container");
+    private static final String API_CONTAINER = System.getProperty("paper.generator.rewriter.container.api");
+    private static final String SERVER_CONTAINER = System.getProperty("paper.generator.rewriter.container.server");
 
     private static String CURRENT_VERSION;
 
@@ -26,33 +26,32 @@ public class OldGeneratedCodeTest {
         CURRENT_VERSION = SharedConstants.getCurrentVersion().getName();
     }
 
-    private boolean versionDependant(SearchReplaceRewriter srt) {
+    private boolean versionDependent(SearchReplaceRewriter srt) {
         if (srt instanceof CompositeRewriter compositeRewriter) {
-            boolean versionDependant = false;
+            boolean versionDependent = false;
             for (SearchReplaceRewriter rewriter : compositeRewriter.getRewriters()) {
                 if (!rewriter.equalsSize) {
-                    versionDependant = true;
+                    versionDependent = true;
                     break;
                 }
             }
-            return versionDependant;
+            return versionDependent;
         }
         return !srt.equalsSize;
     }
 
-    @Test
-    public void testOutdatedCode() throws IOException {
-        for (SourceRewriter rewriter : Generators.API_REWRITE) {
-            if (!(rewriter instanceof SearchReplaceRewriter srt) || !versionDependant(srt)) {
+    private void checkOutdated(String container, SourceRewriter[] rewriters) throws IOException {
+        for (SourceRewriter rewriter : rewriters) {
+            if (!(rewriter instanceof SearchReplaceRewriter srt) || !versionDependent(srt)) {
                 continue;
             }
 
             String filePath = "%s/%s.java".formatted(
-                srt.rewriteClass.getPackageName().replace('.', '/'),
-                ClassHelper.getRootClass(srt.rewriteClass).getSimpleName()
+                srt.rewriteClass.packageName().replace('.', '/'),
+                srt.rewriteClass.rootClassSimpleName()
             );
 
-            Path path = Path.of(CONTAINER, filePath);
+            Path path = Path.of(container, filePath);
             if (!Files.exists(path)) {
                 continue;
             }
@@ -78,12 +77,18 @@ public class OldGeneratedCodeTest {
                             String generatedVersion = nextLine.substring(generatedIndex + generatedComment.length());
                             Assertions.assertEquals(CURRENT_VERSION, generatedVersion,
                                 "Code at line %s in %s is marked as being generated in version %s when the current version is %s".formatted(
-                                    lineCount, srt.rewriteClass.getCanonicalName(),
+                                    lineCount, srt.rewriteClass.canonicalName(),
                                     generatedVersion, CURRENT_VERSION));
                         }
                     }
                 }
             }
         }
+    }
+
+    @Test
+    public void testOutdatedCode() throws IOException {
+        checkOutdated(API_CONTAINER, Generators.API_REWRITE);
+        checkOutdated(SERVER_CONTAINER, Generators.SERVER_REWRITE);
     }
 }

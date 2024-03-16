@@ -2,9 +2,9 @@ package io.papermc.generator.rewriter.types;
 
 import io.papermc.generator.rewriter.SearchMetadata;
 import io.papermc.generator.rewriter.SearchReplaceRewriter;
+import io.papermc.generator.rewriter.ClassNamed;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import java.util.Iterator;
-import java.util.List;
 
 public abstract class SwitchCaseRewriter extends SearchReplaceRewriter {
 
@@ -12,6 +12,10 @@ public abstract class SwitchCaseRewriter extends SearchReplaceRewriter {
     private Iterator<String> cases;
 
     protected SwitchCaseRewriter(final Class<?> rewriteClass, final String pattern, final boolean equalsSize) {
+        super(rewriteClass, pattern, equalsSize);
+    }
+
+    protected SwitchCaseRewriter(final ClassNamed rewriteClass, final String pattern, final boolean equalsSize) {
         super(rewriteClass, pattern, equalsSize);
     }
 

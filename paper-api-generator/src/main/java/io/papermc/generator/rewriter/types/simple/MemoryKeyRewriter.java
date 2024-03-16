@@ -47,7 +47,7 @@ import static javax.lang.model.element.Modifier.STATIC;
 
 public class MemoryKeyRewriter extends SearchReplaceRewriter {
 
-    private static final Map<MemoryModuleType<?>, Class<?>> MOEMORY_GENERIC_TYPES;
+    private static final Map<MemoryModuleType<?>, Class<?>> MEMORY_GENERIC_TYPES;
     static {
         final Map<MemoryModuleType<?>, Class<?>> map = new IdentityHashMap<>();
         try {
@@ -66,7 +66,7 @@ public class MemoryKeyRewriter extends SearchReplaceRewriter {
         } catch (ReflectiveOperationException ex) {
             throw new RuntimeException(ex);
         }
-        MOEMORY_GENERIC_TYPES = Map.copyOf(map);
+        MEMORY_GENERIC_TYPES = Map.copyOf(map);
     }
 
     private final Registry<MemoryModuleType<?>> registry;
@@ -114,7 +114,7 @@ public class MemoryKeyRewriter extends SearchReplaceRewriter {
     outerLoop:
         while (referenceIterator.hasNext()) {
             Holder.Reference<MemoryModuleType<?>> reference = referenceIterator.next();
-            Class<?> memoryType = MOEMORY_GENERIC_TYPES.get(reference.value());
+            Class<?> memoryType = MEMORY_GENERIC_TYPES.get(reference.value());
             if (IGNORED_TYPES.contains(memoryType)) {
                 continue;
             }
@@ -141,9 +141,9 @@ public class MemoryKeyRewriter extends SearchReplaceRewriter {
 
             builder.append(metadata.indent());
             builder.append("%s %s %s ".formatted(PUBLIC, STATIC, FINAL));
-            builder.append("%s<%s>".formatted(this.rewriteClass.getSimpleName(), apiMemoryType.getSimpleName())).append(' ').append(this.rewriteFieldName(reference));
+            builder.append("%s<%s>".formatted(this.rewriteClass.simpleName(), apiMemoryType.getSimpleName())).append(' ').append(this.rewriteFieldName(reference));
             builder.append(" = ");
-            builder.append("new %s<>(%s.minecraft(%s), %s.class)".formatted(this.rewriteClass.getSimpleName(), NamespacedKey.class.getSimpleName(), quoted(pathKey), apiMemoryType.getSimpleName()));
+            builder.append("new %s<>(%s.minecraft(%s), %s.class)".formatted(this.rewriteClass.simpleName(), NamespacedKey.class.getSimpleName(), quoted(pathKey), apiMemoryType.getSimpleName()));
             builder.append(';');
 
             builder.append('\n');

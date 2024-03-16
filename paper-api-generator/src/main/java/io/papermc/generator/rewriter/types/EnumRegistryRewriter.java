@@ -4,6 +4,7 @@ import com.google.common.base.Suppliers;
 import io.papermc.generator.Main;
 import io.papermc.generator.rewriter.SearchMetadata;
 import io.papermc.generator.rewriter.utils.Annotations;
+import io.papermc.generator.rewriter.ClassNamed;
 import io.papermc.generator.utils.Formatting;
 import io.papermc.generator.utils.RegistryUtils;
 import net.minecraft.core.Holder;
@@ -25,6 +26,10 @@ public class EnumRegistryRewriter<T, A extends Enum<A>> extends EnumRewriter<Hol
     private final boolean hasParams;
 
     public EnumRegistryRewriter(final Class<A> rewriteClass, final ResourceKey<? extends Registry<T>> registryKey, final String pattern, final boolean hasParams) {
+        this(new ClassNamed(rewriteClass), registryKey, pattern, hasParams);
+    }
+
+    public EnumRegistryRewriter(final ClassNamed rewriteClass, final ResourceKey<? extends Registry<T>> registryKey, final String pattern, final boolean hasParams) {
         super(rewriteClass, pattern, false);
         this.registry = Main.REGISTRY_ACCESS.registryOrThrow(registryKey);
         this.experimentalKeys = Suppliers.memoize(() -> RegistryUtils.collectExperimentalKeys(this.registry));

@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Lulu13022002 <41980282+Lulu13022002@users.noreply.github.com>
+Date: Sat, 16 Mar 2024 18:58:41 +0100
+Subject: [PATCH] Code generation marker stub
+
+
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java b/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
+index 80584646464b58406150f7146d68969a3353aaa8..ab4416b054612b831cd938b03ffcbfc3bc082ca2 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
+@@ -366,6 +366,7 @@ public class CraftBlockData implements BlockData {
+ 
+     static {
+         //<editor-fold desc="CraftBlockData Registration" defaultstate="collapsed">
++        // Paper start - Generated/CraftBlockData#MAP
+         register(net.minecraft.world.level.block.AmethystClusterBlock.class, org.bukkit.craftbukkit.block.impl.CraftAmethystCluster::new);
+         register(net.minecraft.world.level.block.BigDripleafBlock.class, org.bukkit.craftbukkit.block.impl.CraftBigDripleaf::new);
+         register(net.minecraft.world.level.block.BigDripleafStemBlock.class, org.bukkit.craftbukkit.block.impl.CraftBigDripleafStem::new);
+@@ -537,6 +538,7 @@ public class CraftBlockData implements BlockData {
+         register(net.minecraft.world.level.block.piston.PistonBaseBlock.class, org.bukkit.craftbukkit.block.impl.CraftPistonBase::new);
+         register(net.minecraft.world.level.block.piston.PistonHeadBlock.class, org.bukkit.craftbukkit.block.impl.CraftPistonHead::new);
+         register(net.minecraft.world.level.block.piston.MovingPistonBlock.class, org.bukkit.craftbukkit.block.impl.CraftMovingPiston::new);
++        // Paper end - Generated/CraftBlockData#MAP
+         //</editor-fold>
+     }
+ 
