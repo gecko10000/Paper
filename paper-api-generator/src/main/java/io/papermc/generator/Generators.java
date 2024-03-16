@@ -5,6 +5,7 @@ import io.papermc.generator.rewriter.SourceRewriter;
 import io.papermc.generator.rewriter.types.EnumCloneRewriter;
 import io.papermc.generator.rewriter.types.EnumRegistryRewriter;
 import io.papermc.generator.rewriter.types.simple.CraftBlockDataMapping;
+import io.papermc.generator.rewriter.types.simple.CraftBlockEntityStateMapping;
 import io.papermc.generator.rewriter.types.simple.MapCursorTypeRewriter;
 import io.papermc.generator.rewriter.types.simple.MapPaletteRewriter;
 import io.papermc.generator.rewriter.types.RegistryFieldRewriter;
@@ -83,6 +84,10 @@ public interface Generators {
         new LegacyKeyedRegistryGenerator<>("TrimMaterial", "org.bukkit.inventory.meta.trim", Registries.TRIM_MATERIAL, RegistryKey.TRIM_MATERIAL),
         new TagGenerator("Tag", "org.bukkit")*/
     };
+
+    private static <T, A> SourceGenerator simpleKey(final String className, final Class<A> apiType, final ResourceKey<? extends Registry<T>> registryKey, final RegistryKey<A> apiRegistryKey, final boolean publicCreateKeyMethod) {
+        return new GeneratedKeyType<>(className, apiType, "io.papermc.paper.registry.keys", registryKey, apiRegistryKey, publicCreateKeyMethod);
+    }
 
     SourceRewriter[] API_REWRITE = {
         //new EnumCloneRewriter(Pose.class, net.minecraft.world.entity.Pose.class, "Pose", false)
@@ -212,11 +217,10 @@ public interface Generators {
         new MapPaletteRewriter("MapPalette#colors"),
     };
 
+
     SourceRewriter[] SERVER_REWRITE = {
-        new CraftBlockDataMapping("CraftBlockData#MAP")
+        new CraftBlockDataMapping("CraftBlockData#MAP"),
+        new CraftBlockEntityStateMapping("CraftBlockEntityStates")
     };
 
-    private static <T, A> SourceGenerator simpleKey(final String className, final Class<A> apiType, final ResourceKey<? extends Registry<T>> registryKey, final RegistryKey<A> apiRegistryKey, final boolean publicCreateKeyMethod) {
-        return new GeneratedKeyType<>(className, apiType, "io.papermc.paper.registry.keys", registryKey, apiRegistryKey, publicCreateKeyMethod);
-    }
 }

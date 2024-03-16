@@ -93,7 +93,7 @@ public class SearchReplaceRewriter implements SourceRewriter {
             }
 
             // collect import to avoid fqn when not needed
-            if (importCollector != ImportCollectorType.NO_OP && !inBody) {
+            if (importCollector != ImportCollector.NO_OP && !inBody) {
                 if (line.startsWith("import ") && line.endsWith(";")) {
                     ((ImportCollectorType) importCollector).consume(line);
                 }

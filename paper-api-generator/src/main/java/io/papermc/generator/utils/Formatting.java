@@ -84,7 +84,7 @@ public final class Formatting {
 
     public static String incrementalIndent(String unit, ClassNamed classNamed) {
         if (classNamed.clazz() == null) {
-            return unit.repeat(countOccurrences(classNamed.dottedNestedName(), '.'));
+            return unit.repeat(countOccurrences(classNamed.dottedNestedName(), '.') + 1);
         }
 
         Class<?> parent = classNamed.clazz().getEnclosingClass();

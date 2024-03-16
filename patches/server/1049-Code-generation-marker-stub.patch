@@ -4,6 +4,28 @@ Date: Sat, 16 Mar 2024 18:58:41 +0100
 Subject: [PATCH] Code generation marker stub
 
 
+diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockStates.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockStates.java
+index 8afc396c162d928902a9d9beb9f039b06630f755..2d89e87ca4d8d3a9db6884b0a04db977c1cbc680 100644
+--- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockStates.java
++++ b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockStates.java
+@@ -128,7 +128,7 @@ public final class CraftBlockStates {
+     // Paper end
+ 
+     static {
+-        // Paper start - simplify
++        // Paper start - Generated/CraftBlockEntityStates
+         register(BlockEntityType.SIGN, CraftSign.class, CraftSign::new);
+         register(BlockEntityType.HANGING_SIGN, CraftHangingSign.class, CraftHangingSign::new);
+         register(BlockEntityType.SKULL, CraftSkull.class, CraftSkull::new);
+@@ -172,7 +172,7 @@ public final class CraftBlockStates {
+         register(BlockEntityType.TRAPPED_CHEST, CraftChest.class, CraftChest::new);
+         register(BlockEntityType.CRAFTER, CraftCrafter.class, CraftCrafter::new);
+         register(BlockEntityType.TRIAL_SPAWNER, CraftTrialSpawner.class, CraftTrialSpawner::new);
+-        // Paper end
++        // Paper end - Generated/CraftBlockEntityStates
+     }
+ 
+     private static void register(Material blockType, BlockStateFactory<?> factory) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java b/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
 index 80584646464b58406150f7146d68969a3353aaa8..ab4416b054612b831cd938b03ffcbfc3bc082ca2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/data/CraftBlockData.java
