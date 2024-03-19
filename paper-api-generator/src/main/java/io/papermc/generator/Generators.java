@@ -6,6 +6,7 @@ import io.papermc.generator.rewriter.types.EnumCloneRewriter;
 import io.papermc.generator.rewriter.types.EnumRegistryRewriter;
 import io.papermc.generator.rewriter.types.simple.CraftBlockDataMapping;
 import io.papermc.generator.rewriter.types.simple.CraftBlockEntityStateMapping;
+import io.papermc.generator.rewriter.types.simple.CraftPotionUtilRewriter;
 import io.papermc.generator.rewriter.types.simple.MapCursorTypeRewriter;
 import io.papermc.generator.rewriter.types.simple.MapPaletteRewriter;
 import io.papermc.generator.rewriter.types.RegistryFieldRewriter;
@@ -220,7 +221,15 @@ public interface Generators {
 
     SourceRewriter[] SERVER_REWRITE = {
         new CraftBlockDataMapping("CraftBlockData#MAP"),
-        new CraftBlockEntityStateMapping("CraftBlockEntityStates")
+        new CraftBlockEntityStateMapping("CraftBlockEntityStates"),
+        CompositeRewriter.bind(
+            new StatisticRewriter.CraftCustom("CraftStatisticCustom"),
+            new StatisticRewriter.CraftType("CraftStatisticType")
+        ),
+        CompositeRewriter.bind(
+            new CraftPotionUtilRewriter("CraftPotionUtil#upgradeable", "strong"),
+            new CraftPotionUtilRewriter("CraftPotionUtil#extendable", "long")
+        )
     };
 
 }

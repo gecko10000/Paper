@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import io.papermc.generator.Main;
 import io.papermc.generator.rewriter.types.EnumRegistryRewriter;
+import io.papermc.generator.rewriter.types.Types;
 import io.papermc.generator.utils.ClassHelper;
 import io.papermc.generator.utils.Formatting;
 import net.minecraft.core.Holder;
@@ -19,6 +20,8 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import org.bukkit.Statistic;
+
+import static io.papermc.generator.utils.Formatting.quoted;
 
 @Deprecated(forRemoval = true)
 public class StatisticRewriter {
@@ -67,6 +70,29 @@ public class StatisticRewriter {
         protected String rewriteEnumName(Holder.Reference<ResourceLocation> reference) {
             String internalName = super.rewriteEnumName(reference);
             return FIELD_RENAMES.getOrDefault(internalName, internalName);
+        }
+    }
+
+    public static class CraftCustom extends EnumRegistryRewriter<ResourceLocation, Statistic> {
+
+        private static Map<String, String> INTERNAL_FIELD_RENAMES = Map.of(
+            "SNEAK_TIME", "CROUCH_TIME"
+        );
+
+        public CraftCustom(final String pattern) {
+            super(Types.CRAFT_STATISTIC, Registries.CUSTOM_STAT, pattern, true);
+        }
+
+        @Override
+        protected String rewriteEnumName(Holder.Reference<ResourceLocation> reference) {
+            String internalName = super.rewriteEnumName(reference);
+            return FIELD_RENAMES.getOrDefault(internalName, internalName);
+        }
+
+        @Override
+        protected String rewriteEnumValue(Holder.Reference<ResourceLocation> reference) {
+            String internalName = Formatting.formatPathAsField(reference.key().location().getPath());
+            return "%s.%s".formatted(Stats.class.getSimpleName(), INTERNAL_FIELD_RENAMES.getOrDefault(internalName, internalName));
         }
     }
 
@@ -123,6 +149,30 @@ public class StatisticRewriter {
                 throw new IllegalStateException("Unable to translate stat type generic " + genericType.getCanonicalName() + " into the api!");
             }
             return "%s.%s".formatted(Statistic.Type.class.getSimpleName(), TYPE_MAPPING.get(genericType)); // find a more direct way?
+        }
+    }
+
+    public static class CraftType extends EnumRegistryRewriter<StatType<?>, Statistic> {
+
+        public CraftType(final String pattern) {
+            super(Types.CRAFT_STATISTIC, Registries.STAT_TYPE, pattern, true);
+        }
+
+        @Override
+        protected Iterable<Holder.Reference<StatType<?>>> getValues() {
+            return Main.REGISTRY_ACCESS.registryOrThrow(Registries.STAT_TYPE).holders().filter(reference -> reference.value() != Stats.CUSTOM)
+                .sorted(Formatting.alphabeticKeyOrder(reference -> reference.key().location().getPath())).toList();
+        }
+
+        @Override
+        protected String rewriteEnumName(Holder.Reference<StatType<?>> reference) {
+            String internalName = super.rewriteEnumName(reference);
+            return FIELD_RENAMES.getOrDefault(internalName, internalName);
+        }
+
+        @Override
+        protected String rewriteEnumValue(Holder.Reference<StatType<?>> reference) {
+            return "new %s(%s)".formatted(ResourceLocation.class.getSimpleName(), quoted(reference.key().location().getPath()));
         }
     }
 }

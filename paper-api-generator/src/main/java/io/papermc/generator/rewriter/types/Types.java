@@ -11,4 +11,8 @@ public final class Types {
 
     public static final ClassNamed CRAFT_BLOCKSTATES = ClassNamed.of(BASE_PACKAGE + ".block", "CraftBlockStates");
 
+    public static final ClassNamed CRAFT_STATISTIC = ClassNamed.of(BASE_PACKAGE, "CraftStatistic");
+
+    public static final ClassNamed CRAFT_POTION_UTIL = ClassNamed.of(BASE_PACKAGE + ".potion", "CraftPotionUtil");
+
 }

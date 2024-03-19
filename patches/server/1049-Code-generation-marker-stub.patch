@@ -4,6 +4,29 @@ Date: Sat, 16 Mar 2024 18:58:41 +0100
 Subject: [PATCH] Code generation marker stub
 
 
+diff --git a/src/main/java/org/bukkit/craftbukkit/CraftStatistic.java b/src/main/java/org/bukkit/craftbukkit/CraftStatistic.java
+index 52f3765a13024544e677b16788ced59542be93b8..172196ca8e05bb21ac8f8a299782b01c8259f9bc 100644
+--- a/src/main/java/org/bukkit/craftbukkit/CraftStatistic.java
++++ b/src/main/java/org/bukkit/craftbukkit/CraftStatistic.java
+@@ -20,6 +20,7 @@ import org.bukkit.craftbukkit.inventory.CraftItemType;
+ import org.bukkit.entity.EntityType;
+ 
+ public enum CraftStatistic {
++    // Paper start - Generated/CraftStatisticCustom
+     DAMAGE_DEALT(Stats.DAMAGE_DEALT),
+     DAMAGE_TAKEN(Stats.DAMAGE_TAKEN),
+     DEATHS(Stats.DEATHS),
+@@ -102,7 +103,10 @@ public enum CraftStatistic {
+     INTERACT_WITH_GRINDSTONE(Stats.INTERACT_WITH_GRINDSTONE),
+     TARGET_HIT(Stats.TARGET_HIT),
+     INTERACT_WITH_SMITHING_TABLE(Stats.INTERACT_WITH_SMITHING_TABLE),
++    // Paper end - Generated/CraftStatisticCustom
++    // Paper start - Generated/CraftStatisticType
+     STRIDER_ONE_CM(Stats.STRIDER_ONE_CM);
++    // Paper end - Generated/CraftStatisticType
+     private final ResourceLocation minecraftKey;
+     private final org.bukkit.Statistic bukkit;
+     private static final BiMap<ResourceLocation, org.bukkit.Statistic> statistics;
 diff --git a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockStates.java b/src/main/java/org/bukkit/craftbukkit/block/CraftBlockStates.java
 index 8afc396c162d928902a9d9beb9f039b06630f755..2d89e87ca4d8d3a9db6884b0a04db977c1cbc680 100644
 --- a/src/main/java/org/bukkit/craftbukkit/block/CraftBlockStates.java
@@ -46,3 +69,34 @@ index 80584646464b58406150f7146d68969a3353aaa8..ab4416b054612b831cd938b03ffcbfc3
          //</editor-fold>
      }
  
+diff --git a/src/main/java/org/bukkit/craftbukkit/potion/CraftPotionUtil.java b/src/main/java/org/bukkit/craftbukkit/potion/CraftPotionUtil.java
+index e938255fcc5db0c289d3e132175a541187e4a748..0bc729ba58eeb88f40756260a6b75f666e0eedd7 100644
+--- a/src/main/java/org/bukkit/craftbukkit/potion/CraftPotionUtil.java
++++ b/src/main/java/org/bukkit/craftbukkit/potion/CraftPotionUtil.java
+@@ -13,6 +13,7 @@ import org.bukkit.potion.PotionType;
+ public class CraftPotionUtil {
+ 
+     private static final BiMap<PotionType, PotionType> upgradeable = ImmutableBiMap.<PotionType, PotionType>builder()
++            // Paper start - Generated/CraftPotionUtil#upgradeable
+             .put(PotionType.JUMP, PotionType.STRONG_LEAPING)
+             .put(PotionType.SPEED, PotionType.STRONG_SWIFTNESS)
+             .put(PotionType.INSTANT_HEAL, PotionType.STRONG_HEALING)
+@@ -22,8 +23,10 @@ public class CraftPotionUtil {
+             .put(PotionType.STRENGTH, PotionType.STRONG_STRENGTH)
+             .put(PotionType.SLOWNESS, PotionType.STRONG_SLOWNESS)
+             .put(PotionType.TURTLE_MASTER, PotionType.STRONG_TURTLE_MASTER)
++            // Paper end - Generated/CraftPotionUtil#upgradeable
+             .build();
+     private static final BiMap<PotionType, PotionType> extendable = ImmutableBiMap.<PotionType, PotionType>builder()
++            // Paper start - Generated/CraftPotionUtil#extendable
+             .put(PotionType.NIGHT_VISION, PotionType.LONG_NIGHT_VISION)
+             .put(PotionType.INVISIBILITY, PotionType.LONG_INVISIBILITY)
+             .put(PotionType.JUMP, PotionType.LONG_LEAPING)
+@@ -37,6 +40,7 @@ public class CraftPotionUtil {
+             .put(PotionType.WEAKNESS, PotionType.LONG_WEAKNESS)
+             .put(PotionType.TURTLE_MASTER, PotionType.LONG_TURTLE_MASTER)
+             .put(PotionType.SLOW_FALLING, PotionType.LONG_SLOW_FALLING)
++            // Paper end - Generated/CraftPotionUtil#extendable
+             .build();
+ 
+     public static PotionType fromBukkit(PotionData data) {

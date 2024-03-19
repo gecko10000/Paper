@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class PotionTypeRewriter extends EnumRegistryRewriter<Potion, PotionType> {
 
-    private static final Map<String, String> FIELD_RENAMES = Map.of(
+    public static final Map<String, String> FIELD_RENAMES = Map.of(
         "EMPTY", "UNCRAFTABLE",
         "HEALING", "INSTANT_HEAL",
         "REGENERATION", "REGEN",
