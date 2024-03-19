@@ -28,19 +28,19 @@ public class MapAppender implements DataAppender {
     @Override
     public void addExtras(final TypeSpec.Builder builder, final FieldSpec field, final ParameterSpec indexParameter, final ConverterBase childConverter, final StructuredGenerator<?> generator, final NamingManager naming) {
         if (childConverter.getApiType() == Boolean.TYPE) {
-            String collectFieldName = naming.getVariableNameWrapper().post("s").concat();
+            String collectVarName = naming.getVariableNameWrapper().post("s").concat();
             MethodSpec.Builder methodBuilder = generator.createMethod(naming.getMethodNameWrapper().post("s").concat());
-            methodBuilder.addStatement("$T $L = $T.builder()", ParameterizedTypeName.get(ClassName.get(ImmutableSet.Builder.class), indexParameter.type), collectFieldName, ImmutableSet.class);
+            methodBuilder.addStatement("$T $L = $T.builder()", ParameterizedTypeName.get(ClassName.get(ImmutableSet.Builder.class), indexParameter.type), collectVarName, ImmutableSet.class);
             methodBuilder.beginControlFlow("for ($T $N : $N.entrySet())", ParameterizedTypeName.get(ClassName.get(Map.Entry.class), indexParameter.type, ClassName.get(BooleanProperty.class)), CommonVariable.MAP_ENTRY, field);
             {
                 methodBuilder.beginControlFlow("if (" + childConverter.rawGetExprent().formatted("$L.getValue()") + ")", CommonVariable.MAP_ENTRY);
                 {
-                    methodBuilder.addStatement("$L.add($N.getKey())", collectFieldName, CommonVariable.MAP_ENTRY);
+                    methodBuilder.addStatement("$L.add($N.getKey())", collectVarName, CommonVariable.MAP_ENTRY);
                 }
                 methodBuilder.endControlFlow();
             }
             methodBuilder.endControlFlow();
-            methodBuilder.addStatement("return $L.build()", collectFieldName);
+            methodBuilder.addStatement("return $L.build()", collectVarName);
             methodBuilder.returns(ParameterizedTypeName.get(ClassName.get(Set.class), indexParameter.type));
 
             builder.addMethod(methodBuilder.build());

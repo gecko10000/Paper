@@ -1,4 +1,4 @@
-package io.papermc.generator.rewriter.imports;
+package io.papermc.generator.rewriter.context;
 
 import io.papermc.generator.utils.ClassHelper;
 import org.jetbrains.annotations.VisibleForTesting;

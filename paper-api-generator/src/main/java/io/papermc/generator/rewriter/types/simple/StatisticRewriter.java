@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import io.papermc.generator.Main;
 import io.papermc.generator.rewriter.types.EnumRegistryRewriter;
+import io.papermc.generator.utils.ClassHelper;
 import io.papermc.generator.utils.Formatting;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -90,10 +91,7 @@ public class StatisticRewriter {
                     int mod = field.getModifiers();
                     if (Modifier.isPublic(mod) & Modifier.isStatic(mod) & Modifier.isFinal(mod)) {
                         java.lang.reflect.Type genericType = ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0];
-                        if (genericType instanceof ParameterizedType complexType) {
-                            genericType = complexType.getRawType(); // needed for generic in a generic like entity type
-                        }
-                        map.put((StatType<?>) field.get(null), (Class<?>) genericType);
+                        map.put((StatType<?>) field.get(null), ClassHelper.eraseType(genericType));
                     }
                 }
             } catch (ReflectiveOperationException ex) {

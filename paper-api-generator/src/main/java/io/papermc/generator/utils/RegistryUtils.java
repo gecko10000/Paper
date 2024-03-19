@@ -23,13 +23,13 @@ public class RegistryUtils {
 
     @SuppressWarnings("unchecked")
     public static <T> List<ResourceKey<T>> collectExperimentalKeys(final Registry<T> registry) {
-        final RegistrySetBuilder.@Nullable RegistryBootstrap<T> registryBootstrap = (RegistrySetBuilder.RegistryBootstrap<T>) EXPERIMENTAL_REGISTRY_ENTRIES.get(registry.key());
-        if (registryBootstrap == null) {
+        final RegistrySetBuilder.@Nullable RegistryBootstrap<T> bootstrap = (RegistrySetBuilder.RegistryBootstrap<T>) EXPERIMENTAL_REGISTRY_ENTRIES.get(registry.key());
+        if (bootstrap == null) {
             return Collections.emptyList();
         }
         final List<ResourceKey<T>> experimental = new ArrayList<>();
         final CollectingContext<T> context = new CollectingContext<>(experimental, registry);
-        registryBootstrap.run(context);
+        bootstrap.run(context);
         return experimental;
     }
 

@@ -68,9 +68,9 @@ public class RegistryFieldRewriter<T, A> extends SearchReplaceRewriter {
             return;
         }
 
-        Preconditions.checkState(this.rewriteClass.clazz() != null, "This rewriter doesn't support server gen!");
+        Preconditions.checkState(this.rewriteClass.knownClass() != null, "This rewriter can't check the integrity of the fetch method since it doesn't know the rewritten class!");
         try {
-            this.rewriteClass.clazz().getDeclaredMethod(this.fetchMethod, String.class);
+            this.rewriteClass.knownClass().getDeclaredMethod(this.fetchMethod, String.class);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
@@ -97,7 +97,7 @@ public class RegistryFieldRewriter<T, A> extends SearchReplaceRewriter {
             builder.append(this.rewriteClass.simpleName()).append(' ').append(this.rewriteFieldName(reference));
             builder.append(" = ");
             if (this.fetchMethod == null) {
-                builder.append("%s.%s.get(%s.minecraft(%s))".formatted(org.bukkit.Registry.class.getSimpleName(), REGISTRY_FIELD_NAMES.get(this.rewriteClass.clazz()), NamespacedKey.class.getSimpleName(), quoted(pathKey)));
+                builder.append("%s.%s.get(%s.minecraft(%s))".formatted(org.bukkit.Registry.class.getSimpleName(), REGISTRY_FIELD_NAMES.get(this.rewriteClass.knownClass()), NamespacedKey.class.getSimpleName(), quoted(pathKey)));
             } else {
                 builder.append("%s(%s)".formatted(this.fetchMethod, quoted(pathKey)));
             }

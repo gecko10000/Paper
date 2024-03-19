@@ -23,19 +23,19 @@ public class ArrayAppender implements DataAppender {
     @Override
     public void addExtras(final TypeSpec.Builder builder, final FieldSpec field, final ParameterSpec indexParameter, final ConverterBase childConverter, final StructuredGenerator<?> generator, final NamingManager naming) {
         if (childConverter.getApiType() == Boolean.TYPE) {
-            String collectFieldName = naming.getVariableNameWrapper().post("s").concat();
+            String collectVarName = naming.getVariableNameWrapper().post("s").concat();
             MethodSpec.Builder methodBuilder = generator.createMethod(naming.getMethodNameWrapper().post("s").concat());
-            methodBuilder.addStatement("$T $L = $T.builder()", ParameterizedTypeName.get(ImmutableSet.Builder.class, Integer.class), collectFieldName, ImmutableSet.class);
+            methodBuilder.addStatement("$T $L = $T.builder()", ParameterizedTypeName.get(ImmutableSet.Builder.class, Integer.class), collectVarName, ImmutableSet.class);
             methodBuilder.beginControlFlow("for (int $1L = 0, len = $2N.length; $1L < len; $1L++)", CommonVariable.INDEX, field);
             {
                 methodBuilder.beginControlFlow("if (" + childConverter.rawGetExprent().formatted("$N[$N]") + ")", field, indexParameter);
                 {
-                    methodBuilder.addStatement("$L.add($L)", collectFieldName, CommonVariable.INDEX);
+                    methodBuilder.addStatement("$L.add($L)", collectVarName, CommonVariable.INDEX);
                 }
                 methodBuilder.endControlFlow();
             }
             methodBuilder.endControlFlow();
-            methodBuilder.addStatement("return $L.build()", collectFieldName);
+            methodBuilder.addStatement("return $L.build()", collectVarName);
             methodBuilder.returns(ParameterizedTypeName.get(Set.class, Integer.class));
 
             builder.addMethod(methodBuilder.build());

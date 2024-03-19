@@ -53,12 +53,14 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
         this.blockData = blockData;
     }
 
+    // default keywords: get/set
+    // for single boolean property: get = is
+    // for indexed boolean property: get = has
     private static final Map<Property<?>, NamingManager.AccessKeyword> FLUENT_KEYWORD = ImmutableMap.<Property<?>, NamingManager.AccessKeyword>builder()
         .put(BlockStateProperties.ATTACH_FACE, keywordGetSet("getAttached", "setAttached")) // todo remove this once switch methods are gone
         .put(BlockStateProperties.EYE, keywordGet("has"))
         .put(BlockStateProperties.BERRIES, keywordGet("has")) // spigot method rename
         // data holder keywords is only needed for the first property they hold
-        .put(BrewingStandBlock.HAS_BOTTLE[0], keywordGet("has"))
         .put(ChiseledBookShelfBlock.SLOT_OCCUPIED_PROPERTIES.get(0), keywordGet("is"))
         .build();
 
@@ -90,7 +92,7 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
         TypeSpec.Builder typeBuilder = TypeSpec.classBuilder(this.className)
             .addModifiers(PUBLIC)
             .addAnnotation(Annotations.GENERATED_FROM)
-            .addAnnotation(Annotations.suppressWarnings("unused"))
+            .addAnnotation(Annotations.suppressWarnings("unused")) // todo remove
             .superclass(Types.CRAFT_BLOCKDATA)
             .addSuperinterface(this.baseClass);
 

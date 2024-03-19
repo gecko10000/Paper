@@ -1,4 +1,4 @@
-package io.papermc.generator.rewriter.imports;
+package io.papermc.generator.rewriter.context;
 
 public interface ImportCollector {
 

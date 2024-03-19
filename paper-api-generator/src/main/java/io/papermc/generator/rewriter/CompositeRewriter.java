@@ -1,21 +1,20 @@
 package io.papermc.generator.rewriter;
 
 import com.google.common.base.Preconditions;
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class CompositeRewriter extends SearchReplaceRewriter {
 
-    private final Map<String, SearchReplaceRewriter> patternsInfo;
+    private final Map<String, SearchReplaceRewriter> rewriterByPattern;
 
     private CompositeRewriter(ClassNamed rewriteClass, List<SearchReplaceRewriter> rewriters) {
         super(rewriteClass, null, false);
-        this.patternsInfo = rewriters.stream().collect(Collectors.toMap(rewriter -> rewriter.pattern, rewriter -> rewriter));
+        this.rewriterByPattern = rewriters.stream().collect(Collectors.toMap(rewriter -> rewriter.pattern, rewriter -> rewriter));
     }
 
     @Override
@@ -23,6 +22,20 @@ public class CompositeRewriter extends SearchReplaceRewriter {
         for (SearchReplaceRewriter rewriter : this.getRewriters()) {
             rewriter.beginSearch();
         }
+    }
+
+    @Override
+    protected SearchReplaceRewriter getRewriterFor(String pattern) {
+        return this.rewriterByPattern.get(pattern);
+    }
+
+    @Override
+    protected Set<String> getPatterns() {
+        return this.rewriterByPattern.keySet();
+    }
+
+    public Collection<SearchReplaceRewriter> getRewriters() {
+        return this.rewriterByPattern.values();
     }
 
     public static CompositeRewriter bind(SearchReplaceRewriter... rewriters) {
@@ -42,15 +55,5 @@ public class CompositeRewriter extends SearchReplaceRewriter {
         }
 
         return new CompositeRewriter(rewriteClass, rewriters);
-    }
-
-    @Override
-    protected void searchAndReplace(BufferedReader reader, StringBuilder content, Map<String, SearchReplaceRewriter> patternInfo) throws IOException {
-        Preconditions.checkState(patternInfo.isEmpty());
-        super.searchAndReplace(reader, content, this.patternsInfo);
-    }
-
-    public Collection<SearchReplaceRewriter> getRewriters() {
-        return this.patternsInfo.values();
     }
 }

@@ -142,8 +142,14 @@ public final class BlockStateMapping {
                 WallBlock.EAST_WALL, WallBlock.NORTH_WALL, WallBlock.SOUTH_WALL, WallBlock.WEST_WALL)
         .build();
 
-    public static final Map<Class<? extends Block>, BlockData> MAPPING;
     public static final Map<Property<?>, String> FALLBACK_GENERIC_FIELD_NAMES;
+    static {
+        Map<Property<?>, String> fallbackGenericFieldNames = new HashMap<>();
+        fetchProperties(BlockStateProperties.class, (name, property) -> fallbackGenericFieldNames.put(property, name), null);
+        FALLBACK_GENERIC_FIELD_NAMES = Map.copyOf(fallbackGenericFieldNames);
+    }
+
+    public static final Map<Class<? extends Block>, BlockData> MAPPING;
     static {
         Map<Class<? extends Block>, Collection<Property<?>>> specialBlocks = new HashMap<>();
         for (Block block : BuiltInRegistries.BLOCK) {
@@ -151,10 +157,6 @@ public final class BlockStateMapping {
                 specialBlocks.put(block.getClass(), block.getStateDefinition().getProperties());
             }
         }
-
-        Map<Property<?>, String> fallbackGenericFieldNames = new HashMap<>();
-        fetchProperties(BlockStateProperties.class, (name, property) -> fallbackGenericFieldNames.put(property, name), null);
-        FALLBACK_GENERIC_FIELD_NAMES = Map.copyOf(fallbackGenericFieldNames);
 
         Map<Class<? extends Block>, BlockData> map = new HashMap<>();
         for (Map.Entry<Class<? extends Block>, Collection<Property<?>>> entry : specialBlocks.entrySet()) {
@@ -309,6 +311,7 @@ public final class BlockStateMapping {
     remove some patches:
       - Add missing block data mins and maxes
       - Allow changing bed's 'occupied' property
+    rename module
     remove scrap of old spigot tooling (archetype)
      */
     @Nullable

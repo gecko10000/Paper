@@ -4,9 +4,9 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Sets;
 import io.papermc.generator.Main;
 import io.papermc.generator.rewriter.utils.Annotations;
-import io.papermc.generator.rewriter.imports.ImportCollector;
+import io.papermc.generator.rewriter.context.ImportCollector;
 import io.papermc.generator.utils.ClassHelper;
-import io.papermc.generator.rewriter.imports.ImportCollectorType;
+import io.papermc.generator.rewriter.context.ImportCollectorType;
 import io.papermc.generator.utils.Formatting;
 import io.papermc.paper.generated.GeneratedFrom;
 import net.minecraft.SharedConstants;
@@ -18,9 +18,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -58,25 +56,27 @@ public class SearchReplaceRewriter implements SourceRewriter {
 
     protected void beginSearch() {}
 
-    private SearchReplaceRewriter foundRewriter;
-
-    private void searchAndReplace(BufferedReader reader, StringBuilder content) throws IOException {
-        searchAndReplace(reader, content, this.pattern == null ? new HashMap<>() : Map.of(this.pattern, this)); // todo collect srt per pattern on bootstrap
+    protected SearchReplaceRewriter getRewriterFor(String pattern) {
+        return this;
     }
 
-    protected void searchAndReplace(BufferedReader reader, StringBuilder content, Map<String, SearchReplaceRewriter> patternInfo) throws IOException {
-        Preconditions.checkState(!patternInfo.isEmpty());
+    protected Set<String> getPatterns() {
+        return Set.of(this.pattern);
+    }
+
+    protected void searchAndReplace(BufferedReader reader, StringBuilder content) throws IOException {
+        Set<String> patterns = this.getPatterns();
+        Preconditions.checkState(!patterns.isEmpty());
         this.beginSearch();
 
-        Set<String> patterns = patternInfo.keySet();
         Set<String> foundPatterns = new HashSet<>();
         StringBuilder strippedContent = null;
 
         final ImportCollector importCollector;
         String rootClassDeclaration = null;
 
-        if (this.rewriteClass.clazz() != null) {
-            Class<?> rootClass = ClassHelper.getRootClass(this.rewriteClass.clazz());
+        if (this.rewriteClass.knownClass() != null) {
+            Class<?> rootClass = ClassHelper.getRootClass(this.rewriteClass.knownClass());
             importCollector = new ImportCollectorType(rootClass);
             rootClassDeclaration = "%s %s".formatted(ClassHelper.getDeclaredType(rootClass), this.rewriteClass.rootClassSimpleName());
         } else {
@@ -84,6 +84,7 @@ public class SearchReplaceRewriter implements SourceRewriter {
         }
 
         String indent = Formatting.incrementalIndent(INDENT_UNIT, this.rewriteClass);
+        SearchReplaceRewriter foundRewriter = null;
         boolean inBody = false;
         int i = 0;
         while (true) {
@@ -104,30 +105,30 @@ public class SearchReplaceRewriter implements SourceRewriter {
 
             Optional<String> endPattern = this.searchPattern(line, indent, PAPER_END_FORMAT, patterns);
             if (endPattern.isPresent()) {
-                if (this.foundRewriter == null) {
+                if (foundRewriter == null) {
                     throw new IllegalStateException("Start generated comment missing for pattern " + endPattern.get() + " in class " + this.rewriteClass.simpleName() + " at line " + (i + 1));
                 }
-                if (this.foundRewriter.pattern.equals(endPattern.get())) {
-                    if (!this.foundRewriter.equalsSize) {
+                if (foundRewriter.pattern.equals(endPattern.get())) {
+                    if (!foundRewriter.equalsSize) {
                         appendGeneratedComment(content, indent);
 
-                        this.foundRewriter.insert(new SearchMetadata(importCollector, indent, strippedContent.toString(), i), content);
+                        foundRewriter.insert(new SearchMetadata(importCollector, indent, strippedContent.toString(), i), content);
                         strippedContent = null;
                     }
-                    this.foundRewriter = null;
+                    foundRewriter = null;
                 } else {
-                    throw new IllegalStateException("End generated comment doesn't match for pattern " + this.foundRewriter.pattern +  " in " + this.rewriteClass.simpleName() + " at line " + (i + 1));
+                    throw new IllegalStateException("End generated comment doesn't match for pattern " + foundRewriter.pattern +  " in " + this.rewriteClass.simpleName() + " at line " + (i + 1));
                 }
             }
 
-            if (this.foundRewriter == null) {
+            if (foundRewriter == null) {
                 content.append(line);
                 content.append('\n');
             } else {
-                if (this.foundRewriter.equalsSize) {
+                if (foundRewriter.equalsSize) {
                     // there's no generated comment here since when the size is equals the replaced content doesn't depend on the game content
                     // if it does that means the replaced content might not be equals during MC update because of adding/removed content
-                    this.foundRewriter.replaceLine(new SearchMetadata(importCollector, indent, line, i), content);
+                    foundRewriter.replaceLine(new SearchMetadata(importCollector, indent, line, i), content);
                 } else {
                     strippedContent.append(line);
                     strippedContent.append('\n');
@@ -136,7 +137,7 @@ public class SearchReplaceRewriter implements SourceRewriter {
 
             Optional<String> startPattern = this.searchPattern(line, null, PAPER_START_FORMAT, patterns);
             if (startPattern.isPresent()) {
-                if (this.foundRewriter != null) {
+                if (foundRewriter != null) {
                     throw new IllegalStateException("Nested generated comments are not allowed for " + this.rewriteClass.simpleName() + " at line " + (i + 1));
                 }
                 int startPatternIndex = line.indexOf(GENERATED_COMMENT_FORMAT.formatted(PAPER_START_FORMAT, startPattern.get()));
@@ -145,17 +146,17 @@ public class SearchReplaceRewriter implements SourceRewriter {
                     throw new IllegalStateException("Start generated comment is not properly indented at line " + (i + 1));
                 }
 
-                this.foundRewriter = patternInfo.get(startPattern.get());
-                foundPatterns.add(this.foundRewriter.pattern);
-                if (!this.foundRewriter.equalsSize) {
+                foundRewriter = this.getRewriterFor(startPattern.get());
+                foundPatterns.add(foundRewriter.pattern);
+                if (!foundRewriter.equalsSize) {
                     strippedContent = new StringBuilder();
                 }
             }
             i++;
         }
 
-        if (this.foundRewriter != null) {
-            throw new IllegalStateException("End generated comment " + this.foundRewriter.pattern + " missing for " + this.rewriteClass.simpleName());
+        if (foundRewriter != null) {
+            throw new IllegalStateException("End generated comment " + foundRewriter.pattern + " missing for " + this.rewriteClass.simpleName());
         }
 
         Set<String> diff = Sets.difference(patterns, foundPatterns);
@@ -179,7 +180,7 @@ public class SearchReplaceRewriter implements SourceRewriter {
 
         // Files.writeString(path, content.toString(), StandardCharsets.UTF_8); // todo
         Path createdPath;
-        if (this.rewriteClass.clazz() != null) {
+        if (this.rewriteClass.knownClass() != null) {
             createdPath = Main.generatedPath.resolve(filePath);
         } else {
             createdPath = Main.generatedServerPath.resolve(filePath);

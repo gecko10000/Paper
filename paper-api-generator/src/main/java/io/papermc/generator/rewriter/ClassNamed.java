@@ -3,10 +3,10 @@ package io.papermc.generator.rewriter;
 import io.papermc.generator.utils.ClassHelper;
 import org.jetbrains.annotations.Nullable;
 
-public record ClassNamed(String packageName, String simpleName, String dottedNestedName, @Nullable Class<?> clazz) {
+public record ClassNamed(String packageName, String simpleName, String dottedNestedName, @Nullable Class<?> knownClass) {
 
-    public ClassNamed(Class<?> clazz) {
-        this(clazz.getPackageName(), clazz.getSimpleName(), ClassHelper.retrieveFullNestedName(clazz), clazz);
+    public ClassNamed(Class<?> knownClass) {
+        this(knownClass.getPackageName(), knownClass.getSimpleName(), ClassHelper.retrieveFullNestedName(knownClass), knownClass);
     }
 
     // the class name shouldn't have any '$' char in it
@@ -26,8 +26,8 @@ public record ClassNamed(String packageName, String simpleName, String dottedNes
     }
 
     public String rootClassSimpleName() {
-        if (this.clazz != null) {
-            return ClassHelper.getRootClass(this.clazz).getSimpleName();
+        if (this.knownClass != null) {
+            return ClassHelper.getRootClass(this.knownClass).getSimpleName();
         }
 
         int dotIndex = this.dottedNestedName.indexOf('.');
@@ -42,8 +42,8 @@ public record ClassNamed(String packageName, String simpleName, String dottedNes
     }
 
     public String canonicalName() {
-        if (this.clazz != null) {
-            return this.clazz.getCanonicalName();
+        if (this.knownClass != null) {
+            return this.knownClass.getCanonicalName();
         }
 
         return this.packageName + '.' + this.dottedNestedName;

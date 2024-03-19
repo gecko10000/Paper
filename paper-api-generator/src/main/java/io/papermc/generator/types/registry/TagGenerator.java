@@ -75,13 +75,13 @@ public class TagGenerator extends SimpleGenerator {
 
     private static final String REGISTRY_FIELD_JAVADOC = "Key for the built-in $L registry.";
 
-    private static final List<TagRegistry> TAG_REGISTRIES = List.of(
+    private static final TagRegistry[] TAG_REGISTRIES = {
         registry("blocks", Material.class, Registries.BLOCK),
         registry("items", Material.class, Registries.ITEM),
         registry("fluids", Fluid.class, Registries.FLUID),
         registry("entity_types", EntityType.class, Registries.ENTITY_TYPE),
         registry("game_events", GameEvent.class, Registries.GAME_EVENT)
-    );
+    };
 
     public TagGenerator(final String className, final String pkg) {
         super(className, pkg);

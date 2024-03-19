@@ -27,27 +27,23 @@ import static io.papermc.generator.utils.TagRegistry.registry;
 
 public class TagRewriter extends SearchReplaceRewriter {
 
-    private static final List<TagRegistry> TAG_REGISTRIES = List.of(
+    private static final TagRegistry[] TAG_REGISTRIES = {
         registry("blocks", Material.class, Registries.BLOCK),
         registry("items", Material.class, Registries.ITEM),
         registry("fluids", Fluid.class, Registries.FLUID),
         registry("entity_types", EntityType.class, Registries.ENTITY_TYPE),
         registry("game_events", GameEvent.class, Registries.GAME_EVENT)
-    );
+    };
 
 
     public TagRewriter(final Class<?> rewriteClass, final String pattern) {
         super(rewriteClass, pattern, false);
     }
 
-    public TagRewriter(final ClassNamed rewriteClass, final String pattern) {
-        super(rewriteClass, pattern, false);
-    }
-
     @Override
     protected void insert(final SearchMetadata metadata, final StringBuilder builder) {
-        for (int i = 0, len = TAG_REGISTRIES.size(); i < len; i++) {
-            final TagRegistry tagRegistry = TAG_REGISTRIES.get(i);
+        for (int i = 0, len = TAG_REGISTRIES.length; i < len; i++) {
+            final TagRegistry tagRegistry = TAG_REGISTRIES[i];
 
             final ResourceKey<? extends Registry<?>> registryKey = tagRegistry.registryKey();
             final Registry<?> registry = Main.REGISTRY_ACCESS.registryOrThrow(registryKey);

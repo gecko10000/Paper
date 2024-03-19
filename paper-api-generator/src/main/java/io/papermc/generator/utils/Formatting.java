@@ -72,7 +72,7 @@ public final class Formatting {
         return Optional.of(resourcePath.substring(tagsIndex + tagDir.length() + 1, dotIndex)); // namespace/tags/registry_key/[tag_key].json
     }
 
-    public static int countOccurrences(String value, char match) {
+    private static int countOccurrences(String value, char match) {
         int count = 0;
         int currentMatchIndex = 0;
         while ((currentMatchIndex = value.indexOf(match, currentMatchIndex)) >= 0) {
@@ -83,18 +83,17 @@ public final class Formatting {
     }
 
     public static String incrementalIndent(String unit, ClassNamed classNamed) {
-        if (classNamed.clazz() == null) {
+        if (classNamed.knownClass() == null) {
             return unit.repeat(countOccurrences(classNamed.dottedNestedName(), '.') + 1);
         }
 
-        Class<?> parent = classNamed.clazz().getEnclosingClass();
+        Class<?> parent = classNamed.knownClass().getEnclosingClass();
         StringBuilder indentBuilder = new StringBuilder(unit);
         while (parent != null) {
             indentBuilder.append(unit);
             parent = parent.getEnclosingClass();
         }
         return indentBuilder.toString();
-
     }
 
     public static String quoted(String value) {

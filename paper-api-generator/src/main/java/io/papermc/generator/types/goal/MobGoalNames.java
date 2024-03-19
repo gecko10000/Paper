@@ -2,17 +2,18 @@ package io.papermc.generator.types.goal;
 
 import com.destroystokyo.paper.entity.RangedEntity;
 import com.destroystokyo.paper.entity.ai.GoalKey;
+import com.google.common.base.CaseFormat;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
+import io.papermc.generator.utils.Formatting;
 import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ambient.AmbientCreature;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.AbstractGolem;
@@ -31,6 +32,7 @@ import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.SpellcasterIllager;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.AbstractSkeleton;
@@ -122,13 +124,12 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.entity.ZombieHorse;
 import org.bukkit.entity.ZombieVillager;
 
-public class MobGoalNames {
+public final class MobGoalNames {
 
     private static final Map<Class<? extends Goal>, Class<? extends Mob>> entityClassCache = new HashMap<>();
     private static final Map<Class<? extends net.minecraft.world.entity.Mob>, Class<? extends Mob>> bukkitMap = new HashMap<>();
 
-
-    static {
+    static { // todo move serverside? via CraftEntityTypes
         //<editor-fold defaultstate="collapsed" desc="bukkitMap Entities">
         bukkitMap.put(net.minecraft.world.entity.Mob.class, Mob.class);
         bukkitMap.put(net.minecraft.world.entity.AgeableMob.class, Ageable.class);
@@ -236,77 +237,54 @@ public class MobGoalNames {
     }
 
     private static final BiMap<String, String> deobfuscationMap = HashBiMap.create();
-    private static final Set<String> ignored = new HashSet<>();
 
     static {
         deobfuscationMap.put("abstract_skeleton_1", "abstract_skeleton_melee");
-
-        ignored.add("goal_selector_1");
-        ignored.add("goal_selector_2");
-        ignored.add("selector_1");
-        ignored.add("selector_2");
-        ignored.add("wrapped");
     }
 
-    public static String getUsableName(String name) {
-        final String original = name;
-        name = name.substring(name.lastIndexOf('.') + 1);
-        boolean flag = false;
-        // inner classes
-        if (name.contains("$")) {
-            String cut = name.substring(name.indexOf('$') + 1);
-            if (cut.length() <= 2) {
-                name = name.replace("Entity", "");
-                name = name.replace('$', '_');
-                flag = true;
-            } else {
-                // mapped, wooo
-                name = cut;
-            }
-        }
-        name = name.replace("PathfinderGoal", "");
-        name = name.replace("TargetGoal", "");
-        name = name.replace("Goal", "");
-        StringBuilder sb = new StringBuilder();
-        for (char c : name.toCharArray()) {
-            if (c >= 'A' && c <= 'Z') {
-                sb.append('_');
-                sb.append(Character.toLowerCase(c));
-            } else {
-                sb.append(c);
-            }
-        }
-        name = sb.toString();
-        name = name.replaceFirst("_", "");
+    private static String getPathName(String name) {
+        String pathName = name.substring(name.lastIndexOf('.') + 1);
+        boolean needDeobfMap = false;
 
-        if (flag && !deobfuscationMap.containsKey(name.toLowerCase()) && !ignored.contains(name)) {
-            System.out.println("need to map " + original + " (" + name.toLowerCase() + ")");
+        // inner classes
+        int firstInnerDelimiter = pathName.indexOf('$');
+        if (firstInnerDelimiter != -1) {
+            String innerClassName = pathName.substring(firstInnerDelimiter + 1);
+            for (String nestedClass : innerClassName.split("\\$")) {
+                if (NumberUtils.isDigits(nestedClass)) {
+                    needDeobfMap = true;
+                    break;
+                }
+            }
+            if (!needDeobfMap) {
+                pathName = innerClassName;
+            }
+            pathName = pathName.replace('$', '_');
+            // mapped, wooo!
+        }
+
+        pathName = Formatting.stripWordOfCamelCaseName(pathName, "TargetGoal", true); // replace last? reverse search?
+        pathName = Formatting.stripWordOfCamelCaseName(pathName, "Goal", true);
+        pathName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, pathName);
+
+        if (needDeobfMap && !deobfuscationMap.containsKey(pathName)) {
+            System.err.println("need to map " + name + " (" + pathName + ")");
         }
 
         // did we rename this key?
-        return deobfuscationMap.getOrDefault(name, name);
+        return deobfuscationMap.getOrDefault(pathName, pathName);
     }
 
-    public static boolean isIgnored(String name) {
-        return ignored.contains(name);
-    }
-
-
-    public static <T extends Mob> GoalKey<T> getKey(String clazzName, Class<? extends Goal> goalClass) {
-        String name = getUsableName(clazzName);
-        if (MobGoalNames.isIgnored(name)) {
-            //noinspection unchecked
-            return (GoalKey<T>) GoalKey.of(Mob.class, NamespacedKey.minecraft(name));
-        }
+    public static <T extends Mob> GoalKey<T> getKey(Class<? extends Goal> goalClass) {
+        String name = getPathName(goalClass.getName());
         return GoalKey.of(getEntity(goalClass), NamespacedKey.minecraft(name));
     }
 
-    public static <T extends Mob> Class<T> getEntity(Class<? extends Goal> goalClass) {
+    private static <T extends Mob> Class<T> getEntity(Class<? extends Goal> goalClass) {
         //noinspection unchecked
         return (Class<T>) entityClassCache.computeIfAbsent(goalClass, key -> {
             for (Constructor<?> ctor : key.getDeclaredConstructors()) {
-                for (int i = 0; i < ctor.getParameterCount(); i++) {
-                    Class<?> param = ctor.getParameterTypes()[i];
+                for (Class<?> param : ctor.getParameterTypes()) {
                     if (net.minecraft.world.entity.Mob.class.isAssignableFrom(param)) {
                         //noinspection unchecked
                         return toBukkitClass((Class<? extends net.minecraft.world.entity.Mob>) param);
@@ -315,14 +293,14 @@ public class MobGoalNames {
                     }
                 }
             }
-            throw new RuntimeException("Can't figure out applicable entity for mob goal " + goalClass); // maybe just return EntityInsentient?
+            throw new RuntimeException("Can't figure out applicable goalClass for mob goal " + goalClass + " " + WrappedGoal.class.isAssignableFrom(goalClass)); // maybe just return Mob?
         });
     }
 
-    public static Class<? extends Mob> toBukkitClass(Class<? extends net.minecraft.world.entity.Mob> nmsClass) {
+    private static Class<? extends Mob> toBukkitClass(Class<? extends net.minecraft.world.entity.Mob> nmsClass) {
         Class<? extends Mob> bukkitClass = bukkitMap.get(nmsClass);
         if (bukkitClass == null) {
-            throw new RuntimeException("Can't figure out applicable bukkit entity for nms entity " + nmsClass); // maybe just return Mob?
+            throw new RuntimeException("Can't figure out applicable bukkit goalClass for nms goalClass " + nmsClass); // maybe just return Mob?
         }
         return bukkitClass;
     }

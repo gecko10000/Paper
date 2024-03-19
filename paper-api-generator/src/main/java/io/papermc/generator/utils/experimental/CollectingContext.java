@@ -16,13 +16,13 @@ public record CollectingContext<T>(List<ResourceKey<T>> registered,
                                    Registry<T> registry) implements BootstapContext<T> {
 
     @Override
-    public Holder.Reference<T> register(final ResourceKey<T> resourceKey, final @NonNull T t, final Lifecycle lifecycle) {
-        this.registered.add(resourceKey);
-        return Holder.Reference.createStandAlone(this.registry.holderOwner(), resourceKey);
+    public Holder.Reference<T> register(final ResourceKey<T> key, final @NonNull T value, final Lifecycle lifecycle) {
+        this.registered.add(key);
+        return Holder.Reference.createStandAlone(this.registry.holderOwner(), key);
     }
 
     @Override
-    public <S> HolderGetter<S> lookup(final ResourceKey<? extends Registry<? extends S>> resourceKey) {
-        return Main.REGISTRY_ACCESS.registryOrThrow(resourceKey).asLookup();
+    public <S> HolderGetter<S> lookup(final ResourceKey<? extends Registry<? extends S>> key) {
+        return Main.REGISTRY_ACCESS.lookupOrThrow(key);
     }
 }
