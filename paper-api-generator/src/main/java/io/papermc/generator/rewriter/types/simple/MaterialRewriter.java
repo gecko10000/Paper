@@ -100,7 +100,7 @@ public class MaterialRewriter {
         @Override
         protected Iterable<String> getCases() {
             return BuiltInRegistries.BLOCK.keySet().stream().map(key -> key.getPath().toUpperCase(Locale.ENGLISH))
-                .sorted(Formatting.alphabeticKeyOrder()).toList();
+                .sorted(Formatting.ALPHABETIC_KEY_ORDER).toList();
         }
     }
 
@@ -113,7 +113,7 @@ public class MaterialRewriter {
         @Override
         protected Iterable<String> getCases() {
             return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value().defaultBlockState().blocksMotion())
-                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.ALPHABETIC_KEY_ORDER).toList();
         }
     }
 
@@ -126,7 +126,7 @@ public class MaterialRewriter {
         @Override
         protected Iterable<String> getCases() {
             return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value().defaultBlockState().isAir())
-                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.ALPHABETIC_KEY_ORDER).toList();
         }
     }
 
@@ -140,7 +140,7 @@ public class MaterialRewriter {
         @Override
         protected Iterable<String> getCases() {
             return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value().defaultBlockState().useShapeForLightOcclusion())
-            .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
+            .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.ALPHABETIC_KEY_ORDER).toList();
         }
     }*/
 
@@ -153,7 +153,7 @@ public class MaterialRewriter {
         @Override
         protected Iterable<String> getCases() {
             return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value().defaultBlockState().ignitedByLava())
-                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.ALPHABETIC_KEY_ORDER).toList();
         }
     }
 
@@ -166,7 +166,7 @@ public class MaterialRewriter {
         @Override
         protected Iterable<String> getCases() {
             return BuiltInRegistries.BLOCK.holders().filter(reference -> ((FireBlock) net.minecraft.world.level.block.Blocks.FIRE).igniteOdds.getInt(reference.value()) > 0)
-                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.ALPHABETIC_KEY_ORDER).toList();
         }
     }
 
@@ -179,7 +179,7 @@ public class MaterialRewriter {
         @Override
         protected Iterable<String> getCases() {
             return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value().defaultBlockState().isRedstoneConductor(EmptyBlockGetter.INSTANCE, BlockPos.ZERO))
-                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.ALPHABETIC_KEY_ORDER).toList();
         }
     }
 
@@ -192,7 +192,7 @@ public class MaterialRewriter {
         @Override
         protected Iterable<String> getCases() {
             return BuiltInRegistries.BLOCK.holders().filter(reference -> reference.value() instanceof FallingBlock)
-                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.ALPHABETIC_KEY_ORDER).toList();
         }
     }
 
@@ -210,7 +210,7 @@ public class MaterialRewriter {
                         .getDeclaringClass().equals(BlockBehaviour.class);
                 } catch (ReflectiveOperationException ignored) {}
                 return false;
-            }).map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
+            }).map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.ALPHABETIC_KEY_ORDER).toList();
         }
     }
 
@@ -224,7 +224,7 @@ public class MaterialRewriter {
         @Override
         protected Multimap<Return<Float>, String> getContent() {
             Multimap<Return<Float>, String> map = MultimapBuilder.treeKeys(Comparator.<Return<Float>>comparingDouble(Return::object))
-                                                                 .treeSetValues(Formatting.alphabeticKeyOrder()).build();
+                                                                 .treeSetValues(Formatting.ALPHABETIC_KEY_ORDER).build();
             BuiltInRegistries.BLOCK.holders().forEach(reference -> {
                 float destroySpeed = reference.value().defaultBlockState().getDestroySpeed(EmptyBlockGetter.INSTANCE, BlockPos.ZERO);
                 if (destroySpeed != this.defaultValue.object()) {
@@ -246,7 +246,7 @@ public class MaterialRewriter {
         @Override
         protected Multimap<Return<Float>, String> getContent() {
             Multimap<Return<Float>, String> map = MultimapBuilder.treeKeys(Comparator.<Return<Float>>comparingDouble(Return::object))
-                                                                 .treeSetValues(Formatting.alphabeticKeyOrder()).build();
+                                                                 .treeSetValues(Formatting.ALPHABETIC_KEY_ORDER).build();
             BuiltInRegistries.BLOCK.holders().forEach(reference -> {
                 float explosionResistance = reference.value().getExplosionResistance();
                 if (explosionResistance != this.defaultValue.object()) {
@@ -269,7 +269,7 @@ public class MaterialRewriter {
         @Override
         protected Multimap<Return<Float>, String> getContent() {
             Multimap<Return<Float>, String> map = MultimapBuilder.treeKeys(Comparator.<Return<Float>>comparingDouble(Return::object))
-                                                                 .treeSetValues(Formatting.alphabeticKeyOrder()).build();
+                                                                 .treeSetValues(Formatting.ALPHABETIC_KEY_ORDER).build();
             BuiltInRegistries.BLOCK.holders().forEach(reference -> {
                 float friction = reference.value().getFriction();
                 if (friction != this.defaultValue.object()) {
@@ -333,7 +333,7 @@ public class MaterialRewriter {
             Set<String> blocks = BuiltInRegistries.BLOCK.keySet().stream().map(key -> key.getPath().toUpperCase(Locale.ENGLISH)).collect(Collectors.toSet());
 
             List<String> result = new ArrayList<>(Sets.difference(blocks, items).copyInto(new HashSet<>())); // too much copy happens here
-            result.sort(Formatting.alphabeticKeyOrder());
+            result.sort(Formatting.ALPHABETIC_KEY_ORDER);
             return result; // those cases return false
         }
     }
@@ -347,7 +347,7 @@ public class MaterialRewriter {
         @Override
         protected Iterable<String> getCases() {
             return BuiltInRegistries.ITEM.holders().filter(reference -> reference.value().isEdible())
-                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.ALPHABETIC_KEY_ORDER).toList();
         }
     }
 
@@ -364,7 +364,7 @@ public class MaterialRewriter {
                 return Collections.emptyList();
             }
             return musicDiscs.get().stream().map(reference -> reference.unwrapKey().orElseThrow().location().getPath().toUpperCase(Locale.ENGLISH))
-                .sorted(Formatting.alphabeticKeyOrder()).toList();
+                .sorted(Formatting.ALPHABETIC_KEY_ORDER).toList();
         }
     }
 
@@ -377,7 +377,7 @@ public class MaterialRewriter {
         @Override
         protected Iterable<String> getCases() {
             return BuiltInRegistries.ITEM.holders().filter(reference -> AbstractFurnaceBlockEntity.getFuel().containsKey(reference.value()))
-                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.alphabeticKeyOrder()).toList();
+                .map(reference -> reference.key().location().getPath().toUpperCase(Locale.ENGLISH)).sorted(Formatting.ALPHABETIC_KEY_ORDER).toList();
         }
     }
 
@@ -391,10 +391,11 @@ public class MaterialRewriter {
         @Override
         protected Multimap<Return<Item>, String> getContent() {
             Multimap<Return<Item>, String> map = MultimapBuilder.treeKeys(Formatting.<Return<Item>>alphabeticKeyOrder(Return::code))
-                                                                         .treeSetValues(Formatting.alphabeticKeyOrder()).build();
+                                                                         .treeSetValues(Formatting.ALPHABETIC_KEY_ORDER).build();
             BuiltInRegistries.ITEM.holders().forEach(reference -> {
                 Item item = reference.value().getCraftingRemainingItem();
                 if (item != this.defaultValue.object()) {
+                    //noinspection ConstantConditions
                     String itemKey = BuiltInRegistries.ITEM.getKey(item).getPath().toUpperCase(Locale.ENGLISH);
                     map.put(returnOf(item, itemKey), reference.key().location().getPath().toUpperCase(Locale.ENGLISH));
                 }
@@ -413,7 +414,7 @@ public class MaterialRewriter {
         @Override
         protected Multimap<Return<EquipmentSlot>, String> getContent() {
             Multimap<Return<EquipmentSlot>, String> map = MultimapBuilder.treeKeys(Comparator.<Return<EquipmentSlot>>comparingInt(key -> key.object().ordinal()).reversed())
-                                                                         .treeSetValues(Formatting.alphabeticKeyOrder()).build();
+                                                                         .treeSetValues(Formatting.ALPHABETIC_KEY_ORDER).build();
             BuiltInRegistries.ITEM.holders().forEach(reference -> {
                 net.minecraft.world.entity.EquipmentSlot slot = Mob.getEquipmentSlotForItem(new ItemStack(reference.value()));
                 EquipmentSlot apiSlot = EquipmentSlot.values()[slot.ordinal()];

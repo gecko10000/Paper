@@ -75,15 +75,8 @@ public interface Generators {
         simpleKey("TrimPatternKeys", TrimPattern.class, Registries.TRIM_PATTERN, RegistryKey.TRIM_PATTERN, true),
         simpleKey("StructureKeys", Structure.class, Registries.STRUCTURE, RegistryKey.STRUCTURE, true),
         simpleKey("StructureTypeKeys", StructureType.class, Registries.STRUCTURE_TYPE, RegistryKey.STRUCTURE_TYPE, false),
-        new MobGoalGenerator("VanillaGoal", "com.destroystokyo.paper.entity.ai"),
-        /*new SoundGenerator("Sound", "org.bukkit"), todo extract fields
-        new BiomeGenerator("Biome", "org.bukkit.block"),
-        new AttributeGenerator("Attribute", "org.bukkit.attribute"),
-        new StructureTypeGenerator("StructureType", "org.bukkit.generator.structure"),
-        new StructureGenerator("Structure", "org.bukkit.generator.structure"),
-        new LegacyKeyedRegistryGenerator<>("TrimPattern", "org.bukkit.inventory.meta.trim", Registries.TRIM_PATTERN, RegistryKey.TRIM_PATTERN),
-        new LegacyKeyedRegistryGenerator<>("TrimMaterial", "org.bukkit.inventory.meta.trim", Registries.TRIM_MATERIAL, RegistryKey.TRIM_MATERIAL),
-        new TagGenerator("Tag", "org.bukkit")*/
+        new MobGoalGenerator("VanillaGoal", "com.destroystokyo.paper.entity.ai")
+        // todo extract fields for registry based api
     };
 
     private static <T, A> SourceGenerator simpleKey(final String className, final Class<A> apiType, final ResourceKey<? extends Registry<T>> registryKey, final RegistryKey<A> apiRegistryKey, final boolean publicCreateKeyMethod) {

@@ -12,6 +12,7 @@ import io.papermc.generator.rewriter.types.Types;
 import io.papermc.generator.utils.ClassHelper;
 import io.papermc.generator.utils.Formatting;
 import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.stats.StatType;
@@ -75,7 +76,7 @@ public class StatisticRewriter {
 
     public static class CraftCustom extends EnumRegistryRewriter<ResourceLocation, Statistic> {
 
-        private static Map<String, String> INTERNAL_FIELD_RENAMES = Map.of(
+        private static final Map<String, String> INTERNAL_FIELD_RENAMES = Map.of(
             "SNEAK_TIME", "CROUCH_TIME"
         );
 
@@ -132,7 +133,7 @@ public class StatisticRewriter {
 
         @Override
         protected Iterable<Holder.Reference<StatType<?>>> getValues() {
-            return Main.REGISTRY_ACCESS.registryOrThrow(Registries.STAT_TYPE).holders().filter(reference -> reference.value() != Stats.CUSTOM)
+            return BuiltInRegistries.STAT_TYPE.holders().filter(reference -> reference.value() != Stats.CUSTOM)
                 .sorted(Formatting.alphabeticKeyOrder(reference -> reference.key().location().getPath())).toList();
         }
 
@@ -160,7 +161,7 @@ public class StatisticRewriter {
 
         @Override
         protected Iterable<Holder.Reference<StatType<?>>> getValues() {
-            return Main.REGISTRY_ACCESS.registryOrThrow(Registries.STAT_TYPE).holders().filter(reference -> reference.value() != Stats.CUSTOM)
+            return BuiltInRegistries.STAT_TYPE.holders().filter(reference -> reference.value() != Stats.CUSTOM)
                 .sorted(Formatting.alphabeticKeyOrder(reference -> reference.key().location().getPath())).toList();
         }
 

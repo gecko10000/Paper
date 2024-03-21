@@ -44,7 +44,7 @@ public class CraftStainedGlassPane extends CraftBlockData implements GlassPane {
     public boolean hasFace(final BlockFace blockFace) {
         Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
         BooleanProperty property = PROPERTY_BY_DIRECTION.get(blockFace);
-        Preconditions.checkArgument(property != null, "Invalid %s, only %s are allowed!".formatted("blockFace", PROPERTY_BY_DIRECTION.keySet().stream().map(Enum::name).collect(Collectors.joining(", "))));
+        Preconditions.checkArgument(property != null, "Invalid blockFace, only %s are allowed!".formatted(PROPERTY_BY_DIRECTION.keySet().stream().map(Enum::name).collect(Collectors.joining(", "))));
         return this.get(property);
     }
 
@@ -52,7 +52,7 @@ public class CraftStainedGlassPane extends CraftBlockData implements GlassPane {
     public void setFace(final BlockFace blockFace, final boolean face) {
         Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
         BooleanProperty property = PROPERTY_BY_DIRECTION.get(blockFace);
-        Preconditions.checkArgument(property != null, "Invalid %s, only %s are allowed!".formatted("blockFace", PROPERTY_BY_DIRECTION.keySet().stream().map(Enum::name).collect(Collectors.joining(", "))));
+        Preconditions.checkArgument(property != null, "Invalid blockFace, only %s are allowed!".formatted(PROPERTY_BY_DIRECTION.keySet().stream().map(Enum::name).collect(Collectors.joining(", "))));
         this.set(property, face);
     }
 

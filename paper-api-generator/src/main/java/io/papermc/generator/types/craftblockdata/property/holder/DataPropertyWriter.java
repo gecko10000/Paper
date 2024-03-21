@@ -22,6 +22,7 @@ import io.papermc.generator.utils.ClassHelper;
 import io.papermc.generator.utils.CommonVariable;
 import io.papermc.generator.utils.NamingManager;
 import net.minecraft.core.Direction;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.bukkit.block.BlockFace;
 import java.lang.reflect.Field;
@@ -30,6 +31,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static javax.lang.model.element.Modifier.FINAL;
@@ -38,17 +40,19 @@ import static javax.lang.model.element.Modifier.STATIC;
 
 public class DataPropertyWriter<T extends Property<?>> extends DataPropertyWriterBase<T> {
 
+    private static final Map<String, String> FIELD_TO_BASE_NAME = Map.of(
+        BlockStateMapping.PIPE_FIELD_NAME, "FACE",
+        "SLOT_OCCUPIED_PROPERTIES", "SLOT_OCCUPIED"
+    );
+
     protected final Field field;
     protected DataHolderType type;
-    protected Class<?> indexClass;
+    protected Class<?> indexClass, internalIndexClass;
     protected TypeName fieldType;
-    private String baseName;
-    private NamingManager.AccessKeyword accessKeyword;
 
-    protected DataPropertyWriter(Collection<T> properties, Class<?> blockClass, Field field, TypeName enclosedType) {
+    protected DataPropertyWriter(Field field, Collection<T> properties, Class<? extends Block> blockClass, TypeName enclosedType) {
         super(properties, blockClass);
         this.field = field;
-        this.baseName = field.getName();
         this.computeTypes(field, enclosedType);
     }
 
@@ -63,9 +67,11 @@ public class DataPropertyWriter<T extends Property<?>> extends DataPropertyWrite
             this.fieldType = ParameterizedTypeName.get(ClassName.get(field.getType()), enclosedType);
         } else if (Map.class.isAssignableFrom(field.getType()) && field.getGenericType() instanceof ParameterizedType complexType) {
             this.type = DataHolderType.MAP;
-            this.indexClass = ClassHelper.eraseType(complexType.getActualTypeArguments()[0]);
-            if (this.indexClass.isEnum()) {
-                this.indexClass = BlockStateMapping.ENUM_BRIDGE.getOrDefault(this.indexClass, (Class<? extends Enum<?>>) this.indexClass);
+            this.internalIndexClass = ClassHelper.eraseType(complexType.getActualTypeArguments()[0]);
+            if (this.internalIndexClass.isEnum()) {
+                this.indexClass = BlockStateMapping.ENUM_BRIDGE.getOrDefault(this.internalIndexClass, (Class<? extends Enum<?>>) this.internalIndexClass);
+            } else {
+                this.indexClass = this.internalIndexClass;
             }
             this.fieldType = ParameterizedTypeName.get(ClassName.get(field.getType()), ClassName.get(this.indexClass), enclosedType);
         } else {
@@ -78,8 +84,8 @@ public class DataPropertyWriter<T extends Property<?>> extends DataPropertyWrite
         FieldSpec.Builder fieldBuilder = FieldSpec.builder(this.fieldType, this.field.getName(), PRIVATE, STATIC, FINAL);
         if (Modifier.isPublic(this.field.getModifiers())) {
             // accessible phew
-            if (this.type == DataHolderType.MAP && ClassHelper.eraseType(((ParameterizedType) this.field.getGenericType()).getActualTypeArguments()[0]) == Direction.class &&
-                this.indexClass == BlockFace.class) { // Direction -> BlockFace
+            if (this.type == DataHolderType.MAP &&
+                this.internalIndexClass == Direction.class && this.indexClass == BlockFace.class) { // Direction -> BlockFace
                 // convert the key manually only this one is needed for now
                 fieldBuilder.initializer("$[$1T.$2L.entrySet().stream()\n.collect($3T.toMap($4L -> $5T.notchToBlockFace($4L.getKey()), $4L -> $4L.getValue()))$]",
                     this.blockClass, this.field.getName(), Collectors.class, CommonVariable.MAP_ENTRY, Types.CRAFT_BLOCK);
@@ -112,20 +118,22 @@ public class DataPropertyWriter<T extends Property<?>> extends DataPropertyWrite
 
     @Override
     public String getBaseName() {
-        return this.baseName;
+        String constantName = this.field.getName();
+        if (FIELD_TO_BASE_NAME.containsKey(constantName)) {
+            return FIELD_TO_BASE_NAME.get(constantName);
+        }
+        return stripFieldAccessKeyword(constantName);
     }
 
-    public void setBaseName(String name) {
-        this.baseName = name;
-    }
+    private static final Set<String> CUSTOM_KEYWORD = Set.of("HAS", "IS", "CAN");
 
-    @Override
-    public NamingManager.AccessKeyword getKeyword() {
-        return this.accessKeyword;
-    }
-
-    public void setKeyword(NamingManager.AccessKeyword keyword) {
-        this.accessKeyword = keyword;
+    private String stripFieldAccessKeyword(String name) {
+        for (String keyword : CUSTOM_KEYWORD) {
+            if (name.startsWith(keyword + "_")) {
+                return name.substring(keyword.length() + 1);
+            }
+        }
+        return name;
     }
 
     private static final Map<DataHolderType, DataAppender> APPENDERS;

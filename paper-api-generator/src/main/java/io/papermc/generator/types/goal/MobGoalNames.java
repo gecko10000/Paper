@@ -236,7 +236,7 @@ public final class MobGoalNames {
         //</editor-fold>
     }
 
-    private static final BiMap<String, String> deobfuscationMap = HashBiMap.create();
+    private static final Map<String, String> deobfuscationMap = new HashMap<>();
 
     static {
         deobfuscationMap.put("abstract_skeleton_1", "abstract_skeleton_melee");
@@ -293,14 +293,14 @@ public final class MobGoalNames {
                     }
                 }
             }
-            throw new RuntimeException("Can't figure out applicable goalClass for mob goal " + goalClass + " " + WrappedGoal.class.isAssignableFrom(goalClass)); // maybe just return Mob?
+            throw new RuntimeException("Can't figure out applicable entity for mob goal " + goalClass); // maybe just return Mob?
         });
     }
 
     private static Class<? extends Mob> toBukkitClass(Class<? extends net.minecraft.world.entity.Mob> nmsClass) {
         Class<? extends Mob> bukkitClass = bukkitMap.get(nmsClass);
         if (bukkitClass == null) {
-            throw new RuntimeException("Can't figure out applicable bukkit goalClass for nms goalClass " + nmsClass); // maybe just return Mob?
+            throw new RuntimeException("Can't figure out applicable bukkit entity for nms entity " + nmsClass); // maybe just return Mob?
         }
         return bukkitClass;
     }

@@ -15,6 +15,7 @@ import io.papermc.generator.utils.NamingManager;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.Property;
 
 import static javax.lang.model.element.Modifier.FINAL;
@@ -27,7 +28,7 @@ public class VirtualDataPropertyWriter<T extends Property<?>> extends DataProper
     protected Class<?> indexClass;
     protected TypeName fieldType;
 
-    protected VirtualDataPropertyWriter(VirtualFieldInfo fieldInfo, Collection<T> properties, Class<?> blockClass, TypeName enclosedType) {
+    protected VirtualDataPropertyWriter(VirtualFieldInfo fieldInfo, Collection<T> properties, Class<? extends Block> blockClass, TypeName enclosedType) {
         super(properties, blockClass);
         this.fieldInfo = fieldInfo;
         this.computeTypes(fieldInfo, enclosedType);
@@ -86,11 +87,6 @@ public class VirtualDataPropertyWriter<T extends Property<?>> extends DataProper
     @Override
     public String getBaseName() {
         return this.fieldInfo.getBaseName();
-    }
-
-    @Override
-    public NamingManager.AccessKeyword getKeyword() {
-        return null;
     }
 
     @Override

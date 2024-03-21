@@ -47,7 +47,7 @@ public class CraftRedStoneWire extends CraftBlockData implements RedstoneWire {
     public RedstoneWire.Connection getFace(final BlockFace blockFace) {
         Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
         EnumProperty<RedstoneSide> property = PROPERTY_BY_DIRECTION.get(blockFace);
-        Preconditions.checkArgument(property != null, "Invalid %s, only %s are allowed!".formatted("blockFace", PROPERTY_BY_DIRECTION.keySet().stream().map(Enum::name).collect(Collectors.joining(", "))));
+        Preconditions.checkArgument(property != null, "Invalid blockFace, only %s are allowed!".formatted(PROPERTY_BY_DIRECTION.keySet().stream().map(Enum::name).collect(Collectors.joining(", "))));
         return this.get(property, RedstoneWire.Connection.class);
     }
 
@@ -56,7 +56,7 @@ public class CraftRedStoneWire extends CraftBlockData implements RedstoneWire {
         Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
         Preconditions.checkArgument(connection != null, "connection cannot be null!");
         EnumProperty<RedstoneSide> property = PROPERTY_BY_DIRECTION.get(blockFace);
-        Preconditions.checkArgument(property != null, "Invalid %s, only %s are allowed!".formatted("blockFace", PROPERTY_BY_DIRECTION.keySet().stream().map(Enum::name).collect(Collectors.joining(", "))));
+        Preconditions.checkArgument(property != null, "Invalid blockFace, only %s are allowed!".formatted(PROPERTY_BY_DIRECTION.keySet().stream().map(Enum::name).collect(Collectors.joining(", "))));
         this.set(property, connection);
     }
 

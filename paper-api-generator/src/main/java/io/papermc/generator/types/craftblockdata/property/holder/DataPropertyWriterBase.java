@@ -1,34 +1,24 @@
 package io.papermc.generator.types.craftblockdata.property.holder;
 
 import com.squareup.javapoet.CodeBlock;
-import io.papermc.generator.utils.BlockStateMapping;
+import io.papermc.generator.types.craftblockdata.property.PropertyWriter;
 import io.papermc.generator.utils.Formatting;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import it.unimi.dsi.fastutil.Pair;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.Property;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.function.BiConsumer;
 
 public abstract class DataPropertyWriterBase<T extends Property<?>> implements DataPropertyMaker {
 
-    protected final Class<?> blockClass;
+    protected final Class<? extends Block> blockClass;
     protected final Collection<T> properties;
 
-    protected DataPropertyWriterBase(Collection<T> properties, Class<?> blockClass) {
+    protected DataPropertyWriterBase(Collection<T> properties, Class<? extends Block> blockClass) {
         this.properties = properties;
         this.blockClass = blockClass;
-    }
-
-    private void referenceFieldProperty(T property, Map<String, String> fieldNames, BiConsumer<Class<?>, String> callback) {
-        String fieldName = fieldNames.get(property.getName());
-        Class<?> fieldAccess = this.blockClass;
-        if (fieldName == null) {
-            fieldName = BlockStateMapping.FALLBACK_GENERIC_FIELD_NAMES.get(property);
-            fieldAccess = BlockStateProperties.class;
-        }
-        callback.accept(fieldAccess, fieldName);
     }
 
     protected void createSyntheticCollection(CodeBlock.Builder code, boolean isArray, Map<String, String> fieldNames) {
@@ -40,9 +30,9 @@ public abstract class DataPropertyWriterBase<T extends Property<?>> implements D
         code.indent();
         Iterator<T> it = this.properties.iterator();
         while (it.hasNext()) {
-            this.referenceFieldProperty(it.next(), fieldNames, (fieldAccess, fieldName) -> {
-                code.add("$T.$L", fieldAccess, fieldName);
-            });
+            T property = it.next();
+            Pair<Class<?>, String> fieldName = PropertyWriter.referenceField(this.blockClass, property, fieldNames);
+            code.add("$T.$L", fieldName.left(), fieldName.right());
             if (it.hasNext()) {
                 code.add(",");
             }
@@ -57,9 +47,8 @@ public abstract class DataPropertyWriterBase<T extends Property<?>> implements D
         while (it.hasNext()) {
             T property = it.next();
             String name = Formatting.formatPathAsField(property.getName());
-            this.referenceFieldProperty(property, fieldNames, (fieldAccess, fieldName) -> {
-                code.add("$T.$L, $T.$L", indexClass, name, fieldAccess, fieldName);
-            });
+            Pair<Class<?>, String> fieldName = PropertyWriter.referenceField(this.blockClass, property, fieldNames);
+            code.add("$T.$L, $T.$L", indexClass, name, fieldName.left(), fieldName.right());
             if (it.hasNext()) {
                 code.add(",");
             }

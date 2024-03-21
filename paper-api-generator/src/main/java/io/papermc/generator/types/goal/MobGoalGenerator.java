@@ -10,7 +10,6 @@ import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
-import com.squareup.javapoet.WildcardTypeName;
 import io.github.classgraph.ClassGraph;
 import io.github.classgraph.ScanResult;
 import io.papermc.generator.types.SimpleGenerator;
@@ -18,7 +17,6 @@ import io.papermc.generator.utils.Annotations;
 import io.papermc.generator.utils.ClassHelper;
 import io.papermc.generator.utils.Formatting;
 import io.papermc.generator.utils.Javadocs;
-import java.lang.reflect.ParameterizedType;
 import java.util.Comparator;
 import java.util.List;
 import javax.lang.model.element.Modifier;
@@ -218,12 +216,12 @@ public class MobGoalGenerator extends SimpleGenerator {
         }
 
         for (final DeprecatedGoal deprecatedGoal : DEPRECATED_GOALS) {
-            TypeName typedKey = ParameterizedTypeName.get(GoalKey.class, deprecatedGoal.goalClass());
+            TypeName typedKey = ParameterizedTypeName.get(GoalKey.class, deprecatedGoal.mobClass());
 
             String fieldName = Formatting.formatPathAsField(deprecatedGoal.path());
             FieldSpec.Builder fieldBuilder = FieldSpec.builder(typedKey, fieldName, PUBLIC, STATIC, FINAL)
                 .addAnnotation(Annotations.deprecatedVersioned(deprecatedGoal.removedVersion(), deprecatedGoal.removalVersion() != null))
-                .initializer("$N($S, $T.class)", createMethod.build(), deprecatedGoal.path(), deprecatedGoal.goalClass());
+                .initializer("$N($S, $T.class)", createMethod.build(), deprecatedGoal.path(), deprecatedGoal.mobClass());
 
             if (deprecatedGoal.removedVersion() != null) {
                 fieldBuilder.addJavadoc("Removed in $L", deprecatedGoal.removedVersion());
@@ -241,7 +239,7 @@ public class MobGoalGenerator extends SimpleGenerator {
     record VanillaGoal(Class<? extends Goal> goalClass, GoalKey<?> key) {
     }
 
-    record DeprecatedGoal(Class<? extends Mob> goalClass, String path, @Nullable String removalVersion,
+    record DeprecatedGoal(Class<? extends Mob> mobClass, String path, @Nullable String removalVersion,
                           @Nullable String removedVersion) {
     }
 }

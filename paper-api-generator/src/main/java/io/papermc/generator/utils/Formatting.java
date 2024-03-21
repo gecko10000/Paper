@@ -17,7 +17,6 @@ import net.minecraft.world.flag.FeatureFlag;
 import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.flag.FeatureFlags;
 import org.apache.commons.lang3.math.NumberUtils;
-import javax.lang.model.SourceVersion;
 
 public final class Formatting {
 
@@ -128,16 +127,7 @@ public final class Formatting {
         return newName;
     }
 
-    public static String ensureValidName(String name) {
-        if (!SourceVersion.isName(name)) {
-            return "_" + name;
-        }
-        return name;
-    }
-
-    public static Comparator<String> alphabeticKeyOrder() {
-        return alphabeticKeyOrder(path -> path);
-    }
+    public static Comparator<String> ALPHABETIC_KEY_ORDER = alphabeticKeyOrder(path -> path);
 
     public static <T> Comparator<T> alphabeticKeyOrder(Function<T, String> mapper) {
         return (o1, o2) -> {

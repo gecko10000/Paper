@@ -102,7 +102,6 @@ import org.jetbrains.annotations.Nullable;
 public final class BlockStateMapping {
 
     public static final String PIPE_FIELD_NAME = "PROPERTY_BY_DIRECTION";
-    public static final String CHISELED_BOOKSHELF_FIELD_NAME = "SLOT_OCCUPIED_PROPERTIES";
 
     public record BlockData(String impl, @Nullable Class<? extends org.bukkit.block.data.BlockData> api, Collection<Property<?>> properties, Map<String, String> fieldNames, Multimap<FieldDataHolder, Property<?>> complexFields) {
     }

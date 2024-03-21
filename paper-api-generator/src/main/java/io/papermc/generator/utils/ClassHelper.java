@@ -36,15 +36,6 @@ public final class ClassHelper {
         return rootClass;
     }
 
-    public static Set<Class<?>> getInterfacesUntil(Class<?> clazz, Class<?> stopper, Set<Class<?>> interfaces) {
-        Class<?> parent = clazz;
-        while (parent != null && parent != stopper) {
-            interfaces.addAll(Arrays.asList(parent.getInterfaces()));
-            parent = parent.getSuperclass();
-        }
-        return interfaces;
-    }
-
     public static Set<Class<?>> getAllInterfaces(Class<?> clazz, Class<?> ignored, Set<Class<?>> interfaces) {
         Class<?>[] classes = clazz.getInterfaces();
         interfaces.addAll(Arrays.asList(classes));

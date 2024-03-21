@@ -20,8 +20,8 @@ public class MapConverter implements DataConverter {
     @Override
     public void convertSetter(final ConverterBase childConverter, final MethodSpec.Builder method, final FieldSpec field, final ParameterSpec indexParameter, final ParameterSpec parameter) {
         method.addStatement("$T property = $N.get($N)", ((ParameterizedTypeName) field.type).typeArguments.get(1), field, indexParameter);
-        method.addStatement("$T.checkArgument($N != null, $S.formatted($S, $N.keySet().stream().map($T::name).collect($T.joining($S))))",
-            Preconditions.class, "property", "Invalid %s, only %s are allowed!", indexParameter.name, field, Enum.class, Collectors.class, ", ");
+        method.addStatement("$T.checkArgument($N != null, $S.formatted($N.keySet().stream().map($T::name).collect($T.joining($S))))",
+            Preconditions.class, "property", "Invalid " + indexParameter.name + ", only %s are allowed!", field, Enum.class, Collectors.class, ", ");
 
         method.addStatement(childConverter.rawSetExprent().formatted("$L"), "property", parameter);
     }
@@ -29,8 +29,8 @@ public class MapConverter implements DataConverter {
     @Override
     public void convertGetter(final ConverterBase childConverter, final MethodSpec.Builder method, final FieldSpec field, final ParameterSpec indexParameter) {
         method.addStatement("$T property = $N.get($N)", ((ParameterizedTypeName) field.type).typeArguments.get(1), field, indexParameter);
-        method.addStatement("$T.checkArgument($N != null, $S.formatted($S, $N.keySet().stream().map($T::name).collect($T.joining($S))))",
-            Preconditions.class, "property", "Invalid %s, only %s are allowed!", indexParameter.name, field, Enum.class, Collectors.class, ", ");
+        method.addStatement("$T.checkArgument($N != null, $S.formatted($N.keySet().stream().map($T::name).collect($T.joining($S))))",
+            Preconditions.class, "property", "Invalid " + indexParameter.name + ", only %s are allowed!", field, Enum.class, Collectors.class, ", ");
 
         if (childConverter instanceof EnumPropertyWriter<?> enumConverter) {
             method.addStatement("return " + childConverter.rawGetExprent().formatted("$L"), "property", enumConverter.getApiType());

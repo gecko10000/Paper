@@ -10,6 +10,7 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import io.papermc.generator.types.Types;
 import io.papermc.generator.types.StructuredGenerator;
+import io.papermc.generator.types.craftblockdata.property.PropertyWriter;
 import io.papermc.generator.types.craftblockdata.property.holder.DataPropertyMaker;
 import io.papermc.generator.types.craftblockdata.property.PropertyMaker;
 import io.papermc.generator.types.craftblockdata.property.converter.ConverterBase;
@@ -20,8 +21,8 @@ import io.papermc.generator.utils.Annotations;
 import io.papermc.generator.utils.BlockStateMapping;
 import io.papermc.generator.utils.CommonVariable;
 import io.papermc.generator.utils.NamingManager;
+import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BrewingStandBlock;
 import net.minecraft.world.level.block.ChiseledBookShelfBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -112,17 +113,12 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
         TypeSpec.Builder typeBuilder = this.propertyHolder();
 
         for (Property<?> property : this.blockData.properties()) {
-            String fieldName = this.blockData.fieldNames().get(property.getName());
-            Class<?> fieldAccess = this.blockClass;
-            if (fieldName == null) {
-                fieldAccess = BlockStateProperties.class;
-                fieldName = BlockStateMapping.FALLBACK_GENERIC_FIELD_NAMES.get(property);
-            }
+            Pair<Class<?>, String> fieldName = PropertyWriter.referenceField(this.blockClass, property, this.blockData.fieldNames());
 
             PropertyMaker propertyMaker = PropertyMaker.make(property);
 
-            FieldSpec.Builder fieldBuilder = FieldSpec.builder(propertyMaker.getPropertyType(), fieldName, PRIVATE, STATIC, FINAL)
-                .initializer("$T.$L", fieldAccess, fieldName);
+            FieldSpec.Builder fieldBuilder = FieldSpec.builder(propertyMaker.getPropertyType(), fieldName.right(), PRIVATE, STATIC, FINAL)
+                .initializer("$T.$L", fieldName.left(), fieldName.right());
             FieldSpec field = fieldBuilder.build();
 
             typeBuilder.addField(field);
@@ -173,18 +169,22 @@ public class CraftBlockDataGenerator<T extends BlockData> extends StructuredGene
 
             PropertyMaker propertyMaker = PropertyMaker.make(firstProperty);
             ConverterBase propertyConverter = Converters.getOrDefault(firstProperty, propertyMaker);
-            Class<?> apiClass = propertyConverter.getApiType();
 
             TypeName propertyType = propertyMaker.getPropertyType();
-            DataPropertyMaker dataPropertyMaker = DataPropertyMaker.make(properties, this.blockClass, fieldDataHolder, propertyType, apiClass);
+            DataPropertyMaker dataPropertyMaker = DataPropertyMaker.make(properties, this.blockClass, fieldDataHolder, propertyType);
 
             FieldSpec field = dataPropertyMaker.getOrCreateField(this.blockData.fieldNames()).build();
             typeBuilder.addField(field);
 
             DataConverter converter = DataConverters.getOrThrow(dataPropertyMaker.getType());
+            Class<?> apiClass = propertyConverter.getApiType();
 
-            NamingManager.AccessKeyword accessKeyword = FLUENT_KEYWORD.getOrDefault(firstProperty, dataPropertyMaker.getKeyword());
-            NamingManager naming = new NamingManager(accessKeyword, CaseFormat.UPPER_UNDERSCORE, NamingManager.stripFieldAccessKeyword(dataPropertyMaker.getBaseName()));
+            NamingManager.AccessKeyword accessKeyword = null;
+            if (apiClass == Boolean.TYPE) {
+                accessKeyword = NamingManager.keywordGet("has");
+            }
+            accessKeyword = FLUENT_KEYWORD.getOrDefault(firstProperty, accessKeyword);
+            NamingManager naming = new NamingManager(accessKeyword, CaseFormat.UPPER_UNDERSCORE, dataPropertyMaker.getBaseName());
 
             ParameterSpec indexParameter = ParameterSpec.builder(dataPropertyMaker.getIndexClass(), dataPropertyMaker.getIndexClass() == Integer.TYPE ? CommonVariable.INDEX : naming.paramName(dataPropertyMaker.getIndexClass()), FINAL).build();
 

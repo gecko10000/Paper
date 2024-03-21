@@ -10,7 +10,10 @@ import io.papermc.generator.types.StructuredGenerator;
 import io.papermc.generator.types.craftblockdata.property.appender.EnumValuesAppender;
 import io.papermc.generator.types.craftblockdata.property.appender.PropertyAppender;
 import io.papermc.generator.types.craftblockdata.property.appender.AppenderBase;
+import io.papermc.generator.utils.BlockStateMapping;
 import io.papermc.generator.utils.NamingManager;
+import it.unimi.dsi.fastutil.Pair;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.Property;
 import org.bukkit.Axis;
@@ -81,5 +84,15 @@ public class PropertyWriter<T extends Comparable<T>> implements PropertyMaker {
         if (APPENDERS.containsKey(this.property)) {
             APPENDERS.get(this.property).addExtras(builder, field, generator, naming);
         }
+    }
+
+    public static Pair<Class<?>, String> referenceField(Class<? extends Block> from, Property<?> property, Map<String, String> fieldNames) {
+        Class<?> fieldAccess = from;
+        String fieldName = fieldNames.get(property.getName());
+        if (fieldName == null) {
+            fieldAccess = BlockStateProperties.class;
+            fieldName = BlockStateMapping.FALLBACK_GENERIC_FIELD_NAMES.get(property);
+        }
+        return Pair.of(fieldAccess, fieldName);
     }
 }
