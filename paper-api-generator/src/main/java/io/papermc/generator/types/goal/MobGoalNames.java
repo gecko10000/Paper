@@ -121,7 +121,7 @@ import org.bukkit.entity.Zombie;
 import org.bukkit.entity.ZombieHorse;
 import org.bukkit.entity.ZombieVillager;
 
-public final class MobGoalNames {
+public final class MobGoalNames { // todo sync with MobGoalHelper ideally this should not be duplicated
 
     private static final Map<Class<? extends Goal>, Class<? extends Mob>> entityClassCache = new HashMap<>();
     private static final Map<Class<? extends net.minecraft.world.entity.Mob>, Class<? extends Mob>> bukkitMap = new HashMap<>();
@@ -236,6 +236,7 @@ public final class MobGoalNames {
     private static final Map<String, String> deobfuscationMap = new HashMap<>();
 
     static {
+        // TODO these kinda should be checked on each release, in case obfuscation changes
         deobfuscationMap.put("abstract_skeleton_1", "abstract_skeleton_melee");
     }
 
@@ -284,7 +285,11 @@ public final class MobGoalNames {
                 for (Class<?> param : ctor.getParameterTypes()) {
                     if (net.minecraft.world.entity.Mob.class.isAssignableFrom(param)) {
                         //noinspection unchecked
-                        return toBukkitClass((Class<? extends net.minecraft.world.entity.Mob>) param);
+                        Class<? extends Mob> bukkitClass = toBukkitClass((Class<? extends net.minecraft.world.entity.Mob>) param);
+                        if (bukkitClass == null) {
+                            throw new RuntimeException("Can't figure out applicable bukkit entity for nms entity " + param); // maybe just return Mob?
+                        }
+                        return bukkitClass;
                     } else if (RangedAttackMob.class.isAssignableFrom(param)) {
                         return RangedEntity.class;
                     }
@@ -294,11 +299,7 @@ public final class MobGoalNames {
         });
     }
 
-    private static Class<? extends Mob> toBukkitClass(Class<? extends net.minecraft.world.entity.Mob> nmsClass) {
-        Class<? extends Mob> bukkitClass = bukkitMap.get(nmsClass);
-        if (bukkitClass == null) {
-            throw new RuntimeException("Can't figure out applicable bukkit entity for nms entity " + nmsClass); // maybe just return Mob?
-        }
-        return bukkitClass;
+    public static Class<? extends Mob> toBukkitClass(Class<? extends net.minecraft.world.entity.Mob> nmsClass) {
+        return bukkitMap.get(nmsClass);
     }
 }

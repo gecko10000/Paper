@@ -18,23 +18,18 @@ index e9cda97679ed18156baf009926d6f210093112bd..7cbfd129efcc2e971b75aaa272dee79a
      testImplementation("org.mockito:mockito-core:5.11.0")
 diff --git a/src/main/java/com/destroystokyo/paper/entity/ai/MobGoalHelper.java b/src/main/java/com/destroystokyo/paper/entity/ai/MobGoalHelper.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..8117578ced94aa6bf01871f6526a388385c4adf2
+index 0000000000000000000000000000000000000000..dfd77a09fd23acabec3ba40f23f01484e5bec84f
 --- /dev/null
 +++ b/src/main/java/com/destroystokyo/paper/entity/ai/MobGoalHelper.java
-@@ -0,0 +1,376 @@
+@@ -0,0 +1,342 @@
 +package com.destroystokyo.paper.entity.ai;
 +
 +import com.destroystokyo.paper.entity.RangedEntity;
-+import com.destroystokyo.paper.util.set.OptimizedSmallEnumSet;
-+import com.google.common.collect.BiMap;
-+import com.google.common.collect.HashBiMap;
-+import io.papermc.paper.util.ObfHelper;
++import com.google.common.base.CaseFormat;
 +import java.lang.reflect.Constructor;
 +import java.util.EnumSet;
 +import java.util.HashMap;
-+import java.util.HashSet;
 +import java.util.Map;
-+import java.util.Set;
 +import net.minecraft.world.entity.FlyingMob;
 +import net.minecraft.world.entity.PathfinderMob;
 +import net.minecraft.world.entity.TamableAnimal;
@@ -48,7 +43,6 @@ index 0000000000000000000000000000000000000000..8117578ced94aa6bf01871f6526a3883
 +import net.minecraft.world.entity.animal.ShoulderRidingEntity;
 +import net.minecraft.world.entity.animal.SnowGolem;
 +import net.minecraft.world.entity.animal.WaterAnimal;
-+import net.minecraft.world.entity.animal.camel.Camel;
 +import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
 +import net.minecraft.world.entity.boss.wither.WitherBoss;
 +import net.minecraft.world.entity.monster.AbstractIllager;
@@ -57,8 +51,8 @@ index 0000000000000000000000000000000000000000..8117578ced94aa6bf01871f6526a3883
 +import net.minecraft.world.entity.monster.RangedAttackMob;
 +import net.minecraft.world.entity.monster.SpellcasterIllager;
 +import net.minecraft.world.entity.monster.ZombifiedPiglin;
-+import net.minecraft.world.entity.monster.breeze.Breeze;
 +import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
++import org.apache.commons.lang3.math.NumberUtils;
 +import org.bukkit.NamespacedKey;
 +import org.bukkit.entity.AbstractHorse;
 +import org.bukkit.entity.AbstractSkeleton;
@@ -152,22 +146,10 @@ index 0000000000000000000000000000000000000000..8117578ced94aa6bf01871f6526a3883
 +
 +public class MobGoalHelper {
 +
-+    private static final BiMap<String, String> deobfuscationMap = HashBiMap.create();
 +    private static final Map<Class<? extends Goal>, Class<? extends Mob>> entityClassCache = new HashMap<>();
 +    private static final Map<Class<? extends net.minecraft.world.entity.Mob>, Class<? extends Mob>> bukkitMap = new HashMap<>();
 +
-+    static final Set<String> ignored = new HashSet<>();
-+
 +    static {
-+        // TODO these kinda should be checked on each release, in case obfuscation changes
-+        deobfuscationMap.put("abstract_skeleton_1", "abstract_skeleton_melee");
-+
-+        ignored.add("goal_selector_1");
-+        ignored.add("goal_selector_2");
-+        ignored.add("selector_1");
-+        ignored.add("selector_2");
-+        ignored.add("wrapped");
-+
 +        bukkitMap.put(net.minecraft.world.entity.Mob.class, Mob.class);
 +        bukkitMap.put(net.minecraft.world.entity.AgeableMob.class, Ageable.class);
 +        bukkitMap.put(AmbientCreature.class, Ambient.class);
@@ -189,7 +171,7 @@ index 0000000000000000000000000000000000000000..8117578ced94aa6bf01871f6526a3883
 +        bukkitMap.put(net.minecraft.world.entity.monster.Endermite.class, Endermite.class);
 +        bukkitMap.put(net.minecraft.world.entity.monster.Evoker.class, Evoker.class);
 +        bukkitMap.put(AbstractFish.class, Fish.class);
-+        bukkitMap.put(AbstractSchoolingFish.class, Fish.class); // close enough
++        bukkitMap.put(AbstractSchoolingFish.class, io.papermc.paper.entity.SchoolableFish.class);
 +        bukkitMap.put(FlyingMob.class, Flying.class);
 +        bukkitMap.put(net.minecraft.world.entity.animal.Fox.class, Fox.class);
 +        bukkitMap.put(net.minecraft.world.entity.monster.Ghast.class, Ghast.class);
@@ -204,7 +186,7 @@ index 0000000000000000000000000000000000000000..8117578ced94aa6bf01871f6526a3883
 +        bukkitMap.put(net.minecraft.world.entity.animal.horse.Mule.class, Mule.class);
 +        bukkitMap.put(net.minecraft.world.entity.animal.horse.SkeletonHorse.class, SkeletonHorse.class);
 +        bukkitMap.put(net.minecraft.world.entity.animal.horse.ZombieHorse.class, ZombieHorse.class);
-+        bukkitMap.put(Camel.class, org.bukkit.entity.Camel.class);
++        bukkitMap.put(net.minecraft.world.entity.animal.camel.Camel.class, org.bukkit.entity.Camel.class);
 +        bukkitMap.put(AbstractIllager.class, Illager.class);
 +        bukkitMap.put(net.minecraft.world.entity.monster.Illusioner.class, Illusioner.class);
 +        bukkitMap.put(SpellcasterIllager.class, Spellcaster.class);
@@ -269,46 +251,47 @@ index 0000000000000000000000000000000000000000..8117578ced94aa6bf01871f6526a3883
 +        bukkitMap.put(net.minecraft.world.entity.monster.warden.Warden.class, org.bukkit.entity.Warden.class);
 +        bukkitMap.put(net.minecraft.world.entity.animal.allay.Allay.class, org.bukkit.entity.Allay.class);
 +        bukkitMap.put(net.minecraft.world.entity.animal.sniffer.Sniffer.class, org.bukkit.entity.Sniffer.class);
-+        bukkitMap.put(Breeze.class, org.bukkit.entity.Breeze.class);
++        bukkitMap.put(net.minecraft.world.entity.monster.breeze.Breeze.class, org.bukkit.entity.Breeze.class);
 +    }
 +
-+    public static String getUsableName(Class<?> clazz) {
-+        String name = ObfHelper.INSTANCE.deobfClassName(clazz.getName());
-+        name = name.substring(name.lastIndexOf(".") + 1);
-+        boolean flag = false;
-+        // inner classes
-+        if (name.contains("$")) {
-+            String cut = name.substring(name.indexOf("$") + 1);
-+            if (cut.length() <= 2) {
-+                name = name.replace("Entity", "");
-+                name = name.replace("$", "_");
-+                flag = true;
-+            } else {
-+                // mapped, wooo
-+                name = cut;
-+            }
-+        }
-+        name = name.replace("PathfinderGoal", "");
-+        name = name.replace("TargetGoal", "");
-+        name = name.replace("Goal", "");
-+        StringBuilder sb = new StringBuilder();
-+        for (char c : name.toCharArray()) {
-+            if (c >= 'A' && c <= 'Z') {
-+                sb.append("_");
-+                sb.append(Character.toLowerCase(c));
-+            } else {
-+                sb.append(c);
-+            }
-+        }
-+        name = sb.toString();
-+        name = name.replaceFirst("_", "");
++    private static final Map<String, String> deobfuscationMap = new HashMap<>();
 +
-+        if (flag && !deobfuscationMap.containsKey(name.toLowerCase()) && !ignored.contains(name)) {
-+            System.out.println("need to map " + clazz.getName() + " (" + name.toLowerCase() + ")");
++    static {
++        // TODO these kinda should be checked on each release, in case obfuscation changes
++        deobfuscationMap.put("abstract_skeleton_1", "abstract_skeleton_melee");
++    }
++
++    private static String getPathName(String name) {
++        String pathName = name.substring(name.lastIndexOf('.') + 1);
++        boolean needDeobfMap = false;
++
++        // inner classes
++        int firstInnerDelimiter = pathName.indexOf('$');
++        if (firstInnerDelimiter != -1) {
++            String innerClassName = pathName.substring(firstInnerDelimiter + 1);
++            for (String nestedClass : innerClassName.split("\\$")) {
++                if (NumberUtils.isDigits(nestedClass)) {
++                    needDeobfMap = true;
++                    break;
++                }
++            }
++            if (!needDeobfMap) {
++                pathName = innerClassName;
++            }
++            pathName = pathName.replace('$', '_');
++            // mapped, wooo!
++        }
++
++        pathName = pathName.replace("TargetGoal", "");
++        pathName = pathName.replace("Goal", "");
++        pathName = CaseFormat.UPPER_CAMEL.to(CaseFormat.LOWER_UNDERSCORE, pathName);
++
++        if (needDeobfMap && !deobfuscationMap.containsKey(pathName)) {
++            System.err.println("need to map " + name + " (" + pathName + ")");
 +        }
 +
 +        // did we rename this key?
-+        return deobfuscationMap.getOrDefault(name, name);
++        return deobfuscationMap.getOrDefault(pathName, pathName);
 +    }
 +
 +    public static EnumSet<GoalType> vanillaToPaper(Goal goal) {
@@ -322,20 +305,14 @@ index 0000000000000000000000000000000000000000..8117578ced94aa6bf01871f6526a3883
 +    }
 +
 +    public static GoalType vanillaToPaper(Goal.Flag type) {
-+        switch (type) {
-+            case MOVE:
-+                return GoalType.MOVE;
-+            case LOOK:
-+                return GoalType.LOOK;
-+            case JUMP:
-+                return GoalType.JUMP;
-+            case UNKNOWN_BEHAVIOR:
-+                return GoalType.UNKNOWN_BEHAVIOR;
-+            case TARGET:
-+                return GoalType.TARGET;
-+            default:
-+                throw new IllegalArgumentException("Unknown vanilla mob goal type " + type.name());
-+        }
++        return switch (type) {
++            case MOVE -> GoalType.MOVE;
++            case LOOK -> GoalType.LOOK;
++            case JUMP -> GoalType.JUMP;
++            case UNKNOWN_BEHAVIOR -> GoalType.UNKNOWN_BEHAVIOR;
++            case TARGET -> GoalType.TARGET;
++            default -> throw new IllegalArgumentException("Unknown vanilla mob goal type " + type.name());
++        };
 +    }
 +
 +    public static EnumSet<Goal.Flag> paperToVanilla(EnumSet<GoalType> types) {
@@ -347,55 +324,44 @@ index 0000000000000000000000000000000000000000..8117578ced94aa6bf01871f6526a3883
 +    }
 +
 +    public static Goal.Flag paperToVanilla(GoalType type) {
-+        switch (type) {
-+            case MOVE:
-+                return Goal.Flag.MOVE;
-+            case LOOK:
-+                return Goal.Flag.LOOK;
-+            case JUMP:
-+                return Goal.Flag.JUMP;
-+            case UNKNOWN_BEHAVIOR:
-+                return Goal.Flag.UNKNOWN_BEHAVIOR;
-+            case TARGET:
-+                return Goal.Flag.TARGET;
-+            default:
-+                throw new IllegalArgumentException("Unknown paper mob goal type " + type.name());
-+        }
++        return switch (type) {
++            case MOVE -> Goal.Flag.MOVE;
++            case LOOK -> Goal.Flag.LOOK;
++            case JUMP -> Goal.Flag.JUMP;
++            case UNKNOWN_BEHAVIOR -> Goal.Flag.UNKNOWN_BEHAVIOR;
++            case TARGET -> Goal.Flag.TARGET;
++            default -> throw new IllegalArgumentException("Unknown paper mob goal type " + type.name());
++        };
 +    }
 +
 +    public static <T extends Mob> GoalKey<T> getKey(Class<? extends Goal> goalClass) {
-+        String name = getUsableName(goalClass);
-+        if (ignored.contains(name)) {
-+            //noinspection unchecked
-+            return (GoalKey<T>) GoalKey.of(Mob.class, NamespacedKey.minecraft(name));
-+        }
++        String name = getPathName(goalClass.getName());
 +        return GoalKey.of(getEntity(goalClass), NamespacedKey.minecraft(name));
 +    }
 +
-+    public static <T extends Mob> Class<T> getEntity(Class<? extends Goal> goalClass) {
++    private static <T extends Mob> Class<T> getEntity(Class<? extends Goal> goalClass) {
 +        //noinspection unchecked
 +        return (Class<T>) entityClassCache.computeIfAbsent(goalClass, key -> {
 +            for (Constructor<?> ctor : key.getDeclaredConstructors()) {
-+                for (int i = 0; i < ctor.getParameterCount(); i++) {
-+                    Class<?> param = ctor.getParameterTypes()[i];
++                for (Class<?> param : ctor.getParameterTypes()) {
 +                    if (net.minecraft.world.entity.Mob.class.isAssignableFrom(param)) {
 +                        //noinspection unchecked
-+                        return toBukkitClass((Class<? extends net.minecraft.world.entity.Mob>) param);
++                        Class<? extends Mob> bukkitClass = toBukkitClass((Class<? extends net.minecraft.world.entity.Mob>) param);
++                        if (bukkitClass == null) {
++                            throw new RuntimeException("Can't figure out applicable bukkit entity for nms entity " + param); // maybe just return Mob?
++                        }
++                        return bukkitClass;
 +                    } else if (RangedAttackMob.class.isAssignableFrom(param)) {
 +                        return RangedEntity.class;
 +                    }
 +                }
 +            }
-+            throw new RuntimeException("Can't figure out applicable entity for mob goal " + goalClass); // maybe just return EntityInsentient?
++            throw new RuntimeException("Can't figure out applicable entity for mob goal " + goalClass); // maybe just return Mob?
 +        });
 +    }
 +
 +    public static Class<? extends Mob> toBukkitClass(Class<? extends net.minecraft.world.entity.Mob> nmsClass) {
-+        Class<? extends Mob> bukkitClass = bukkitMap.get(nmsClass);
-+        if (bukkitClass == null) {
-+            throw new RuntimeException("Can't figure out applicable bukkit entity for nms entity " + nmsClass); // maybe just return Mob?
-+        }
-+        return bukkitClass;
++        return bukkitMap.get(nmsClass);
 +    }
 +}
 diff --git a/src/main/java/com/destroystokyo/paper/entity/ai/PaperCustomGoal.java b/src/main/java/com/destroystokyo/paper/entity/ai/PaperCustomGoal.java
@@ -783,3 +749,46 @@ index 0a6b283aee63adb09cf1466fb18406f941466cd0..12b76fd9d3d5e8dcca31d7e82f6956e1
 +    }
      // Paper end
  }
+diff --git a/src/test/java/io/papermc/paper/entity/ai/MobGoalConverterTest.java b/src/test/java/io/papermc/paper/entity/ai/MobGoalConverterTest.java
+new file mode 100644
+index 0000000000000000000000000000000000000000..b020f795846d98f5464b390008be8815e892f9e8
+--- /dev/null
++++ b/src/test/java/io/papermc/paper/entity/ai/MobGoalConverterTest.java
+@@ -0,0 +1,37 @@
++package io.papermc.paper.entity.ai;
++
++import com.destroystokyo.paper.entity.ai.MobGoalHelper;
++import io.github.classgraph.ClassGraph;
++import io.github.classgraph.ScanResult;
++import net.minecraft.world.entity.Entity;
++import net.minecraft.world.entity.Mob;
++import org.junit.jupiter.api.Test;
++import java.util.ArrayList;
++import java.util.List;
++
++import static org.junit.jupiter.api.Assertions.assertFalse;
++import static org.junit.jupiter.api.Assertions.fail;
++
++public class MobGoalConverterTest {
++
++    @Test
++    public void testBukkitMap() {
++        List<Class<Mob>> classes;
++        try (ScanResult scanResult = new ClassGraph().enableAllInfo().whitelistPackages(Entity.class.getPackageName()).scan()) {
++            classes = scanResult.getSubclasses(Mob.class.getName()).loadClasses(Mob.class);
++        }
++        assertFalse(classes.isEmpty(), "There are supposed to be more than 0 mob classes!");
++
++        List<String> missingClasses = new ArrayList<>();
++        for (Class<Mob> nmsClass : classes) {
++            Class<? extends org.bukkit.entity.Mob> bukkitClass = MobGoalHelper.toBukkitClass(nmsClass);
++            if (bukkitClass == null) {
++                missingClasses.add(nmsClass.getCanonicalName());
++            }
++        }
++
++        if (!missingClasses.isEmpty()) {
++            fail("Missing some entity classes in the bukkit map (MobGoalHelper): " + String.join(", ", missingClasses));
++        }
++    }
++}
