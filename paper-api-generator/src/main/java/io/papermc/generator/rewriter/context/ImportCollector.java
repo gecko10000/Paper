@@ -12,10 +12,17 @@ public interface ImportCollector {
         public String getTypeName(final Class<?> clazz) {
             return clazz.getCanonicalName();
         }
+
+        @Override
+        public void consume(final String line) {
+
+        }
     };
 
     String getStaticAlias(String fqn);
 
     String getTypeName(Class<?> clazz);
+
+    void consume(String line);
 
 }

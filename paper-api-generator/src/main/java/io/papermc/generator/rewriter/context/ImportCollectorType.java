@@ -1,5 +1,6 @@
 package io.papermc.generator.rewriter.context;
 
+import io.papermc.generator.rewriter.ClassNamed;
 import io.papermc.generator.utils.ClassHelper;
 import org.jetbrains.annotations.VisibleForTesting;
 import java.util.HashMap;
@@ -15,9 +16,9 @@ public class ImportCollectorType implements ImportCollector {
     private final Set<String> globalImports = new HashSet<>();
     private final Map<String, String> staticImports = new HashMap<>(); // <fqn.alias:alias>
 
-    private final Class<?> rewriteClass;
+    private final ClassNamed rewriteClass;
 
-    public ImportCollectorType(Class<?> rewriteClass) {
+    public ImportCollectorType(ClassNamed rewriteClass) {
         this.rewriteClass = rewriteClass;
     }
 
@@ -46,9 +47,8 @@ public class ImportCollectorType implements ImportCollector {
 
         Class<?> rootClass = ClassHelper.getRootClass(clazz);
         final String typeName;
-        if (this.rewriteClass == clazz ||
-            this.imports.contains(rootClass.getName()) ||
-            clazz.getPackageName().equals(this.rewriteClass.getPackageName()) || // same package don't need fqn too
+        if (this.imports.contains(rootClass.getName()) ||
+            clazz.getPackageName().equals(this.rewriteClass.packageName()) || // same package don't need fqn too (include self class too)
             this.globalImports.contains(clazz.getPackageName())) { // star import
             typeName = ClassHelper.retrieveFullNestedName(clazz);
         } else {
@@ -67,6 +67,7 @@ public class ImportCollectorType implements ImportCollector {
         }
     }
 
+    @Override
     public void consume(String line) {
         for (String rawImport : line.split(";")) {
             String importLine = rawImport.trim();

@@ -64,7 +64,7 @@ public class SearchReplaceRewriter implements SourceRewriter {
         return Set.of(this.pattern);
     }
 
-    protected void searchAndReplace(BufferedReader reader, StringBuilder content) throws IOException {
+    private void searchAndReplace(BufferedReader reader, StringBuilder content) throws IOException {
         Set<String> patterns = this.getPatterns();
         Preconditions.checkState(!patterns.isEmpty());
         this.beginSearch();
@@ -72,15 +72,12 @@ public class SearchReplaceRewriter implements SourceRewriter {
         Set<String> foundPatterns = new HashSet<>();
         StringBuilder strippedContent = null;
 
-        final ImportCollector importCollector;
+        final ImportCollector importCollector = new ImportCollectorType(this.rewriteClass.root());
         String rootClassDeclaration = null;
 
         if (this.rewriteClass.knownClass() != null) {
             Class<?> rootClass = ClassHelper.getRootClass(this.rewriteClass.knownClass());
-            importCollector = new ImportCollectorType(rootClass);
-            rootClassDeclaration = "%s %s".formatted(ClassHelper.getDeclaredType(rootClass), this.rewriteClass.rootClassSimpleName());
-        } else {
-            importCollector = ImportCollector.NO_OP; // for now skip the import collector for server gen
+            rootClassDeclaration = "%s %s".formatted(ClassHelper.getDeclaredType(rootClass), this.rewriteClass.root().simpleName()); // this should be improved to take in account server gen and comments
         }
 
         String indent = Formatting.incrementalIndent(INDENT_UNIT, this.rewriteClass);
@@ -96,9 +93,9 @@ public class SearchReplaceRewriter implements SourceRewriter {
             // collect import to avoid fqn when not needed
             if (importCollector != ImportCollector.NO_OP && !inBody) {
                 if (line.startsWith("import ") && line.endsWith(";")) {
-                    ((ImportCollectorType) importCollector).consume(line);
+                    importCollector.consume(line);
                 }
-                if (line.contains(rootClassDeclaration)) { // might fail on comments but good enough
+                if (rootClassDeclaration != null && line.contains(rootClassDeclaration)) { // might fail on comments but good enough
                     inBody = true;
                 }
             }
@@ -165,12 +162,16 @@ public class SearchReplaceRewriter implements SourceRewriter {
         }
     }
 
+    protected String getFilePath() {
+        return "%s/%s.java".formatted(
+            this.rewriteClass.packageName().replace('.', '/'),
+            this.rewriteClass.root().simpleName()
+        );
+    }
+
     @Override
     public void writeToFile(Path parent) throws IOException {
-        String filePath = "%s/%s.java".formatted(
-            this.rewriteClass.packageName().replace('.', '/'),
-            this.rewriteClass.rootClassSimpleName()
-        );
+        String filePath = this.getFilePath();
 
         Path path = parent.resolve(filePath);
         StringBuilder content = new StringBuilder();

@@ -3,8 +3,6 @@ package io.papermc.generator.types.goal;
 import com.destroystokyo.paper.entity.RangedEntity;
 import com.destroystokyo.paper.entity.ai.GoalKey;
 import com.google.common.base.CaseFormat;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +11,6 @@ import net.minecraft.world.entity.FlyingMob;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ambient.AmbientCreature;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.animal.AbstractGolem;
@@ -129,7 +126,7 @@ public final class MobGoalNames {
     private static final Map<Class<? extends Goal>, Class<? extends Mob>> entityClassCache = new HashMap<>();
     private static final Map<Class<? extends net.minecraft.world.entity.Mob>, Class<? extends Mob>> bukkitMap = new HashMap<>();
 
-    static { // todo move serverside? via CraftEntityTypes
+    static {
         //<editor-fold defaultstate="collapsed" desc="bukkitMap Entities">
         bukkitMap.put(net.minecraft.world.entity.Mob.class, Mob.class);
         bukkitMap.put(net.minecraft.world.entity.AgeableMob.class, Ageable.class);

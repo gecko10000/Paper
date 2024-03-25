@@ -59,8 +59,8 @@ import org.bukkit.entity.Vex;
 import org.bukkit.entity.Vindicator;
 import org.bukkit.entity.WanderingTrader;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
-import org.jetbrains.annotations.Nullable;
 
 import static javax.lang.model.element.Modifier.FINAL;
 import static javax.lang.model.element.Modifier.PUBLIC;

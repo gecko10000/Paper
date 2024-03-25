@@ -17,7 +17,6 @@ import io.papermc.generator.utils.Javadocs;
 import io.papermc.generator.utils.TagRegistry;
 import io.papermc.paper.tag.EntityTags;
 import java.util.Collection;
-import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import net.minecraft.core.Registry;

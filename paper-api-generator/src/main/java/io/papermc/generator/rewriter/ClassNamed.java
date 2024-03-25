@@ -25,20 +25,21 @@ public record ClassNamed(String packageName, String simpleName, String dottedNes
         return new ClassNamed(packageName, simpleName, nestedName, null);
     }
 
-    public String rootClassSimpleName() {
+    public ClassNamed root() {
         if (this.knownClass != null) {
-            return ClassHelper.getRootClass(this.knownClass).getSimpleName();
+            Class<?> rootClass = ClassHelper.getRootClass(this.knownClass);
+            if (rootClass == this.knownClass) {
+                return this;
+            }
+            return new ClassNamed(rootClass);
         }
 
         int dotIndex = this.dottedNestedName.indexOf('.');
         if (dotIndex != -1) {
-            return this.dottedNestedName.substring(0, dotIndex);
+            String name = this.dottedNestedName.substring(0, dotIndex);
+            return new ClassNamed(this.packageName, name, name, null);
         }
-        return this.dottedNestedName;
-    }
-
-    public String rootClassCanonicalName() {
-        return this.packageName + '.' + this.rootClassSimpleName();
+        return this;
     }
 
     public String canonicalName() {

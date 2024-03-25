@@ -55,7 +55,7 @@ public class CraftWall extends CraftBlockData implements Wall {
     public Wall.Height getHeight(final BlockFace blockFace) {
         Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
         EnumProperty<WallSide> property = PROPERTY_BY_FACE.get(blockFace);
-        Preconditions.checkArgument(property != null, "Invalid blockFace, only %s are allowed!".formatted(PROPERTY_BY_FACE.keySet().stream().map(Enum::name).collect(Collectors.joining(", "))));
+        Preconditions.checkArgument(property != null, "Invalid blockFace, only %s are allowed!", PROPERTY_BY_FACE.keySet().stream().map(Enum::name).collect(Collectors.joining(", ")));
         return this.get(property, Wall.Height.class);
     }
 
@@ -64,7 +64,7 @@ public class CraftWall extends CraftBlockData implements Wall {
         Preconditions.checkArgument(blockFace != null, "blockFace cannot be null!");
         Preconditions.checkArgument(height != null, "height cannot be null!");
         EnumProperty<WallSide> property = PROPERTY_BY_FACE.get(blockFace);
-        Preconditions.checkArgument(property != null, "Invalid blockFace, only %s are allowed!".formatted(PROPERTY_BY_FACE.keySet().stream().map(Enum::name).collect(Collectors.joining(", "))));
+        Preconditions.checkArgument(property != null, "Invalid blockFace, only %s are allowed!", PROPERTY_BY_FACE.keySet().stream().map(Enum::name).collect(Collectors.joining(", ")));
         this.set(property, height);
     }
 }
