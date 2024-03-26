@@ -18,10 +18,10 @@ index e9cda97679ed18156baf009926d6f210093112bd..7cbfd129efcc2e971b75aaa272dee79a
      testImplementation("org.mockito:mockito-core:5.11.0")
 diff --git a/src/main/java/com/destroystokyo/paper/entity/ai/MobGoalHelper.java b/src/main/java/com/destroystokyo/paper/entity/ai/MobGoalHelper.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..dfd77a09fd23acabec3ba40f23f01484e5bec84f
+index 0000000000000000000000000000000000000000..3bbd3ffa759192392fa5f8e24ebbf1345eb83b49
 --- /dev/null
 +++ b/src/main/java/com/destroystokyo/paper/entity/ai/MobGoalHelper.java
-@@ -0,0 +1,342 @@
+@@ -0,0 +1,343 @@
 +package com.destroystokyo.paper.entity.ai;
 +
 +import com.destroystokyo.paper.entity.RangedEntity;
@@ -30,6 +30,7 @@ index 0000000000000000000000000000000000000000..dfd77a09fd23acabec3ba40f23f01484
 +import java.util.EnumSet;
 +import java.util.HashMap;
 +import java.util.Map;
++import io.papermc.paper.util.ObfHelper;
 +import net.minecraft.world.entity.FlyingMob;
 +import net.minecraft.world.entity.PathfinderMob;
 +import net.minecraft.world.entity.TamableAnimal;
@@ -335,7 +336,7 @@ index 0000000000000000000000000000000000000000..dfd77a09fd23acabec3ba40f23f01484
 +    }
 +
 +    public static <T extends Mob> GoalKey<T> getKey(Class<? extends Goal> goalClass) {
-+        String name = getPathName(goalClass.getName());
++        String name = getPathName(ObfHelper.INSTANCE.deobfClassName(goalClass.getName()));
 +        return GoalKey.of(getEntity(goalClass), NamespacedKey.minecraft(name));
 +    }
 +
