@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.state.properties.Property;
 import org.bukkit.Note;
 
 public class NoteConverter implements Converter<Integer, Note> {
+
     @Override
     public Property<Integer> getProperty() {
         return BlockStateProperties.NOTE;

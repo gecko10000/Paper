@@ -47,7 +47,7 @@ public class OldGeneratedCodeTest {
             }
 
             Path path = Path.of(container, srt.getFilePath());
-            if (!Files.exists(path)) {
+            if (Files.notExists(path)) { // todo remove after the repo change
                 continue;
             }
             try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {

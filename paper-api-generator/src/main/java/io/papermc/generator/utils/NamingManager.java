@@ -2,7 +2,6 @@ package io.papermc.generator.utils;
 
 import com.google.common.base.CaseFormat;
 import java.util.Optional;
-import java.util.Set;
 import java.util.function.Predicate;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;

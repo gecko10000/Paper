@@ -36,27 +36,25 @@ public class ImportCollectorType implements ImportCollector {
         this.staticImports.put(fqn, fqn.substring(fqn.lastIndexOf('.') + 1));
     }
 
+    @Override
     public String getStaticAlias(String fqn) {
         return this.staticImports.getOrDefault(fqn, fqn);
     }
 
+    @Override
     public String getTypeName(Class<?> clazz) {
-        if (this.typeCache.containsKey(clazz)) {
-            return this.typeCache.get(clazz);
-        }
-
-        Class<?> rootClass = ClassHelper.getRootClass(clazz);
-        final String typeName;
-        if (this.imports.contains(rootClass.getName()) ||
-            clazz.getPackageName().equals(this.rewriteClass.packageName()) || // same package don't need fqn too (include self class too)
-            this.globalImports.contains(clazz.getPackageName())) { // star import
-            typeName = ClassHelper.retrieveFullNestedName(clazz);
-        } else {
-            typeName = clazz.getCanonicalName();
-        }
-
-        this.typeCache.put(clazz, typeName);
-        return typeName;
+        return this.typeCache.computeIfAbsent(clazz, type -> {
+            Class<?> rootClass = ClassHelper.getRootClass(type);
+            final String typeName;
+            if (this.imports.contains(rootClass.getName()) ||
+                type.getPackageName().equals(this.rewriteClass.packageName()) || // same package don't need fqn too (include self class too)
+                this.globalImports.contains(type.getPackageName())) { // star import
+                typeName = ClassHelper.retrieveFullNestedName(type);
+            } else {
+                typeName = type.getCanonicalName();
+            }
+            return typeName;
+        });
     }
 
     private void addImportLine(String importLine) {
@@ -71,10 +69,9 @@ public class ImportCollectorType implements ImportCollector {
     public void consume(String line) {
         for (String rawImport : line.split(";")) {
             String importLine = rawImport.trim();
-            if (importLine.isEmpty()) {
-                continue;
+            if (importLine.startsWith("import ")) {
+                addImportLine(importLine);
             }
-            addImportLine(importLine);
         }
     }
 }

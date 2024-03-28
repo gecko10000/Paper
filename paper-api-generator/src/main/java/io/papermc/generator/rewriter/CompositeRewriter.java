@@ -45,13 +45,13 @@ public class CompositeRewriter extends SearchReplaceRewriter {
     public static CompositeRewriter bind(List<SearchReplaceRewriter> rewriters) {
         Preconditions.checkArgument(!rewriters.isEmpty(), "Rewriter list cannot be empty!");
         ClassNamed rewriteClass = rewriters.get(0).rewriteClass;
-        String rootClassName = rewriteClass.root().canonicalName();
+        String rootClassName = rewriteClass.root().simpleName();
 
         for (SearchReplaceRewriter rewriter : rewriters) {
             Preconditions.checkState(!(rewriter instanceof CompositeRewriter), "Nested composite rewriters are not allowed!");
             Preconditions.checkArgument(rewriter.pattern != null, "Rewriter pattern cannot be null!");
             Preconditions.checkState(rewriteClass.packageName().equals(rewriter.rewriteClass.packageName()) &&
-                rootClassName.equals(rewriter.rewriteClass.root().canonicalName()), "Composite rewriter only works for one file!");
+                rootClassName.equals(rewriter.rewriteClass.root().simpleName()), "Composite rewriter only works for one file!");
         }
 
         return new CompositeRewriter(rewriteClass, rewriters);

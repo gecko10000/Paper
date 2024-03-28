@@ -9,7 +9,6 @@ import io.papermc.generator.utils.NamingManager;
 import java.util.Set;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
-import net.minecraft.world.level.block.state.properties.Property;
 
 public class EnumValuesAppender<T extends Enum<T> & StringRepresentable, A extends Enum<A>> implements PropertyAppender<T, A> {
 

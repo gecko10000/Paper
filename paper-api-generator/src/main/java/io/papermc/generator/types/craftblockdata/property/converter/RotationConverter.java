@@ -11,6 +11,9 @@ import org.bukkit.util.Vector;
 
 public class RotationConverter implements Converter<Integer, BlockFace> {
 
+    private static final String DIRECTION_VAR = "dir";
+    private static final String ANGLE_VAR = "angle";
+
     @Override
     public Property<Integer> getProperty() {
         return BlockStateProperties.ROTATION_16;
@@ -23,14 +26,14 @@ public class RotationConverter implements Converter<Integer, BlockFace> {
 
     @Override
     public void convertSetter(final MethodSpec.Builder method, final FieldSpec field, final ParameterSpec parameter) {
-        method.addStatement("$T dir = $N.getDirection()", Vector.class, parameter);
-        method.addStatement("$1T angle = ($1T) -$2T.toDegrees($2T.atan2(dir.getX(), dir.getZ()))", Float.TYPE, Math.class);
-        method.addStatement(this.rawSetExprent().formatted("$N"), field, RotationSegment.class);
+        method.addStatement("$T $L = $N.getDirection()", Vector.class, DIRECTION_VAR, parameter);
+        method.addStatement("$1T $2L = ($1T) -$3T.toDegrees($3T.atan2($4L.getX(), $4L.getZ()))", Float.TYPE, ANGLE_VAR, Math.class, DIRECTION_VAR);
+        method.addStatement(this.rawSetExprent().formatted("$N", ANGLE_VAR), field, RotationSegment.class);
     }
 
     @Override
     public String rawSetExprent() {
-        return "this.set(%s, $T.convertToSegment(angle))";
+        return "this.set(%s, $T.convertToSegment(%s))";
     }
 
     @Override

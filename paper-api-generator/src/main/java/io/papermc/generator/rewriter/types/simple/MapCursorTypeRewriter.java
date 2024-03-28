@@ -1,16 +1,9 @@
 package io.papermc.generator.rewriter.types.simple;
 
 import io.papermc.generator.rewriter.types.EnumCloneRewriter;
-import io.papermc.generator.rewriter.types.EnumRegistryRewriter;
 import java.util.Map;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.saveddata.maps.MapDecoration;
-import org.bukkit.block.banner.PatternType;
 import org.bukkit.map.MapCursor;
-
-import static io.papermc.generator.utils.Formatting.quoted;
 
 public class MapCursorTypeRewriter extends EnumCloneRewriter<MapDecoration.Type, MapCursor.Type> {
 

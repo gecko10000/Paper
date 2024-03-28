@@ -1,7 +1,6 @@
 package io.papermc.generator.types;
 
 import com.squareup.javapoet.TypeSpec;
-import io.papermc.generator.types.SimpleGenerator;
 import io.papermc.generator.utils.Annotations;
 import javax.lang.model.element.Modifier;
 import org.checkerframework.checker.nullness.qual.NonNull;

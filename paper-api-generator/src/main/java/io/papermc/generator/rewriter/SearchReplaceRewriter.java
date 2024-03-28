@@ -187,7 +187,7 @@ public class SearchReplaceRewriter implements SourceRewriter {
             createdPath = Main.generatedServerPath.resolve(filePath);
         }
         Files.createDirectories(createdPath.getParent());
-        Files.writeString(createdPath, content.toString(), StandardCharsets.UTF_8);
+        Files.writeString(createdPath, content, StandardCharsets.UTF_8);
     }
 
     private void appendGeneratedComment(StringBuilder builder, String indent) {
