@@ -2,7 +2,7 @@ package io.papermc.generator.rewriter.types;
 
 import com.google.common.base.Suppliers;
 import io.papermc.generator.Main;
-import io.papermc.generator.rewriter.SearchMetadata;
+import io.papermc.generator.rewriter.replace.SearchMetadata;
 import io.papermc.generator.rewriter.utils.Annotations;
 import io.papermc.generator.rewriter.ClassNamed;
 import io.papermc.generator.utils.Formatting;

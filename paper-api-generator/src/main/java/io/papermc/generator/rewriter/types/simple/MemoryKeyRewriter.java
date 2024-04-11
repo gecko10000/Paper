@@ -2,8 +2,8 @@ package io.papermc.generator.rewriter.types.simple;
 
 import com.google.common.base.Suppliers;
 import com.google.gson.internal.Primitives;
-import io.papermc.generator.rewriter.SearchMetadata;
-import io.papermc.generator.rewriter.SearchReplaceRewriter;
+import io.papermc.generator.rewriter.replace.SearchMetadata;
+import io.papermc.generator.rewriter.replace.SearchReplaceRewriter;
 import io.papermc.generator.rewriter.utils.Annotations;
 import io.papermc.generator.utils.ClassHelper;
 import io.papermc.generator.utils.Formatting;

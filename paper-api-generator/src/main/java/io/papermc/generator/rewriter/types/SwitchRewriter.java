@@ -1,8 +1,8 @@
 package io.papermc.generator.rewriter.types;
 
 import com.google.common.collect.Multimap;
-import io.papermc.generator.rewriter.SearchMetadata;
-import io.papermc.generator.rewriter.SearchReplaceRewriter;
+import io.papermc.generator.rewriter.replace.SearchMetadata;
+import io.papermc.generator.rewriter.replace.SearchReplaceRewriter;
 import io.papermc.generator.rewriter.ClassNamed;
 
 import java.util.Collection;
@@ -11,12 +11,12 @@ public abstract class SwitchRewriter<T> extends SearchReplaceRewriter {
 
     protected Return<T> defaultValue;
 
-    protected SwitchRewriter(final Class<?> rewriteClass, final String pattern, final boolean equalsSize) {
-        super(rewriteClass, pattern, equalsSize);
+    protected SwitchRewriter(final Class<?> rewriteClass, final String pattern, final boolean exactReplacement) {
+        super(rewriteClass, pattern, exactReplacement);
     }
 
-    protected SwitchRewriter(final ClassNamed rewriteClass, final String pattern, final boolean equalsSize) {
-        super(rewriteClass, pattern, equalsSize);
+    protected SwitchRewriter(final ClassNamed rewriteClass, final String pattern, final boolean exactReplacement) {
+        super(rewriteClass, pattern, exactReplacement);
     }
 
     protected record Return<T>(T object, String code) {}

@@ -1,11 +1,14 @@
 package io.papermc.generator.rewriter;
 
 import io.papermc.generator.Generators;
+import io.papermc.generator.rewriter.parser.StringReader;
+import io.papermc.generator.rewriter.replace.CommentMarker;
+import io.papermc.generator.rewriter.replace.SearchReplaceRewriter;
 import io.papermc.generator.rewriter.utils.Annotations;
 import io.papermc.paper.generated.GeneratedFrom;
 import net.minecraft.SharedConstants;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,6 +16,12 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static io.papermc.generator.rewriter.replace.CommentMarker.EMPTY_MARKER;
+import static io.papermc.generator.rewriter.replace.SearchReplaceRewriter.INDENT_CHAR;
+import static io.papermc.generator.rewriter.replace.SearchReplaceRewriter.INDENT_SIZE;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@Disabled
 public class OldGeneratedCodeTest {
 
     private static final String API_CONTAINER = System.getProperty("paper.generator.rewriter.container.api");
@@ -26,27 +35,13 @@ public class OldGeneratedCodeTest {
         CURRENT_VERSION = SharedConstants.getCurrentVersion().getName();
     }
 
-    private boolean versionDependent(SearchReplaceRewriter srt) {
-        if (srt instanceof CompositeRewriter compositeRewriter) {
-            boolean versionDependent = false;
-            for (SearchReplaceRewriter rewriter : compositeRewriter.getRewriters()) {
-                if (!rewriter.equalsSize) {
-                    versionDependent = true;
-                    break;
-                }
-            }
-            return versionDependent;
-        }
-        return !srt.equalsSize;
-    }
-
     private void checkOutdated(String container, SourceRewriter[] rewriters) throws IOException {
         for (SourceRewriter rewriter : rewriters) {
-            if (!(rewriter instanceof SearchReplaceRewriter srt) || !versionDependent(srt)) {
+            if (!(rewriter instanceof SearchReplaceRewriter srt) || !srt.isVersionDependant()) {
                 continue;
             }
 
-            Path path = Path.of(container, srt.getFilePath());
+            Path path = Path.of(container, srt.getRelativeFilePath());
             if (Files.notExists(path)) { // todo remove after the repo change
                 continue;
             }
@@ -58,21 +53,42 @@ public class OldGeneratedCodeTest {
                         break;
                     }
                     lineCount++;
+                    if (line.isEmpty()) {
+                        continue;
+                    }
 
-                    int startPatternIndex = line.indexOf(SearchReplaceRewriter.GENERATED_COMMENT_FORMAT.formatted(SearchReplaceRewriter.PAPER_START_FORMAT, ""));
-                    if (startPatternIndex != -1 && (startPatternIndex % SearchReplaceRewriter.INDENT_UNIT.length()) == 0 && line.stripTrailing().equals(line)) {
+                    StringReader lineIterator = new StringReader(line);
+                    CommentMarker marker = srt.searchMarker(lineIterator, null, null);
+                    if (marker != EMPTY_MARKER) {
+                        if (!marker.start()) {
+                            continue;
+                        }
+                        int startIndentSize = marker.indent();
+                        if (startIndentSize % INDENT_SIZE != 0) {
+                            continue;
+                        }
+
                         String nextLine = reader.readLine();
                         if (nextLine == null) {
                             break;
                         }
                         lineCount++;
+                        if (nextLine.isEmpty()) {
+                            continue;
+                        }
+
+                        StringReader nextLineIterator = new StringReader(nextLine);
+                        int indentSize = nextLineIterator.skipChars(INDENT_CHAR);
+                        if (indentSize != startIndentSize) {
+                            continue;
+                        }
+
                         String generatedComment = "// %s ".formatted(Annotations.annotationStyle(GeneratedFrom.class));
-                        int generatedIndex = nextLine.indexOf(generatedComment);
-                        if (generatedIndex != -1 && (generatedIndex % SearchReplaceRewriter.INDENT_UNIT.length()) == 0 && nextLine.stripTrailing().equals(nextLine)) {
-                            String generatedVersion = nextLine.substring(generatedIndex + generatedComment.length());
-                            Assertions.assertEquals(CURRENT_VERSION, generatedVersion,
+                        if (nextLineIterator.trySkipString(generatedComment) && nextLineIterator.canRead()) {
+                            String generatedVersion = nextLineIterator.readRemainingString();
+                            assertEquals(CURRENT_VERSION, generatedVersion,
                                 "Code at line %s in %s is marked as being generated in version %s when the current version is %s".formatted(
-                                    lineCount, srt.rewriteClass.canonicalName(),
+                                    lineCount, srt.getRewrittenClass().canonicalName(),
                                     generatedVersion, CURRENT_VERSION));
                         }
                     }

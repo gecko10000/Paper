@@ -1,4 +1,4 @@
-package io.papermc.generator.rewriter;
+package io.papermc.generator.rewriter.replace;
 
 import io.papermc.generator.rewriter.context.ImportCollector;
 

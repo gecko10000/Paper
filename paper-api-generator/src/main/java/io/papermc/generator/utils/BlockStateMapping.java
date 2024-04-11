@@ -319,7 +319,11 @@ public final class BlockStateMapping {
             return null;
         }
 
-        BlockData data = MAPPING.get(block);
+        return getBestSuitedApiClass(MAPPING.get(block));
+    }
+
+    @Nullable
+    public static Class<? extends org.bukkit.block.data.BlockData> getBestSuitedApiClass(BlockData data) {
         if (data.api() != null) {
             return data.api();
         }

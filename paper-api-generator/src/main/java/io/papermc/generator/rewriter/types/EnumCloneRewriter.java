@@ -7,12 +7,12 @@ public class EnumCloneRewriter<T extends Enum<T>, A extends Enum<A>> extends Enu
 
     private final Class<T> basedOn;
 
-    public EnumCloneRewriter(final Class<A> rewriteClass, final Class<T> basedOn, final String pattern, boolean equalsSize) {
-        this(new ClassNamed(rewriteClass), basedOn, pattern, equalsSize);
+    public EnumCloneRewriter(final Class<A> rewriteClass, final Class<T> basedOn, final String pattern, boolean exactReplacement) {
+        this(new ClassNamed(rewriteClass), basedOn, pattern, exactReplacement);
     }
 
-    public EnumCloneRewriter(final ClassNamed rewriteClass, final Class<T> basedOn, final String pattern, boolean equalsSize) {
-        super(rewriteClass, pattern, equalsSize);
+    public EnumCloneRewriter(final ClassNamed rewriteClass, final Class<T> basedOn, final String pattern, boolean exactReplacement) {
+        super(rewriteClass, pattern, exactReplacement);
         this.basedOn = basedOn;
     }
 

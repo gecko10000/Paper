@@ -1,0 +1,6 @@
+imports: {
+  "(_).SamePackageClass": "SamePackageClass",
+  "(_).one.OneDepthClass": "OneDepthClass",
+  "(_).one.OneDepthClass$NonStaticClass": "OneDepthClass.NonStaticClass",
+  "(_).one.OneDepthClass$StaticClass": "OneDepthClass.StaticClass"
+}

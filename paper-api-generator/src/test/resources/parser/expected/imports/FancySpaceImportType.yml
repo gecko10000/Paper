@@ -1,0 +1,12 @@
+imports:
+  single:
+    - "org.bukkit.NamespacedKey"
+    - "org.bukkit.Statistic.Type"
+  global:
+    - "org.bukkit"
+
+staticImports:
+  single:
+    - "org.bukkit.Statistic.ANIMALS_BRED"
+  global:
+    - "org.bukkit.Material"

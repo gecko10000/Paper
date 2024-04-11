@@ -1,7 +1,7 @@
 package io.papermc.generator.rewriter.types;
 
-import io.papermc.generator.rewriter.SearchMetadata;
-import io.papermc.generator.rewriter.SearchReplaceRewriter;
+import io.papermc.generator.rewriter.replace.SearchMetadata;
+import io.papermc.generator.rewriter.replace.SearchReplaceRewriter;
 import io.papermc.generator.rewriter.ClassNamed;
 import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -12,12 +12,12 @@ public abstract class EnumRewriter<T, A extends Enum<A>> extends SearchReplaceRe
     @MonotonicNonNull
     private Iterator<T> values;
 
-    protected EnumRewriter(final Class<A> rewriteClass, final String pattern, final boolean equalsSize) {
-        super(rewriteClass, pattern, equalsSize);
+    protected EnumRewriter(final Class<A> rewriteClass, final String pattern, final boolean exactReplacement) {
+        super(rewriteClass, pattern, exactReplacement);
     }
 
-    protected EnumRewriter(final ClassNamed rewriteClass, final String pattern, final boolean equalsSize) {
-        super(rewriteClass, pattern, equalsSize);
+    protected EnumRewriter(final ClassNamed rewriteClass, final String pattern, final boolean exactReplacement) {
+        super(rewriteClass, pattern, exactReplacement);
     }
 
     protected abstract Iterable<T> getValues();

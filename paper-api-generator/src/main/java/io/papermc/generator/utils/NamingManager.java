@@ -3,6 +3,8 @@ package io.papermc.generator.utils;
 import com.google.common.base.CaseFormat;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
+import org.checkerframework.checker.nullness.qual.MonotonicNonNull;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 import javax.lang.model.SourceVersion;
@@ -80,6 +82,17 @@ public class NamingManager {
             return "_" + name;
         }
         return name;
+    }
+
+    public static final Pattern FULLY_QUALIFIED_NAME_SEPARATOR = Pattern.compile(".", Pattern.LITERAL);
+
+    public static boolean hasIllegalKeyword(String typeName) {
+        for (String part : FULLY_QUALIFIED_NAME_SEPARATOR.split(typeName)) {
+            if (SourceVersion.isKeyword(part)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static class NameWrapper {

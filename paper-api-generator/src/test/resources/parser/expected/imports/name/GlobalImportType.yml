@@ -1,0 +1,7 @@
+imports: {
+  "org.bukkit.Material": "Material",
+}
+
+staticImports: {
+  "org.bukkit.Statistic.ARMOR_CLEANED": "ARMOR_CLEANED"
+}

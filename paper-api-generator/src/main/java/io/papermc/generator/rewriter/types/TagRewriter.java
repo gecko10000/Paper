@@ -1,8 +1,8 @@
 package io.papermc.generator.rewriter.types;
 
 import io.papermc.generator.Main;
-import io.papermc.generator.rewriter.SearchMetadata;
-import io.papermc.generator.rewriter.SearchReplaceRewriter;
+import io.papermc.generator.rewriter.replace.SearchMetadata;
+import io.papermc.generator.rewriter.replace.SearchReplaceRewriter;
 import io.papermc.generator.rewriter.utils.Annotations;
 import io.papermc.generator.utils.Formatting;
 import java.util.Collection;

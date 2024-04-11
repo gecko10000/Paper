@@ -13,8 +13,8 @@ import java.util.Map;
 
 public abstract class DataPropertyWriterBase<T extends Property<?>> implements DataPropertyMaker {
 
-    protected final Class<? extends Block> blockClass;
     protected final Collection<T> properties;
+    protected final Class<? extends Block> blockClass;
 
     protected DataPropertyWriterBase(Collection<T> properties, Class<? extends Block> blockClass) {
         this.properties = properties;
@@ -42,6 +42,7 @@ public abstract class DataPropertyWriterBase<T extends Property<?>> implements D
     }
 
     protected void createSyntheticMap(CodeBlock.Builder code, Class<?> indexClass, Map<String, String> fieldNames) {
+        // assume indexClass is an enum with its values matching the property names
         code.add("$T.of(\n", Map.class).indent();
         Iterator<T> it = this.properties.iterator();
         while (it.hasNext()) {

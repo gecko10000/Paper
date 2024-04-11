@@ -1,6 +1,6 @@
 package io.papermc.generator.rewriter.utils;
 
-import io.papermc.generator.rewriter.SearchMetadata;
+import io.papermc.generator.rewriter.replace.SearchMetadata;
 import io.papermc.generator.rewriter.context.ImportCollector;
 import io.papermc.generator.utils.ClassHelper;
 import io.papermc.generator.utils.Formatting;
@@ -14,7 +14,7 @@ import static io.papermc.generator.utils.Formatting.quoted;
 public final class Annotations {
 
     public static String annotation(Class<? extends Annotation> clazz, ImportCollector collector) {
-        return "@%s".formatted(collector.getTypeName(clazz));
+        return "@%s".formatted(collector.getShortName(clazz));
     }
 
     public static String annotationStyle(Class<? extends Annotation> clazz) {

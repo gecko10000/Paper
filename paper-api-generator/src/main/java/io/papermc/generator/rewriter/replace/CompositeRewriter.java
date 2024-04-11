@@ -1,6 +1,7 @@
-package io.papermc.generator.rewriter;
+package io.papermc.generator.rewriter.replace;
 
 import com.google.common.base.Preconditions;
+import io.papermc.generator.rewriter.ClassNamed;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -25,12 +26,22 @@ public class CompositeRewriter extends SearchReplaceRewriter {
     }
 
     @Override
+    public boolean isVersionDependant() {
+        for (SearchReplaceRewriter rewriter : this.getRewriters()) {
+            if (rewriter.isVersionDependant()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     protected SearchReplaceRewriter getRewriterFor(String pattern) {
         return this.rewriterByPattern.get(pattern);
     }
 
     @Override
-    protected Set<String> getPatterns() {
+    public Set<String> getPatterns() {
         return this.rewriterByPattern.keySet();
     }
 

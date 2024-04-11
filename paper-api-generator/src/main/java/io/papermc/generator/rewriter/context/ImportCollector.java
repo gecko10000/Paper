@@ -1,28 +1,42 @@
 package io.papermc.generator.rewriter.context;
 
+import io.papermc.generator.rewriter.ClassNamed;
+
 public interface ImportCollector {
 
     ImportCollector NO_OP = new ImportCollector() {
         @Override
-        public String getStaticAlias(final String fqn) {
-            return fqn;
+        public void addImport(final String typeName) {
+
         }
 
         @Override
-        public String getTypeName(final Class<?> clazz) {
-            return clazz.getCanonicalName();
+        public void addStaticImport(final String typeName) {
+
         }
 
         @Override
-        public void consume(final String line) {
-
+        public String getStaticMemberShortName(final String fullName) {
+            return fullName;
         }
+
+        @Override
+        public String getShortName(final ClassNamed type) {
+            return type.canonicalName();
+        }
+
     };
 
-    String getStaticAlias(String fqn);
+    void addImport(String typeName);
 
-    String getTypeName(Class<?> clazz);
+    void addStaticImport(String typeName);
 
-    void consume(String line);
+    String getStaticMemberShortName(String fullName);
+
+    default String getShortName(Class<?> type) {
+        return this.getShortName(new ClassNamed(type));
+    }
+
+    String getShortName(ClassNamed type);
 
 }

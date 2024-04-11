@@ -1,7 +1,7 @@
 package io.papermc.generator.rewriter.types.simple;
 
-import io.papermc.generator.rewriter.SearchMetadata;
-import io.papermc.generator.rewriter.SearchReplaceRewriter;
+import io.papermc.generator.rewriter.replace.SearchMetadata;
+import io.papermc.generator.rewriter.replace.SearchReplaceRewriter;
 import net.minecraft.world.level.material.MapColor;
 import org.bukkit.map.MapPalette;
 

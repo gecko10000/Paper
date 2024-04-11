@@ -1,0 +1,5 @@
+imports: {
+  "(_).SelfInnerClassImportType$A": "A",
+  "(_).SelfInnerClassImportType$A$B": "B",
+  "(_).SelfInnerClassImportType$A$B$C": "C",
+}

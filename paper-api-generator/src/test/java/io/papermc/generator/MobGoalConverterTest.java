@@ -16,10 +16,11 @@ public class MobGoalConverterTest {
 
     @Test
     public void testBukkitMap() {
-        List<Class<Mob>> classes;
+        final List<Class<Mob>> classes;
         try (ScanResult scanResult = new ClassGraph().enableAllInfo().whitelistPackages(Entity.class.getPackageName()).scan()) {
             classes = scanResult.getSubclasses(Mob.class.getName()).loadClasses(Mob.class);
         }
+
         assertFalse(classes.isEmpty(), "There are supposed to be more than 0 mob classes!");
 
         List<String> missingClasses = new ArrayList<>();

@@ -3,7 +3,7 @@ package io.papermc.generator.rewriter.types.simple;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.MultimapBuilder;
 import com.google.common.collect.Sets;
-import io.papermc.generator.rewriter.SearchMetadata;
+import io.papermc.generator.rewriter.replace.SearchMetadata;
 import io.papermc.generator.rewriter.types.EnumRegistryRewriter;
 import io.papermc.generator.rewriter.types.SwitchCaseRewriter;
 import io.papermc.generator.rewriter.types.SwitchRewriter;

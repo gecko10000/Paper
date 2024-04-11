@@ -1,0 +1,7 @@
+imports: {
+  "(_).one.OneDepthClass$NonStaticClass": "NonStaticClass"
+}
+
+staticImports: {
+  "(_).one.OneDepthClass.StaticClass": "StaticClass"
+}

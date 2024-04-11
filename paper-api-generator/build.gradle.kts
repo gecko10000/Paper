@@ -26,14 +26,27 @@ dependencies {
     implementation(project(":paper-api"))
     implementation("io.github.classgraph:classgraph:4.8.47")
     testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher") // todo version conflict?
 }
 
-tasks.test {
-    useJUnitPlatform()
-    systemProperty("paper.generator.rewriter.container.api", file("generated").toString()) // todo move to the sourceset
-    systemProperty("paper.generator.rewriter.container.server", file("generatedServerTest").toString()) // todo move to the sourceset
-    inputs.dir("generated")
-    inputs.dir("generatedServerTest")
+tasks {
+    test {
+        useJUnitPlatform {
+            if (System.getenv()["CI"]?.toBoolean() == true) {
+                excludeTags("parser")
+            } else {
+                // excludeTags("parser") // comment this line while working on parser related things
+            }
+        }
+        systemProperty("paper.generator.rewriter.container.api", file("generated").toString()) // todo move to the sourceset
+        systemProperty("paper.generator.rewriter.container.server", file("generatedServerTest").toString()) // todo move to the sourceset
+        inputs.dir("generated")
+        inputs.dir("generatedServerTest")
+    }
+
+    compileTestJava {
+        options.compilerArgs.add("-parameters")
+    }
 }
 
 group = "io.papermc.paper"
