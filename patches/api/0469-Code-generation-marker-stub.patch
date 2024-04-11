@@ -756,6 +756,26 @@ index d03adfaa4176617ef2ace2754fe02b63860e3aee..fceb2f0a452a1ce72988bbd1ecca599c
  
          private final NamespacedKey key;
  
+diff --git a/src/main/java/org/bukkit/entity/EntityType.java b/src/main/java/org/bukkit/entity/EntityType.java
+index 4aaf268f58038cd5d4101ec3fbfdc20b544d6678..48843885feebcf26a48a23f8085fcb246b6bbe18 100644
+--- a/src/main/java/org/bukkit/entity/EntityType.java
++++ b/src/main/java/org/bukkit/entity/EntityType.java
+@@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
+ public enum EntityType implements Keyed, Translatable, net.kyori.adventure.translation.Translatable { // Paper - translatable
+ 
+     // These strings MUST match the strings in nms.EntityTypes and are case sensitive.
++    // Paper start - Generated/EntityType
+     /**
+      * An item resting on the ground.
+      * <p>
+@@ -303,6 +304,7 @@ public enum EntityType implements Keyed, Translatable, net.kyori.adventure.trans
+      */
+     LIGHTNING("lightning_bolt", LightningStrike.class, -1, false),
+     PLAYER("player", Player.class, -1, false),
++    // Paper end - Generated/EntityType
+     /**
+      * An unknown entity without an Entity Class
+      */
 diff --git a/src/main/java/org/bukkit/entity/Fox.java b/src/main/java/org/bukkit/entity/Fox.java
 index 473a7e36ad64f866d1d2e09e2ecb2e9881668faf..1fb12e0bc77247e9f6562bb7a8d0ff35eecb54a9 100644
 --- a/src/main/java/org/bukkit/entity/Fox.java
