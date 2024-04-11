@@ -70,6 +70,13 @@ public enum PatternType implements Keyed {
         this.key = NamespacedKey.minecraft(key);
     }
 
+    // Paper start - deprecate getKey
+    /**
+     * @deprecated use {@link Registry#getKey(Keyed)} and {@link Registry#BANNER_PATTERN}. PatternTypes
+     * can exist without a key.
+     */
+    @Deprecated
+    // Paper end - deprecate getKey
     @Override
     @NotNull
     public NamespacedKey getKey() {

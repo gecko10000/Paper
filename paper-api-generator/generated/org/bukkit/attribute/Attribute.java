@@ -1,13 +1,15 @@
 package org.bukkit.attribute;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
+import org.bukkit.Translatable;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Types of attributes which may be present on an {@link Attributable}.
  */
-public enum Attribute implements Keyed, net.kyori.adventure.translation.Translatable { // Paper - Adventure translations
+public enum Attribute implements Keyed, Translatable, net.kyori.adventure.translation.Translatable { // Paper - Adventure translations
 
     // Paper start - Generated/Attribute
     // @GeneratedFrom 1.20.4
@@ -38,10 +40,18 @@ public enum Attribute implements Keyed, net.kyori.adventure.translation.Translat
     public NamespacedKey getKey() {
         return key;
     }
+
+    @NotNull
+    @Override
+    public String getTranslationKey() {
+        return Bukkit.getUnsafe().getTranslationKey(this);
+    }
+
     // Paper start
+    @SuppressWarnings("deprecation")
     @Override
     public @NotNull String translationKey() {
-        return "attribute.name." + this.key.getKey();
+        return Bukkit.getUnsafe().getTranslationKey(this);
     }
     // Paper end
 }

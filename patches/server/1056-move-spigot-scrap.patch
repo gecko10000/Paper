@@ -5,7 +5,7 @@ Subject: [PATCH] move spigot scrap
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 376e8983fdfdbb6c3e5fd8ad0f6a05e655b622bf..19ed2a23bed5b98b5c1a2339570d25e25f3de2ea 100644
+index bcfe59b6efb628ee1e7f9d60667360d4d885fb6a..6da74f989921c213aefb2832821abf3089317325 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -2,6 +2,7 @@ import io.papermc.paperweight.util.*
@@ -16,7 +16,7 @@ index 376e8983fdfdbb6c3e5fd8ad0f6a05e655b622bf..19ed2a23bed5b98b5c1a2339570d25e2
      `maven-publish`
      id("com.github.johnrengelman.shadow")
  }
-@@ -185,6 +186,18 @@ fun TaskContainer.registerRunTask(
+@@ -182,6 +183,18 @@ fun TaskContainer.registerRunTask(
      block(this)
  }
  

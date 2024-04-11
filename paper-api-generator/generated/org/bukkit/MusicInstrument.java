@@ -63,6 +63,16 @@ public abstract class MusicInstrument implements Keyed, net.kyori.adventure.tran
         return instrument;
     }
 
+    // Paper start - deprecate getKey
+    /**
+     * @deprecated use {@link Registry#getKey(Keyed)} and {@link Registry#INSTRUMENT}. MusicInstruments
+     * can exist without a key.
+     */
+    @Deprecated
+    @Override
+    public abstract @NotNull NamespacedKey getKey();
+    // Paper end - deprecate getKey
+
     // Paper start - translation key
     @Override
     public @NotNull String translationKey() {

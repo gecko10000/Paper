@@ -5,10 +5,10 @@ Subject: [PATCH] server gen test
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index 19ed2a23bed5b98b5c1a2339570d25e25f3de2ea..e9f82eb19641970152592d5399172fbf2cdf079c 100644
+index 6da74f989921c213aefb2832821abf3089317325..a0ce28e9d57777a6040083079260409d094a9c51 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
-@@ -186,14 +186,18 @@ fun TaskContainer.registerRunTask(
+@@ -183,14 +183,18 @@ fun TaskContainer.registerRunTask(
      block(this)
  }
  

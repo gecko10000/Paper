@@ -128,8 +128,8 @@ public final class MemoryKey<T> implements Keyed {
 
     // Paper end - Generated/MemoryKey
     /**
-     * @deprecated this constant use the wrong generic type, the sniffer now store different positions
-     * from possibly different worlds. Use the relevant methods in the {@link org.bukkit.entity.Sniffer} directly
+     * @deprecated this constant uses the wrong generic type, the sniffer now stores different positions
+     * from possibly different worlds. Use the relevant methods in {@link org.bukkit.entity.Sniffer} directly
      * for now.
      */
     @Deprecated // Paper

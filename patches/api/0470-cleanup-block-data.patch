@@ -5,7 +5,7 @@ Subject: [PATCH] cleanup block data
 
 
 diff --git a/src/main/java/org/bukkit/Material.java b/src/main/java/org/bukkit/Material.java
-index 63ff4ab251f27c3c94ba775dc288ff8ef9b3b334..1d0ecea530caa5febbe3f08e77ff7c80cd0b49d5 100644
+index 78e0a0eed2d86f31805d009c059db3118cf557a9..0a0f9e6a3d83d8b26cda1bcf5f7d6955f9c5e3ee 100644
 --- a/src/main/java/org/bukkit/Material.java
 +++ b/src/main/java/org/bukkit/Material.java
 @@ -96,6 +96,8 @@ import org.bukkit.block.data.type.SculkShrieker;
@@ -17,7 +17,7 @@ index 63ff4ab251f27c3c94ba775dc288ff8ef9b3b334..1d0ecea530caa5febbe3f08e77ff7c80
  import org.bukkit.block.data.type.Slab;
  import org.bukkit.block.data.type.SmallDripleaf;
  import org.bukkit.block.data.type.Snow;
-@@ -2794,33 +2796,33 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
+@@ -2796,33 +2798,33 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
      MAP(21655),
      GOLDEN_CARROT(5300),
      /**
@@ -65,7 +65,7 @@ index 63ff4ab251f27c3c94ba775dc288ff8ef9b3b334..1d0ecea530caa5febbe3f08e77ff7c80
      NETHER_STAR(12469),
      PUMPKIN_PIE(28725),
      FIREWORK_ROCKET(23841),
-@@ -3498,33 +3500,33 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
+@@ -3500,33 +3502,33 @@ public enum Material implements Keyed, Translatable, net.kyori.adventure.transla
       */
      POTATOES(10879, Ageable.class),
      /**

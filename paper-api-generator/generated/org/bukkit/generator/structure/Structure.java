@@ -99,4 +99,13 @@ public abstract class Structure implements Keyed {
      */
     @NotNull
     public abstract StructureType getStructureType();
+    // Paper start - deprecate getKey
+    /**
+     * @deprecated use {@link Registry#getKey(Keyed)} and {@link Registry#STRUCTURE}. Structures
+     * can exist without a key.
+     */
+    @Override
+    @Deprecated
+    public abstract @NotNull NamespacedKey getKey();
+    // Paper end - deprecate getKey
 }
