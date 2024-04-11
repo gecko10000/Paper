@@ -1,0 +1,38 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Lulu13022002 <41980282+Lulu13022002@users.noreply.github.com>
+Date: Thu, 11 Apr 2024 20:49:16 +0200
+Subject: [PATCH] remove fluidstate mapping
+
+
+diff --git a/src/main/java/io/papermc/paper/block/fluid/PaperFluidData.java b/src/main/java/io/papermc/paper/block/fluid/PaperFluidData.java
+index 479bc32241ebadf8bbc1080b601f61391ad37fa4..891341025f92090144a91cd5326b1c020ea75315 100644
+--- a/src/main/java/io/papermc/paper/block/fluid/PaperFluidData.java
++++ b/src/main/java/io/papermc/paper/block/fluid/PaperFluidData.java
+@@ -88,23 +88,10 @@ public class PaperFluidData implements FluidData {
+         return "PaperFluidData{" + this.state + "}";
+     }
+ 
+-    /* Registry */
+-    private static final Map<Class<? extends net.minecraft.world.level.material.Fluid>, Function<FluidState, PaperFluidData>> MAP = new HashMap<>();
+-    static {
+-        //<editor-fold desc="PaperFluidData Registration" defaultstate="collapsed">
+-        register(LavaFluid.Source.class, PaperFallingFluidData::new);
+-        register(WaterFluid.Source.class, PaperFallingFluidData::new);
+-        register(LavaFluid.Flowing.class, PaperFlowingFluidData::new);
+-        register(WaterFluid.Flowing.class, PaperFlowingFluidData::new);
+-        //</editor-fold>
+-    }
+-
+-    static void register(final Class<? extends net.minecraft.world.level.material.Fluid> fluid, final Function<FluidState, PaperFluidData> creator) {
+-        Preconditions.checkState(MAP.put(fluid, creator) == null, "Duplicate mapping %s->%s", fluid, creator);
+-        MAP.put(fluid, creator);
+-    }
+-
+     public static PaperFluidData createData(final FluidState state) {
+-        return MAP.getOrDefault(state.getType().getClass(), PaperFluidData::new).apply(state);
++        if (state.isEmpty()) {
++            return new PaperFluidData(state);
++        }
++        return state.isSource() ? new PaperFallingFluidData(state) : new PaperFlowingFluidData(state);
+     }
+ }
